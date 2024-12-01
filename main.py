@@ -52,8 +52,8 @@ def main():
     print("\nProcessing types.yaml...")
     process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
 
-    print("\nProcessing iconIDs.yaml...")
-    process_yaml_file(iconIDs_yaml_file_path, read_iconIDs_yaml, process_iconIDs_data)
+    #print("\nProcessing iconIDs.yaml...")
+    #process_yaml_file(iconIDs_yaml_file_path, read_iconIDs_yaml, process_iconIDs_data)
 
     print("\n所有数据库已更新。")
 
