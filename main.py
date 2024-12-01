@@ -4,6 +4,7 @@ from categories_handler import read_yaml as read_categories_yaml, process_data a
 from groups_handler import read_yaml as read_groups_yaml, process_data as process_groups_data
 from types_handler import read_yaml as read_types_yaml, process_data as process_types_data
 from iconIDs_handler import read_yaml as read_iconIDs_yaml, process_data as process_iconIDs_data
+import image_extra
 
 # 文件路径
 categories_yaml_file_path = 'Data/sde/fsd/categories.yaml'
@@ -54,6 +55,10 @@ def main():
 
     #print("\nProcessing iconIDs.yaml...")
     #process_yaml_file(iconIDs_yaml_file_path, read_iconIDs_yaml, process_iconIDs_data)
+
+    # 调用新脚本以复制图像
+    print("\nProcessing images for types...")
+    image_extra.main()  # 调用新的脚本处理图片
 
     print("\n所有数据库已更新。")
 
