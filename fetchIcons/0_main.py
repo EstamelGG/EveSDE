@@ -1,0 +1,61 @@
+import os
+import subprocess
+import sys
+import shutil
+
+def delete_files():
+    """删除指定的文件和目录"""
+    files_to_delete = [
+        '../icon_md5_map.txt',
+        'typeids.txt',
+        'not_exist.txt',
+        'bp_id.txt'
+    ]
+    choice = input("是否确实要重新构建图片资源？(y/n)(y:完全重新下载图片资源, n:复用现有图片资源): ").lower().strip()
+    if choice != 'y':
+        return
+    print("\n开始重新构建图片资源...")
+    # 删除文件
+    for file in files_to_delete:
+        if os.path.exists(file):
+            try:
+                os.remove(file)
+                print(f"已删除文件: {file}")
+            except Exception as e:
+                print(f"删除文件 {file} 时出错: {e}")
+    
+    # 删除icon_from_api目录
+    icon_dir = 'icon_from_api'
+    if os.path.exists(icon_dir):
+        try:
+            shutil.rmtree(icon_dir)
+            print(f"已删除目录: {icon_dir}")
+        except Exception as e:
+            print(f"删除目录 {icon_dir} 时出错: {e}")
+
+def run_script(script_name):
+    """运行指定的Python脚本"""
+    try:
+        print(f"\n开始执行 {script_name}...")
+        subprocess.run([sys.executable, script_name], check=True)
+        print(f"{script_name} 执行完成")
+    except subprocess.CalledProcessError as e:
+        print(f"执行 {script_name} 时出错: {e}")
+        sys.exit(1)
+
+def main():
+    print("欢迎使用图标同步工具")
+    choice = input("是否重新构建图片资源？(y/n)(y:完全重新下载图片资源, n:复用现有图片资源): ").lower().strip()
+    
+    if choice == 'y':
+        delete_files()
+    else:
+        print("\n跳过重新构建，直接执行同步...")
+
+    run_script('sync_icon.py')
+    run_script('replace_icon.py')
+    
+    print("\n所有操作已完成！")
+
+if __name__ == "__main__":
+    main() 

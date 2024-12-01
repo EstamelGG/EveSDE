@@ -1,0 +1,1656 @@
+{
+    "0": {
+        "entryTypeNameID": 59792, 
+        "entryTypeNameTranslated": "Undefined", 
+        "description": "", 
+        "name": "Undefined"
+    }, 
+    "1": {
+        "entryJournalMessageTranslated": "Direct trade between {name1} and {name2}", 
+        "description": "", 
+        "entryTypeNameID": 59793, 
+        "entryTypeNameTranslated": "Player Trading", 
+        "entryJournalMessageID": 234499, 
+        "name": "Player Trading"
+    }, 
+    "2": {
+        "entryJournalMessageTranslated": "Market: {name1} bought stuff from {name2}", 
+        "description": "", 
+        "entryTypeNameID": 59794, 
+        "entryTypeNameTranslated": "Market Transaction", 
+        "entryJournalMessageID": 234500, 
+        "name": "Market Transaction"
+    }, 
+    "3": {
+        "entryJournalMessageTranslated": "GM [{arg}] issued transaction between {name1} and {name2}", 
+        "description": "", 
+        "entryTypeNameID": 59795, 
+        "entryTypeNameTranslated": "GM Cash Transfer", 
+        "entryJournalMessageID": 234502, 
+        "name": "GM Cash Transfer"
+    }, 
+    "4": {
+        "entryTypeNameID": 59796, 
+        "entryTypeNameTranslated": "ATM Withdraw", 
+        "description": "", 
+        "name": "ATM Withdraw"
+    }, 
+    "5": {
+        "entryTypeNameID": 59797, 
+        "entryTypeNameTranslated": "ATM Deposit", 
+        "description": "", 
+        "name": "ATM Deposit"
+    }, 
+    "6": {
+        "entryTypeNameID": 59798, 
+        "entryTypeNameTranslated": "Backward Compatible", 
+        "description": "", 
+        "name": "Backward Compatible"
+    }, 
+    "7": {
+        "entryJournalMessageTranslated": "Mission reward", 
+        "description": "", 
+        "entryTypeNameID": 59799, 
+        "entryTypeNameTranslated": "Mission Reward", 
+        "entryJournalMessageID": 234504, 
+        "name": "Mission Reward"
+    }, 
+    "8": {
+        "entryJournalMessageTranslated": "Clone activation", 
+        "description": "", 
+        "entryTypeNameID": 59800, 
+        "entryTypeNameTranslated": "Clone Activation", 
+        "entryJournalMessageID": 234505, 
+        "name": "Clone Activation"
+    }, 
+    "9": {
+        "entryJournalMessageTranslated": "Inheritance from {name}", 
+        "description": "", 
+        "entryTypeNameID": 59801, 
+        "entryTypeNameTranslated": "Inheritance", 
+        "entryJournalMessageID": 234507, 
+        "name": "Inheritance"
+    }, 
+    "10": {
+        "entryJournalMessageTranslated": "{name1} deposited cash into {name2}'s account", 
+        "description": "Player gave cash to another owner", 
+        "entryTypeDescriptionTranslated": "Player gave cash to another owner", 
+        "entryTypeDescriptionID": 59719, 
+        "entryTypeNameID": 59802, 
+        "entryTypeNameTranslated": "Player Donation", 
+        "entryJournalMessageID": 234508, 
+        "name": "Player Donation"
+    }, 
+    "11": {
+        "description": "CEO or Accountant transferred cash  from corp. account", 
+        "entryTypeDescriptionTranslated": "CEO or Accountant transferred cash  from corp. account", 
+        "entryTypeDescriptionID": 59720, 
+        "entryTypeNameID": 59803, 
+        "entryTypeNameTranslated": "Corporation Payment", 
+        "name": "Corporation Payment"
+    }, 
+    "12": {
+        "entryJournalMessageTranslated": "Docking fee between {name1} and {name2}'s account", 
+        "description": "", 
+        "entryTypeNameID": 59804, 
+        "entryTypeNameTranslated": "Docking Fee", 
+        "entryJournalMessageID": 234511, 
+        "name": "Docking Fee"
+    }, 
+    "13": {
+        "entryJournalMessageTranslated": "Office rental fee between {name1} and {name2}", 
+        "description": "", 
+        "entryTypeNameID": 59805, 
+        "entryTypeNameTranslated": "Office Rental Fee", 
+        "entryJournalMessageID": 234512, 
+        "name": "Office Rental Fee"
+    }, 
+    "14": {
+        "entryJournalMessageTranslated": "Factory slot rental fee between{name1} and {name2}", 
+        "description": "", 
+        "entryTypeNameID": 59806, 
+        "entryTypeNameTranslated": "Factory Slot Rental Fee", 
+        "entryJournalMessageID": 234513, 
+        "name": "Factory Slot Rental Fee"
+    }, 
+    "15": {
+        "entryJournalMessageTranslated": "Repair bill between {name1} and {name2}", 
+        "description": "", 
+        "entryTypeNameID": 59807, 
+        "entryTypeNameTranslated": "Repair Bill", 
+        "entryJournalMessageID": 234527, 
+        "name": "Repair Bill"
+    }, 
+    "16": {
+        "description": "Player gave cash to someone's  bounty pool", 
+        "entryTypeDescriptionTranslated": "Player gave cash to someone's  bounty pool", 
+        "entryTypeDescriptionID": 59721, 
+        "entryTypeNameID": 59808, 
+        "entryTypeNameTranslated": "Bounty", 
+        "name": "Bounty"
+    }, 
+    "17": {
+        "description": "Player got bounty prize for killing someone", 
+        "entryTypeDescriptionTranslated": "Player got bounty prize for killing someone", 
+        "entryTypeDescriptionID": 59722, 
+        "entryTypeNameID": 59809, 
+        "entryTypeNameTranslated": "Bounty Prize", 
+        "name": "Bounty Prize"
+    }, 
+    "18": {
+        "description": "TEMP", 
+        "entryTypeDescriptionTranslated": "TEMP", 
+        "entryTypeDescriptionID": 59723, 
+        "entryTypeNameID": 59810, 
+        "entryTypeNameTranslated": "Agents_temporary", 
+        "name": "Agents_temporary"
+    }, 
+    "19": {
+        "entryTypeNameID": 59811,
+        "entryJournalMessageID": [234532, 234531, 234533],
+        "entryTypeNameTranslated": "Insurance",
+        "description": "", 
+        "name": "Insurance"
+    }, 
+    "20": {
+        "entryJournalMessageTranslated": "Mission rollback due to expiration", 
+        "description": "", 
+        "entryTypeNameID": 59812, 
+        "entryTypeNameTranslated": "Mission Expiration", 
+        "entryJournalMessageID": 234549, 
+        "name": "Mission Expiration"
+    }, 
+    "21": {
+        "entryJournalMessageTranslated": "Mission completion", 
+        "description": "", 
+        "entryTypeNameID": 59813, 
+        "entryTypeNameTranslated": "Mission Completion", 
+        "entryJournalMessageID": 234550, 
+        "name": "Mission Completion"
+    }, 
+    "22": {
+        "entryJournalMessageTranslated": "Company shares transaction", 
+        "description": "", 
+        "entryTypeNameID": 59814, 
+        "entryTypeNameTranslated": "Shares", 
+        "entryJournalMessageID": 234551, 
+        "name": "Shares"
+    }, 
+    "23": {
+        "entryJournalMessageTranslated": "Courier mission escrow", 
+        "description": "", 
+        "entryTypeNameID": 59815, 
+        "entryTypeNameTranslated": "Courier Mission Escrow", 
+        "entryJournalMessageID": 234552, 
+        "name": "Courier Mission Escrow"
+    }, 
+    "24": {
+        "entryJournalMessageTranslated": "Mission cost", 
+        "description": "", 
+        "entryTypeNameID": 59816, 
+        "entryTypeNameTranslated": "Mission Cost", 
+        "entryJournalMessageID": 234553, 
+        "name": "Mission Cost"
+    }, 
+    "25": {
+        "entryJournalMessageTranslated": "Cash transfer from agent {name1} to {name2}", 
+        "description": "Agent paid you", 
+        "entryTypeDescriptionTranslated": "Agent paid you", 
+        "entryTypeDescriptionID": 59724, 
+        "entryTypeNameID": 59817, 
+        "entryTypeNameTranslated": "Agent Miscellaneous", 
+        "entryJournalMessageID": 234514, 
+        "name": "Agent Miscellaneous"
+    }, 
+    "26": {
+        "entryJournalMessageTranslated": "Payment to LP Store", 
+        "description": "Payment to LP Store", 
+        "entryTypeDescriptionTranslated": "Payment to LP Store", 
+        "entryTypeDescriptionID": 59725, 
+        "entryTypeNameID": 59818, 
+        "entryTypeNameTranslated": "LP Store", 
+        "entryJournalMessageID": 234618, 
+        "name": "LP Store"
+    }, 
+    "27": {
+        "entryJournalMessageTranslated": "Paid agent to locate somebody", 
+        "description": "You paid agent to locate somebody", 
+        "entryTypeDescriptionTranslated": "You paid agent to locate somebody", 
+        "entryTypeDescriptionID": 59726, 
+        "entryTypeNameID": 59819, 
+        "entryTypeNameTranslated": "Agent Location Services", 
+        "entryJournalMessageID": 234521, 
+        "name": "Agent Location Services"
+    }, 
+    "28": {
+        "entryJournalMessageTranslated": "Donation from {name1} to agent {name2}", 
+        "description": "You donated/bribed the agent", 
+        "entryTypeDescriptionTranslated": "You donated/bribed the agent", 
+        "entryTypeDescriptionID": 59727, 
+        "entryTypeNameID": 59820, 
+        "entryTypeNameTranslated": "Agent Donation", 
+        "entryJournalMessageID": 234519, 
+        "name": "Agent Donation"
+    }, 
+    "29": {
+        "entryJournalMessageTranslated": "CONCORD relations by agent {name1} on behalf of {name2}", 
+        "description": "You paid agent to clean your rep", 
+        "entryTypeDescriptionTranslated": "You paid agent to clean your rep", 
+        "entryTypeDescriptionID": 59728, 
+        "entryTypeNameID": 59821, 
+        "entryTypeNameTranslated": "Agent Security Services", 
+        "entryJournalMessageID": 234520, 
+        "name": "Agent Security Services"
+    }, 
+    "30": {
+        "entryJournalMessageTranslated": "Mission collateral paid by {name1} to agent {name2}", 
+        "description": "You gave agent collateral for a mission", 
+        "entryTypeDescriptionTranslated": "You gave agent collateral for a mission", 
+        "entryTypeDescriptionID": 59729, 
+        "entryTypeNameID": 59822, 
+        "entryTypeNameTranslated": "Agent Mission Collateral Paid", 
+        "entryJournalMessageID": 234517, 
+        "name": "Agent Mission Collateral Paid"
+    }, 
+    "31": {
+        "entryJournalMessageTranslated": "Mission collateral refunded by agent {name1} to  {name2}", 
+        "description": "The agent returned collateral to you", 
+        "entryTypeDescriptionTranslated": "The agent returned collateral to you", 
+        "entryTypeDescriptionID": 59730, 
+        "entryTypeNameID": 59823, 
+        "entryTypeNameTranslated": "Agent Mission Collateral Refunded", 
+        "entryJournalMessageID": 234518, 
+        "name": "Agent Mission Collateral Refunded"
+    }, 
+    "32": {
+        "description": "The agent gave you this when you accepted the mission", 
+        "entryTypeDescriptionTranslated": "The agent gave you this when you accepted the mission", 
+        "entryTypeDescriptionID": 59731, 
+        "entryTypeNameID": 59824, 
+        "entryTypeNameTranslated": "Agents_preward", 
+        "name": "Agents_preward"
+    }, 
+    "33": {
+        "entryJournalMessageTranslated": "Mission reward from agent {name1} to {name2}", 
+        "description": "The agent gave you this as a reward", 
+        "entryTypeDescriptionTranslated": "The agent gave you this as a reward", 
+        "entryTypeDescriptionID": 59732, 
+        "entryTypeNameID": 59825, 
+        "entryTypeNameTranslated": "Agent Mission Reward", 
+        "entryJournalMessageID": 234515, 
+        "name": "Agent Mission Reward"
+    }, 
+    "34": {
+        "entryJournalMessageTranslated": "Mission reward bonus from agent {name1} to {name2}", 
+        "description": "The agent gave you this as a special reward for fast mission completion", 
+        "entryTypeDescriptionTranslated": "The agent gave you this as a special reward for fast mission completion", 
+        "entryTypeDescriptionID": 59733, 
+        "entryTypeNameID": 59826, 
+        "entryTypeNameTranslated": "Agent Mission Time Bonus Reward", 
+        "entryJournalMessageID": 234516, 
+        "name": "Agent Mission Time Bonus Reward"
+    }, 
+    "35": {
+        "description": "CONCORD Spam Prevention Act", 
+        "entryTypeDescriptionTranslated": "CONCORD Spam Prevention Act", 
+        "entryTypeDescriptionID": 59734, 
+        "entryTypeNameID": 59827, 
+        "entryTypeNameTranslated": "CSPA", 
+        "name": "CSPA"
+    }, 
+    "36": {
+        "description": "Refunded CSPA charge because the other party was not online", 
+        "entryTypeDescriptionTranslated": "Refunded CSPA charge because the other party was not online", 
+        "entryTypeDescriptionID": 59735, 
+        "entryTypeNameID": 59828, 
+        "entryTypeNameTranslated": "CSPAOfflineRefund", 
+        "name": "CSPAOfflineRefund"
+    }, 
+    "37": {
+        "description": "Withdrawal from corporation account", 
+        "entryTypeDescriptionTranslated": "Withdrawal from corporation account", 
+        "entryTypeDescriptionID": 59736, 
+        "entryTypeNameID": 59829,
+        "entryJournalMessageID": 234558,
+        "entryTypeNameTranslated": "Corporation Account Withdrawal", 
+        "name": "Corporation Account Withdrawal"
+    }, 
+    "38": {
+        "entryTypeNameID": 59830, 
+        "entryTypeNameTranslated": "Corporation Dividend Payment", 
+        "description": "", 
+        "name": "Corporation Dividend Payment"
+    }, 
+    "39": {
+        "entryJournalMessageTranslated": "{name1} paid corporation registration fee", 
+        "description": "", 
+        "entryTypeNameID": 59831, 
+        "entryTypeNameTranslated": "Corporation Registration Fee", 
+        "entryJournalMessageID": 234565, 
+        "name": "Corporation Registration Fee"
+    }, 
+    "40": {
+        "entryTypeNameID": 59832, 
+        "entryTypeNameTranslated": "Corporation Logo Change Cost", 
+        "description": "", 
+        "name": "Corporation Logo Change Cost"
+    }, 
+    "41": {
+        "description": "Charge for the receipt of goods from a corporation hangar that is no longer rented", 
+        "entryTypeDescriptionTranslated": "Charge for the receipt of goods from a corporation hangar that is no longer rented", 
+        "entryTypeDescriptionID": 59737, 
+        "entryTypeNameID": 59833, 
+        "entryTypeNameTranslated": "Release Of Impounded Property", 
+        "name": "Release Of Impounded Property"
+    }, 
+    "42": {
+        "entryTypeNameID": 59834, 
+        "entryTypeNameTranslated": "Market Escrow", 
+        "description": "",
+        "entryJournalMessageID": [234573],
+        "name": "Market Escrow"
+    }, 
+    "43": {
+        "description": "For miscellaneous services rendered by the agent", 
+        "entryTypeDescriptionTranslated": "For miscellaneous services rendered by the agent", 
+        "entryTypeDescriptionID": 59738, 
+        "entryTypeNameID": 59835, 
+        "entryTypeNameTranslated": "Agent Services Rendered", 
+        "name": "Agent Services Rendered"
+    }, 
+    "44": {
+        "entryJournalMessageTranslated": "Market: paid fine", 
+        "description": "", 
+        "entryTypeNameID": 59836, 
+        "entryTypeNameTranslated": "Market Fine Paid", 
+        "entryJournalMessageID": 234501, 
+        "name": "Market Fine Paid"
+    }, 
+    "45": {
+        "description": "Funds from the liquidation of a corporation to a shareholder", 
+        "entryTypeDescriptionTranslated": "Funds from the liquidation of a corporation to a shareholder", 
+        "entryTypeDescriptionID": 59739, 
+        "entryTypeNameID": 59837, 
+        "entryTypeNameTranslated": "Corporation Liquidation", 
+        "name": "Corporation Liquidation"
+    }, 
+    "46": {
+        "entryTypeNameID": 59838, 
+        "entryTypeNameTranslated": "Brokers Fee", 
+        "description": "",
+        "entryJournalMessageID": [234569],
+        "name": "Brokers Fee"
+    }, 
+    "47": {
+        "description": "A payment from a corporation", 
+        "entryTypeDescriptionTranslated": "A payment from a corporation", 
+        "entryTypeDescriptionID": 59740, 
+        "entryTypeNameID": 59839, 
+        "entryTypeNameTranslated": "Corporation Bulk Payment", 
+        "name": "Corporation Bulk Payment"
+    }, 
+    "48": {
+        "entryJournalMessageTranslated": "Alliance registration fee", 
+        "description": "", 
+        "entryTypeNameID": 59840, 
+        "entryTypeNameTranslated": "Alliance Registration Fee", 
+        "entryJournalMessageID": 234575, 
+        "name": "Alliance Registration Fee"
+    }, 
+    "49": {
+        "entryTypeNameID": 59841, 
+        "entryTypeNameTranslated": "War Fee", 
+        "description": "", 
+        "name": "War Fee"
+    }, 
+    "50": {
+        "entryTypeNameID": 59842, 
+        "entryTypeNameTranslated": "Alliance Maintainance Fee", 
+        "description": "", 
+        "name": "Alliance Maintainance Fee"
+    }, 
+    "51": {
+        "entryJournalMessageTranslated": "Fine for contraband smuggling", 
+        "description": "", 
+        "entryTypeNameID": 59843, 
+        "entryTypeNameTranslated": "Contraband Fine", 
+        "entryJournalMessageID": 234587, 
+        "name": "Contraband Fine"
+    }, 
+    "52": {
+        "entryJournalMessageTranslated": "Clone transfer to {[location]arg.name}", 
+        "description": "", 
+        "entryTypeNameID": 59844, 
+        "entryTypeNameTranslated": "Clone Transfer", 
+        "entryJournalMessageID": 234506, 
+        "name": "Clone Transfer"
+    }, 
+    "53": {
+        "entryTypeNameID": 59845, 
+        "entryTypeNameTranslated": "Acceleration Gate Fee", 
+        "description": "", 
+        "name": "Acceleration Gate Fee"
+    }, 
+    "54": {
+        "entryJournalMessageTranslated": "Sales tax paid to the SCC", 
+        "description": "Sales tax paid to the SCC for any transaction", 
+        "entryTypeDescriptionTranslated": "Sales tax paid to the SCC for any transaction", 
+        "entryTypeDescriptionID": 59741, 
+        "entryTypeNameID": 59846, 
+        "entryTypeNameTranslated": "Transaction Tax", 
+        "entryJournalMessageID": 234580, 
+        "name": "Transaction Tax"
+    }, 
+    "55": {
+        "entryJournalMessageTranslated": "Fee for installing a Jump Clone paid from {name1} to {name2}", 
+        "description": "", 
+        "entryTypeNameID": 59847, 
+        "entryTypeNameTranslated": "Jump Clone Installation Fee", 
+        "entryJournalMessageID": 234617, 
+        "name": "Jump Clone Installation Fee"
+    }, 
+    "56": {
+        "entryJournalMessageTranslated": "Manufacturing job fee between {name1} and {name2} (Job ID: {arg1})", 
+        "description": "Installation and runtime cost for a manufacturing job", 
+        "entryTypeDescriptionTranslated": "Installation and runtime cost for a manufacturing job", 
+        "entryTypeDescriptionID": 59742, 
+        "entryTypeNameID": 59848, 
+        "entryTypeNameTranslated": "Manufacturing", 
+        "entryJournalMessageID": 234588, 
+        "name": "Manufacturing"
+    }, 
+    "57": {
+        "entryJournalMessageTranslated": "Technological research job fee between {name1} and {name2} (Job ID: {arg1})", 
+        "description": "Installation and runtime cost for a technological research job", 
+        "entryTypeDescriptionTranslated": "Installation and runtime cost for a technological research job", 
+        "entryTypeDescriptionID": 59743, 
+        "entryTypeNameID": 59849, 
+        "entryTypeNameTranslated": "Researching Technology", 
+        "entryJournalMessageID": 234589, 
+        "name": "Researching Technology"
+    }, 
+    "58": {
+        "entryJournalMessageTranslated": "Time efficiency research job fee between {name1} and {name2} (Job ID: {arg1})", 
+        "description": "Installation and runtime cost for a time productivity research job", 
+        "entryTypeDescriptionTranslated": "Installation and runtime cost for a time efficiency research job", 
+        "entryTypeDescriptionID": 59744, 
+        "entryTypeNameID": 59850, 
+        "entryTypeNameTranslated": "Researching Time Efficiency", 
+        "entryJournalMessageID": 234590, 
+        "name": "Researching Time Productivity"
+    }, 
+    "59": {
+        "entryJournalMessageTranslated": "Material efficiency research job fee between {name1} and {name2} (Job ID: {arg1})", 
+        "description": "Installation and runtime cost for a material productivity research job", 
+        "entryTypeDescriptionTranslated": "Installation and runtime cost for a material efficiency research job", 
+        "entryTypeDescriptionID": 59745, 
+        "entryTypeNameID": 59851, 
+        "entryTypeNameTranslated": "Researching Material Efficiency", 
+        "entryJournalMessageID": 234591, 
+        "name": "Researching Material Productivity"
+    }, 
+    "60": {
+        "entryJournalMessageTranslated": "Blueprint copying job fee between {name1} and {name2} (Job ID: {arg1})", 
+        "description": "Installation and runtime cost for a blueprint copying job", 
+        "entryTypeDescriptionTranslated": "Installation and runtime cost for a blueprint copying job", 
+        "entryTypeDescriptionID": 59746, 
+        "entryTypeNameID": 59852, 
+        "entryTypeNameTranslated": "Copying", 
+        "entryJournalMessageID": 234592, 
+        "name": "Copying"
+    }, 
+    "61": {
+        "description": "Installation and runtime cost for an item duplication job", 
+        "entryTypeDescriptionTranslated": "Installation and runtime cost for an item duplication job", 
+        "entryTypeDescriptionID": 59747, 
+        "entryTypeNameID": 59853, 
+        "entryTypeNameTranslated": "Duplicating", 
+        "name": "Duplicating"
+    }, 
+    "62": {
+        "entryJournalMessageTranslated": "Invention job fee between {name1} and {name2} (Job ID: {arg1})", 
+        "description": "Installation and runtime cost for a reverse engineering job", 
+        "entryTypeDescriptionTranslated": "Installation and runtime cost for a reverse engineering job", 
+        "entryTypeDescriptionID": 59748, 
+        "entryTypeNameID": 59854, 
+        "entryTypeNameTranslated": "Reverse Engineering", 
+        "entryJournalMessageID": 234593, 
+        "name": "Reverse Engineering"
+    }, 
+    "63": {
+        "entryJournalMessageTranslated": "A bid on an Auction", 
+        "description": "A bid on an Auction", 
+        "entryTypeDescriptionTranslated": "A bid on an Auction", 
+        "entryTypeDescriptionID": 59749, 
+        "entryTypeNameID": 59855, 
+        "entryTypeNameTranslated": "Contract Auction Bid", 
+        "entryJournalMessageID": 234594, 
+        "name": "Contract Auction Bid"
+    }, 
+    "64": {
+        "entryJournalMessageTranslated": "Auction Bid refund. You have been outbid.", 
+        "description": "Auction Bid refund", 
+        "entryTypeDescriptionTranslated": "Auction Bid refund", 
+        "entryTypeDescriptionID": 59750, 
+        "entryTypeNameID": 59856, 
+        "entryTypeNameTranslated": "Contract Auction Bid Refund", 
+        "entryJournalMessageID": 234595, 
+        "name": "Contract Auction Bid Refund"
+    }, 
+    "65": {
+        "entryJournalMessageTranslated": "Collateral for a contract", 
+        "description": "Collateral for a contract", 
+        "entryTypeDescriptionTranslated": "Collateral for a contract", 
+        "entryTypeDescriptionID": 59751, 
+        "entryTypeNameID": 59857, 
+        "entryTypeNameTranslated": "Contract Collateral", 
+        "entryJournalMessageID": 234596, 
+        "name": "Contract Collateral"
+    }, 
+    "66": {
+        "entryJournalMessageTranslated": "Reward refund for a cancelled or completed contract", 
+        "description": "Reward refund for a cancelled contract", 
+        "entryTypeDescriptionTranslated": "Reward refund for a cancelled contract", 
+        "entryTypeDescriptionID": 59752, 
+        "entryTypeNameID": 59858, 
+        "entryTypeNameTranslated": "Contract Reward Refund", 
+        "entryJournalMessageID": 234597, 
+        "name": "Contract Reward Refund"
+    }, 
+    "67": {
+        "entryJournalMessageTranslated": "Bid payout for a completed Auction contract", 
+        "description": "Bid payout for an Auction contract", 
+        "entryTypeDescriptionTranslated": "Bid payout for an Auction contract", 
+        "entryTypeDescriptionID": 59753, 
+        "entryTypeNameID": 59859, 
+        "entryTypeNameTranslated": "Contract Auction Sold", 
+        "entryJournalMessageID": 234598, 
+        "name": "Contract Auction Sold"
+    }, 
+    "68": {
+        "entryJournalMessageTranslated": "Reward for completing a contract", 
+        "description": "Reward for completing a contract", 
+        "entryTypeDescriptionTranslated": "Reward for completing a contract", 
+        "entryTypeDescriptionID": 59754, 
+        "entryTypeNameID": 59860, 
+        "entryTypeNameTranslated": "Contract Reward", 
+        "entryJournalMessageID": 234599, 
+        "name": "Contract Reward"
+    }, 
+    "69": {
+        "entryJournalMessageTranslated": "Refund of collateral for a contract", 
+        "description": "Refund of collateral for a Courier contract", 
+        "entryTypeDescriptionTranslated": "Refund of collateral for a Courier contract", 
+        "entryTypeDescriptionID": 59755, 
+        "entryTypeNameID": 59861, 
+        "entryTypeNameTranslated": "Contract Collateral Refund", 
+        "entryJournalMessageID": 234600, 
+        "name": "Contract Collateral Refund"
+    }, 
+    "70": {
+        "entryJournalMessageTranslated": "Collateral Payout because of a failed contract", 
+        "description": "Collateral Payout because of a failed contract", 
+        "entryTypeDescriptionTranslated": "Collateral Payout because of a failed contract", 
+        "entryTypeDescriptionID": 59756, 
+        "entryTypeNameID": 59862, 
+        "entryTypeNameTranslated": "Contract Collateral Payout", 
+        "entryJournalMessageID": 234601, 
+        "name": "Contract Collateral Payout"
+    }, 
+    "71": {
+        "entryJournalMessageTranslated": "Price for accepting a contract", 
+        "description": "Contract Price", 
+        "entryTypeDescriptionTranslated": "Contract Price", 
+        "entryTypeDescriptionID": 59757, 
+        "entryTypeNameID": 59863, 
+        "entryTypeNameTranslated": "Contract Price", 
+        "entryJournalMessageID": 234602, 
+        "name": "Contract Price"
+    }, 
+    "72": {
+        "entryJournalMessageTranslated": "Contract Broker's Fee", 
+        "description": "Non-refundable contract tax", 
+        "entryTypeDescriptionTranslated": "Non-refundable contract tax", 
+        "entryTypeDescriptionID": 59758, 
+        "entryTypeNameID": 59864, 
+        "entryTypeNameTranslated": "Contract Brokers Fee", 
+        "entryJournalMessageID": 234603, 
+        "name": "Contract Brokers Fee"
+    }, 
+    "73": {
+        "entryJournalMessageTranslated": "Contract Sales Tax", 
+        "description": "Contract Tax for a successful contract", 
+        "entryTypeDescriptionTranslated": "Contract Tax for a successful contract", 
+        "entryTypeDescriptionID": 59759, 
+        "entryTypeNameID": 59865, 
+        "entryTypeNameTranslated": "Contract Sales Tax", 
+        "entryJournalMessageID": 234604, 
+        "name": "Contract Sales Tax"
+    }, 
+    "74": {
+        "entryJournalMessageTranslated": "Contract Deposit", 
+        "description": "Contract Deposit, refundable upon successful contract", 
+        "entryTypeDescriptionTranslated": "Contract Deposit, refundable upon successful contract", 
+        "entryTypeDescriptionID": 59760, 
+        "entryTypeNameID": 59866, 
+        "entryTypeNameTranslated": "Contract Deposit", 
+        "entryJournalMessageID": 234606, 
+        "name": "Contract Deposit"
+    }, 
+    "75": {
+        "entryJournalMessageTranslated": "Contract Deposit return with Sales Tax deducted", 
+        "description": "Contract Deposit Refund", 
+        "entryTypeDescriptionTranslated": "Contract Deposit Refund", 
+        "entryTypeDescriptionID": 59761, 
+        "entryTypeNameID": 59867, 
+        "entryTypeNameTranslated": "Contract Deposit Sales Tax", 
+        "entryJournalMessageID": 234607, 
+        "name": "Contract Deposit Sales Tax"
+    }, 
+    "76": {
+        "entryJournalMessageTranslated": "{name1} bought ETC [{arg}] from {name2}", 
+        "description": "Selling or buying of EVE Time Codes for ISK on secure.eve-online.com", 
+        "entryTypeDescriptionTranslated": "Selling or buying of EVE Time Codes for ISK on secure.eveonline.com", 
+        "entryTypeDescriptionID": 59762, 
+        "entryTypeNameID": 59868, 
+        "entryTypeNameTranslated": "Secure EVE Time Code Exchange", 
+        "entryJournalMessageID": 234619, 
+        "name": "Secure EVE Time Code Exchange"
+    }, 
+    "77": {
+        "entryJournalMessageTranslated": "A bid on an Auction authorized by {name} (contract ID: {arg})", 
+        "description": "", 
+        "entryTypeNameID": 59869, 
+        "entryTypeNameTranslated": "Contract Auction Bid (corp)", 
+        "entryJournalMessageID": 234610, 
+        "name": "Contract Auction Bid (corp)"
+    }, 
+    "78": {
+        "entryJournalMessageTranslated": "Collateral for a contract authorized by {name} (contract ID: {arg})", 
+        "description": "", 
+        "entryTypeNameID": 59870, 
+        "entryTypeNameTranslated": "Contract Collateral Deposited (corp)", 
+        "entryJournalMessageID": 234611, 
+        "name": "Contract Collateral Deposited (corp)"
+    }, 
+    "79": {
+        "entryJournalMessageTranslated": "Price for accepting a contract authorized by {name} (contract ID: {arg})", 
+        "description": "", 
+        "entryTypeNameID": 59871, 
+        "entryTypeNameTranslated": "Contract Price Payment (corp)", 
+        "entryJournalMessageID": 234612, 
+        "name": "Contract Price Payment (corp)"
+    }, 
+    "80": {
+        "entryJournalMessageTranslated": "Contract Broker's Fee authorized by {name} (contract ID: {arg})", 
+        "description": "", 
+        "entryTypeNameID": 59872, 
+        "entryTypeNameTranslated": "Contract Brokers Fee (corp)", 
+        "entryJournalMessageID": 234613, 
+        "name": "Contract Brokers Fee (corp)"
+    }, 
+    "81": {
+        "entryJournalMessageTranslated": "Contract Deposit authorized by {name} (contract ID: {arg})", 
+        "description": "", 
+        "entryTypeNameID": 59873, 
+        "entryTypeNameTranslated": "Contract Deposit (corp)", 
+        "entryJournalMessageID": 234614, 
+        "name": "Contract Deposit (corp)"
+    }, 
+    "82": {
+        "entryJournalMessageTranslated": "Deposit refunded for completion of a contract", 
+        "description": "", 
+        "entryTypeNameID": 59874, 
+        "entryTypeNameTranslated": "Contract Deposit Refund", 
+        "entryJournalMessageID": 234615, 
+        "name": "Contract Deposit Refund"
+    }, 
+    "83": {
+        "entryJournalMessageTranslated": "Reward deposited for completing a contract", 
+        "description": "", 
+        "entryTypeNameID": 59875, 
+        "entryTypeNameTranslated": "Contract Reward Deposited", 
+        "entryJournalMessageID": 234608, 
+        "name": "Contract Reward Deposited"
+    }, 
+    "84": {
+        "entryJournalMessageTranslated": "Reward deposited for completing a contract authorized by {name} (contract ID: {arg})", 
+        "description": "", 
+        "entryTypeNameID": 59876, 
+        "entryTypeNameTranslated": "Contract Reward Deposited (corp)", 
+        "entryJournalMessageID": 234616, 
+        "name": "Contract Reward Deposited (corp)"
+    }, 
+    "85": {
+        "entryTypeNameID": 59877,
+        "entryJournalMessageID": [234530, 234529, 59722],
+        "entryTypeNameTranslated": "Bounty Prizes", 
+        "description": "", 
+        "name": "Bounty Prizes"
+    }, 
+    "86": {
+        "entryJournalMessageTranslated": "{name1} paid corporation advertisement fee", 
+        "description": "Creating a corporate recruitment advertisement", 
+        "entryTypeDescriptionTranslated": "Creating a corporate recruitment advertisement", 
+        "entryTypeDescriptionID": 59763, 
+        "entryTypeNameID": 59878, 
+        "entryTypeNameTranslated": "Advertisement Listing Fee", 
+        "entryJournalMessageID": 234567, 
+        "name": "Advertisement Listing Fee"
+    }, 
+    "87": {
+        "entryJournalMessageTranslated": "Medal creation fee between {name1} and {name2}", 
+        "description": "Medal was created", 
+        "entryTypeDescriptionTranslated": "Medal was created", 
+        "entryTypeDescriptionID": 59764, 
+        "entryTypeNameID": 59879, 
+        "entryTypeNameTranslated": "Medal Creation", 
+        "entryJournalMessageID": 234620, 
+        "name": "Medal Creation"
+    }, 
+    "88": {
+        "entryJournalMessageTranslated": "Medal issuing fee between {name1} and {name2}", 
+        "description": "Medal was issued", 
+        "entryTypeDescriptionTranslated": "Medal was issued", 
+        "entryTypeDescriptionID": 59765, 
+        "entryTypeNameID": 59880, 
+        "entryTypeNameTranslated": "Medal Issued", 
+        "entryJournalMessageID": 234621, 
+        "name": "Medal Issued"
+    }, 
+    "89": {
+        "description": "Minigame betting", 
+        "entryTypeDescriptionTranslated": "Minigame betting", 
+        "entryTypeDescriptionID": 59766, 
+        "entryTypeNameID": 59881, 
+        "entryTypeNameTranslated": "Betting", 
+        "name": "Betting"
+    }, 
+    "90": {
+        "entryJournalMessageTranslated": "Neural Remapping Fee", 
+        "description": "Fee for attribute modification surgery", 
+        "entryTypeDescriptionTranslated": "Fee for attribute modification surgery", 
+        "entryTypeDescriptionID": 59767, 
+        "entryTypeNameID": 59882, 
+        "entryTypeNameTranslated": "DNA Modification Fee", 
+        "entryJournalMessageID": 234622, 
+        "name": "DNA Modification Fee"
+    }, 
+    "91": {
+        "description": "CONCORD sovereignity registrar fee", 
+        "entryTypeDescriptionTranslated": "CONCORD sovereignty registrar fee", 
+        "entryTypeDescriptionID": 59768, 
+        "entryTypeNameID": 59883, 
+        "entryTypeNameTranslated": "Sovereignty bill", 
+        "name": "Sovereignity bill"
+    }, 
+    "92": {
+        "entryJournalMessageTranslated": "Corporation tax on pirate bounties", 
+        "description": "", 
+        "entryTypeNameID": 59884, 
+        "entryTypeNameTranslated": "Bounty Prize Corporation Tax", 
+        "entryJournalMessageID": 234554, 
+        "name": "Bounty Prize Corporation Tax"
+    }, 
+    "93": {
+        "entryJournalMessageTranslated": "Corporation tax on mission rewards", 
+        "description": "", 
+        "entryTypeNameID": 59885, 
+        "entryTypeNameTranslated": "Agent Mission Reward Corporation Tax", 
+        "entryJournalMessageID": 234555, 
+        "name": "Agent Mission Reward Corporation Tax"
+    }, 
+    "94": {
+        "entryJournalMessageTranslated": "Corporation tax on mission bonus rewards", 
+        "description": "", 
+        "entryTypeNameID": 59886, 
+        "entryTypeNameTranslated": "Agent Mission Time Bonus Reward Corporation Tax", 
+        "entryJournalMessageID": 234556, 
+        "name": "Agent Mission Time Bonus Reward Corporation Tax"
+    }, 
+    "95": {
+        "description": "Upkeep cost of upgrade for remainder of current billing period", 
+        "entryTypeDescriptionTranslated": "Upkeep cost of upgrade for remainder of current billing period", 
+        "entryTypeDescriptionID": 59769, 
+        "entryTypeNameID": 59887, 
+        "entryTypeNameTranslated": "Upkeep adjustment fee", 
+        "name": "Upkeep adjustment fee"
+    }, 
+    "96": {
+        "entryTypeNameID": 59888, 
+        "entryTypeNameTranslated": "Planetary Import Tax", 
+        "description": "", 
+        "name": "Planetary Import Tax"
+    }, 
+    "97": {
+        "entryTypeNameID": 59889, 
+        "entryTypeNameTranslated": "Planetary Export Tax", 
+        "description": "", 
+        "name": "Planetary Export Tax"
+    }, 
+    "98": {
+        "description": "Construction on Planet", 
+        "entryTypeDescriptionTranslated": "Construction on Planet", 
+        "entryTypeDescriptionID": 59770, 
+        "entryTypeNameID": 59890, 
+        "entryTypeNameTranslated": "Planetary Construction", 
+        "name": "Planetary Construction"
+    }, 
+    "99": {
+        "entryJournalMessageTranslated": "{name1} rewarded {name2} for services performed.", 
+        "description": "Corporate reward awarded a player", 
+        "entryTypeDescriptionTranslated": "Corporate reward awarded a player", 
+        "entryTypeDescriptionID": 59771, 
+        "entryTypeNameID": 59891, 
+        "entryTypeNameTranslated": "Corporate Reward Payout", 
+        "entryJournalMessageID": 234626, 
+        "name": "Corporate Reward Payout"
+    }, 
+    "101": {
+        "entryJournalMessageTranslated": "A temporary charge levied against transactions due to local conditions.", 
+        "description": "Surcharge on bounty because of local conditions.", 
+        "entryTypeDescriptionTranslated": "Surcharge on bounty because of local conditions.", 
+        "entryTypeDescriptionID": 59773, 
+        "entryTypeNameID": 59893, 
+        "entryTypeNameTranslated": "Bounty Surcharge", 
+        "entryJournalMessageID": 234526, 
+        "name": "Bounty Surcharge"
+    }, 
+    "102": {
+        "entryJournalMessageTranslated": "GM [{arg}] reversed contract between {name1} and {name2}", 
+        "description": "Contract Reversed by GM", 
+        "entryTypeDescriptionTranslated": "Contract Reversed by GM", 
+        "entryTypeDescriptionID": 59774, 
+        "entryTypeNameID": 59894, 
+        "entryTypeNameTranslated": "Contract Reversal", 
+        "entryJournalMessageID": 234609, 
+        "name": "Contract Reversal"
+    }, 
+    "103": {
+        "entryJournalMessageTranslated": "Corporation tax on {name} rewards", 
+        "description": "", 
+        "entryTypeNameID": 59895, 
+        "entryTypeNameTranslated": "Corporate Reward Tax", 
+        "entryJournalMessageID": 234557, 
+        "name": "Corporate Reward Tax"
+    }, 
+    "106": {
+        "entryJournalMessageTranslated": "Purchased one or more items from the store.", 
+        "description": "Purchased something from the virtual goods store", 
+        "entryTypeDescriptionTranslated": "Purchased something from the virtual goods store", 
+        "entryTypeDescriptionID": 59777, 
+        "entryTypeNameID": 59898, 
+        "entryTypeNameTranslated": "Store Purchase", 
+        "entryJournalMessageID": 234629, 
+        "name": "Store Purchase"
+    }, 
+    "107": {
+        "entryJournalMessageTranslated": "A refund from the store was preformed to take back goods previously purchased.", 
+        "description": "We refunded a purchase from the store", 
+        "entryTypeDescriptionTranslated": "We refunded a purchase from the store", 
+        "entryTypeDescriptionID": 59778, 
+        "entryTypeNameID": 59899, 
+        "entryTypeNameTranslated": "Store Purchase Refund", 
+        "entryJournalMessageID": 234630, 
+        "name": "Store Purchase Refund"
+    }, 
+    "108": {
+        "entryJournalMessageTranslated": "Sold PLEX for AURUM", 
+        "description": "Conversion of a PLEX to AURUM", 
+        "entryTypeDescriptionTranslated": "Conversion of a PLEX to AURUM", 
+        "entryTypeDescriptionID": 59779, 
+        "entryTypeNameID": 59900, 
+        "entryTypeNameTranslated": "PLEX sold for Aurum", 
+        "entryJournalMessageID": 234631, 
+        "name": "PLEX sold for Aurum"
+    }, 
+    "109": {
+        "entryJournalMessageTranslated": "You have won the New Eden lottery.", 
+        "description": "This is Gift of cash to the players", 
+        "entryTypeDescriptionTranslated": "This is Gift of cash to the players", 
+        "entryTypeDescriptionID": 234493, 
+        "entryTypeNameID": 234494, 
+        "entryTypeNameTranslated": "Lottery Give Away", 
+        "entryJournalMessageID": 234632, 
+        "name": "Lottery Give Away"
+    }, 
+    "111": {
+        "entryJournalMessageTranslated": "You exchanged Aurum Tokens for Aur.", 
+        "description": "The player has converted a aurum token for aurum.", 
+        "entryTypeDescriptionTranslated": "The player has converted a aurum token for aurum.", 
+        "entryTypeDescriptionID": 263478, 
+        "entryTypeNameID": 263475, 
+        "entryTypeNameTranslated": "Aurum Token exchanged for Aur", 
+        "entryJournalMessageID": 261454, 
+        "name": "Aurum Token exchanged for Aur"
+    }, 
+    "112": {
+        "entryJournalMessageTranslated": "Bought datacore(s) from agent", 
+        "description": "Player bought datacore(s) from agent", 
+        "entryTypeDescriptionTranslated": "Bought datacores from an agent", 
+        "entryTypeDescriptionID": 277690, 
+        "entryTypeNameID": 277685, 
+        "entryTypeNameTranslated": "Datacore Fee", 
+        "entryJournalMessageID": 277692, 
+        "name": "Datacore Fee"
+    }, 
+    "113": {
+        "entryTypeNameID": 279064, 
+        "entryTypeNameTranslated": "War Surrender Fee", 
+        "description": "One entity surrendered from a war", 
+        "name": "War fee surrender"
+    }, 
+    "114": {
+        "entryTypeNameID": 279063, 
+        "entryTypeNameTranslated": "War Ally Contract", 
+        "description": "Entity offered its help in a war", 
+        "name": "War ally contract"
+    }, 
+    "115": {
+        "entryJournalMessageTranslated": "Bounty reimbursed", 
+        "description": "Bounty was repaid", 
+        "entryTypeNameID": 285170, 
+        "entryTypeNameTranslated": "Bounty Reimbursement", 
+        "entryJournalMessageID": 283461, 
+        "name": "Bounty Reimbursement"
+    }, 
+    "116": {
+        "entryTypeNameID": 285169, 
+        "entryTypeNameTranslated": "Kill Right",
+        "entryJournalMessageID": 285160,
+        "description": "Kill right bought", 
+        "name": "Kill Right Fee"
+    }, 
+    "117": {
+        "entryJournalMessageTranslated": "Fee for processing one or more security tags", 
+        "description": "Tags traded for security status", 
+        "entryTypeNameID": 287844, 
+        "entryTypeNameTranslated": "Fee for processing one or more security tags", 
+        "entryJournalMessageID": 570553, 
+        "name": "Security Processing Fee"
+    }, 
+    "118": {
+        "entryJournalMessageTranslated": "Fee taken in escrow for your bid on an industry team", 
+        "description": "Money taken into escrow for bid on an industry team", 
+        "entryTypeNameID": 503028, 
+        "entryTypeNameTranslated": "Industry Team Bid", 
+        "entryJournalMessageID": 502898, 
+        "name": "Escrow for Industry Team Auction"
+    }, 
+    "119": {
+        "entryJournalMessageTranslated": "Fee returned from escrow for your unsuccessful bid on an industry team", 
+        "description": "Money reimbursed because your bid for industry team was not accepted", 
+        "entryTypeNameID": 503029, 
+        "entryTypeNameTranslated": "Bid Reimbursement", 
+        "entryJournalMessageID": 502899, 
+        "name": "Reimbursement of escrow"
+    }, 
+    "120": {
+        "entryJournalMessageTranslated": "Industry facility tax between {name1} and {name2} (Job ID: {arg1})", 
+        "description": "Tax paid to facility owners for manufacturing Jobs", 
+        "entryTypeNameID": 503484, 
+        "entryTypeNameTranslated": "Industry Facility Tax", 
+        "entryJournalMessageID": 503483, 
+        "name": "Industry Job Tax"
+    }, 
+    "122": {
+        "entryTypeNameID": 507741, 
+        "entryTypeNameTranslated": "Infrastructure Hub bill", 
+        "description": "Maintenance fee for running an Infrastructure Hub (plus upgrades)", 
+        "name": "Infrastructure Hub maintenance"
+    }, 
+    "123": {
+        "entryJournalMessageTranslated": "Asset safety recovery tax", 
+        "description": "Tax paid for recovering assets from asset safety", 
+        "entryTypeNameID": 510859, 
+        "entryTypeNameTranslated": "Asset safety recovery tax", 
+        "entryJournalMessageID": 570551, 
+        "name": "Asset Safety recovery Tax"
+    }, 
+    "124": {
+        "entryJournalMessageTranslated": "Reward for opportunity completion", 
+        "description": "Rewarded granted for finishing a whole opportunity", 
+        "entryTypeDescriptionTranslated": "Reward for opportunity completion", 
+        "entryTypeDescriptionID": 514020, 
+        "entryTypeNameID": 514021, 
+        "entryTypeNameTranslated": "Opportunity Reward", 
+        "entryJournalMessageID": 570555, 
+        "name": "Opportunity reward"
+    }, 
+    "125": {
+        "entryJournalMessageTranslated": "Reward given for scientific contribution to Project Discovery.", 
+        "description": "Reward granted for submitting a sample in Project Discovery", 
+        "entryTypeDescriptionTranslated": "Reward given for scientific contribution to Project Discovery.", 
+        "entryTypeDescriptionID": 515363, 
+        "entryTypeNameID": 515360, 
+        "entryTypeNameTranslated": "Project Discovery reward", 
+        "entryJournalMessageID": 570557, 
+        "name": "Project Discovery reward"
+    }, 
+    "126": {
+        "entryJournalMessageTranslated": "Corporation tax on Project Discovery rewards", 
+        "description": "Tax paid for rewards given by Project Discovery", 
+        "entryTypeNameID": 515396, 
+        "entryTypeNameTranslated": "Corporation tax on Project Discovery rewards", 
+        "entryJournalMessageID": 570548, 
+        "name": "Project Discovery Tax"
+    }, 
+    "127": {
+        "entryTypeNameID": 312131, 
+        "entryTypeNameTranslated": "Reprocessing Tax", 
+        "description": "Tax paid for reprocessing", 
+        "name": "Reprocessing Tax"
+    }, 
+    "128": {
+        "entryJournalMessageTranslated": "Fee for activating a Jump Clone paid from {name1} to {name2}", 
+        "description": "Fee for activating a jump clone", 
+        "entryTypeDescriptionTranslated": "Fee for activating a jump clone", 
+        "entryTypeDescriptionID": 312133, 
+        "entryTypeNameID": 312132, 
+        "entryTypeNameTranslated": "Jump Clone Activation Fee", 
+        "entryJournalMessageID": 516539, 
+        "name": "Jump Clone Activation Fee"
+    }, 
+    "129": {
+        "entryJournalMessageTranslated": "Mission Reward from the Tutorial", 
+        "description": "Operation Bonus from your Mentor", 
+        "entryTypeDescriptionTranslated": "Mission Reward from the Tutorial", 
+        "entryTypeDescriptionID": 522817, 
+        "entryTypeNameID": 522816, 
+        "entryTypeNameTranslated": "Mission Reward", 
+        "entryJournalMessageID": 570554, 
+        "name": "Operation Bonus"
+    }, 
+    "131": {
+        "entryJournalMessageTranslated": "Payment for protecting valuable ORE from pirates.", 
+        "description": "Payment for assisting your faction in protecting valuable ore from pirates", 
+        "entryTypeDescriptionTranslated": "Payment for protecting valuable ORE from pirates.", 
+        "entryTypeDescriptionID": 529366, 
+        "entryTypeNameID": 529365, 
+        "entryTypeNameTranslated": "Mining Site Protection Money", 
+        "entryJournalMessageID": 570541, 
+        "name": "Resource Wars Site Completion"
+    }, 
+    "132": {
+        "entryJournalMessageTranslated": "Duel wager escrow payment", 
+        "description": "Escrow payment for a duel wager", 
+        "entryTypeNameID": 530052, 
+        "entryTypeNameTranslated": "Duel wager escrow payment", 
+        "entryJournalMessageID": 570542, 
+        "name": "Duel Wager Escrow"
+    }, 
+    "133": {
+        "entryJournalMessageTranslated": "Duel wager reward", 
+        "description": "Reward for winning duel", 
+        "entryTypeNameID": 530053, 
+        "entryTypeNameTranslated": "Duel wager reward", 
+        "entryJournalMessageID": 570543, 
+        "name": "Duel Wager Payment"
+    }, 
+    "134": {
+        "entryJournalMessageTranslated": "Duel wager refund", 
+        "description": "Refunded duel wager", 
+        "entryTypeNameID": 530054, 
+        "entryTypeNameTranslated": "Duel wager refund", 
+        "entryJournalMessageID": 570544, 
+        "name": "Duel Wager Refund"
+    }, 
+    "135": {
+        "entryJournalMessageTranslated": "Reaction job fee between {name1} and {name2} (Job ID: {arg1})", 
+        "description": "Installation and runtime cost for a reaction job", 
+        "entryTypeDescriptionTranslated": "Installation and runtime cost for a reaction job", 
+        "entryTypeDescriptionID": 317047, 
+        "entryTypeNameID": 317046, 
+        "entryTypeNameTranslated": "Reactions", 
+        "entryJournalMessageID": 530995, 
+        "name": "Reactions"
+    }, 
+    "136": {
+        "entryJournalMessageTranslated": "Transactions via external services", 
+        "description": "Money is frozen by request of external trading service because it has been put on sale.", 
+        "entryTypeNameID": 531920, 
+        "entryTypeNameTranslated": "External Trade Freeze", 
+        "entryJournalMessageID": 564314, 
+        "name": "External Trade Freeze"
+    }, 
+    "137": {
+        "entryJournalMessageTranslated": "Transactions via external services", 
+        "description": "Money is no longer frozen by request of external trading service.", 
+        "entryTypeNameID": 531921, 
+        "entryTypeNameTranslated": "External Trade Thaw", 
+        "entryJournalMessageID": 564319, 
+        "name": "External Trade Thaw"
+    }, 
+    "138": {
+        "entryTypeNameID": 531922, 
+        "entryTypeNameTranslated": "External Trade Delivery", 
+        "description": "Money was sold between characters by external trading service.", 
+        "name": "External Trade Delivery"
+    }, 
+    "139": {
+        "entryJournalMessageTranslated": "A reward for completing a challenge during an event.", 
+        "description": "A reward for completing a seasonal event challenge.", 
+        "entryTypeDescriptionTranslated": "A reward for completing a challenge during an event.", 
+        "entryTypeDescriptionID": 539337, 
+        "entryTypeNameID": 539336, 
+        "entryTypeNameTranslated": "Challenge Completed", 
+        "entryJournalMessageID": 570540, 
+        "name": "Season Challenge Reward"
+    }, 
+    "140": {
+        "entryJournalMessageTranslated": "Fee for activating a Upwell Jump Bridge paid from {name1} to {name2}", 
+        "description": "Payment for using a privately owned stargate", 
+        "entryTypeDescriptionTranslated": "Fee for activating a Upwell Jump Bridge paid from {name1} to {name2}", 
+        "entryTypeDescriptionID": 543037, 
+        "entryTypeNameID": 543036, 
+        "entryTypeNameTranslated": "Jump Bridge Fee", 
+        "entryJournalMessageID": 570552, 
+        "name": "Structure Stargate Jump"
+    }, 
+    "141": {
+        "entryJournalMessageTranslated": "{name1} purchased a skill ({[item]arg1.name})", 
+        "description": "The player purchased a skill.", 
+        "entryTypeNameID": 543737, 
+        "entryTypeNameTranslated": "Skill Purchase", 
+        "entryJournalMessageID": 543653, 
+        "name": "Skill Purchase"
+    }, 
+    "142": {
+        "entryJournalMessageTranslated": "Payment for use of {itemTraderTypeID}.", 
+        "description": "A payment made in exchange for items from an item trader.", 
+        "entryTypeDescriptionTranslated": "Payment for use of {itemTraderTypeID}.", 
+        "entryTypeDescriptionID": 545150, 
+        "entryTypeNameID": 545149, 
+        "entryTypeNameTranslated": "Item Trade", 
+        "entryJournalMessageID": 570550, 
+        "name": "Item Trader Payment"
+    }, 
+    "143": {
+        "entryTypeNameID": 552172, 
+        "entryTypeNameTranslated": "HyperNode transaction", 
+        "description": "A payment for a flux ticket", 
+        "name": "Flux Ticket Sale"
+    }, 
+    "144": {
+        "entryTypeNameID": 552175, 
+        "entryTypeNameTranslated": "Completed HyperNet Relay Payout", 
+        "description": "A payment for a succesful flux", 
+        "name": "Flux Payout"
+    }, 
+    "145": {
+        "entryTypeNameID": 552173, 
+        "entryTypeNameTranslated": "HyperNet Relay Fee", 
+        "description": "Tax for a succesful flux", 
+        "name": "Flux Tax"
+    }, 
+    "146": {
+        "entryTypeNameID": 552174, 
+        "entryTypeNameTranslated": "HyperNode refund for expired HyperNet Offer", 
+        "description": "Ticket repayment for an expired flux", 
+        "name": "Flux Ticket Repayment"
+    }, 
+    "147": {
+        "entryJournalMessageTranslated": "Reward for redeeming ISK token", 
+        "description": "The player redeemed an ISK token to their wallet", 
+        "entryTypeDescriptionTranslated": "Reward for redeeming ISK token", 
+        "entryTypeDescriptionID": 552496, 
+        "entryTypeNameID": 552388, 
+        "entryTypeNameTranslated": "Redeemed ISK token", 
+        "entryJournalMessageID": 570549, 
+        "name": "Redeemed ISK token"
+    }, 
+    "148": {
+        "entryJournalMessageTranslated": "Reward for completing a daily challenge", 
+        "description": "Reward for completing a daily challenge", 
+        "entryTypeDescriptionTranslated": "Reward for completing a daily challenge", 
+        "entryTypeDescriptionID": 559001, 
+        "entryTypeNameID": 559010, 
+        "entryTypeNameTranslated": "Daily Challenge Completed", 
+        "entryJournalMessageID": 570556, 
+        "name": "Daily Challenge Completed"
+    }, 
+    "149": {
+        "entryTypeNameID": 559228, 
+        "entryTypeNameTranslated": "SCC surcharge", 
+        "description": "Tax paid by the player to the SCC when doing market trade in structures", 
+        "name": "SCC surcharge"
+    }, 
+    "155": {
+        "entryJournalMessageTranslated": "Encounter Surveillance System in {[location]arg1.name} transferred funds to {name2}", 
+        "description": "Payment made to player when autopayment timer expires and main bank has not been robbed", 
+        "entryTypeNameID": 571898, 
+        "entryTypeNameTranslated": "ESS Escrow Payment", 
+        "entryJournalMessageID": 571899, 
+        "name": "ESS Main Bank Autopayment"
+    }, 
+    "156": {
+        "entryJournalMessageTranslated": "Welcome to New Eden!", 
+        "description": "Reward for  First Day ISK Bonus", 
+        "entryTypeNameID": 584301, 
+        "entryTypeNameTranslated": "First Day ISK Bonus", 
+        "entryJournalMessageID": 584300, 
+        "name": "First Day ISK Bonus"
+    }, 
+    "166": {
+        "entryJournalMessageTranslated": "Payment for delivering building materials in {[location]arg1.name}", 
+        "description": "Isk people get after depositing some items needed to build another item in space (using UnderConstruction spacecomponent)", 
+        "entryTypeDescriptionTranslated": "Payment for delivering building materials for an item under construction", 
+        "entryTypeDescriptionID": 644855, 
+        "entryTypeNameID": 644856, 
+        "entryTypeNameTranslated": "Building Materials Delivered", 
+        "entryJournalMessageID": 644889, 
+        "name": "Under constructions"
+    }, 
+    "167": {
+        "entryTypeNameID": 662530, 
+        "entryTypeNameTranslated": "Gate Toll", 
+        "description": "Player was charged while using a gate with a alignmentBasedToll spacecomponent", 
+        "name": "Alignment Based Gate Toll"
+    }, 
+    "168": {
+        "entryJournalMessageTranslated": "Fee for using a stargate to Zarzakh in {[location]arg1.name}.", 
+        "description": "The ISK people get charged for using the external Jovian stargates to Zarzakh", 
+        "entryTypeDescriptionTranslated": "Fee for using a stargate to Zarzakh in {[location]arg1.name}.", 
+        "entryTypeDescriptionID": 669908, 
+        "entryTypeNameID": 669909, 
+        "entryTypeNameTranslated": "Zarzakh Stargate Toll", 
+        "entryJournalMessageID": 669907, 
+        "name": "Alignment Based Zarzakh Stargate Toll"
+    }, 
+    "170": {
+        "entryJournalMessageTranslated": "{corp_name} Project - {project_name}", 
+        "description": "Entry type is used for payments made related to corporation projects", 
+        "entryTypeNameID": 682461, 
+        "entryTypeNameTranslated": "Corporation Projects", 
+        "entryJournalMessageID": 682460, 
+        "name": "Corporation Projects Payment"
+    }, 
+    "172": {
+        "entryJournalMessageTranslated": "Reward from {name1} for pirate actions", 
+        "description": "ISK reward for pirate characters who contribute towards raising corruption during an Insurgency", 
+        "entryTypeNameID": 697061, 
+        "entryTypeNameTranslated": "Insurgency corruption contribution reward", 
+        "entryJournalMessageID": 697066, 
+        "name": "Insurgency corruption contribution ISK reward"
+    }, 
+    "173": {
+        "entryJournalMessageTranslated": "Reward from {name1} for antipirate actions", 
+        "description": "ISK reward for antipirate characters who contribute towards raising suppression during an Insurgency", 
+        "entryTypeNameID": 697062, 
+        "entryTypeNameTranslated": "Insurgency suppression contribution reward", 
+        "entryJournalMessageID": 697067, 
+        "name": "Insurgency suppression contribution ISK reward"
+    }, 
+    "174": {
+        "entryJournalMessageTranslated": "Reward for completion of the AIR Daily Goal {goal_name} by {character_name}", 
+        "description": "Entry type is used for payments made related to daily goals", 
+        "entryTypeNameID": 698549, 
+        "entryTypeNameTranslated": "Daily Goal Reward", 
+        "entryJournalMessageID": 699226, 
+        "name": "Daily Goal Entry type"
+    }, 
+    "175": {
+        "entryJournalMessageTranslated": "Corporation tax paid on a reward earned by completing an AIR Daily Goal", 
+        "description": "", 
+        "entryTypeNameID": 699236, 
+        "entryTypeNameTranslated": "Daily Goal Reward Tax", 
+        "entryJournalMessageID": 699235, 
+        "name": "Daily Goal tax Entry type"
+    }, 
+    "178": {
+        "entryTypeNameID": 712104, 
+        "entryTypeNameTranslated": "Paragon Hub Design Element", 
+        "description": "Accounting entry for purchases of SKIN Component Items in the Cosmetic Market", 
+        "name": "Cosmetic Market Component Item Purchase"
+    }, 
+    "179": {
+        "entryTypeNameID": 720962, 
+        "entryTypeNameTranslated": "Paragon Hub Listing Fee", 
+        "description": "Accounting entry for the broker fee paid when listing SKINs for sale on the Cosmetic Market", 
+        "name": "Cosmetic Market Skin Sale Broker Fee"
+    }, 
+    "180": {
+        "entryTypeNameID": 720963, 
+        "entryTypeNameTranslated": "Paragon Hub SKIN purchase", 
+        "description": "Accounting entry for purchases of SKINs in the Cosmetic Market", 
+        "name": "Cosmetic Market Skin Purchase"
+    }, 
+    "181": {
+        "entryTypeNameID": 720964, 
+        "entryTypeNameTranslated": "Paragon Hub SKIN sale", 
+        "description": "Accounting entry for the sale of a SKIN on the Cosmetic Market", 
+        "name": "Cosmetic Market Skin Sale"
+    }, 
+    "182": {
+        "entryTypeNameID": 720965, 
+        "entryTypeNameTranslated": "Paragon Hub Vendor Fee", 
+        "description": "Accounting entry for the tax paid on a sale of a SKIN on the Cosmetic Market", 
+        "name": "Cosmetic Market Skin Sale Tax"
+    }, 
+    "183": {
+        "entryTypeNameID": 721956, 
+        "entryTypeNameTranslated": "Paragon Hub SKIN transaction", 
+        "description": "Accounting entry for transactions of SKINs between players in the Cosmetic Market", 
+        "name": "Cosmetic Market Skin Transaction"
+    }, 
+    "13001": {
+        "description": "DUST - DK from daily mission", 
+        "entryTypeDescriptionTranslated": "District Kredits  increase because of daily mission finished", 
+        "entryTypeDescriptionID": 505874, 
+        "entryTypeNameID": 505873, 
+        "entryTypeNameTranslated": "District Kredits from DUST daily mission fininshed", 
+        "name": "Daily mission DK"
+    }, 
+    "13002": {
+        "description": "DUST - DK from planetary conquest", 
+        "entryTypeDescriptionTranslated": "District Kredit increase due to Planetary Conquest activity", 
+        "entryTypeDescriptionID": 505876, 
+        "entryTypeNameID": 505875, 
+        "entryTypeNameTranslated": "District Kredits from Planetary Conquest activity", 
+        "name": "Planetary conquest DK"
+    }, 
+    "13003": {
+        "description": "DUST - Use DK to purchase items", 
+        "entryTypeDescriptionTranslated": "District Kredit consumption due to item purchases", 
+        "entryTypeDescriptionID": 505878, 
+        "entryTypeNameID": 505877, 
+        "entryTypeNameTranslated": "District Kredit cost of purchasing items", 
+        "name": "Use DK for purchasing items"
+    }, 
+    "13004": {
+        "description": "DUST - Use DK to reroll market", 
+        "entryTypeDescriptionTranslated": "Consuming District Kredits to reroll market", 
+        "entryTypeDescriptionID": 505880, 
+        "entryTypeNameID": 505879, 
+        "entryTypeNameTranslated": "Consuming District Kredits for rerolling market", 
+        "name": "Use DK for rerolling market"
+    }, 
+    "13005": {
+        "description": "DUST - DK from selling clones", 
+        "entryTypeDescriptionTranslated": "District Kredit increase due to selling clones", 
+        "entryTypeDescriptionID": 505961, 
+        "entryTypeNameID": 505960, 
+        "entryTypeNameTranslated": "District Kredit increase because of selling clones", 
+        "name": "Selling Clones DK"
+    }, 
+    "12001": {
+        "description": "DUST - CP from daily mission", 
+        "entryTypeDescriptionTranslated": "Command Point increase due to Daily Mission completion", 
+        "entryTypeDescriptionID": 505818, 
+        "entryTypeNameID": 505817, 
+        "entryTypeNameTranslated": "Command Points from completing Daily Missions", 
+        "name": "Daily mission CP"
+    }, 
+    "12002": {
+        "description": "DUST - CP from warbarge", 
+        "entryTypeDescriptionTranslated": "Command points increase because of warbarge production", 
+        "entryTypeDescriptionID": 505820, 
+        "entryTypeNameID": 505819, 
+        "entryTypeNameTranslated": "Command points from warbarge", 
+        "name": "Warbarge CP"
+    }, 
+    "12003": {
+        "description": "DUST - CP from donation", 
+        "entryTypeDescriptionTranslated": "Command points increase becasue of donation", 
+        "entryTypeDescriptionID": 505822, 
+        "entryTypeNameID": 505821, 
+        "entryTypeNameTranslated": "Command points from donation", 
+        "name": "Donate CP"
+    }, 
+    "12004": {
+        "description": "DUST - Use CP to buy clone packs", 
+        "entryTypeDescriptionTranslated": "Command Point cost of purchasing Clone Packs", 
+        "entryTypeDescriptionID": 570203, 
+        "entryTypeNameID": 505823, 
+        "entryTypeNameTranslated": "Command Point cost of purchasing Clone Packs", 
+        "name": "Use CP for clone packs"
+    }, 
+    "12005": {
+        "description": "DUST - Use CP to move clones", 
+        "entryTypeDescriptionTranslated": "Command Point consumption due to Clone moves", 
+        "entryTypeDescriptionID": 505826, 
+        "entryTypeNameID": 505825, 
+        "entryTypeNameTranslated": "Command Point cost of moving Clones", 
+        "name": "Use CP for moving clones"
+    }, 
+    "12006": {
+        "description": "DUST - Use CP to sell clones", 
+        "entryTypeDescriptionTranslated": "Command Point consumption due to Clone sales", 
+        "entryTypeDescriptionID": 505830, 
+        "entryTypeNameID": 505829, 
+        "entryTypeNameTranslated": "Command Point cost of selling Clones", 
+        "name": "Use CP for selling clones"
+    }, 
+    "12007": {
+        "description": "DUST - Use CP to change reinforcement", 
+        "entryTypeDescriptionTranslated": "Command Point consumption due to Reinforcement Timer changes", 
+        "entryTypeDescriptionID": 505828, 
+        "entryTypeNameID": 505827, 
+        "entryTypeNameTranslated": "Command Point cost of changing Reinforcement Timers", 
+        "name": "Use CP for changing reinforcement"
+    }, 
+    "12008": {
+        "description": "DUST - Use CP to change surface infrastructure", 
+        "entryTypeDescriptionTranslated": "Command Point consumption due to Surface Infrastructure changes", 
+        "entryTypeDescriptionID": 505832, 
+        "entryTypeNameID": 505831, 
+        "entryTypeNameTranslated": "Command Point cost of changing Surface Infrastructures", 
+        "name": "Use CP for changing surface infrastructure"
+    }, 
+    "11001": {
+        "description": "DUST - Modify AUR", 
+        "entryTypeDescriptionTranslated": "DUST - Modify AUR", 
+        "entryTypeDescriptionID": 59790, 
+        "entryTypeNameID": 59911, 
+        "entryTypeNameTranslated": "Modify AUR", 
+        "name": "Modify AUR"
+    }, 
+    "11002": {
+        "description": "DUST - Respec payment", 
+        "entryTypeDescriptionTranslated": "DUST - Respec payment", 
+        "entryTypeDescriptionID": 59791, 
+        "entryTypeNameID": 59912, 
+        "entryTypeNameTranslated": "Respec payment", 
+        "name": "Respec payment"
+    }, 
+    "11003": {
+        "entryTypeNameID": 570204, 
+        "entryTypeNameTranslated": "DUST Entitlement", 
+        "description": "DUST - AUR awarded as part of consuming a PSN entitlement", 
+        "name": "Entitlement"
+    }, 
+    "11004": {
+        "entryTypeNameID": 570205, 
+        "entryTypeNameTranslated": "DUST Reset Reimbursement", 
+        "description": "DUST - AUR reimbursed after a character reset", 
+        "name": "Reset Reimbursement"
+    }, 
+    "11005": {
+        "entryTypeNameID": 570206, 
+        "entryTypeNameTranslated": "DUST AUR for Character Reset", 
+        "description": "DUST - AUR set to zero for a character reset", 
+        "name": "Reset AUR for Character Reset"
+    }, 
+    "10001": {
+        "description": "DUST - Modify ISK", 
+        "entryTypeDescriptionTranslated": "DUST - Modify ISK", 
+        "entryTypeDescriptionID": 59780, 
+        "entryTypeNameID": 59901, 
+        "entryTypeNameTranslated": "Modify ISK", 
+        "name": "Modify ISK"
+    }, 
+    "10002": {
+        "description": "DUST - Primary Marketplace Purchase", 
+        "entryTypeDescriptionTranslated": "DUST - Primary Marketplace Purchase", 
+        "entryTypeDescriptionID": 59781, 
+        "entryTypeNameID": 59902, 
+        "entryTypeNameTranslated": "Primary Marketplace Purchase", 
+        "name": "Primary Marketplace Purchase"
+    }, 
+    "10003": {
+        "description": "DUST - Battle Reward", 
+        "entryTypeDescriptionTranslated": "DUST - Battle Reward", 
+        "entryTypeDescriptionID": 59782, 
+        "entryTypeNameID": 59903, 
+        "entryTypeNameTranslated": "Battle Reward", 
+        "name": "Battle Reward"
+    }, 
+    "10004": {
+        "description": "DUST - New Character Starting Funds", 
+        "entryTypeDescriptionTranslated": "DUST - New Character Starting Funds", 
+        "entryTypeDescriptionID": 59783, 
+        "entryTypeNameID": 59904, 
+        "entryTypeNameTranslated": "New Character Starting Funds", 
+        "name": "New Character Starting Funds"
+    }, 
+    "10005": {
+        "description": "DUST - Corporation Account Withdrawal", 
+        "entryTypeDescriptionTranslated": "DUST - Corporation Account Withdrawal", 
+        "entryTypeDescriptionID": 59784, 
+        "entryTypeNameID": 59905, 
+        "entryTypeNameTranslated": "Corporation Account Withdrawal", 
+        "name": "Corporation Account Withdrawal"
+    }, 
+    "10006": {
+        "description": "DUST - Corporation Account Deposit", 
+        "entryTypeDescriptionTranslated": "DUST - Corporation Account Deposit", 
+        "entryTypeDescriptionID": 59785, 
+        "entryTypeNameID": 59906, 
+        "entryTypeNameTranslated": "Corporation Account Deposit", 
+        "name": "Corporation Account Deposit"
+    }, 
+    "10007": {
+        "description": "DUST - Battle Reward", 
+        "entryTypeDescriptionTranslated": "DUST - Battle Reward", 
+        "entryTypeDescriptionID": 59786, 
+        "entryTypeNameID": 59907, 
+        "entryTypeNameTranslated": "Battle WP Win Reward", 
+        "name": "Battle WP Win Reward"
+    }, 
+    "10008": {
+        "description": "DUST - Battle Reward", 
+        "entryTypeDescriptionTranslated": "DUST - Battle Reward", 
+        "entryTypeDescriptionID": 59787, 
+        "entryTypeNameID": 59908, 
+        "entryTypeNameTranslated": "Battle WP Loss Reward", 
+        "name": "Battle WP Loss Reward"
+    }, 
+    "10009": {
+        "description": "DUST - Battle Reward", 
+        "entryTypeDescriptionTranslated": "DUST - Battle Reward", 
+        "entryTypeDescriptionID": 59788, 
+        "entryTypeNameID": 59909, 
+        "entryTypeNameTranslated": "Battle Win Reward", 
+        "name": "Battle Win Reward"
+    }, 
+    "10010": {
+        "description": "DUST - Battle Reward", 
+        "entryTypeDescriptionTranslated": "DUST - Battle Reward", 
+        "entryTypeDescriptionID": 59789, 
+        "entryTypeNameID": 59910, 
+        "entryTypeNameTranslated": "Battle Loss Reward", 
+        "name": "Battle Loss Reward"
+    }, 
+    "10011": {
+        "entryTypeNameID": 570207, 
+        "entryTypeNameTranslated": "DUST Reset ISK for Character Reset", 
+        "description": "DUST - ISK set to initial level for a character reset", 
+        "name": "Reset ISK for Character Reset"
+    }, 
+    "10012": {
+        "description": "DUST - District Contract Deposit", 
+        "entryTypeDescriptionTranslated": "DUST - District Contract Deposit", 
+        "entryTypeDescriptionID": 283746, 
+        "entryTypeNameID": 283741, 
+        "entryTypeNameTranslated": "District Contract Deposit", 
+        "name": "District Contract Deposit"
+    }, 
+    "10013": {
+        "description": "DUST - District Contract Deposit Refund", 
+        "entryTypeDescriptionTranslated": "DUST - District Contract Deposit Refund", 
+        "entryTypeDescriptionID": 283747, 
+        "entryTypeNameID": 283742, 
+        "entryTypeNameTranslated": "District Contract Deposit Refund", 
+        "name": "District Contract Deposit Refund"
+    }, 
+    "10014": {
+        "description": "DUST - District Contract Collateral", 
+        "entryTypeDescriptionTranslated": "DUST - District Contract Collateral", 
+        "entryTypeDescriptionID": 283748, 
+        "entryTypeNameID": 283743, 
+        "entryTypeNameTranslated": "District Contract Collateral", 
+        "name": "District Contract Collateral"
+    }, 
+    "10015": {
+        "description": "DUST - District Contract Collateral Refund", 
+        "entryTypeDescriptionTranslated": "DUST - District Contract Collateral Refund", 
+        "entryTypeDescriptionID": 283749, 
+        "entryTypeNameID": 283744, 
+        "entryTypeNameTranslated": "District Contract Collateral Refund", 
+        "name": "District Contract Collateral Refund"
+    }, 
+    "10016": {
+        "description": "DUST - District Contract Reward", 
+        "entryTypeDescriptionTranslated": "DUST - District Contract Reward", 
+        "entryTypeDescriptionID": 283750, 
+        "entryTypeNameID": 283745, 
+        "entryTypeNameTranslated": "District Contract Reward", 
+        "name": "District Contract Reward"
+    }, 
+    "10017": {
+        "description": "DUST - District Clone Transportation", 
+        "entryTypeDescriptionTranslated": "DUST - District Clone Transportation", 
+        "entryTypeDescriptionID": 287028, 
+        "entryTypeNameID": 287027, 
+        "entryTypeNameTranslated": "District Clone Transportation", 
+        "name": "District Clone Transportation"
+    }, 
+    "10018": {
+        "description": "DUST - District Clone Transportation Refund", 
+        "entryTypeDescriptionTranslated": "DUST - District Clone Transportation Refund", 
+        "entryTypeDescriptionID": 287030, 
+        "entryTypeNameID": 287029, 
+        "entryTypeNameTranslated": "District Clone Transportation Refund", 
+        "name": "District Clone Transportation Refund"
+    }, 
+    "10019": {
+        "description": "DUST - District Infrastructure", 
+        "entryTypeDescriptionTranslated": "DUST - District Infrastructure", 
+        "entryTypeDescriptionID": 287032, 
+        "entryTypeNameID": 287031, 
+        "entryTypeNameTranslated": "District Infrastructure", 
+        "name": "District Infrastructure"
+    }, 
+    "10020": {
+        "description": "DUST - District Clone Sales", 
+        "entryTypeDescriptionTranslated": "DUST - District Clone Sales", 
+        "entryTypeDescriptionID": 287034, 
+        "entryTypeNameID": 287033, 
+        "entryTypeNameTranslated": "District Clone Sales", 
+        "name": "District Clone Sales"
+    }, 
+    "10021": {
+        "description": "DUST - District Clone Purchase", 
+        "entryTypeDescriptionTranslated": "DUST - District Clone Purchase", 
+        "entryTypeDescriptionID": 287036, 
+        "entryTypeNameID": 287035, 
+        "entryTypeNameTranslated": "District Clone Purchase", 
+        "name": "District Clone Purchase"
+    }, 
+    "10022": {
+        "description": "DUST - Biomass Reward", 
+        "entryTypeDescriptionTranslated": "DUST - Biomass Reward", 
+        "entryTypeDescriptionID": 288206, 
+        "entryTypeNameID": 288205, 
+        "entryTypeNameTranslated": "Biomass Reward", 
+        "name": "Biomass Reward"
+    }, 
+    "10023": {
+        "description": "DUST - ISK Swap Reward", 
+        "entryTypeDescriptionTranslated": "DUST - ISK Swap Reward", 
+        "entryTypeDescriptionID": 306850, 
+        "entryTypeNameID": 306849, 
+        "entryTypeNameTranslated": "ISK Swap Reward", 
+        "name": "ISK Swap Reward"
+    }
+}

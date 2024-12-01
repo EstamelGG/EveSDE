@@ -1,0 +1,2350 @@
+{
+    "player_trading": {
+        "entryTypeName": {
+            "en": [
+                "Player Trading"
+            ],
+            "zh": [
+                "玩家交易"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Direct trade between {name1} and {name2}"
+            ],
+            "zh": [
+                "{name1}和{name2}之间的直接交易"
+            ]
+        }
+    },
+    "market_transaction": {
+        "entryTypeName": {
+            "en": [
+                "Market Transaction"
+            ],
+            "zh": [
+                "市场交易"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Market: {name1} bought stuff from {name2}"
+            ],
+            "zh": [
+                "市场：{name1}从{name2}那里购买了物品"
+            ]
+        }
+    },
+    "gm_cash_transfer": {
+        "entryTypeName": {
+            "en": [
+                "GM Cash Transfer"
+            ],
+            "zh": [
+                "GM现金转帐"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "GM [{arg}] issued transaction between {name1} and {name2}"
+            ],
+            "zh": [
+                "GM[{arg}]实施的{name1}和{name2}之间的交易"
+            ]
+        }
+    },
+    "mission_reward": {
+        "entryTypeName": {
+            "en": [
+                "Mission Reward"
+            ],
+            "zh": [
+                "任务奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Mission reward"
+            ],
+            "zh": [
+                "任务报酬"
+            ]
+        }
+    },
+    "clone_activation": {
+        "entryTypeName": {
+            "en": [
+                "Clone Activation"
+            ],
+            "zh": [
+                "克隆激活"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Clone activation"
+            ],
+            "zh": [
+                "克隆激活"
+            ]
+        }
+    },
+    "inheritance": {
+        "entryTypeName": {
+            "en": [
+                "Inheritance"
+            ],
+            "zh": [
+                "继承"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Inheritance from {name}"
+            ],
+            "zh": [
+                "{name}的馈赠继承"
+            ]
+        }
+    },
+    "player_donation": {
+        "entryTypeName": {
+            "en": [
+                "Player Donation"
+            ],
+            "zh": [
+                "玩家捐助"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "{name1} deposited cash into {name2}'s account"
+            ],
+            "zh": [
+                "{name1}将现金存入{name2}的账户"
+            ]
+        }
+    },
+    "corporation_payment": {
+        "entryTypeName": {
+            "en": [
+                "Corporation Payment"
+            ],
+            "zh": [
+                "军团付款"
+            ]
+        }
+    },
+    "docking_fee": {
+        "entryTypeName": {
+            "en": [
+                "Docking Fee"
+            ],
+            "zh": [
+                "停靠费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Docking fee between {name1} and {name2}'s account"
+            ],
+            "zh": [
+                "{name1}和{name2}的账户之间的停靠费"
+            ]
+        }
+    },
+    "office_rental_fee": {
+        "entryTypeName": {
+            "en": [
+                "Office Rental Fee"
+            ],
+            "zh": [
+                "办公室租金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Office rental fee between {name1} and {name2}"
+            ],
+            "zh": [
+                "{name1}和{name2}之间的办公室租借费"
+            ]
+        }
+    },
+    "factory_slot_rental_fee": {
+        "entryTypeName": {
+            "en": [
+                "Factory Slot Rental Fee"
+            ],
+            "zh": [
+                "工厂槽位租借费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Factory slot rental fee between{name1} and {name2}"
+            ],
+            "zh": [
+                "{name1}和{name2}之间的工厂槽位租借费"
+            ]
+        }
+    },
+    "repair_bill": {
+        "entryTypeName": {
+            "en": [
+                "Repair Bill"
+            ],
+            "zh": [
+                "维修账单"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Repair bill between {name1} and {name2}"
+            ],
+            "zh": [
+                "{name1}和{name2}之间的修理费"
+            ]
+        }
+    },
+    "bounty": {
+        "entryTypeName": {
+            "en": [
+                "Bounty"
+            ],
+            "zh": [
+                "赏金"
+            ]
+        }
+    },
+    "bounty_prize": {
+        "entryTypeName": {
+            "en": [
+                "Bounty Prize"
+            ],
+            "zh": [
+                "追击赏金"
+            ]
+        }
+    },
+    "insurance": {
+        "entryTypeName": {
+            "en": [
+                "Insurance"
+            ],
+            "zh": [
+                "保险"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Insurance paid by {name1} to {name2} for ship {location} (Insurance RefID:{refID}",
+                "Insurance paid by {name1} to {name2} covering loss of a {itemname}",
+                "Insurance paid by {name1} to {name2}"
+            ],
+            "zh": [
+                "{name1}为飞船{location}投保而向{name2}支付保险金 (保单参考ID：{refID})",
+                "{name1}为{itemname}的损失而对{name2}保险赔付",
+                "{name1}支付给{name2}的保险金"
+            ]
+        }
+    },
+    "mission_expiration": {
+        "entryTypeName": {
+            "en": [
+                "Mission Expiration"
+            ],
+            "zh": [
+                "任务过期"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Mission rollback due to expiration"
+            ],
+            "zh": [
+                "任务由于过期而撤回"
+            ]
+        }
+    },
+    "mission_completion": {
+        "entryTypeName": {
+            "en": [
+                "Mission Completion"
+            ],
+            "zh": [
+                "任务完成"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Mission completion"
+            ],
+            "zh": [
+                "任务完成"
+            ]
+        }
+    },
+    "shares": {
+        "entryTypeName": {
+            "en": [
+                "Shares"
+            ],
+            "zh": [
+                "股票"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Company shares transaction"
+            ],
+            "zh": [
+                "军团股份交易"
+            ]
+        }
+    },
+    "courier_mission_escrow": {
+        "entryTypeName": {
+            "en": [
+                "Courier Mission Escrow"
+            ],
+            "zh": [
+                "快递任务契约金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Courier mission escrow"
+            ],
+            "zh": [
+                "快递任务契约"
+            ]
+        }
+    },
+    "mission_cost": {
+        "entryTypeName": {
+            "en": [
+                "Mission Cost"
+            ],
+            "zh": [
+                "任务花销"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Mission cost"
+            ],
+            "zh": [
+                "任务开销"
+            ]
+        }
+    },
+    "agent_miscellaneous": {
+        "entryTypeName": {
+            "en": [
+                "Agent Miscellaneous"
+            ],
+            "zh": [
+                "代理人杂项"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Cash transfer from agent {name1} to {name2}"
+            ],
+            "zh": [
+                "从代理人{name1}到{name2}的现金转账"
+            ]
+        }
+    },
+    "lp_store": {
+        "entryTypeName": {
+            "en": [
+                "LP Store"
+            ],
+            "zh": [
+                "忠诚点商店"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Payment to LP Store"
+            ],
+            "zh": [
+                "支付给忠诚点商店的款项"
+            ]
+        }
+    },
+    "agent_location_services": {
+        "entryTypeName": {
+            "en": [
+                "Agent Location Services"
+            ],
+            "zh": [
+                "位置追踪服务"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Paid agent to locate somebody"
+            ],
+            "zh": [
+                "请代理人寻人而支付的费用"
+            ]
+        }
+    },
+    "agent_donation": {
+        "entryTypeName": {
+            "en": [
+                "Agent Donation"
+            ],
+            "zh": [
+                "代理人捐赠"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Donation from {name1} to agent {name2}"
+            ],
+            "zh": [
+                "{name1}给予代理人{name2}的捐赠"
+            ]
+        }
+    },
+    "agent_security_services": {
+        "entryTypeName": {
+            "en": [
+                "Agent Security Services"
+            ],
+            "zh": [
+                "代理人保安服务"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "CONCORD relations by agent {name1} on behalf of {name2}"
+            ],
+            "zh": [
+                "代表{name2}的代理人{name1}和统合部的关系"
+            ]
+        }
+    },
+    "agent_mission_collateral_paid": {
+        "entryTypeName": {
+            "en": [
+                "Agent Mission Collateral Paid"
+            ],
+            "zh": [
+                "代理人任务保证金已缴纳"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Mission collateral paid by {name1} to agent {name2}"
+            ],
+            "zh": [
+                "{name1}支付给代理人{name2}的任务保证金"
+            ]
+        }
+    },
+    "agent_mission_collateral_refunded": {
+        "entryTypeName": {
+            "en": [
+                "Agent Mission Collateral Refunded"
+            ],
+            "zh": [
+                "代理人任务保证金已返还"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Mission collateral refunded by agent {name1} to  {name2}"
+            ],
+            "zh": [
+                "代理人{name1}返还给{name2}的任务保证金"
+            ]
+        }
+    },
+    "agents_preward": {
+        "entryTypeName": {
+            "en": [
+                "Agents_preward"
+            ],
+            "zh": [
+                "代理人_预付金"
+            ]
+        }
+    },
+    "agent_mission_reward": {
+        "entryTypeName": {
+            "en": [
+                "Agent Mission Reward"
+            ],
+            "zh": [
+                "代理人任务奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Mission reward from agent {name1} to {name2}"
+            ],
+            "zh": [
+                "代理人{name1}给予{name2}的任务酬劳"
+            ]
+        }
+    },
+    "agent_mission_time_bonus_reward": {
+        "entryTypeName": {
+            "en": [
+                "Agent Mission Time Bonus Reward"
+            ],
+            "zh": [
+                "代理人任务时间加成奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Mission reward bonus from agent {name1} to {name2}"
+            ],
+            "zh": [
+                "代理人{name1}给予{name2}的任务酬劳奖金"
+            ]
+        }
+    },
+    "cspa": {
+        "entryTypeName": {
+            "en": [
+                "CSPA"
+            ],
+            "zh": [
+                "CSPA"
+            ]
+        }
+    },
+    "cspaofflinerefund": {
+        "entryTypeName": {
+            "en": [
+                "CSPAOfflineRefund"
+            ],
+            "zh": [
+                "CSPA离线返还金"
+            ]
+        }
+    },
+    "corporation_account_withdrawal": {
+        "entryTypeName": {
+            "en": [
+                "Corporation Account Withdrawal"
+            ],
+            "zh": [
+                "军团账户支取"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "{name1} transferred cash from {name2}'s corporate account to {name3}'s account"
+            ],
+            "zh": [
+                "{name1}从{name2}的军团账户转移现金到{name3}的账户"
+            ]
+        }
+    },
+    "corporation_dividend_payment": {
+        "entryTypeName": {
+            "en": [
+                "Corporation Dividend Payment"
+            ],
+            "zh": [
+                "军团分红支付"
+            ]
+        }
+    },
+    "corporation_registration_fee": {
+        "entryTypeName": {
+            "en": [
+                "Corporation Registration Fee"
+            ],
+            "zh": [
+                "军团注册费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "{name1} paid corporation registration fee"
+            ],
+            "zh": [
+                "{name1}支付了军团注册费"
+            ]
+        }
+    },
+    "corporation_logo_change_cost": {
+        "entryTypeName": {
+            "en": [
+                "Corporation Logo Change Cost"
+            ],
+            "zh": [
+                "军团图标变更费用"
+            ]
+        }
+    },
+    "release_of_impounded_property": {
+        "entryTypeName": {
+            "en": [
+                "Release Of Impounded Property"
+            ],
+            "zh": [
+                "扣押资产赎金"
+            ]
+        }
+    },
+    "market_escrow": {
+        "entryTypeName": {
+            "en": [
+                "Market Escrow"
+            ],
+            "zh": [
+                "市场契约金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Market escrow release"
+            ],
+            "zh": [
+                "市场契约金退还"
+            ]
+        }
+    },
+    "agent_services_rendered": {
+        "entryTypeName": {
+            "en": [
+                "Agent Services Rendered"
+            ],
+            "zh": [
+                "代理人服务已提供"
+            ]
+        }
+    },
+    "market_fine_paid": {
+        "entryTypeName": {
+            "en": [
+                "Market Fine Paid"
+            ],
+            "zh": [
+                "支付市场罚款"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Market: paid fine"
+            ],
+            "zh": [
+                "市场：已付罚金"
+            ]
+        }
+    },
+    "corporation_liquidation": {
+        "entryTypeName": {
+            "en": [
+                "Corporation Liquidation"
+            ],
+            "zh": [
+                "军团结算"
+            ]
+        }
+    },
+    "brokers_fee": {
+        "entryTypeName": {
+            "en": [
+                "Brokers Fee"
+            ],
+            "zh": [
+                "经纪人中介费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Market order commission to broker authorized by: {name1}"
+            ],
+            "zh": [
+                "{name1}授权的支付给中介的市场订单佣金"
+            ]
+        }
+    },
+    "corporation_bulk_payment": {
+        "entryTypeName": {
+            "en": [
+                "Corporation Bulk Payment"
+            ],
+            "zh": [
+                "军团批量付款"
+            ]
+        }
+    },
+    "alliance_registration_fee": {
+        "entryTypeName": {
+            "en": [
+                "Alliance Registration Fee"
+            ],
+            "zh": [
+                "联盟注册费用"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Alliance registration fee"
+            ],
+            "zh": [
+                "联盟注册费"
+            ]
+        }
+    },
+    "war_fee": {
+        "entryTypeName": {
+            "en": [
+                "War Fee"
+            ],
+            "zh": [
+                "战争费"
+            ]
+        }
+    },
+    "alliance_maintainance_fee": {
+        "entryTypeName": {
+            "en": [
+                "Alliance Maintainance Fee"
+            ],
+            "zh": [
+                "联盟维护费用"
+            ]
+        }
+    },
+    "contraband_fine": {
+        "entryTypeName": {
+            "en": [
+                "Contraband Fine"
+            ],
+            "zh": [
+                "违禁物罚金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Fine for contraband smuggling"
+            ],
+            "zh": [
+                "走私违禁品的罚款"
+            ]
+        }
+    },
+    "clone_transfer": {
+        "entryTypeName": {
+            "en": [
+                "Clone Transfer"
+            ],
+            "zh": [
+                "克隆转移"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Clone transfer to {[location]arg.name}"
+            ],
+            "zh": [
+                "克隆转移到{[location]arg.name}"
+            ]
+        }
+    },
+    "acceleration_gate_fee": {
+        "entryTypeName": {
+            "en": [
+                "Acceleration Gate Fee"
+            ],
+            "zh": [
+                "加速轨道费用"
+            ]
+        }
+    },
+    "transaction_tax": {
+        "entryTypeName": {
+            "en": [
+                "Transaction Tax"
+            ],
+            "zh": [
+                "交易税"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Sales tax paid to the SCC"
+            ],
+            "zh": [
+                "向SCC支付的销售税"
+            ]
+        }
+    },
+    "jump_clone_installation_fee": {
+        "entryTypeName": {
+            "en": [
+                "Jump Clone Installation Fee"
+            ],
+            "zh": [
+                "远距克隆安装费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Fee for installing a Jump Clone paid from {name1} to {name2}"
+            ],
+            "zh": [
+                "{name1} 支付给{name2}的安装远距克隆费用"
+            ]
+        }
+    },
+    "manufacturing": {
+        "entryTypeName": {
+            "en": [
+                "Manufacturing"
+            ],
+            "zh": [
+                "制造"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Manufacturing job fee between {name1} and {name2} (Job ID: {arg1})"
+            ],
+            "zh": [
+                "{name1}与{name2}之间的生产项目费用 (项目ID：{arg1})"
+            ]
+        }
+    },
+    "researching_technology": {
+        "entryTypeName": {
+            "en": [
+                "Researching Technology"
+            ],
+            "zh": [
+                "研究技术"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Technological research job fee between {name1} and {name2} (Job ID: {arg1})"
+            ],
+            "zh": [
+                "{name1}与{name2}之间的技术研究费用 (项目ID：{arg1})"
+            ]
+        }
+    },
+    "researching_time_productivity": {
+        "entryTypeName": {
+            "en": [
+                "Researching Time Efficiency"
+            ],
+            "zh": [
+                "研究时间效率"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Time efficiency research job fee between {name1} and {name2} (Job ID: {arg1})"
+            ],
+            "zh": [
+                "{name1}与{name2}之间的时间效率研究费用（项目ID：{arg1}）"
+            ]
+        }
+    },
+    "researching_material_productivity": {
+        "entryTypeName": {
+            "en": [
+                "Researching Material Efficiency"
+            ],
+            "zh": [
+                "研究材料效率"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Material efficiency research job fee between {name1} and {name2} (Job ID: {arg1})"
+            ],
+            "zh": [
+                "{name1}与{name2}之间的材料效率研究费用（项目ID：{arg1}）"
+            ]
+        }
+    },
+    "copying": {
+        "entryTypeName": {
+            "en": [
+                "Copying"
+            ],
+            "zh": [
+                "拷贝"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Blueprint copying job fee between {name1} and {name2} (Job ID: {arg1})"
+            ],
+            "zh": [
+                "{name1}与{name2}之间的蓝图复制费用 (项目ID：{arg1})"
+            ]
+        }
+    },
+    "reverse_engineering": {
+        "entryTypeName": {
+            "en": [
+                "Reverse Engineering"
+            ],
+            "zh": [
+                "逆向工程"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Invention job fee between {name1} and {name2} (Job ID: {arg1})"
+            ],
+            "zh": [
+                "{name1}与{name2}之间的发明项目费用 (项目ID：{arg1})"
+            ]
+        }
+    },
+    "contract_auction_bid": {
+        "entryTypeName": {
+            "en": [
+                "Contract Auction Bid"
+            ],
+            "zh": [
+                "合同拍卖出价"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "A bid on an Auction"
+            ],
+            "zh": [
+                "对一项拍卖的出价"
+            ]
+        }
+    },
+    "contract_auction_bid_refund": {
+        "entryTypeName": {
+            "en": [
+                "Contract Auction Bid Refund"
+            ],
+            "zh": [
+                "合同拍卖出价返还"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Auction Bid refund. You have been outbid."
+            ],
+            "zh": [
+                "拍卖出价返还。有人出价高过你。"
+            ]
+        }
+    },
+    "contract_collateral": {
+        "entryTypeName": {
+            "en": [
+                "Contract Collateral"
+            ],
+            "zh": [
+                "合同保证金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Collateral for a contract"
+            ],
+            "zh": [
+                "合同保证金"
+            ]
+        }
+    },
+    "contract_reward_refund": {
+        "entryTypeName": {
+            "en": [
+                "Contract Reward Refund"
+            ],
+            "zh": [
+                "合同奖金返还"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward refund for a cancelled or completed contract"
+            ],
+            "zh": [
+                "合同取消或者完成后退还的报酬"
+            ]
+        }
+    },
+    "contract_auction_sold": {
+        "entryTypeName": {
+            "en": [
+                "Contract Auction Sold"
+            ],
+            "zh": [
+                "合同拍卖售出"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Bid payout for a completed Auction contract"
+            ],
+            "zh": [
+                "拍卖合同收获款"
+            ]
+        }
+    },
+    "contract_reward": {
+        "entryTypeName": {
+            "en": [
+                "Contract Reward"
+            ],
+            "zh": [
+                "合同酬金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward for completing a contract"
+            ],
+            "zh": [
+                "完成合同的酬劳"
+            ]
+        }
+    },
+    "contract_collateral_refund": {
+        "entryTypeName": {
+            "en": [
+                "Contract Collateral Refund"
+            ],
+            "zh": [
+                "合同保证金返还"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Refund of collateral for a contract"
+            ],
+            "zh": [
+                "合同保证金返还"
+            ]
+        }
+    },
+    "contract_collateral_payout": {
+        "entryTypeName": {
+            "en": [
+                "Contract Collateral Payout"
+            ],
+            "zh": [
+                "合同保证金支付"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Collateral Payout because of a failed contract"
+            ],
+            "zh": [
+                "因合同失败而支付的保证金"
+            ]
+        }
+    },
+    "contract_price": {
+        "entryTypeName": {
+            "en": [
+                "Contract Price"
+            ],
+            "zh": [
+                "合同价格"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Price for accepting a contract"
+            ],
+            "zh": [
+                "接受合同所需要的费用"
+            ]
+        }
+    },
+    "contract_brokers_fee": {
+        "entryTypeName": {
+            "en": [
+                "Contract Brokers Fee"
+            ],
+            "zh": [
+                "合同经纪人中介费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Contract Broker's Fee"
+            ],
+            "zh": [
+                "合同经纪人中介费"
+            ]
+        }
+    },
+    "contract_sales_tax": {
+        "entryTypeName": {
+            "en": [
+                "Contract Sales Tax"
+            ],
+            "zh": [
+                "合同销售税"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Contract Sales Tax"
+            ],
+            "zh": [
+                "合同销售税"
+            ]
+        }
+    },
+    "contract_deposit": {
+        "entryTypeName": {
+            "en": [
+                "Contract Deposit"
+            ],
+            "zh": [
+                "合同定金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Contract Deposit"
+            ],
+            "zh": [
+                "合同定金"
+            ]
+        }
+    },
+    "contract_deposit_sales_tax": {
+        "entryTypeName": {
+            "en": [
+                "Contract Deposit Sales Tax"
+            ],
+            "zh": [
+                "合同定金销售税"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Contract Deposit return with Sales Tax deducted"
+            ],
+            "zh": [
+                "扣除销售税后的合同定金返还"
+            ]
+        }
+    },
+    "contract_auction_bid_corp": {
+        "entryTypeName": {
+            "en": [
+                "Contract Auction Bid (corp)"
+            ],
+            "zh": [
+                "合同拍卖出价(军团)"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "A bid on an Auction authorized by {name} (contract ID: {arg})"
+            ],
+            "zh": [
+                "由{name}授权的拍卖出价 (合同ID：{arg})"
+            ]
+        }
+    },
+    "contract_collateral_deposited_corp": {
+        "entryTypeName": {
+            "en": [
+                "Contract Collateral Deposited (corp)"
+            ],
+            "zh": [
+                "预缴合同保证金(军团)"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Collateral for a contract authorized by {name} (contract ID: {arg})"
+            ],
+            "zh": [
+                "由{name}授权的合同保证金 (合同ID：{arg})"
+            ]
+        }
+    },
+    "contract_price_payment_corp": {
+        "entryTypeName": {
+            "en": [
+                "Contract Price Payment (corp)"
+            ],
+            "zh": [
+                "合同价格付款(军团)"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Price for accepting a contract authorized by {name} (contract ID: {arg})"
+            ],
+            "zh": [
+                "接受由{name}授权的合同所需要的费用 (合同ID：{arg})"
+            ]
+        }
+    },
+    "contract_brokers_fee_corp": {
+        "entryTypeName": {
+            "en": [
+                "Contract Brokers Fee (corp)"
+            ],
+            "zh": [
+                "合同经纪人中介费(军团)"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Contract Broker's Fee authorized by {name} (contract ID: {arg})"
+            ],
+            "zh": [
+                "由{name}授权的合同经纪人中介费 (合同ID：{arg})"
+            ]
+        }
+    },
+    "contract_deposit_corp": {
+        "entryTypeName": {
+            "en": [
+                "Contract Deposit (corp)"
+            ],
+            "zh": [
+                "合同定金(军团)"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Contract Deposit authorized by {name} (contract ID: {arg})"
+            ],
+            "zh": [
+                "由{name}授权的合同定金 (合同ID：{arg})"
+            ]
+        }
+    },
+    "contract_deposit_refund": {
+        "entryTypeName": {
+            "en": [
+                "Contract Deposit Refund"
+            ],
+            "zh": [
+                "合同定金返还"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Deposit refunded for completion of a contract"
+            ],
+            "zh": [
+                "合同完成后的定金返还"
+            ]
+        }
+    },
+    "contract_reward_deposited": {
+        "entryTypeName": {
+            "en": [
+                "Contract Reward Deposited"
+            ],
+            "zh": [
+                "预缴合同奖金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward deposited for completing a contract"
+            ],
+            "zh": [
+                "预付完成合同的酬劳"
+            ]
+        }
+    },
+    "contract_reward_deposited_corp": {
+        "entryTypeName": {
+            "en": [
+                "Contract Reward Deposited (corp)"
+            ],
+            "zh": [
+                "预缴合同奖金(军团)"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward deposited for completing a contract authorized by {name} (contract ID: {arg})"
+            ],
+            "zh": [
+                "由{name}授权的对完成合同酬劳的预付 (合同ID：{arg})"
+            ]
+        }
+    },
+    "bounty_prizes": {
+        "entryTypeName": {
+            "en": [
+                "Bounty Prizes"
+            ],
+            "zh": [
+                "追击赏金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "{name1} got bounty prizes for killing pirates in {location}",
+                "{name1} got bounty prize for killing {name2}",
+                "Player got bounty prize for killing someone"
+            ],
+            "zh": [
+                "{name1}因在{location}击毁海盗而获得追击赏金",
+                "{name1}因击毁{name2}而获得追击赏金",
+                "玩家因为成功追击某人而得到的奖金"
+            ]
+        }
+    },
+    "advertisement_listing_fee": {
+        "entryTypeName": {
+            "en": [
+                "Advertisement Listing Fee"
+            ],
+            "zh": [
+                "广告登记费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "{name1} paid corporation advertisement fee"
+            ],
+            "zh": [
+                "{name1}支付了军团广告费"
+            ]
+        }
+    },
+    "medal_creation": {
+        "entryTypeName": {
+            "en": [
+                "Medal Creation"
+            ],
+            "zh": [
+                "制作奖章"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Medal creation fee between {name1} and {name2}"
+            ],
+            "zh": [
+                "{name1}和{name2}之间的奖章制作费"
+            ]
+        }
+    },
+    "medal_issued": {
+        "entryTypeName": {
+            "en": [
+                "Medal Issued"
+            ],
+            "zh": [
+                "授予奖章"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Medal issuing fee between {name1} and {name2}"
+            ],
+            "zh": [
+                "{name1}和{name2}之间的奖章颁发费"
+            ]
+        }
+    },
+    "dna_modification_fee": {
+        "entryTypeName": {
+            "en": [
+                "DNA Modification Fee"
+            ],
+            "zh": [
+                "DNA改造费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Neural Remapping Fee"
+            ],
+            "zh": [
+                "属性改造费"
+            ]
+        }
+    },
+    "sovereignity_bill": {
+        "entryTypeName": {
+            "en": [
+                "Sovereignty bill"
+            ],
+            "zh": [
+                "主权账单"
+            ]
+        }
+    },
+    "bounty_prize_corporation_tax": {
+        "entryTypeName": {
+            "en": [
+                "Bounty Prize Corporation Tax"
+            ],
+            "zh": [
+                "追击赏金 军团税金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Corporation tax on pirate bounties"
+            ],
+            "zh": [
+                "针对海盗追击赏金的军团税"
+            ]
+        }
+    },
+    "agent_mission_reward_corporation_tax": {
+        "entryTypeName": {
+            "en": [
+                "Agent Mission Reward Corporation Tax"
+            ],
+            "zh": [
+                "代理人任务奖励 军团税金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Corporation tax on mission rewards"
+            ],
+            "zh": [
+                "针对任务报酬的军团税"
+            ]
+        }
+    },
+    "agent_mission_time_bonus_reward_corporation_tax": {
+        "entryTypeName": {
+            "en": [
+                "Agent Mission Time Bonus Reward Corporation Tax"
+            ],
+            "zh": [
+                "代理人任务时间加成奖励 军团税金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Corporation tax on mission bonus rewards"
+            ],
+            "zh": [
+                "针对任务报酬奖金的军团税"
+            ]
+        }
+    },
+    "upkeep_adjustment_fee": {
+        "entryTypeName": {
+            "en": [
+                "Upkeep adjustment fee"
+            ],
+            "zh": [
+                "主权维护调整费"
+            ]
+        }
+    },
+    "planetary_import_tax": {
+        "entryTypeName": {
+            "en": [
+                "Planetary Import Tax"
+            ],
+            "zh": [
+                "行星进口税"
+            ]
+        }
+    },
+    "planetary_export_tax": {
+        "entryTypeName": {
+            "en": [
+                "Planetary Export Tax"
+            ],
+            "zh": [
+                "行星出口税"
+            ]
+        }
+    },
+    "planetary_construction": {
+        "entryTypeName": {
+            "en": [
+                "Planetary Construction"
+            ],
+            "zh": [
+                "行星建设"
+            ]
+        }
+    },
+    "corporate_reward_payout": {
+        "entryTypeName": {
+            "en": [
+                "Corporate Reward Payout"
+            ],
+            "zh": [
+                "军团奖励支付"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "{name1} rewarded {name2} for services performed."
+            ],
+            "zh": [
+                "{name1}对{name2}的服务给予报酬。"
+            ]
+        }
+    },
+    "bounty_surcharge": {
+        "entryTypeName": {
+            "en": [
+                "Bounty Surcharge"
+            ],
+            "zh": [
+                "赏金附加费用"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "A temporary charge levied against transactions due to local conditions."
+            ],
+            "zh": [
+                "出于当地情况收取的临时交易费。"
+            ]
+        }
+    },
+    "contract_reversal": {
+        "entryTypeName": {
+            "en": [
+                "Contract Reversal"
+            ],
+            "zh": [
+                "合同撤销"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "GM [{arg}] reversed contract between {name1} and {name2}"
+            ],
+            "zh": [
+                "GM[{arg}]逆转了{name1}与{name2}之间的合同"
+            ]
+        }
+    },
+    "corporate_reward_tax": {
+        "entryTypeName": {
+            "en": [
+                "Corporate Reward Tax"
+            ],
+            "zh": [
+                "军团奖励税"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Corporation tax on {name} rewards"
+            ],
+            "zh": [
+                "针对{name}奖励的军团税"
+            ]
+        }
+    },
+    "store_purchase": {
+        "entryTypeName": {
+            "en": [
+                "Store Purchase"
+            ],
+            "zh": [
+                "商城消费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Purchased one or more items from the store."
+            ],
+            "zh": [
+                "从商店中购买了一个或多个商品。"
+            ]
+        }
+    },
+    "store_purchase_refund": {
+        "entryTypeName": {
+            "en": [
+                "Store Purchase Refund"
+            ],
+            "zh": [
+                "商城消费退款"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "A refund from the store was preformed to take back goods previously purchased."
+            ],
+            "zh": [
+                "商店进行了退款，收回了之前售出的商品。"
+            ]
+        }
+    },
+    "datacore_fee": {
+        "entryTypeName": {
+            "en": [
+                "Datacore Fee"
+            ],
+            "zh": [
+                "数据核心费用"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Bought datacore(s) from agent"
+            ],
+            "zh": [
+                "从代理人处买入数据核心"
+            ]
+        }
+    },
+    "war_fee_surrender": {
+        "entryTypeName": {
+            "en": [
+                "War Surrender Fee"
+            ],
+            "zh": [
+                "战争投降费用"
+            ]
+        }
+    },
+    "war_ally_contract": {
+        "entryTypeName": {
+            "en": [
+                "War Ally Contract"
+            ],
+            "zh": [
+                "战争同盟合同"
+            ]
+        }
+    },
+    "bounty_reimbursement": {
+        "entryTypeName": {
+            "en": [
+                "Bounty Reimbursement"
+            ],
+            "zh": [
+                "支付追击赏金"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Bounty reimbursed"
+            ],
+            "zh": [
+                "领取追击赏金"
+            ]
+        }
+    },
+    "kill_right_fee": {
+        "entryTypeName": {
+            "en": [
+                "Kill Right"
+            ],
+            "zh": [
+                "击毁权"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "{buyer} bought kill right on {name} from {seller}"
+            ],
+            "zh": [
+                "{buyer}从{seller}手中买到了对{name}的击毁权"
+            ]
+        }
+    },
+    "security_processing_fee": {
+        "entryTypeName": {
+            "en": [
+                "Fee for processing one or more security tags"
+            ],
+            "zh": [
+                "安全等级铭牌上交手续费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Fee for processing one or more security tags"
+            ],
+            "zh": [
+                "安全等级铭牌上交手续费"
+            ]
+        }
+    },
+    "industry_job_tax": {
+        "entryTypeName": {
+            "en": [
+                "Industry Facility Tax"
+            ],
+            "zh": [
+                "工业设施税"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Industry facility tax between {name1} and {name2} (Job ID: {arg1})"
+            ],
+            "zh": [
+                "{name1}与{name2}之间的工业设施税（项目ID：{arg1}）"
+            ]
+        }
+    },
+    "infrastructure_hub_maintenance": {
+        "entryTypeName": {
+            "en": [
+                "Infrastructure Hub bill"
+            ],
+            "zh": [
+                "基础设施中心账单"
+            ]
+        }
+    },
+    "asset_safety_recovery_tax": {
+        "entryTypeName": {
+            "en": [
+                "Asset safety recovery tax"
+            ],
+            "zh": [
+                "资产安全恢复税"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Asset safety recovery tax"
+            ],
+            "zh": [
+                "资产安全恢复税"
+            ]
+        }
+    },
+    "opportunity_reward": {
+        "entryTypeName": {
+            "en": [
+                "Opportunity Reward"
+            ],
+            "zh": [
+                "机遇奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward for opportunity completion"
+            ],
+            "zh": [
+                "完成机遇奖励"
+            ]
+        }
+    },
+    "project_discovery_reward": {
+        "entryTypeName": {
+            "en": [
+                "Project Discovery reward"
+            ],
+            "zh": [
+                "探索计划奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward given for scientific contribution to Project Discovery."
+            ],
+            "zh": [
+                "给予对探索计划做出科学贡献的人的奖励。"
+            ]
+        }
+    },
+    "project_discovery_tax": {
+        "entryTypeName": {
+            "en": [
+                "Corporation tax on Project Discovery rewards"
+            ],
+            "zh": [
+                "针对探索计划奖励的军团税"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Corporation tax on Project Discovery rewards"
+            ],
+            "zh": [
+                "针对探索计划奖励的军团税"
+            ]
+        }
+    },
+    "reprocessing_tax": {
+        "entryTypeName": {
+            "en": [
+                "Reprocessing Tax"
+            ],
+            "zh": [
+                "提炼税"
+            ]
+        }
+    },
+    "jump_clone_activation_fee": {
+        "entryTypeName": {
+            "en": [
+                "Jump Clone Activation Fee"
+            ],
+            "zh": [
+                "远距克隆激活费用"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Fee for activating a Jump Clone paid from {name1} to {name2}"
+            ],
+            "zh": [
+                "{name1} 支付给{name2}的激活远距克隆费用"
+            ]
+        }
+    },
+    "operation_bonus": {
+        "entryTypeName": {
+            "en": [
+                "Mission Reward"
+            ],
+            "zh": [
+                "任务奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Mission Reward from the Tutorial"
+            ],
+            "zh": [
+                "教程提供的任务奖励"
+            ]
+        }
+    },
+    "resource_wars_reward": {
+        "entryTypeName": {
+            "en": [
+                "Mining Site Protection Money"
+            ],
+            "zh": [
+                "采集地点保护费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Payment for protecting valuable ORE from pirates."
+            ],
+            "zh": [
+                "保护贵重的ORE不受海盗侵袭的报酬"
+            ]
+        }
+    },
+    "duel_wager_escrow": {
+        "entryTypeName": {
+            "en": [
+                "Duel wager escrow payment"
+            ],
+            "zh": [
+                "决斗赌注保证金支付"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Duel wager escrow payment"
+            ],
+            "zh": [
+                "决斗赌注保证金支付"
+            ]
+        }
+    },
+    "duel_wager_payment": {
+        "entryTypeName": {
+            "en": [
+                "Duel wager reward"
+            ],
+            "zh": [
+                "决斗赌注奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Duel wager reward"
+            ],
+            "zh": [
+                "决斗赌注奖励"
+            ]
+        }
+    },
+    "duel_wager_refund": {
+        "entryTypeName": {
+            "en": [
+                "Duel wager refund"
+            ],
+            "zh": [
+                "决斗赌注退款"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Duel wager refund"
+            ],
+            "zh": [
+                "决斗赌注退款"
+            ]
+        }
+    },
+    "reaction": {
+        "entryTypeName": {
+            "en": [
+                "Reactions"
+            ],
+            "zh": [
+                "反应"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reaction job fee between {name1} and {name2} (Job ID: {arg1})"
+            ],
+            "zh": [
+                "{name1}与{name2}之间的反应项目费用 (项目ID：{arg1})"
+            ]
+        }
+    },
+    "external_trade_freeze": {
+        "entryTypeName": {
+            "en": [
+                "External Trade Freeze"
+            ],
+            "zh": [
+                "外部交易冻结"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Transactions via external services"
+            ],
+            "zh": [
+                "藏宝阁交易"
+            ]
+        }
+    },
+    "external_trade_thaw": {
+        "entryTypeName": {
+            "en": [
+                "External Trade Thaw"
+            ],
+            "zh": [
+                "外部交易解冻"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Transactions via external services"
+            ],
+            "zh": [
+                "藏宝阁交易"
+            ]
+        }
+    },
+    "external_trade_delivery": {
+        "entryTypeName": {
+            "en": [
+                "External Trade Delivery"
+            ],
+            "zh": [
+                "外部交易递送"
+            ]
+        }
+    },
+    "season_challenge_reward": {
+        "entryTypeName": {
+            "en": [
+                "Challenge Completed"
+            ],
+            "zh": [
+                "挑战已完成"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "A reward for completing a challenge during an event."
+            ],
+            "zh": [
+                "在活动中完成一个挑战而获得的奖励。"
+            ]
+        }
+    },
+    "structure_gate_jump": {
+        "entryTypeName": {
+            "en": [
+                "Jump Bridge Fee"
+            ],
+            "zh": [
+                "跳跃桥接费用"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Fee for activating a Upwell Jump Bridge paid from {name1} to {name2}"
+            ],
+            "zh": [
+                "昇威跳跃桥接的激活费用由{name1}支付给{name2}。"
+            ]
+        }
+    },
+    "skill_purchase": {
+        "entryTypeName": {
+            "en": [
+                "Skill Purchase"
+            ],
+            "zh": [
+                "技能购买"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "{name1} purchased a skill ({[item]arg1.name})"
+            ],
+            "zh": [
+                "{name1}购买了一个技能({[item]arg1.name})"
+            ]
+        }
+    },
+    "item_trader_payment": {
+        "entryTypeName": {
+            "en": [
+                "Item Trade"
+            ],
+            "zh": [
+                "物品交易"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Payment for use of {itemTraderTypeID}."
+            ],
+            "zh": [
+                "使用{itemTraderTypeID}而支付的款项。"
+            ]
+        }
+    },
+    "flux_ticket_sale": {
+        "entryTypeName": {
+            "en": [
+                "HyperNode transaction"
+            ],
+            "zh": [
+                "超网节点交易"
+            ]
+        }
+    },
+    "flux_payout": {
+        "entryTypeName": {
+            "en": [
+                "Completed HyperNet Relay Payout"
+            ],
+            "zh": [
+                "完成的超网中继支付"
+            ]
+        }
+    },
+    "flux_tax": {
+        "entryTypeName": {
+            "en": [
+                "HyperNet Relay Fee"
+            ],
+            "zh": [
+                "超网中继交易费"
+            ]
+        }
+    },
+    "flux_ticket_repayment": {
+        "entryTypeName": {
+            "en": [
+                "HyperNode refund for expired HyperNet Offer"
+            ],
+            "zh": [
+                "因超网订单过期而返还超网节点购买金额"
+            ]
+        }
+    },
+    "redeemed_isk_token": {
+        "entryTypeName": {
+            "en": [
+                "Redeemed ISK token"
+            ],
+            "zh": [
+                "兑换星币令牌"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward for redeeming ISK token"
+            ],
+            "zh": [
+                "兑换星币令牌奖励"
+            ]
+        }
+    },
+    "daily_challenge_reward": {
+        "entryTypeName": {
+            "en": [
+                "Daily Challenge Completed"
+            ],
+            "zh": [
+                "完成的每日挑战"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward for completing a daily challenge"
+            ],
+            "zh": [
+                "完成每日挑战获得的奖励"
+            ]
+        }
+    },
+    "market_provider_tax": {
+        "entryTypeName": {
+            "en": [
+                "SCC surcharge"
+            ],
+            "zh": [
+                "商业安全委员会追加费用"
+            ]
+        }
+    },
+    "ess_escrow_transfer": {
+        "entryTypeName": {
+            "en": [
+                "ESS Escrow Payment"
+            ],
+            "zh": [
+                "事件监测装置保证金支付"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Encounter Surveillance System in {[location]arg1.name} transferred funds to {name2}"
+            ],
+            "zh": [
+                "{[location]arg1.name}的事件监测装置赏金池转移给{name2}"
+            ]
+        }
+    },
+    "milestone_reward_payment": {
+        "entryTypeName": {
+            "en": [
+                "First Day ISK Bonus"
+            ],
+            "zh": [
+                "首日星币加成"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Welcome to New Eden!"
+            ],
+            "zh": [
+                "欢迎来到新伊甸！"
+            ]
+        }
+    },
+    "under_construction": {
+        "entryTypeName": {
+            "en": [
+                "Building Materials Delivered"
+            ],
+            "zh": [
+                "建造材料已交付"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Payment for delivering building materials in {[location]arg1.name}"
+            ],
+            "zh": [
+                "为交付建筑材料到{[location]arg1.name}所支付的款项"
+            ]
+        }
+    },
+    "allignment_based_gate_toll": {
+        "entryTypeName": {
+            "en": [
+                "Zarzakh Stargate Toll"
+            ],
+            "zh": [
+                "扎尔扎克星门通行费"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Fee for using a stargate to Zarzakh in {[location]arg1.name}."
+            ],
+            "zh": [
+                "在{[location]arg1.name}使用星门前往扎尔扎克的费用。"
+            ]
+        }
+    },
+    "project_payouts": {
+        "entryTypeName": {
+            "en": [
+                "Corporation Projects"
+            ],
+            "zh": [
+                "军团项目"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "{corp_name} Project - {project_name}"
+            ],
+            "zh": [
+                "{corp_name}项目 - {project_name}"
+            ]
+        }
+    },
+    "insurgency_corruption_contribution_reward": {
+        "entryTypeName": {
+            "en": [
+                "Insurgency corruption contribution reward"
+            ],
+            "zh": [
+                "叛乱活动的腐蚀贡献奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward from {name1} for pirate actions"
+            ],
+            "zh": [
+                "{name1}为海盗行动发放的奖励"
+            ]
+        }
+    },
+    "insurgency_suppression_contribution_reward": {
+        "entryTypeName": {
+            "en": [
+                "Insurgency suppression contribution reward"
+            ],
+            "zh": [
+                "叛乱活动的镇压贡献奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward from {name1} for antipirate actions"
+            ],
+            "zh": [
+                "{name1}为反海盗行动发放的奖励"
+            ]
+        }
+    },
+    "daily_goal_payouts": {
+        "entryTypeName": {
+            "en": [
+                "Daily Goal Reward"
+            ],
+            "zh": [
+                "每日目标奖励"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Reward for completion of the AIR Daily Goal {goal_name} by {character_name}"
+            ],
+            "zh": [
+                "{character_name}完成星空会每日目标{goal_name}而获得的奖励"
+            ]
+        }
+    },
+    "daily_goal_payouts_tax": {
+        "entryTypeName": {
+            "en": [
+                "Daily Goal Reward Tax"
+            ],
+            "zh": [
+                "每日目标奖励税"
+            ]
+        },
+        "entryJournalMessage": {
+            "en": [
+                "Corporation tax paid on a reward earned by completing an AIR Daily Goal"
+            ],
+            "zh": [
+                "为完成星空会每日目标获得的奖励而缴纳的军团税"
+            ]
+        }
+    },
+    "cosmetic_market_component_item_purchase": {
+        "entryTypeName": {
+            "en": [
+                "Paragon Hub Design Element"
+            ],
+            "zh": [
+                "派瑞根中心设计元素"
+            ]
+        }
+    },
+    "cosmetic_market_skin_sale_broker_fee": {
+        "entryTypeName": {
+            "en": [
+                "Paragon Hub Listing Fee"
+            ],
+            "zh": [
+                "派瑞根中心上架费用"
+            ]
+        }
+    },
+    "cosmetic_market_skin_purchase": {
+        "entryTypeName": {
+            "en": [
+                "Paragon Hub SKIN purchase"
+            ],
+            "zh": [
+                "派瑞根中心涂装购买"
+            ]
+        }
+    },
+    "cosmetic_market_skin_sale": {
+        "entryTypeName": {
+            "en": [
+                "Paragon Hub SKIN sale"
+            ],
+            "zh": [
+                "派瑞根中心涂装销售"
+            ]
+        }
+    },
+    "cosmetic_market_skin_sale_tax": {
+        "entryTypeName": {
+            "en": [
+                "Paragon Hub Vendor Fee"
+            ],
+            "zh": [
+                "派瑞根中心商家费用"
+            ]
+        }
+    },
+    "cosmetic_market_skin_transaction": {
+        "entryTypeName": {
+            "en": [
+                "Paragon Hub SKIN transaction"
+            ],
+            "zh": [
+                "派瑞根中心涂装交易"
+            ]
+        }
+    }
+}
