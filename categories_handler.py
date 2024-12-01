@@ -23,7 +23,7 @@ def process_data(categories_data, cursor, lang):
     create_categories_table(cursor)
 
     for item_id, item in categories_data.items():
-        name = item['name'].get(lang, None)  # 获取特定语言的名称
+        name = item['name'].get(lang, item['name'].get('en', ""))  # 优先取 lang，没有则取 en
         published = item['published']
         iconID = item.get('iconID', 0)  # 获取 iconID，如果没有则设为 0
 

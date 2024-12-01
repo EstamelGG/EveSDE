@@ -27,7 +27,7 @@ def process_data(groups_data, cursor, lang):
     create_groups_table(cursor)
 
     for item_id, item in groups_data.items():
-        name = item['name'].get(lang, None)
+        name = item['name'].get(lang, item['name'].get('en', ""))  # 优先取 lang，没有则取 en
         if name is None:
             continue
 

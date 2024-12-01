@@ -30,8 +30,8 @@ def process_data(types_data, cursor, lang):
     create_types_table(cursor)
 
     for item_id, item in types_data.items():
-        name = item['name'].get(lang, "")  # 获取名称
-        description = item.get('description', {}).get(lang, "")  # 获取描述
+        name = item['name'].get(lang, item['name'].get('en', ""))  # 优先取 lang，没有则取 en
+        description = item.get('description', {}).get(lang, item.get('description', {}).get('en', ""))  # 优先取 lang，没有则取 en
         published = item.get('published', False)
         volume = item.get('volume', 0)
         marketGroupID = item.get('marketGroupID', 0)
