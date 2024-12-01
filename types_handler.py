@@ -20,6 +20,7 @@ def create_types_table(cursor):
             published BOOLEAN,
             volume REAL,
             marketGroupID INTEGER,
+            metaGroupID INTEGER,
             iconID INTEGER,
             groupID INTEGER
         )
@@ -35,11 +36,12 @@ def process_data(types_data, cursor, lang):
         published = item.get('published', False)
         volume = item.get('volume', 0)
         marketGroupID = item.get('marketGroupID', 0)
+        metaGroupID = item.get('metaGroupID', 1)
         iconID = item.get('iconID', 0)
         groupID = item.get('groupID', 0)
 
         # 使用 INSERT OR IGNORE 语句，避免重复插入
         cursor.execute('''
-            INSERT OR IGNORE INTO types (type_id, name, description, published, volume, marketGroupID, iconID, groupID)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (item_id, name, description, published, volume, marketGroupID, iconID, groupID))
+            INSERT OR IGNORE INTO types (type_id, name, description, published, volume, marketGroupID, metaGroupID, iconID, groupID)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (item_id, name, description, published, volume, marketGroupID, metaGroupID, iconID, groupID))
