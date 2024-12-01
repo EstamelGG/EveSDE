@@ -4,12 +4,6 @@ import shutil
 from tqdm import tqdm  # 导入 tqdm 用于显示进度条
 import random  # 导入 random 用于随机选择缺失的 type_id
 
-# 已知：
-# 1. types中每个元素最开始的id，与Types目录中的大图片名对应。id在Types目录中找不到的就没有小图。
-# 2. types中的iconID没啥用
-# 3. 简而言之，拿着types.yaml中的id去Types目录中找图片即可。找到的图片作为小图。
-# 4. 在Rendoer中找到的图则为大图
-
 def get_all_type_ids(db_filename):
     """从数据库中获取所有 type_id"""
     conn = sqlite3.connect(db_filename)
@@ -34,6 +28,9 @@ def copy_images(type_ids, types_image_dir, renders_image_dir, output_image_dir):
 
     # 使用 tqdm 显示进度条
     for type_id in tqdm(type_ids, desc="Copying images", unit=" item"):
+        # 标记当前type_id是否找到了图片
+        found_image = False
+
         # 生成图片文件名，例如 "123_32.png" 或 "123_64.png"
         for size in [32, 64]:
             image_filename = f"{type_id}_{size}.png"
@@ -44,29 +41,31 @@ def copy_images(type_ids, types_image_dir, renders_image_dir, output_image_dir):
                 # 复制文件到目标目录
                 shutil.copy(source_path, os.path.join(output_image_dir, image_filename))
                 copied_files += 1
-            else:
-                if type_id not in missed_type_ids:
-                    missed_type_ids.append(type_id)
-                missed_files += 1
+                found_image = True  # 找到小图，标记为已找到
+                break  # 找到一张图就可以跳出循环
 
-        # 查找 Data/Renders 目录下的同名图片并复制
-        render_image_filename = f"{type_id}.png"
-        render_image_path = os.path.join(renders_image_dir, render_image_filename)
+        # 只有在 Types 目录找不到图片时，才去检查 Renders 目录
+        if not found_image:
+            # 查找 Data/Renders 目录下的同名图片并复制
+            render_image_filename = f"{type_id}.png"
+            render_image_path = os.path.join(renders_image_dir, render_image_filename)
 
-        if os.path.exists(render_image_path):
-            # 复制到目标目录并重命名为 type_id_512.png
-            render_output_path = os.path.join(output_image_dir, f"{type_id}_512.png")
-            shutil.copy(render_image_path, render_output_path)
-            copied_files += 1
-        else:
-            if type_id not in missed_type_ids:
-                missed_type_ids.append(type_id)
+            if os.path.exists(render_image_path):
+                # 复制到目标目录并重命名为 type_id_512.png
+                render_output_path = os.path.join(output_image_dir, f"{type_id}_512.png")
+                shutil.copy(render_image_path, render_output_path)
+                copied_files += 1
+                found_image = True  # 找到大图，标记为已找到
+
+        # 如果在 Types 和 Renders 中都没有找到对应的图片
+        if not found_image:
             missed_files += 1
+            missed_type_ids.append(type_id)
 
     # 打印最终结果
     print(f"\nFinished copying images.")
     print(f"Copied {copied_files} files.")
-    print(f"Missed {missed_files} files due to missing icons in Types or Renders directory.")
+    print(f"Missed {missed_files} files due to missing icons in both Types and Renders directories.")
 
     # 如果缺失文件超过 10 个，随机选择 10 个缺失的 type_id 打印出来
     if missed_type_ids:
