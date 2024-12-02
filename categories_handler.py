@@ -2,6 +2,8 @@ from ruamel.yaml import YAML
 
 yaml = YAML(typ='safe')
 
+# 提取所有目录信息
+
 def read_yaml(file_path):
     """读取 categories.yaml 文件"""
     with open(file_path, 'r', encoding='utf-8') as file:

@@ -4,6 +4,8 @@ from categories_handler import read_yaml as read_categories_yaml, process_data a
 from groups_handler import read_yaml as read_groups_yaml, process_data as process_groups_data
 from types_handler import read_yaml as read_types_yaml, process_data as process_types_data
 from metaGroups_handler import read_yaml as read_metaGroups_yaml, process_data as process_metaGroups_data
+from dogmaAttributes_handler import read_yaml as read_dogmaAttributes_yaml, process_data as process_dogmaAttributes_data
+from dogmaAttributeCategories_handler import read_yaml as read_dogmaAttributeCategories_yaml, process_data as process_dogmaAttributeCategories_data
 import image_extra
 
 # 文件路径
@@ -11,6 +13,8 @@ categories_yaml_file_path = 'Data/sde/fsd/categories.yaml'
 groups_yaml_file_path = 'Data/sde/fsd/groups.yaml'
 types_yaml_file_path = 'Data/sde/fsd/types.yaml'
 metaGroups_yaml_file_path = 'Data/sde/fsd/metaGroups.yaml'
+dogmaAttributes_yaml_file_path = 'Data/sde/fsd/dogmaAttributes.yaml'
+dogmaAttributeCategories_yaml_file_path = 'Data/sde/fsd/dogmaAttributeCategories.yaml'
 
 # 输出数据库文件的目录
 output_dir = 'output/db'
@@ -53,12 +57,19 @@ def main():
     print("\nProcessing metaGroups.yaml...")
     process_yaml_file(metaGroups_yaml_file_path, read_metaGroups_yaml, process_metaGroups_data)
 
+    print("\nProcessing dogmaAttributeCategories.yaml...")
+    process_yaml_file(dogmaAttributeCategories_yaml_file_path, read_dogmaAttributeCategories_yaml,
+                      process_dogmaAttributeCategories_data)
+
+    print("\nProcessing dogmaAttributes.yaml...")
+    process_yaml_file(dogmaAttributes_yaml_file_path, read_dogmaAttributes_yaml, process_dogmaAttributes_data)
+
     print("\nProcessing types.yaml...")
-    process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
+    #process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
 
     # 调用新脚本以复制图像
     print("\nProcessing images for types...")
-    image_extra.main()  # 调用新的脚本处理图片
+    #image_extra.main()  # 调用新的脚本处理图片
 
     print("\n所有数据库已更新。")
 

@@ -2,6 +2,8 @@ from ruamel.yaml import YAML
 
 yaml = YAML(typ='safe')
 
+# 提取所有组信息
+
 def read_yaml(file_path):
     """读取 groups.yaml 文件"""
     with open(file_path, 'r', encoding='utf-8') as file:

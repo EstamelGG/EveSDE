@@ -1,6 +1,8 @@
 import sqlite3
 from ruamel.yaml import YAML
 
+# 提取图片id和图片文件名
+
 yaml = YAML(typ='safe')
 
 def read_yaml(file_path):

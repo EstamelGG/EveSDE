@@ -2,6 +2,8 @@ from ruamel.yaml import YAML
 
 yaml = YAML(typ='safe')
 
+# 处理types中所有物品的名称、描述等信息
+
 def read_yaml(file_path):
     """读取 types.yaml 文件"""
     with open(file_path, 'r', encoding='utf-8') as file:

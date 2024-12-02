@@ -4,6 +4,9 @@ import shutil
 from tqdm import tqdm  # 导入 tqdm 用于显示进度条
 import random  # 导入 random 用于随机选择缺失的 type_id
 
+# 提取需要用到的图片
+# 其中，type_id 与 图片文件应一致
+
 def get_all_type_ids(db_filename):
     """从数据库中获取所有 type_id"""
     conn = sqlite3.connect(db_filename)

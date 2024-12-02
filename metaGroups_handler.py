@@ -2,7 +2,7 @@ import sqlite3
 import os
 from ruamel.yaml import YAML
 
-# 处理科技等级
+# 提取科技等级组对应的名字
 
 yaml = YAML(typ='safe')
 
