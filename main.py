@@ -75,11 +75,11 @@ def main():
     process_yaml_file(typeDogma_yaml_file_path, read_typeDogma_yaml, process_typeDogma_data)
 
     print("\nProcessing types.yaml...") # 物品详情
-    #process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
+    process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
 
     # 调用新脚本以复制图像
     print("\nProcessing images for types...")
-    #image_extra.main()  # 调用新的脚本处理图片
+    image_extra.main()  # 调用新的脚本处理图片
 
     print("\n所有数据库已更新。")
 
