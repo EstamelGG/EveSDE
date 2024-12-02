@@ -18,7 +18,7 @@ def create_dogma_attribute_categories_table(cursor):
     """创建 dogmaAttributeCategories 表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS dogmaAttributeCategories (
-            id INTEGER PRIMARY KEY,
+            attribute_category_id INTEGER PRIMARY KEY,
             name TEXT,
             description TEXT
         )
@@ -37,6 +37,6 @@ def process_data(data, cursor, lang):
         # 插入数据
         cursor.execute('''
             INSERT OR REPLACE INTO dogmaAttributeCategories (
-                id, name, description
+                attribute_category_id, name, description
             ) VALUES (?, ?, ?)
         ''', (category_id, name, description))

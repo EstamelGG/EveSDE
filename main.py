@@ -3,18 +3,22 @@ import sqlite3
 from categories_handler import read_yaml as read_categories_yaml, process_data as process_categories_data
 from groups_handler import read_yaml as read_groups_yaml, process_data as process_groups_data
 from types_handler import read_yaml as read_types_yaml, process_data as process_types_data
+from iconIDs_handler import read_yaml as read_iconIDs_yaml, process_data as process_iconIDs_data
 from metaGroups_handler import read_yaml as read_metaGroups_yaml, process_data as process_metaGroups_data
 from dogmaAttributes_handler import read_yaml as read_dogmaAttributes_yaml, process_data as process_dogmaAttributes_data
 from dogmaAttributeCategories_handler import read_yaml as read_dogmaAttributeCategories_yaml, process_data as process_dogmaAttributeCategories_data
+from typeDogma_handler import read_yaml as read_typeDogma_yaml, process_data as process_typeDogma_data
 import image_extra
 
 # 文件路径
 categories_yaml_file_path = 'Data/sde/fsd/categories.yaml'
 groups_yaml_file_path = 'Data/sde/fsd/groups.yaml'
+iconIDs_yaml_file_path = 'Data/sde/fsd/iconIDs.yaml'
 types_yaml_file_path = 'Data/sde/fsd/types.yaml'
 metaGroups_yaml_file_path = 'Data/sde/fsd/metaGroups.yaml'
 dogmaAttributes_yaml_file_path = 'Data/sde/fsd/dogmaAttributes.yaml'
 dogmaAttributeCategories_yaml_file_path = 'Data/sde/fsd/dogmaAttributeCategories.yaml'
+typeDogma_yaml_file_path = 'Data/sde/fsd/typeDogma.yaml'
 
 # 输出数据库文件的目录
 output_dir = 'output/db'
@@ -48,23 +52,29 @@ def process_yaml_file(yaml_file_path, read_func, process_func):
 
 def main():
     # 依次处理每个 YAML 文件
-    print("\nProcessing categories.yaml...")
+    print("\nProcessing categories.yaml...") # 物品目录
     process_yaml_file(categories_yaml_file_path, read_categories_yaml, process_categories_data)
 
-    print("\nProcessing groups.yaml...")
+    print("\nProcessing groups.yaml...") # 物品组
     process_yaml_file(groups_yaml_file_path, read_groups_yaml, process_groups_data)
 
-    print("\nProcessing metaGroups.yaml...")
+    print("\nProcessing metaGroups.yaml...") # 物品衍生组
     process_yaml_file(metaGroups_yaml_file_path, read_metaGroups_yaml, process_metaGroups_data)
 
-    print("\nProcessing dogmaAttributeCategories.yaml...")
+    print("\nProcessing iconIDs.yaml...") # 图标ID与文件路径
+    process_yaml_file(iconIDs_yaml_file_path, read_iconIDs_yaml, process_iconIDs_data)
+
+    print("\nProcessing dogmaAttributeCategories.yaml...") # 物品属性目录
     process_yaml_file(dogmaAttributeCategories_yaml_file_path, read_dogmaAttributeCategories_yaml,
                       process_dogmaAttributeCategories_data)
 
-    print("\nProcessing dogmaAttributes.yaml...")
+    print("\nProcessing dogmaAttributes.yaml...") # 物品属性名称
     process_yaml_file(dogmaAttributes_yaml_file_path, read_dogmaAttributes_yaml, process_dogmaAttributes_data)
 
-    print("\nProcessing types.yaml...")
+    print("\nProcessing typeDogma.yaml...") # 物品属性详情
+    process_yaml_file(typeDogma_yaml_file_path, read_typeDogma_yaml, process_typeDogma_data)
+
+    print("\nProcessing types.yaml...") # 物品详情
     #process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
 
     # 调用新脚本以复制图像

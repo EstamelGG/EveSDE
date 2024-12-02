@@ -15,6 +15,7 @@ def create_groups_table(cursor):
         CREATE TABLE IF NOT EXISTS groups (
             group_id INTEGER PRIMARY KEY,
             name TEXT,
+            iconID INTEGER,
             categoryID INTEGER,
             anchorable BOOLEAN,
             anchored BOOLEAN,
@@ -34,6 +35,7 @@ def process_data(groups_data, cursor, lang):
             continue
 
         categoryID = item['categoryID']
+        iconID = item.get('iconID', 0)
         anchorable = item['anchorable']
         anchored = item['anchored']
         fittableNonSingleton = item['fittableNonSingleton']
@@ -42,6 +44,6 @@ def process_data(groups_data, cursor, lang):
 
         # 使用 INSERT OR IGNORE 语句，避免重复插入
         cursor.execute('''
-            INSERT OR IGNORE INTO groups (group_id, name, categoryID, anchorable, anchored, fittableNonSingleton, published, useBasePrice)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (item_id, name, categoryID, anchorable, anchored, fittableNonSingleton, published, useBasePrice))
+            INSERT OR IGNORE INTO groups (group_id, name, categoryID, iconID, anchorable, anchored, fittableNonSingleton, published, useBasePrice)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (item_id, name, categoryID, iconID, anchorable, anchored, fittableNonSingleton, published, useBasePrice))
