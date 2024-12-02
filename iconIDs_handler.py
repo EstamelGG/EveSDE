@@ -41,12 +41,13 @@ def copy_and_rename_icons(icon_data):
                 source_path = os.path.join(ICONS_SOURCE_DIR, file_name)
                 dest_path = os.path.join(ICONS_DEST_DIR, f"item_{file_name}")
 
-                # 如果源文件存在，复制到目标路径并重命名
-                if os.path.exists(source_path):
-                    if not os.path.exists(dest_path):  # 如果目标文件不存在
-                        shutil.copy(source_path, dest_path)
-                        copy_num += 1
-                    icon_filename_mapping[icon_id] = f"{os.path.basename(dest_path)}"
+                # 如果源文件不存在，则默认用73_16_50
+                if not os.path.exists(source_path):
+                    source_path = os.path.join(ICONS_SOURCE_DIR, "73_16_50.png")
+                if not os.path.exists(dest_path):  # 如果目标文件不存在
+                    shutil.copy(source_path, dest_path)
+                    copy_num += 1
+                icon_filename_mapping[icon_id] = f"{os.path.basename(dest_path)}"
                     # print(f"Copied and renamed {file_name} to {dest_path}")
                 # else:
                 # print(f"Warning: {file_name} not found in source directory.")
