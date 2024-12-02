@@ -26,31 +26,8 @@ output_dir = 'output/db'
 os.makedirs(output_dir, exist_ok=True)
 
 # 语言列表
-languages = ['de', 'en', 'es', 'fr', 'ja', 'ko', 'ru', 'zh']
+languages = ['en', 'de', 'es', 'fr', 'ja', 'ko', 'ru', 'zh'] # en 务必在第一个否则有些功能可能会有缺失
 
-
-def copy_icons_folder(source_dir, destination_dir):
-    """
-    将指定的文件夹及其内容复制到目标文件夹。
-
-    参数：
-        source_dir (str): 源文件夹路径。
-        destination_dir (str): 目标文件夹路径。
-    """
-    # 检查源文件夹是否存在
-    if not os.path.exists(source_dir):
-        print(f"Source folder {source_dir} does not exist!")
-        return
-
-    # 创建目标文件夹（如果不存在）
-    os.makedirs(destination_dir, exist_ok=True)
-
-    # 递归地复制文件夹及其内容
-    try:
-        shutil.copytree(source_dir, destination_dir, dirs_exist_ok=True)
-        print(f"Folder {source_dir} has been successfully copied to {destination_dir}.")
-    except Exception as e:
-        print(f"An error occurred while copying: {e}")
 
 def process_yaml_file(yaml_file_path, read_func, process_func):
     """处理每个 YAML 文件并更新所有语言的数据库"""
@@ -76,6 +53,9 @@ def process_yaml_file(yaml_file_path, read_func, process_func):
 
 def main():
     # 依次处理每个 YAML 文件
+    print("\nProcessing iconIDs.yaml...")  # 图标ID与文件路径
+    process_yaml_file(iconIDs_yaml_file_path, read_iconIDs_yaml, process_iconIDs_data)
+
     print("\nProcessing categories.yaml...") # 物品目录
     process_yaml_file(categories_yaml_file_path, read_categories_yaml, process_categories_data)
 
@@ -84,9 +64,6 @@ def main():
 
     print("\nProcessing metaGroups.yaml...") # 物品衍生组
     process_yaml_file(metaGroups_yaml_file_path, read_metaGroups_yaml, process_metaGroups_data)
-
-    print("\nProcessing iconIDs.yaml...") # 图标ID与文件路径
-    process_yaml_file(iconIDs_yaml_file_path, read_iconIDs_yaml, process_iconIDs_data)
 
     print("\nProcessing dogmaAttributeCategories.yaml...") # 物品属性目录
     process_yaml_file(dogmaAttributeCategories_yaml_file_path, read_dogmaAttributeCategories_yaml,
@@ -101,11 +78,10 @@ def main():
     print("\nProcessing types.yaml...") # 物品详情
     process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
 
-    # 调用新脚本以复制图像
-    print("\nProcessing images for types...")
+    # 调用脚本以复制Render图像
+    # print("\nProcessing images for types...")
     image_extra.main()  # 调用新的脚本处理图片
 
-    copy_icons_folder("Data/Icons", "output/Icons")
     print("\n所有数据库已更新。")
 
 
