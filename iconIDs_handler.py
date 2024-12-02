@@ -82,7 +82,6 @@ def insert_iconIDs(cursor, icon_data, icon_filename_mapping):
 
 def process_data(icon_data, cursor, lang):
     """处理 iconIDs 数据并插入数据库"""
-    # 只在 lang == 'en' 时执行图像复制
     icon_filename_mapping = copy_and_rename_icons(icon_data)
 
     # 插入数据库（使用新文件名）
