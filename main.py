@@ -1,4 +1,5 @@
 import os
+import shutil
 import sqlite3
 from categories_handler import read_yaml as read_categories_yaml, process_data as process_categories_data
 from groups_handler import read_yaml as read_groups_yaml, process_data as process_groups_data
@@ -27,6 +28,29 @@ os.makedirs(output_dir, exist_ok=True)
 # 语言列表
 languages = ['de', 'en', 'es', 'fr', 'ja', 'ko', 'ru', 'zh']
 
+
+def copy_icons_folder(source_dir, destination_dir):
+    """
+    将指定的文件夹及其内容复制到目标文件夹。
+
+    参数：
+        source_dir (str): 源文件夹路径。
+        destination_dir (str): 目标文件夹路径。
+    """
+    # 检查源文件夹是否存在
+    if not os.path.exists(source_dir):
+        print(f"Source folder {source_dir} does not exist!")
+        return
+
+    # 创建目标文件夹（如果不存在）
+    os.makedirs(destination_dir, exist_ok=True)
+
+    # 递归地复制文件夹及其内容
+    try:
+        shutil.copytree(source_dir, destination_dir, dirs_exist_ok=True)
+        print(f"Folder {source_dir} has been successfully copied to {destination_dir}.")
+    except Exception as e:
+        print(f"An error occurred while copying: {e}")
 
 def process_yaml_file(yaml_file_path, read_func, process_func):
     """处理每个 YAML 文件并更新所有语言的数据库"""
@@ -81,6 +105,7 @@ def main():
     print("\nProcessing images for types...")
     image_extra.main()  # 调用新的脚本处理图片
 
+    copy_icons_folder("Data/Icons", "output/Icons")
     print("\n所有数据库已更新。")
 
 
