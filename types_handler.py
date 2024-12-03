@@ -19,13 +19,13 @@ def create_types_table(cursor):
             name TEXT,
             description TEXT,
             published BOOLEAN,
-            volume REAL,
+            volume INTEGER,
             marketGroupID INTEGER,
             metaGroupID INTEGER,
             iconID INTEGER,
             groupID INTEGER,
-            pg_need REAL,  -- 新增 pg_need 列
-            cpu_need REAL  -- 新增 cpu_need 列
+            pg_need INTEGER,
+            cpu_need INTEGER
         )
     ''')
 
