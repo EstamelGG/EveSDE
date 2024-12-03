@@ -10,8 +10,21 @@ ICONS_DEST_DIR = 'output/Icons'
 # 图标目录与实际目录的局部映射
 # key是yaml中的关键词，value是实际映射的文件的开头
 icon_path_map = {
-    "/ui/texture/icons/": "items",
-    "/ui/texture/corps/": "corporations"
+    "/UI/Texture/Icons/Modules/": "items_modules",
+    "/UI/Texture/Icons/Ammo/": "items_ammo",
+    "/UI/Texture/Icons/Brackets/": "items_brackets",
+    "/UI/Texture/Icons/DustIcons/": "items_DustIcons",
+    "/UI/Texture/Icons/generic/": "items_generic",
+    "/UI/Texture/Icons/Inventory/": "items_Inventory",
+    "/UI/Texture/Icons/ItemOverlay/": "items_ItemOverlay",
+    "/UI/Texture/Icons/notifications/": "items_notifications",
+    "/UI/Texture/Icons/RewardTrack/": "items_RewardTrack",
+    "/UI/Texture/Icons/SkillPoints/": "items_SkillPoints",
+    "/UI/Texture/Icons/StatusEffects/": "items_StatusEffects",
+    "/UI/Texture/Icons/Triglavian/": "items_Triglavian",
+    "/ui/texture/corps/": "corporations",
+    "/ui/texture/icons/": "items"
+
 }
 
 
@@ -36,7 +49,7 @@ def copy_and_rename_icons(icon_data):
     for icon_id, details in icon_data.items():
         icon_file = details.get('iconFile', "")
         raw_icon_filename_mapping[icon_id] = icon_file
-        dest_icon_filename = "items_73_16_50.png"
+        dest_icon_filename = ""
         # 判断 iconFile 是否包含 "/icons/" 等目录, 其他筛选条件后续再加
         for key in icon_path_map:
             if key.lower() in icon_file.lower():
@@ -45,7 +58,7 @@ def copy_and_rename_icons(icon_data):
                 break
         dest_file_path = os.path.join(ICONS_DEST_DIR, dest_icon_filename)
         if not os.path.exists(dest_file_path):
-            dest_icon_filename = "items_73_16_50.png"
+            dest_icon_filename = ""
         dest_icon_filename_fix = dest_icon_filename  # .split(".")[0] # 只留文件名
         icon_filename_mapping[icon_id] = dest_icon_filename_fix
     return raw_icon_filename_mapping, icon_filename_mapping
@@ -69,7 +82,7 @@ def insert_iconIDs(cursor, icon_data, raw_icon_filename_mapping, icon_filename_m
         description = details.get('description', "")
 
         # 获取新的 iconFile（如果有映射的话）
-        new_icon_file = icon_filename_mapping.get(icon_id, details.get('iconFile', "items_73_16_50.png"))
+        new_icon_file = icon_filename_mapping.get(icon_id, details.get('iconFile', ""))
         old_icon_file = raw_icon_filename_mapping.get(icon_id, details.get('iconFile', ""))
 
         # 插入或替换数据

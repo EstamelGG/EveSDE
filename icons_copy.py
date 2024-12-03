@@ -2,6 +2,8 @@ import os
 import shutil
 import sys
 
+# 复制Icons中的图片，用于展示目录、组等信息
+
 # 定义源目录和目标目录
 source_root = "Data/Icons"
 destination_root = "output/Icons"

@@ -104,7 +104,6 @@ def main():
     copy_and_rename_png_files()
     print("\nProcessing iconIDs.yaml...")  # 图标ID与文件路径
     process_yaml_file(iconIDs_yaml_file_path, read_iconIDs_yaml, process_iconIDs_data)
-    zip_icons()
 
     print("\nProcessing categories.yaml...")  # 物品目录
     process_yaml_file(categories_yaml_file_path, read_categories_yaml, process_categories_data)
@@ -128,6 +127,7 @@ def main():
     print("\nProcessing types.yaml...")  # 物品详情
     process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
 
+    zip_icons()
     print("\n所有数据库已更新。")
 
 
