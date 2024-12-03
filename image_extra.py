@@ -83,7 +83,7 @@ def main():
     db_filename = 'output/db/item_db_en.sqlite'
     types_image_dir = 'Data/Types'
     renders_image_dir = 'Data/Renders'
-    output_image_dir = 'output/images'
+    output_image_dir = 'output/Images'
 
     # 获取数据库中的所有 type_id
     type_ids = get_all_type_ids(db_filename)

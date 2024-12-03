@@ -9,6 +9,8 @@ from metaGroups_handler import read_yaml as read_metaGroups_yaml, process_data a
 from dogmaAttributes_handler import read_yaml as read_dogmaAttributes_yaml, process_data as process_dogmaAttributes_data
 from dogmaAttributeCategories_handler import read_yaml as read_dogmaAttributeCategories_yaml, process_data as process_dogmaAttributeCategories_data
 from typeDogma_handler import read_yaml as read_typeDogma_yaml, process_data as process_typeDogma_data
+from icons_copy import copy_and_rename_png_files
+from sprite_sheet_generator import create_sprite_sheet_from_folder
 import image_extra
 
 # 文件路径
@@ -21,13 +23,34 @@ dogmaAttributes_yaml_file_path = 'Data/sde/fsd/dogmaAttributes.yaml'
 dogmaAttributeCategories_yaml_file_path = 'Data/sde/fsd/dogmaAttributeCategories.yaml'
 typeDogma_yaml_file_path = 'Data/sde/fsd/typeDogma.yaml'
 
-# 输出数据库文件的目录
-output_dir = 'output/db'
-os.makedirs(output_dir, exist_ok=True)
-
 # 语言列表
 languages = ['en', 'de', 'es', 'fr', 'ja', 'ko', 'ru', 'zh'] # en 务必在第一个否则有些功能可能会有缺失
 
+output_db_dir = 'output/db'
+output_icons_dir = 'output/Icons'
+output_images_dir = 'output/Images'
+
+def rebuild_directory(directory_path):
+    """
+    删除指定目录中的所有文件和子目录，但保留目录本身。
+    :param directory_path: 要清理的目录路径
+    """
+    if not os.path.exists(directory_path):
+        print(f"Error: Directory '{directory_path}' does not exist.")
+        return
+
+    for item in os.listdir(directory_path):
+        item_path = os.path.join(directory_path, item)
+        if os.path.isfile(item_path) or os.path.islink(item_path):
+            os.remove(item_path)  # 删除文件或符号链接
+            print(f"Deleted file: {item_path}")
+        elif os.path.isdir(item_path):
+            shutil.rmtree(item_path)  # 删除子目录及其内容
+            print(f"Deleted directory: {item_path}")
+    # 输出数据库文件的目录
+    os.makedirs(output_db_dir, exist_ok=True)
+    os.makedirs(output_icons_dir, exist_ok=True)
+    os.makedirs(output_images_dir, exist_ok=True)
 
 def process_yaml_file(yaml_file_path, read_func, process_func):
     """处理每个 YAML 文件并更新所有语言的数据库"""
@@ -35,7 +58,7 @@ def process_yaml_file(yaml_file_path, read_func, process_func):
     data = read_func(yaml_file_path)
 
     for lang in languages:
-        db_filename = os.path.join(output_dir, f'item_db_{lang}.sqlite')
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
 
         # 连接数据库
         conn = sqlite3.connect(db_filename)
@@ -52,7 +75,9 @@ def process_yaml_file(yaml_file_path, read_func, process_func):
 
 
 def main():
+    rebuild_directory("./output")
     # 依次处理每个 YAML 文件
+    copy_and_rename_png_files()
     print("\nProcessing iconIDs.yaml...")  # 图标ID与文件路径
     process_yaml_file(iconIDs_yaml_file_path, read_iconIDs_yaml, process_iconIDs_data)
 
@@ -79,7 +104,7 @@ def main():
     process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
 
     # 调用脚本以复制Render图像
-    # print("\nProcessing images for types...")
+    print("\nProcessing images for types...")
     image_extra.main()  # 调用新的脚本处理图片
 
     print("\n所有数据库已更新。")
