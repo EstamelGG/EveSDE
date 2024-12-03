@@ -1,8 +1,7 @@
 from ruamel.yaml import YAML
+import sqlite3
 
 yaml = YAML(typ='safe')
-
-# 处理types中所有物品的名称、描述等信息
 
 def read_yaml(file_path):
     """读取 types.yaml 文件"""
@@ -24,7 +23,9 @@ def create_types_table(cursor):
             marketGroupID INTEGER,
             metaGroupID INTEGER,
             iconID INTEGER,
-            groupID INTEGER
+            groupID INTEGER,
+            pg_need REAL,  -- 新增 pg_need 列
+            cpu_need REAL  -- 新增 cpu_need 列
         )
     ''')
 
@@ -42,8 +43,20 @@ def process_data(types_data, cursor, lang):
         iconID = item.get('iconID', 0)
         groupID = item.get('groupID', 0)
 
+        # 获取 pg_need 和 cpu_need 的值
+        pg_need = get_attribute_value(cursor, item_id, 30)  # 获取 pg占用 的值 (pg_need)
+        cpu_need = get_attribute_value(cursor, item_id, 50)  # 获取 cpu占用 的值 (cpu_need)
+
         # 使用 INSERT OR IGNORE 语句，避免重复插入
         cursor.execute('''
-            INSERT OR IGNORE INTO types (type_id, name, description, published, volume, marketGroupID, metaGroupID, iconID, groupID)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (item_id, name, description, published, volume, marketGroupID, metaGroupID, iconID, groupID))
+            INSERT OR IGNORE INTO types (type_id, name, description, published, volume, marketGroupID, metaGroupID, iconID, groupID, pg_need, cpu_need)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (item_id, name, description, published, volume, marketGroupID, metaGroupID, iconID, groupID, pg_need, cpu_need))
+
+def get_attribute_value(cursor, type_id, attribute_id):
+    """从 typeAttributes 表获取两个属性的值"""
+    cursor.execute('''
+        SELECT value FROM typeAttributes WHERE type_id = ? AND attribute_id = ?
+    ''', (type_id, attribute_id))
+    result = cursor.fetchone()
+    return result[0] if result else -1  # 如果没有值，返回 None
