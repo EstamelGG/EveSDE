@@ -56,6 +56,7 @@ def create_types_table(cursor):
             iconID INTEGER,
             groupID INTEGER,
             group_name TEXT,
+            categoryID INTEGER,
             category_name TEXT,
             pg_need INTEGER,
             cpu_need INTEGER
@@ -107,10 +108,10 @@ def process_data(types_data, cursor, lang):
 
         # 使用 INSERT OR IGNORE 语句，避免重复插入
         cursor.execute('''
-            INSERT OR IGNORE INTO types (type_id, name, description, icon_filename, published, volume, marketGroupID, metaGroupID, iconID, groupID, group_name, category_name, pg_need, cpu_need)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT OR IGNORE INTO types (type_id, name, description, icon_filename, published, volume, marketGroupID, metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            item_id, name, description,copied_file,  published, volume, marketGroupID, metaGroupID, iconID, groupID, group_name,category_name, pg_need,
+            item_id, name, description,copied_file,  published, volume, marketGroupID, metaGroupID, iconID, groupID, group_name, category_id, category_name, pg_need,
             cpu_need))
 
 
