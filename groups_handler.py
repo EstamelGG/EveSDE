@@ -21,7 +21,8 @@ def create_groups_table(cursor):
             anchored BOOLEAN,
             fittableNonSingleton BOOLEAN,
             published BOOLEAN,
-            useBasePrice BOOLEAN
+            useBasePrice BOOLEAN,
+            icon_filename TEXT
         )
     ''')
 
@@ -29,7 +30,7 @@ def process_data(groups_data, cursor, lang):
     """处理 groups 数据并插入数据库（针对单一语言）"""
     create_groups_table(cursor)
 
-    for item_id, item in groups_data.items():
+    for group_id, item in groups_data.items():
         name = item['name'].get(lang, item['name'].get('en', ""))  # 优先取 lang，没有则取 en
         if name is None:
             continue
@@ -44,6 +45,6 @@ def process_data(groups_data, cursor, lang):
 
         # 使用 INSERT OR IGNORE 语句，避免重复插入
         cursor.execute('''
-            INSERT OR IGNORE INTO groups (group_id, name, categoryID, iconID, anchorable, anchored, fittableNonSingleton, published, useBasePrice)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (item_id, name, categoryID, iconID, anchorable, anchored, fittableNonSingleton, published, useBasePrice))
+            INSERT OR IGNORE INTO groups (group_id, name, categoryID, iconID, anchorable, anchored, fittableNonSingleton, published, useBasePrice, icon_filename)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (group_id, name, categoryID, iconID, anchorable, anchored, fittableNonSingleton, published, useBasePrice, "items_73_16_50.png"))

@@ -12,6 +12,7 @@ from dogmaAttributeCategories_handler import read_yaml as read_dogmaAttributeCat
     process_data as process_dogmaAttributeCategories_data
 from typeDogma_handler import read_yaml as read_typeDogma_yaml, process_data as process_typeDogma_data
 from icons_copy import copy_and_rename_png_files
+from update_catelogy_icons import update_groups_with_icon_filename
 
 # 文件路径
 categories_yaml_file_path = 'Data/sde/fsd/categories.yaml'
@@ -126,6 +127,11 @@ def main():
 
     print("\nProcessing types.yaml...")  # 物品详情
     process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
+
+    print("\nUpdating groups...") # 给 groups 更新图标名称
+    for lang in languages:
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+        update_groups_with_icon_filename(db_filename)
 
     zip_icons()
     print("\n所有数据库已更新。")
