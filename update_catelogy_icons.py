@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def update_groups_with_icon_filename(db_filename):
     """根据 group_id 从 types 表获取 icon_filename，并更新 groups 表"""
     # 连接数据库
@@ -15,7 +16,13 @@ def update_groups_with_icon_filename(db_filename):
 
         # 获取对应的 icon_filename，查找符合条件的第一条数据
         cursor.execute('''
-            SELECT icon_filename FROM types WHERE groupID = ? AND icon_filename != "items_73_16_50.png" AND icon_filename != "items_7_64_15.png" LIMIT 1
+            SELECT icon_filename 
+FROM types 
+WHERE groupID = ? 
+  AND icon_filename != "items_73_16_50.png" 
+  AND icon_filename != "items_7_64_15.png" 
+ORDER BY metaGroupID ASC 
+LIMIT 1
         ''', (group_id_value,))
         result = cursor.fetchone()
 
