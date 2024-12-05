@@ -12,7 +12,7 @@ from dogmaAttributeCategories_handler import read_yaml as read_dogmaAttributeCat
     process_data as process_dogmaAttributeCategories_data
 from typeDogma_handler import read_yaml as read_typeDogma_yaml, process_data as process_typeDogma_data
 from icons_copy import copy_and_rename_png_files
-from update_catelogy_icons import update_groups_with_icon_filename
+from update_groups_icons import update_groups_with_icon_filename
 
 # 文件路径
 categories_yaml_file_path = 'Data/sde/fsd/categories.yaml'
