@@ -41,6 +41,10 @@ categories_id_icon_map = {
     65: "icon_40340_64.png",
     66: "icon_35923_64.png",
     87: "icon_23061_64.png",
+    91: "items_rewardtrack_crateskincontainer.png",
+    2100: "items_74_64_13.png",
+    2118: "items_multiple_training.png",
+    2143: "items_skillpoints_500k.png",
 }
 
 
@@ -75,8 +79,6 @@ def process_data(categories_data, cursor, lang):
         if name is None:
             continue
         dest_icon_filename = categories_id_icon_map.get(item_id, "items_73_16_50.png")
-        if not os.path.exists(f"output/Icons/{dest_icon_filename}"):
-            dest_icon_filename = "items_73_16_50.png"
         # 使用 INSERT OR REPLACE 语句，当 category_id 已存在时更新记录
         cursor.execute('''
             INSERT OR REPLACE INTO categories (category_id, name, icon_filename, iconID, published)
