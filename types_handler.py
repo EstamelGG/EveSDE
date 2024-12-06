@@ -60,6 +60,7 @@ def create_types_table(cursor):
             category_name TEXT,
             pg_need INTEGER,
             cpu_need INTEGER,
+            rig_cost INTEGER,
             em_damage INTEGER,
             them_damage INTEGER,
             kin_damage INTEGER,
@@ -113,31 +114,34 @@ def process_data(types_data, cursor, lang):
         category_name = category_id_to_name.get(category_id, 'Unknown')
         copied_file = copy_and_rename_icon(type_id)  # 复制物品图像
         # 获取 pg_need 和 cpu_need 的值
-        res = get_attributes_value(cursor, type_id, [30, 50, 114, 118, 117, 116, 14, 13, 12, 1137, 102, 101, 1367]) # 获取 pg占用 的值 (pg_need)和 cpu占用 的值 (cpu_need)
+        res = get_attributes_value(cursor, type_id, [30, 50, 1153, 114, 118, 117, 116, 14, 13, 12, 1154, 102, 101, 1367]) # 获取 pg占用 的值 (pg_need)和 cpu占用 的值 (cpu_need)
         pg_need =  res[0]
         cpu_need = res[1]
-        em_damage = res[2]
-        them_damage = res[3]
-        kin_damage = res[4]
-        exp_damage = res[5]
-        high_slot = res[6]
-        mid_slot = res[7]
-        low_slot = res[8]
-        rig_slot = res[9]
-        gun_slot = res[10]
-        miss_slot = res[11]
+        rig_cost = res[2]
+        em_damage = res[3]
+        them_damage = res[4]
+        kin_damage = res[5]
+        exp_damage = res[6]
+        high_slot = res[7]
+        mid_slot = res[8]
+        low_slot = res[9]
+        rig_slot = res[10]
+        gun_slot = res[11]
+        miss_slot = res[12]
 
         # 使用 INSERT OR IGNORE 语句，避免重复插入
         cursor.execute('''
             INSERT OR IGNORE INTO types (
             type_id, name, description, icon_filename, published, volume, marketGroupID,
-             metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need,
+             metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
              em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot,gun_slot, miss_slot
              )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            type_id, name, description,copied_file,  published, volume, marketGroupID, metaGroupID, iconID, groupID, group_name, category_id, category_name, pg_need,
-            cpu_need, em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot))
+            type_id, name, description, copied_file,  published, volume, marketGroupID, metaGroupID, iconID, groupID,
+            group_name, category_id, category_name, pg_need,
+            cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, high_slot,
+            mid_slot, low_slot, rig_slot, gun_slot, miss_slot))
 
 
 def get_attributes_value(cursor, type_id, attribute_ids):
