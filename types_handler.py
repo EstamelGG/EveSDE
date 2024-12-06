@@ -59,7 +59,17 @@ def create_types_table(cursor):
             categoryID INTEGER,
             category_name TEXT,
             pg_need INTEGER,
-            cpu_need INTEGER
+            cpu_need INTEGER,
+            em_damage INTEGER,
+            them_damage INTEGER,
+            kin_damage INTEGER,
+            exp_damage INTEGER,
+            high_slot INTEGER,
+            mid_slot INTEGER,
+            low_slot INTEGER,
+            rig_slot INTEGER,
+            gun_slot INTEGER,
+            miss_slot INTEGER
         )
     ''')
 
@@ -88,7 +98,7 @@ def process_data(types_data, cursor, lang):
     """处理 types 数据并插入数据库（针对单一语言）"""
     create_types_table(cursor)
     group_to_category, category_id_to_name, group_id_to_name = fetch_and_process_data(cursor)
-    for item_id, item in types_data.items():
+    for type_id, item in types_data.items():
         name = item['name'].get(lang, item['name'].get('en', ""))  # 优先取 lang，没有则取 en
         description = item.get('description', {}).get(lang,
                                                       item.get('description', {}).get('en', ""))  # 优先取 lang，没有则取 en
@@ -101,24 +111,58 @@ def process_data(types_data, cursor, lang):
         group_name = group_id_to_name.get(groupID, 'Unknown')
         category_id = group_to_category.get(groupID, 0)
         category_name = category_id_to_name.get(category_id, 'Unknown')
-        copied_file = copy_and_rename_icon(item_id)  # 复制物品图像
+        copied_file = copy_and_rename_icon(type_id)  # 复制物品图像
         # 获取 pg_need 和 cpu_need 的值
-        pg_need = get_attribute_value(cursor, item_id, 30)  # 获取 pg占用 的值 (pg_need)
-        cpu_need = get_attribute_value(cursor, item_id, 50)  # 获取 cpu占用 的值 (cpu_need)
+        res = get_attributes_value(cursor, type_id, [30, 50, 114, 118, 117, 116, 14, 13, 12, 1137, 102, 101, 1367]) # 获取 pg占用 的值 (pg_need)和 cpu占用 的值 (cpu_need)
+        pg_need =  res[0]
+        cpu_need = res[1]
+        em_damage = res[2]
+        them_damage = res[3]
+        kin_damage = res[4]
+        exp_damage = res[5]
+        high_slot = res[6]
+        mid_slot = res[7]
+        low_slot = res[8]
+        rig_slot = res[9]
+        gun_slot = res[10]
+        miss_slot = res[11]
 
         # 使用 INSERT OR IGNORE 语句，避免重复插入
         cursor.execute('''
-            INSERT OR IGNORE INTO types (type_id, name, description, icon_filename, published, volume, marketGroupID, metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT OR IGNORE INTO types (
+            type_id, name, description, icon_filename, published, volume, marketGroupID,
+             metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need,
+             em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot,gun_slot, miss_slot
+             )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            item_id, name, description,copied_file,  published, volume, marketGroupID, metaGroupID, iconID, groupID, group_name, category_id, category_name, pg_need,
-            cpu_need))
+            type_id, name, description,copied_file,  published, volume, marketGroupID, metaGroupID, iconID, groupID, group_name, category_id, category_name, pg_need,
+            cpu_need, em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot))
 
 
-def get_attribute_value(cursor, type_id, attribute_id):
-    """从 typeAttributes 表获取两个属性的值"""
-    cursor.execute('''
-        SELECT value FROM typeAttributes WHERE type_id = ? AND attribute_id = ?
-    ''', (type_id, attribute_id))
-    result = cursor.fetchone()
-    return result[0] if result else -1  # 如果没有值，返回 None
+def get_attributes_value(cursor, type_id, attribute_ids):
+    """
+    从 typeAttributes 表获取多个属性的值
+
+    参数:
+    - cursor: 数据库游标
+    - type_id: 类型ID
+    - attribute_ids: 属性ID列表
+
+    返回:
+    - 包含所有请求属性值的列表，如果某个属性不存在则对应位置返回None
+    """
+    # 构建 SQL 查询中的 IN 子句
+    placeholders = ','.join('?' * len(attribute_ids))
+
+    cursor.execute(f'''
+        SELECT attribute_id, value 
+        FROM typeAttributes 
+        WHERE type_id = ? AND attribute_id IN ({placeholders})
+    ''', (type_id, *attribute_ids))
+
+    # 获取所有结果并转换为字典
+    results = dict(cursor.fetchall())
+
+    # 为每个请求的 attribute_id 获取对应的值，如果不存在则返回 None
+    return [results.get(attr_id, None) for attr_id in attribute_ids]
