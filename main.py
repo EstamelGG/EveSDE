@@ -2,7 +2,6 @@ import os
 import shutil
 import sqlite3
 import zipfile
-import tarfile
 from categories_handler import read_yaml as read_categories_yaml, process_data as process_categories_data
 from groups_handler import read_yaml as read_groups_yaml, process_data as process_groups_data
 from types_handler import read_yaml as read_types_yaml, process_data as process_types_data
@@ -25,7 +24,6 @@ dogmaAttributes_yaml_file_path = 'Data/sde/fsd/dogmaAttributes.yaml'
 dogmaAttributeCategories_yaml_file_path = 'Data/sde/fsd/dogmaAttributeCategories.yaml'
 typeDogma_yaml_file_path = 'Data/sde/fsd/typeDogma.yaml'
 ZIP_ICONS_DEST = 'output/Icons/icons.zip'
-TAR_ICONS_DEST = 'output/Icons/icons.tar'
 ICONS_DEST_DIR = 'output/Icons'
 
 # 语言列表
@@ -57,30 +55,38 @@ def rebuild_directory(directory_path):
     os.makedirs(output_icons_dir, exist_ok=True)
 
 
-def archive_icons():
-    # 检查 TAR 文件是否已经存在
-    if os.path.exists(TAR_ICONS_DEST) and os.path.exists(ZIP_ICONS_DEST):
-        return  # 如果两个文件都存在，跳过压缩
+def create_uncompressed_icons_zip(source_dir, zip_path):
+    """
+    创建一个无压缩的ZIP文件，用于存储图标
 
-    # 创建一个 TAR 文件
-    with tarfile.open(TAR_ICONS_DEST, 'w') as tarf, zipfile.ZipFile(ZIP_ICONS_DEST, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    Args:
+        source_dir: 源图标目录路径
+        zip_path: 目标ZIP文件路径
+    """
+    # 如果ZIP文件已存在，先删除
+    if os.path.exists(zip_path):
+        os.remove(zip_path)
+        print(f"已删除现有ZIP文件: {zip_path}")
+
+    # 创建一个无压缩的ZIP文件
+    with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_STORED) as zipf:
         # 遍历指定目录下的文件
-        for filename in os.listdir(ICONS_DEST_DIR):
-            file_path = os.path.join(ICONS_DEST_DIR, filename)
-            # 确保处理的是文件而不是子目录，只压缩 png 文件
-            if os.path.isfile(file_path) and file_path.endswith(".png"):
+        for filename in os.listdir(source_dir):
+            file_path = os.path.join(source_dir, filename)
+            # 确保处理的是PNG文件
+            if os.path.isfile(file_path) and filename.lower().endswith(".png"):
                 try:
-                    # 将文件添加到 TAR 压缩包中
-                    tarf.add(file_path, arcname=os.path.basename(file_path))  # 归档文件并保留文件名
-                    # 将文件添加到 ZIP 压缩包中
-                    zipf.write(file_path, os.path.basename(file_path))  # 压缩文件并保留文件名
-                    # 文件压缩成功后删除源文件
+                    # 将文件添加到ZIP中，不使用压缩
+                    zipf.write(file_path, filename)  # 只保留文件名，不包含路径
+                    print(f"已添加文件: {filename}")
                     os.remove(file_path)
-                    # print(f"已成功压缩并删除文件: {filename}")
                 except Exception as e:
                     print(f"处理文件 {filename} 时发生错误: {e}")
-    print(f"所有文件已成功压缩到 {TAR_ICONS_DEST} 和 {ZIP_ICONS_DEST}")
 
+    # 显示ZIP文件大小
+    zip_size = os.path.getsize(zip_path) / (1024 * 1024)  # 转换为MB
+    print(f"\nZIP文件创建完成: {zip_path}")
+    print(f"文件大小: {zip_size:.2f}MB")
 def process_yaml_file(yaml_file_path, read_func, process_func):
     """处理每个 YAML 文件并更新所有语言的数据库"""
     # 读取 YAML 数据一次
@@ -137,7 +143,7 @@ def main():
         db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
         update_groups_with_icon_filename(db_filename)
     print("\n")
-    archive_icons()
+    create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
     print("\n所有数据库已更新。")
 
 
