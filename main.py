@@ -32,6 +32,8 @@ ZIP_ICONS_DEST = 'output/Icons/icons.zip'
 arch_ICONS_DEST = 'output/Icons/icons.aar'
 ICONS_DEST_DIR = 'output/Icons'
 
+# aa archive -o ../icons.aar -d .
+
 # 语言列表
 languages = ['en', 'de', 'es', 'fr', 'ja', 'ko', 'ru', 'zh']  # en 务必在第一个否则有些功能可能会有缺失
 
