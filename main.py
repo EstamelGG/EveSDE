@@ -4,6 +4,9 @@ import sqlite3
 import zipfile
 import tarfile
 import gzip
+import struct
+import zlib
+from pathlib import Path
 from categories_handler import read_yaml as read_categories_yaml, process_data as process_categories_data
 from groups_handler import read_yaml as read_groups_yaml, process_data as process_groups_data
 from types_handler import read_yaml as read_types_yaml, process_data as process_types_data
@@ -26,6 +29,7 @@ dogmaAttributes_yaml_file_path = 'Data/sde/fsd/dogmaAttributes.yaml'
 dogmaAttributeCategories_yaml_file_path = 'Data/sde/fsd/dogmaAttributeCategories.yaml'
 typeDogma_yaml_file_path = 'Data/sde/fsd/typeDogma.yaml'
 ZIP_ICONS_DEST = 'output/Icons/icons.zip'
+arch_ICONS_DEST = 'output/Icons/icons.aar'
 ICONS_DEST_DIR = 'output/Icons'
 
 # 语言列表
@@ -57,41 +61,92 @@ def rebuild_directory(directory_path):
     os.makedirs(output_icons_dir, exist_ok=True)
 
 
-def create_uncompressed_icons_tar(source_dir, zip_path):
+def create_resource_package(source_dir: str, output_path: str):
     """
-    创建一个tar.gz文件，用于存储图标
-    使用gzip压缩，保持与原函数相同的参数和删除逻辑
+    创建一个兼容 Apple Compression API 的资源包
 
-    Args:
-        source_dir: 源图标目录路径
-        zip_path: 目标文件路径（会自动将.zip替换为.tar.gz）
+    文件格式：
+    [文件头]
+    - 魔数 (4字节): "NPAK"
+    - 版本 (4字节): 1
+    - 文件数量 (4字节)
+
+    [文件表]
+    对每个文件：
+    - 文件名长度 (2字节)
+    - 文件名 (UTF-8)
+    - 文件偏移 (8字节)
+    - 压缩大小 (8字节)
+    - 原始大小 (8字节)
+
+    [数据区]
+    - LZFSE 压缩的文件数据
     """
-    # 将输出路径从.zip改为.tar.gz
-    tar_path = zip_path.replace('.zip', '.tar.gz')
+    source_path = Path(source_dir)
+    output_path = Path(output_path)
 
-    # 如果文件已存在，先删除
-    if os.path.exists(tar_path):
-        os.remove(tar_path)
-        print(f"已删除现有文件: {tar_path}")
+    # 获取所有PNG文件
+    png_files = list(source_path.glob("**/*.png"))
+    file_count = len(png_files)
+    print(f"找到 {file_count} 个PNG文件")
 
-    # 创建tar.gz文件
-    with tarfile.open(tar_path, 'w:gz') as tarf:
-        # 遍历指定目录下的文件
-        for filename in os.listdir(source_dir):
-            file_path = os.path.join(source_dir, filename)
-            # 确保处理的是PNG文件
-            if os.path.isfile(file_path) and filename.lower().endswith(".png"):
-                try:
-                    # 将文件添加到tar中
-                    tarf.add(file_path, arcname=filename)  # 只保留文件名，不包含路径
-                    os.remove(file_path)
-                except Exception as e:
-                    print(f"处理文件 {filename} 时发生错误: {e}")
+    # 准备文件表和数据
+    file_table = []
+    compressed_data = []
+    current_offset = 0
 
-    # 显示文件大小
-    tar_size = os.path.getsize(tar_path) / (1024 * 1024)  # 转换为MB
-    print(f"\n文件创建完成: {tar_path}")
-    print(f"文件大小: {tar_size:.2f}MB")
+    # 处理每个文件
+    for png_file in png_files:
+        # 读取文件数据
+        file_data = png_file.read_bytes()
+        # 压缩数据 (使用 zlib，因为 Python 没有 LZFSE)
+        compressed = zlib.compress(file_data, level=6)
+
+        # 准备文件表项
+        relative_path = png_file.relative_to(source_path).as_posix()
+        name_bytes = relative_path.encode('utf-8')
+
+        file_table.append({
+            'name_length': len(name_bytes),
+            'name': name_bytes,
+            'offset': current_offset,
+            'compressed_size': len(compressed),
+            'original_size': len(file_data)
+        })
+
+        compressed_data.append(compressed)
+        current_offset += len(compressed)
+
+        print(f"处理: {relative_path} ({len(file_data)} -> {len(compressed)} bytes)")
+        os.remove(png_file)
+
+    # 写入文件
+    with open(output_path, 'wb') as f:
+        # 写入文件头
+        f.write(b'NPAK')  # 魔数
+        f.write(struct.pack('<I', 1))  # 版本号
+        f.write(struct.pack('<I', file_count))  # 文件数量
+
+        # 写入文件表
+        for entry in file_table:
+            f.write(struct.pack('<H', entry['name_length']))  # 文件名长度 (2字节)
+            f.write(entry['name'])  # 文件名
+            f.write(struct.pack('<Q', entry['offset']))  # 文件偏移 (8字节)
+            f.write(struct.pack('<Q', entry['compressed_size']))  # 压缩大小 (8字节)
+            f.write(struct.pack('<Q', entry['original_size']))  # 原始大小 (8字节)
+
+        # 写入压缩数据
+        for data in compressed_data:
+            f.write(data)
+
+    # 显示统计信息
+    total_original = sum(entry['original_size'] for entry in file_table)
+    total_compressed = sum(entry['compressed_size'] for entry in file_table)
+    print(f"\n打包完成: {output_path}")
+    print(f"文件数量: {file_count}")
+    print(f"原始大小: {total_original / 1024 / 1024:.1f}MB")
+    print(f"压缩大小: {total_compressed / 1024 / 1024:.1f}MB")
+    print(f"压缩比例: {total_compressed * 100 / total_original:.1f}%")
 
 def create_uncompressed_icons_zip(source_dir, zip_path):
     """
@@ -181,8 +236,8 @@ def main():
         db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
         update_groups_with_icon_filename(db_filename)
     print("\n")
-    # create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
-    create_uncompressed_icons_tar(ICONS_DEST_DIR, ZIP_ICONS_DEST)
+    create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
+    # create_resource_package(ICONS_DEST_DIR, arch_ICONS_DEST)
     print("\n所有数据库已更新。")
 
 
