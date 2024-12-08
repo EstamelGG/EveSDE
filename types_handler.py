@@ -1,5 +1,6 @@
 from ruamel.yaml import YAML
 import sqlite3
+from typeTraits_handler import process_trait_data
 import shutil
 import os
 
@@ -142,6 +143,8 @@ def process_data(types_data, cursor, lang):
             group_name, category_id, category_name, pg_need,
             cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, high_slot,
             mid_slot, low_slot, rig_slot, gun_slot, miss_slot))
+
+    process_trait_data(types_data, cursor, lang)
 
 
 def get_attributes_value(cursor, type_id, attribute_ids):
