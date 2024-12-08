@@ -1,5 +1,6 @@
 from ruamel.yaml import YAML
 import sqlite3
+import json
 
 # 用于处理物品属性信息
 # 提取出各属性id对应的名称
@@ -25,18 +26,55 @@ def create_dogma_attributes_table(cursor):
             display_name TEXT,
             description TEXT,
             tooltipDescription TEXT,
-            iconID INTEGER
+            iconID INTEGER,
+            unitName TEXT
         )
     ''')
+
+
+def extract_display_names_from_file(file_path):
+    # 从文件中读取JSON内容
+    with open(file_path, 'r', encoding='utf-8') as file:
+        try:
+            data = json.load(file)  # 使用json.load直接从文件读取并解析JSON
+        except json.JSONDecodeError as e:
+            raise ValueError(f"无效的JSON格式: {e}")
+
+    # 创建一个字典来存储结果
+    result = {}
+
+    # 遍历每个条目，提取key和displayName
+    for key, value in data.items():
+        result[key] = value.get("displayName", None)
+
+    return result
+
+
+def format_number(value):
+    # 判断输入变量是否是数字
+    if not isinstance(value, (int, float)):
+        raise ValueError("输入的值必须是数字")
+
+    # 如果是int类型，直接返回
+    if isinstance(value, int):
+        return f"{value:,}"
+
+    # 如果是float类型，保留3位小数，且末尾不为零
+    formatted_value = f"{value:,.3f}".rstrip('0').rstrip('.')
+
+    return formatted_value
 
 
 def process_data(data, cursor, lang):
     """处理 dogmaAttributes 数据并插入数据库（针对单一语言）"""
     create_dogma_attributes_table(cursor)
-
+    unitDict = extract_display_names_from_file("Data/sde/thirdparty/dogmaunits.json")
     for attr_id, attr_data in data.items():
         attributeID = attr_data.get('attributeID')
-
+        unitID = str(attr_data.get("unitID", "-1"))
+        unitName = None
+        if unitID in unitDict.keys():
+            unitName = unitDict[unitID]
         # 多语言字段
         displayName = attr_data.get('displayNameID', {}).get(lang, "")
         name = attr_data.get('name', "")
@@ -48,6 +86,6 @@ def process_data(data, cursor, lang):
         # 插入数据
         cursor.execute('''
             INSERT OR REPLACE INTO dogmaAttributes (
-                attribute_id, categoryID, name, display_name, description, tooltipDescription, iconID
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (attributeID, categoryID, name, displayName, description, tooltipDescription, iconID))
+                attribute_id, categoryID, name, display_name, description, tooltipDescription, iconID, unitName
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (attributeID, categoryID, name, displayName, description, tooltipDescription, iconID, unitName))
