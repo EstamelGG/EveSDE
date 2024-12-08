@@ -27,6 +27,7 @@ def create_dogma_attributes_table(cursor):
             description TEXT,
             tooltipDescription TEXT,
             iconID INTEGER,
+            unitID INTEGER,
             unitName TEXT
         )
     ''')
@@ -71,10 +72,10 @@ def process_data(data, cursor, lang):
     unitDict = extract_display_names_from_file("Data/sde/thirdparty/dogmaunits.json")
     for attr_id, attr_data in data.items():
         attributeID = attr_data.get('attributeID')
-        unitID = str(attr_data.get("unitID", "-1"))
+        unitID = attr_data.get("unitID", None)
         unitName = None
-        if unitID in unitDict.keys():
-            unitName = unitDict[unitID]
+        if unitID != None and str(unitID) in unitDict.keys():
+            unitName = unitDict[str(unitID)]
         # 多语言字段
         displayName = attr_data.get('displayNameID', {}).get(lang, "")
         name = attr_data.get('name', "")
@@ -86,6 +87,6 @@ def process_data(data, cursor, lang):
         # 插入数据
         cursor.execute('''
             INSERT OR REPLACE INTO dogmaAttributes (
-                attribute_id, categoryID, name, display_name, description, tooltipDescription, iconID, unitName
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (attributeID, categoryID, name, displayName, description, tooltipDescription, iconID, unitName))
+                attribute_id, categoryID, name, display_name, description, tooltipDescription, iconID, unitID, unitName
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (attributeID, categoryID, name, displayName, description, tooltipDescription, iconID, unitID, unitName))

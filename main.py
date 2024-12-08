@@ -18,6 +18,7 @@ from dogmaAttributeCategories_handler import read_yaml as read_dogmaAttributeCat
 from typeDogma_handler import read_yaml as read_typeDogma_yaml, process_data as process_typeDogma_data
 from icons_copy import copy_and_rename_png_files
 from update_groups_icons import update_groups_with_icon_filename
+from update_type_attributes_unit import update_type_attributes_unit
 
 # 文件路径
 categories_yaml_file_path = 'Data/sde/fsd/categories.yaml'
@@ -237,6 +238,13 @@ def main():
     for lang in languages:
         db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
         update_groups_with_icon_filename(db_filename)
+    
+    print("\nUpdating type attributes unit...") # 更新typeAttributes表的unitID
+    for lang in languages:
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+        update_type_attributes_unit(db_filename)
+        print(f"Updated unitID in typeAttributes table for {lang}")
+    
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
     # create_resource_package(ICONS_DEST_DIR, arch_ICONS_DEST)
