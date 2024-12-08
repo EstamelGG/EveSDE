@@ -22,6 +22,7 @@ def create_dogma_attributes_table(cursor):
             attribute_id INTEGER PRIMARY KEY,
             categoryID INTEGER,
             name TEXT,
+            display_name TEXT,
             description TEXT,
             tooltipDescription TEXT,
             iconID INTEGER
@@ -38,6 +39,7 @@ def process_data(data, cursor, lang):
 
         # 多语言字段
         displayName = attr_data.get('displayNameID', {}).get(lang, "")
+        name = attr_data.get('name', "")
         description = attr_data.get('description', "")
         iconID = attr_data.get('iconID', 0)
         categoryID = attr_data.get('categoryID', 0)
@@ -46,6 +48,6 @@ def process_data(data, cursor, lang):
         # 插入数据
         cursor.execute('''
             INSERT OR REPLACE INTO dogmaAttributes (
-                attribute_id, categoryID, name, description, tooltipDescription, iconID
-            ) VALUES (?, ?, ?, ?, ?, ?)
-        ''', (attributeID, categoryID, displayName, description, tooltipDescription, iconID))
+                attribute_id, categoryID, name, display_name, description, tooltipDescription, iconID
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (attributeID, categoryID, name, displayName, description, tooltipDescription, iconID))
