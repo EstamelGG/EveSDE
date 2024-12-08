@@ -4,7 +4,7 @@ def process_single_data(type_id, traits_data, language):
     """处理单个物品的traits数据"""
     results = []
     
-    # 处理roleBonuses
+    # 处理 roleBonuses
     if 'roleBonuses' in traits_data: # role bonuses,船体加成
         for bonus in traits_data['roleBonuses']:
             if 'bonusText' in bonus and language in bonus['bonusText']:
@@ -15,19 +15,19 @@ def process_single_data(type_id, traits_data, language):
                     bonus_num = int(bonus['bonus']) if isinstance(bonus['bonus'], int) or bonus[
                         'bonus'].is_integer() else round(bonus['bonus'], 2)
                     if bonus['unitID'] == 105:  # 百分比
-                        prefix = f"{bonus_num}% "
+                        prefix = f"<b>{bonus_num}%</b> "
                     elif bonus['unitID'] == 104:  # 倍乘
-                        prefix = f"{bonus_num}x "
+                        prefix = f"<b>{bonus_num}x</b> "
                     elif bonus['unitID'] == 139:  # 加号
-                        prefix = f"{bonus_num}+ "
+                        prefix = f"<b>{bonus_num}+</b> "
                     else:
-                        prefix = f"{bonus_num} "
+                        prefix = f"<b>{bonus_num}</b>  "
                     content = prefix + content
                 
-                results.append((type_id, content, 'none', bonus.get('importance', 999999)))
+                results.append((type_id, content, None, bonus.get('importance', 999999), "roleBonuses"))
     
-    # 处理types
-    if 'types' in traits_data: # type bonues,技能加成
+    # 处理 typeBonuses
+    if 'types' in traits_data: # type bonuses,技能加成
         for skill_id, skill_bonuses in traits_data['types'].items():
             for bonus in skill_bonuses:
                 if 'bonusText' in bonus and language in bonus['bonusText']:
@@ -37,16 +37,16 @@ def process_single_data(type_id, traits_data, language):
                         bonus_num = int(bonus['bonus']) if isinstance(bonus['bonus'], int) or bonus[
                             'bonus'].is_integer() else round(bonus['bonus'], 2)
                         if bonus['unitID'] == 105:  # 百分比
-                            prefix = f"{bonus_num}% "
+                            prefix = f"<b>{bonus_num}%</b> "
                         elif bonus['unitID'] == 104:  # 倍乘
-                            prefix = f"{bonus_num}x "
+                            prefix = f"<b>{bonus_num}x</b> "
                         elif bonus['unitID'] == 139:  # 加号
-                            prefix = f"{bonus_num}+ "
+                            prefix = f"<b>{bonus_num}+</b> "
                         else:
-                            prefix = f"{bonus_num} "
+                            prefix = f"<b>{bonus_num}</b>  "
                         content = prefix + content
                     
-                    results.append((type_id, content, skill_id, bonus.get('importance', 999)))
+                    results.append((type_id, content, skill_id, bonus.get('importance', 999999), "typeBonuses"))
     
     # 按importance排序
     return sorted(results, key=lambda x: x[3])
@@ -57,6 +57,8 @@ def process_trait_data(yaml_data, cursor, language):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS traits (
         typeid INTEGER,
+        importance INTEGER,
+        bonus_type TEXT,
         content TEXT,
         skill INTEGER,
         PRIMARY KEY (typeid, content, skill)
@@ -70,9 +72,9 @@ def process_trait_data(yaml_data, cursor, language):
     for type_id, type_data in yaml_data.items():
         if 'traits' in type_data:
             traits = process_single_data(type_id, type_data['traits'], language)
-            for type_id, content, skill, _ in traits:
+            for type_id, content, skill, importance, bonus_type in traits:
                 # 逐个插入
                 cursor.execute(
-                    'INSERT OR REPLACE INTO traits (typeid, content, skill) VALUES (?, ?, ?)',
-                    (type_id, content, skill)
+                    'INSERT OR REPLACE INTO traits (typeid, importance, bonus_type, content, skill) VALUES (?, ?, ?, ?, ?)',
+                    (type_id, importance, bonus_type, content, skill)
                 )
