@@ -14,6 +14,7 @@ def process_data(yaml_data, cursor, language):
         output_material INTEGER,
         output_quantity INTEGER,
         output_material_name TEXT,
+        output_material_icon TEXT,
         PRIMARY KEY (typeid, output_material)
     )
     ''')
@@ -21,16 +22,19 @@ def process_data(yaml_data, cursor, language):
     # 清空现有数据
     cursor.execute('DELETE FROM typeMaterials')
     
-    # 创建材料名称缓存字典
-    material_names = {}
+    # 创建材料信息缓存字典
+    material_info = {}
     
-    def get_material_name(material_id):
-        """从缓存或数据库获取材料名称"""
-        if material_id not in material_names:
-            cursor.execute('SELECT name FROM types WHERE type_id = ?', (material_id,))
+    def get_material_info(material_id):
+        """从缓存或数据库获取材料信息"""
+        if material_id not in material_info:
+            cursor.execute('SELECT name, icon_filename FROM types WHERE type_id = ?', (material_id,))
             result = cursor.fetchone()
-            material_names[material_id] = result[0] if result else None
-        return material_names[material_id]
+            if result:
+                material_info[material_id] = {'name': result[0], 'icon': result[1]}
+            else:
+                material_info[material_id] = {'name': None, 'icon': None}
+        return material_info[material_id]
     
     # 处理每个物品的材料数据
     for type_id, type_data in yaml_data.items():
@@ -38,12 +42,12 @@ def process_data(yaml_data, cursor, language):
             for material in type_data['materials']:
                 material_type_id = material['materialTypeID']
                 quantity = material['quantity']
-                material_name = get_material_name(material_type_id)
+                material_data = get_material_info(material_type_id)
                 
                 # 逐行插入数据
                 cursor.execute(
                     '''INSERT OR REPLACE INTO typeMaterials 
-                       (typeid, output_material, output_quantity, output_material_name) 
-                       VALUES (?, ?, ?, ?)''',
-                    (type_id, material_type_id, quantity, material_name)
+                       (typeid, output_material, output_quantity, output_material_name, output_material_icon) 
+                       VALUES (?, ?, ?, ?, ?)''',
+                    (type_id, material_type_id, quantity, material_data['name'], material_data['icon'])
                 )
