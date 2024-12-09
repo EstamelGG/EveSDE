@@ -22,133 +22,122 @@ def create_tables(cursor):
     # 制造材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_manufacturing_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        quantity INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        quantity INTEGER
     )
     ''')
     
     # 制造产出表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_manufacturing_output (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        quantity INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        quantity INTEGER
     )
     ''')
     
     # 材料研究材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_material_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        quantity INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        quantity INTEGER
     )
     ''')
     
     # 材料研究技能表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_material_skills (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        level INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        level INTEGER
     )
     ''')
     
     # 时间研究材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_time_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        quantity INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        quantity INTEGER
     )
     ''')
     
     # 时间研究技能表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_time_skills (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        level INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        level INTEGER
     )
     ''')
     
     # 复制材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_copying_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        quantity INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        quantity INTEGER
     )
     ''')
     
     # 复制技能表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_copying_skills (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        level INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        level INTEGER
     )
     ''')
     
     # 发明材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_invention_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        quantity INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        quantity INTEGER
     )
     ''')
     
     # 发明产出表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_invention_products (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
         quantity INTEGER,
-        probability REAL,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        probability REAL
     )
     ''')
     
     # 发明技能表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_invention_skills (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER PRIMARY KEY,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
-        level INTEGER,
-        PRIMARY KEY (blueprintTypeID, typeID)
+        level INTEGER
     )
     ''')
     
