@@ -17,6 +17,7 @@ from dogmaAttributeCategories_handler import read_yaml as read_dogmaAttributeCat
     process_data as process_dogmaAttributeCategories_data
 from typeDogma_handler import read_yaml as read_typeDogma_yaml, process_data as process_typeDogma_data
 from typeMaterials_handler import read_yaml as read_typeMaterials_yaml, process_data as process_typeMaterials_data
+from blueprints_handler import read_yaml as read_blueprints_yaml, process_data as process_blueprints_data
 from icons_copy import copy_and_rename_png_files
 from update_groups_icons import update_groups_with_icon_filename
 from update_type_attributes_unit import update_type_attributes_unit
@@ -31,6 +32,7 @@ dogmaAttributes_yaml_file_path = 'Data/sde/fsd/dogmaAttributes.yaml'
 dogmaAttributeCategories_yaml_file_path = 'Data/sde/fsd/dogmaAttributeCategories.yaml'
 typeDogma_yaml_file_path = 'Data/sde/fsd/typeDogma.yaml'
 typeMaterials_yaml_file_path = 'Data/sde/fsd/typeMaterials.yaml'
+blueprints_yaml_file_path = 'Data/sde/fsd/blueprints.yaml'
 ZIP_ICONS_DEST = 'output/Icons/icons.zip'
 arch_ICONS_DEST = 'output/Icons/icons.aar'
 ICONS_DEST_DIR = 'output/Icons'
@@ -238,6 +240,9 @@ def main():
 
     print("\nProcessing typeMaterials.yaml...")  # 物品材料产出
     process_yaml_file(typeMaterials_yaml_file_path, read_typeMaterials_yaml, process_typeMaterials_data)
+
+    print("\nProcessing blueprints.yaml...")  # 蓝图数据
+    process_yaml_file(blueprints_yaml_file_path, read_blueprints_yaml, process_blueprints_data)
 
     print("\nUpdating groups...") # 给 groups 更新图标名称
     for lang in languages:
