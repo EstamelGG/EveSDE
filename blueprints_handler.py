@@ -23,8 +23,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_manufacturing_materials (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -37,8 +35,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_manufacturing_output (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -51,8 +47,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_material_materials (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -65,8 +59,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_material_skills (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -79,8 +71,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_time_materials (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -93,8 +83,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_time_skills (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -107,8 +95,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_copying_materials (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -121,8 +107,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_copying_skills (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -135,8 +119,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_invention_materials (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -149,8 +131,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_invention_products (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -164,8 +144,6 @@ def create_tables(cursor):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_invention_skills (
         blueprintTypeID INTEGER,
-        blueprintTypeName, blueprintTypeIcon TEXT,
-        blueprintTypeIcon TEXT,
         typeID INTEGER,
         typeName TEXT,
         typeIcon TEXT,
@@ -217,6 +195,7 @@ def process_data(yaml_data, cursor, language):
         blueprint_type_id = blueprint_data['blueprintTypeID']
         blueprint_type_name = get_type_name(cursor, blueprint_type_id)
         activities = blueprint_data.get('activities', {})
+        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
         
         # 记录处理时间
         times = {
@@ -241,10 +220,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = material['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_manufacturing_materials (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, material.get("quantity", -1))
+                            'INSERT OR REPLACE INTO blueprint_manufacturing_materials (blueprintTypeID, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, material.get("quantity", -1))
                         )
             # 处理产出
             if 'products' in mfg:
@@ -253,10 +231,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = product['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_manufacturing_output (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, product.get("quantity", -1))
+                            'INSERT OR REPLACE INTO blueprint_manufacturing_output (blueprintTypeID, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, product.get("quantity", -1))
                         )
         
         # 处理材料研究
@@ -269,10 +246,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = material['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_research_material_materials (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, material.get("quantity", -1))
+                            'INSERT OR REPLACE INTO blueprint_research_material_materials (blueprintTypeID, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, material.get("quantity", -1))
                         )
             # 处理技能
             if 'skills' in rm:
@@ -281,10 +257,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = skill['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_research_material_skills (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, level) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, skill.get("level", -1))
+                            'INSERT OR REPLACE INTO blueprint_research_material_skills (blueprintTypeID, typeID, typeName, typeIcon, level) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, skill.get("level", -1))
                         )
         
         # 处理时间研究
@@ -297,10 +272,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = material['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_research_time_materials (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, material.get("quantity", -1))
+                            'INSERT OR REPLACE INTO blueprint_research_time_materials (blueprintTypeID, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, material.get("quantity", -1))
                         )
             # 处理技能
             if 'skills' in rt:
@@ -309,10 +283,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = skill['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_research_time_skills (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, level) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, skill.get("level", -1))
+                            'INSERT OR REPLACE INTO blueprint_research_time_skills (blueprintTypeID, typeID, typeName, typeIcon, level) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, skill.get("level", -1))
                         )
         
         # 处理复制
@@ -325,10 +298,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = material['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_copying_materials (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, material.get("quantity", -1))
+                            'INSERT OR REPLACE INTO blueprint_copying_materials (blueprintTypeID, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, material.get("quantity", -1))
                         )
             # 处理技能
             if 'skills' in cp:
@@ -337,10 +309,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = skill['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_copying_skills (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, level) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, skill.get("level", -1))
+                            'INSERT OR REPLACE INTO blueprint_copying_skills (blueprintTypeID, typeID, typeName, typeIcon, level) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, skill.get("level", -1))
                         )
         
         # 处理发明
@@ -353,10 +324,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = material['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_invention_materials (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, material.get("quantity", -1))
+                            'INSERT OR REPLACE INTO blueprint_invention_materials (blueprintTypeID, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, material.get("quantity", -1))
                         )
             # 处理产出
             if 'products' in inv:
@@ -365,10 +335,9 @@ def process_data(yaml_data, cursor, language):
                         type_id = product['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_invention_products (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity, probability) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, product.get("quantity", -1), product.get("probability", 0))
+                            'INSERT OR REPLACE INTO blueprint_invention_products (blueprintTypeID, typeID, typeName, typeIcon, quantity, probability) VALUES (?, ?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, product.get("quantity", -1), product.get("probability", 0))
                         )
             # 处理技能
             if 'skills' in inv:
@@ -377,8 +346,7 @@ def process_data(yaml_data, cursor, language):
                         type_id = skill['typeID']
                         type_name = get_type_name(cursor, type_id)
                         typeIcon = get_type_icon(cursor, type_id)
-                        blueprintTypeIcon = get_type_icon(cursor, blueprint_type_id)
                         cursor.execute(
-                            'INSERT OR REPLACE INTO blueprint_invention_skills (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, level) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            (blueprint_type_id, blueprint_type_name, blueprintTypeIcon, type_id, type_name, typeIcon, skill.get("level", -1))
+                            'INSERT OR REPLACE INTO blueprint_invention_skills (blueprintTypeID, typeID, typeName, typeIcon, level) VALUES (?, ?, ?, ?, ?)',
+                            (blueprint_type_id, type_id, type_name, typeIcon, skill.get("level", -1))
                         )
