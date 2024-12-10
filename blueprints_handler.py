@@ -46,7 +46,21 @@ def create_tables(cursor):
         PRIMARY KEY (blueprintTypeID, typeID)
     )
     ''')
-    
+
+    # 制造技能表
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS blueprint_manufacturing_skills (
+        blueprintTypeID INTEGER,
+        blueprintTypeName TEXT,
+        blueprintTypeIcon TEXT,
+        typeID INTEGER,
+        typeName TEXT,
+        typeIcon TEXT,
+        level INTEGER,
+        PRIMARY KEY (blueprintTypeID, typeID)
+    )
+    ''')
+
     # 材料研究材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_material_materials (
@@ -195,6 +209,7 @@ def clear_tables(cursor):
         'blueprint_manufacturing_output',
         'blueprint_research_material_materials',
         'blueprint_research_material_skills',
+        'blueprint_manufacturing_skills',
         'blueprint_research_time_materials',
         'blueprint_research_time_skills',
         'blueprint_copying_materials',
@@ -261,6 +276,17 @@ def process_data(yaml_data, cursor, language):
                                 cursor.execute(
                                     'INSERT OR REPLACE INTO blueprint_manufacturing_output (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)',
                                     (blueprint_type_id, blueprint_type_name, blueprint_type_icon, type_id, type_name, type_icon, product.get("quantity", -1))
+                                )
+                    # 处理技能
+                    if 'skills' in mfg:
+                        for skill in mfg['skills']:
+                            if "typeID" in skill:
+                                type_id = skill['typeID']
+                                type_name = get_type_name(cursor, type_id)
+                                type_icon = get_type_icon(cursor, type_id)
+                                cursor.execute(
+                                    'INSERT OR REPLACE INTO blueprint_manufacturing_skills (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, level) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                                    (blueprint_type_id, blueprint_type_name, blueprint_type_icon, type_id, type_name, type_icon, skill.get("level", -1))
                                 )
                 
                 # 处理材料研究
