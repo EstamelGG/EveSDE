@@ -2,8 +2,6 @@ import os
 import shutil
 import sqlite3
 import zipfile
-import tarfile
-import gzip
 import struct
 import zlib
 from pathlib import Path
@@ -21,11 +19,14 @@ from blueprints_handler import read_yaml as read_blueprints_yaml, process_data a
 from icons_copy import copy_and_rename_png_files
 from update_groups_icons import update_groups_with_icon_filename
 from update_type_attributes_unit import update_type_attributes_unit
+from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, process_data as process_planetSchematics_data
+
 
 # 文件路径
 categories_yaml_file_path = 'Data/sde/fsd/categories.yaml'
 groups_yaml_file_path = 'Data/sde/fsd/groups.yaml'
 iconIDs_yaml_file_path = 'Data/sde/fsd/iconIDs.yaml'
+planetSchematics_yaml_file_path = 'Data/sde/fsd/planetSchematics.yaml'
 types_yaml_file_path = 'Data/sde/fsd/types.yaml'
 metaGroups_yaml_file_path = 'Data/sde/fsd/metaGroups.yaml'
 dogmaAttributes_yaml_file_path = 'Data/sde/fsd/dogmaAttributes.yaml'
@@ -213,6 +214,9 @@ def main():
     rebuild_directory("./output")
     # 依次处理每个 YAML 文件
     copy_and_rename_png_files()
+    print("\nProcessing planetSchematics.yaml...")
+    process_yaml_file(planetSchematics_yaml_file_path, read_planetSchematics_yaml, process_planetSchematics_data)
+
     print("\nProcessing iconIDs.yaml...")  # 图标ID与文件路径
     process_yaml_file(iconIDs_yaml_file_path, read_iconIDs_yaml, process_iconIDs_data)
 
