@@ -29,6 +29,15 @@ def create_tables(cursor):
         )
     ''')
 
+    # 添加新表
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS planetResourceHarvest (
+            typeid INTEGER,
+            harvest_typeid INTEGER,
+            PRIMARY KEY (typeid, harvest_typeid)
+        )
+    ''')
+
 def insert_data(data, cursor):
     """将 typeDogma.yaml 数据插入到数据库中"""
     for type_id, details in data.items():
@@ -39,6 +48,14 @@ def insert_data(data, cursor):
                     INSERT OR REPLACE INTO typeAttributes (type_id, attribute_id, value)
                     VALUES (?, ?, ?)
                 ''', (type_id, attribute['attributeID'], attribute['value']))
+                
+                # 特殊处理 attribute_id = 709 的情况
+                if attribute['attributeID'] == 709:
+                    harvest_typeid = int(attribute['value'])
+                    cursor.execute('''
+                        INSERT OR REPLACE INTO planetResourceHarvest (typeid, harvest_typeid)
+                        VALUES (?, ?)
+                    ''', (harvest_typeid, type_id))
 
         # 插入 dogmaEffects 数据
         if 'dogmaEffects' in details:
