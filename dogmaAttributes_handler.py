@@ -69,7 +69,7 @@ def format_number(value):
 def process_data(data, cursor, lang):
     """处理 dogmaAttributes 数据并插入数据库（针对单一语言）"""
     create_dogma_attributes_table(cursor)
-    unitDict = extract_display_names_from_file("Data/sde/thirdparty/dogmaunits.json")
+    unitDict = extract_display_names_from_file("Data/thirdparty/dogmaunits.json")
     for attr_id, attr_data in data.items():
         attributeID = attr_data.get('attributeID')
         unitID = attr_data.get("unitID", None)
