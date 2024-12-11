@@ -68,94 +68,6 @@ def rebuild_directory(directory_path):
     os.makedirs(output_db_dir, exist_ok=True)
     os.makedirs(output_icons_dir, exist_ok=True)
 
-
-def create_resource_package(source_dir: str, output_path: str):
-    """
-    创建一个兼容 Apple Compression API 的资源包
-
-    文件格式：
-    [文件头]
-    - 魔数 (4字节): "NPAK"
-    - 版本 (4字节): 1
-    - 文件数量 (4字节)
-
-    [文件表]
-    对每个文件：
-    - 文件名长度 (2字节)
-    - 文件名 (UTF-8)
-    - 文件偏移 (8字节)
-    - 压缩大小 (8字节)
-    - 原始大小 (8字节)
-
-    [数据区]
-    - LZFSE 压缩的文件数据
-    """
-    source_path = Path(source_dir)
-    output_path = Path(output_path)
-
-    # 获取所有PNG文件
-    png_files = list(source_path.glob("**/*.png"))
-    file_count = len(png_files)
-    print(f"找到 {file_count} 个PNG文件")
-
-    # 准备文件表和数据
-    file_table = []
-    compressed_data = []
-    current_offset = 0
-
-    # 处理每个文件
-    for png_file in png_files:
-        # 读取文件数据
-        file_data = png_file.read_bytes()
-        # 压缩数据 (使用 zlib，因为 Python 没有 LZFSE)
-        compressed = zlib.compress(file_data, level=6)
-
-        # 准备文件表项
-        relative_path = png_file.relative_to(source_path).as_posix()
-        name_bytes = relative_path.encode('utf-8')
-
-        file_table.append({
-            'name_length': len(name_bytes),
-            'name': name_bytes,
-            'offset': current_offset,
-            'compressed_size': len(compressed),
-            'original_size': len(file_data)
-        })
-
-        compressed_data.append(compressed)
-        current_offset += len(compressed)
-
-        print(f"处理: {relative_path} ({len(file_data)} -> {len(compressed)} bytes)")
-        os.remove(png_file)
-
-    # 写入文件
-    with open(output_path, 'wb') as f:
-        # 写入文件头
-        f.write(b'NPAK')  # 魔数
-        f.write(struct.pack('<I', 1))  # 版本号
-        f.write(struct.pack('<I', file_count))  # 文件数量
-
-        # 写入文件表
-        for entry in file_table:
-            f.write(struct.pack('<H', entry['name_length']))  # 文件名长度 (2字节)
-            f.write(entry['name'])  # 文件名
-            f.write(struct.pack('<Q', entry['offset']))  # 文件偏移 (8字节)
-            f.write(struct.pack('<Q', entry['compressed_size']))  # 压缩大小 (8字节)
-            f.write(struct.pack('<Q', entry['original_size']))  # 原始大小 (8字节)
-
-        # 写入压缩数据
-        for data in compressed_data:
-            f.write(data)
-
-    # 显示统计信息
-    total_original = sum(entry['original_size'] for entry in file_table)
-    total_compressed = sum(entry['compressed_size'] for entry in file_table)
-    print(f"\n打包完成: {output_path}")
-    print(f"文件数量: {file_count}")
-    print(f"原始大小: {total_original / 1024 / 1024:.1f}MB")
-    print(f"压缩大小: {total_compressed / 1024 / 1024:.1f}MB")
-    print(f"压缩比例: {total_compressed * 100 / total_original:.1f}%")
-
 def create_uncompressed_icons_zip(source_dir, zip_path):
     """
     创建一个无压缩的ZIP文件，用于存储图标
@@ -261,7 +173,6 @@ def main():
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
-    # create_resource_package(ICONS_DEST_DIR, arch_ICONS_DEST)
     print("\n所有数据库已更新。")
 
 
