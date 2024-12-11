@@ -1,0 +1,5 @@
+dogmaunits.json:各种单位。来自 https://sde.hoboleaks.space/tq/dogmaunits.json
+
+更多sde：
+https://sde.hoboleaks.space/tq/meta.json
+https://data.everef.net/reference-data/
