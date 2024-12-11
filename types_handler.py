@@ -3,6 +3,8 @@ import sqlite3
 from typeTraits_handler import process_trait_data
 import shutil
 import os
+import hashlib
+import json
 
 yaml = YAML(typ='safe')
 
@@ -16,7 +18,37 @@ def read_yaml(file_path):
         return types_data
 
 
+def load_md5_map():
+    """从文件加载MD5映射"""
+    try:
+        with open('icon_md5_map.txt', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+def save_md5_map(md5_map):
+    """保存MD5映射到文件"""
+    with open('icon_md5_map.txt', 'w', encoding='utf-8') as f:
+        json.dump(md5_map, f, ensure_ascii=False, indent=2)
+
+
+# 初始化全局字典
+icon_md5_map = load_md5_map()
+
+
+def calculate_file_md5(file_path):
+    """计算文件的MD5值"""
+    md5_hash = hashlib.md5()
+    with open(file_path, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            md5_hash.update(chunk)
+    return md5_hash.hexdigest()
+
+
 def copy_and_rename_icon(x):
+    global icon_md5_map
+    
     # 定义文件路径
     input_directory = "Data/Types"
     output_directory = "output/Icons"
@@ -29,17 +61,31 @@ def copy_and_rename_icon(x):
     # 构造输入文件完整路径
     input_path = os.path.join(input_directory, input_file)
 
-    # 检查文件是否存在
-    if os.path.exists(input_path):
-        # 构造输出文件完整路径
-        output_path = os.path.join(output_directory, output_file)
-
-        # 复制文件并重命名
-        if not os.path.exists(output_file):
-            shutil.copy(input_path, output_path)
-        return output_file
-    else:
+    # 检查源文件是否存在
+    if not os.path.exists(input_path):
         return ""
+
+    # 计算源文件的MD5
+    file_md5 = calculate_file_md5(input_path)
+    
+    # 检查MD5是否存在于映射中
+    if file_md5 in icon_md5_map:
+        # 如果存在，直接返回之前保存的文件名
+        return icon_md5_map[file_md5]
+
+    # 如果MD5不存在，进行正常的复制流程
+    output_path = os.path.join(output_directory, output_file)
+    
+    # 复制文件并重命名
+    if not os.path.exists(output_path):
+        shutil.copy(input_path, output_path)
+    
+    # 将新的MD5和文件名添加到映射中
+    icon_md5_map[file_md5] = output_file
+    # 保存更新后的映射
+    save_md5_map(icon_md5_map)
+    
+    return output_file
 
 
 def create_types_table(cursor):

@@ -1,10 +1,10 @@
 from PIL import Image
 
 # 输入图片路径
-input_image_path = "raw_icon/Appicon1024x1024.png"
+input_image_path = "app_icon/Appicon1024x1024.png"
 
 # 输出图片路径模板
-output_image_path_template = "raw_icon/Appicon{size}x{size}.png"
+output_image_path_template = "app_icon/Appicon{size}x{size}.png"
 
 # 目标尺寸列表
 sizes = [512, 256, 128, 64, 32, 16]
