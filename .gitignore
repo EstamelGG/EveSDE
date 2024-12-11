@@ -4,3 +4,4 @@
 /__pycache__/
 /.venv/
 .DS_Store
+/thirdparty_data_source/icon_from_api
