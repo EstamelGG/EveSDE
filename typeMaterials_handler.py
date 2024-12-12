@@ -26,7 +26,7 @@ def process_data(yaml_data, cursor, language):
     
     # 创建材料信息缓存字典
     material_info = {}
-    type_info = {}
+    type_info_cache = {}
     
     def get_material_info(material_id):
         """从缓存或数据库获取材料信息"""
@@ -41,22 +41,22 @@ def process_data(yaml_data, cursor, language):
     
     def get_type_info(type_id):
         """从缓存或数据库获取物品的categoryid和process_size"""
-        if type_id not in type_info:
+        if type_id not in type_info_cache:
             cursor.execute('SELECT categoryID, process_size FROM types WHERE type_id = ?', (type_id,))
             result = cursor.fetchone()
             if result:
-                type_info[type_id] = {'categoryid': result[0], 'process_size': result[1]}
+                type_info_cache[type_id] = {'categoryid': result[0], 'process_size': result[1]}
             else:
-                type_info[type_id] = {'categoryid': None, 'process_size': None}
-        return type_info[type_id]
+                type_info_cache[type_id] = {'categoryid': None, 'process_size': None}
+        return type_info_cache[type_id]
     
     # 处理每个物品的材料数据
     for type_id, type_data in yaml_data.items():
         if 'materials' in type_data:
             # 获取物品的信息
-            type_data = get_type_info(type_id)
-            category_id = type_data['categoryid']
-            process_size = type_data['process_size']
+            type_info_cache = get_type_info(type_id)
+            category_id = type_info_cache['categoryid']
+            process_size = type_info_cache['process_size']
             
             for material in type_data['materials']:
                 material_type_id = material['materialTypeID']
