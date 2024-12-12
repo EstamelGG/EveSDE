@@ -117,7 +117,8 @@ def create_types_table(cursor):
             rig_slot INTEGER,
             gun_slot INTEGER,
             miss_slot INTEGER,
-            variationParentTypeID INTEGER
+            variationParentTypeID INTEGER,
+            process_size INTEGER
         )
     ''')
 
@@ -156,6 +157,7 @@ def process_data(types_data, cursor, lang):
         metaGroupID = item.get('metaGroupID', 1)
         iconID = item.get('iconID', 0)
         groupID = item.get('groupID', 0)
+        process_size = item.get('portionSize', None)
         variationParentTypeID = item.get('variationParentTypeID', None)
         group_name = group_id_to_name.get(groupID, 'Unknown')
         category_id = group_to_category.get(groupID, 0)
@@ -183,14 +185,14 @@ def process_data(types_data, cursor, lang):
             type_id, name, description, icon_filename, published, volume, marketGroupID,
              metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
              em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot,gun_slot, miss_slot,
-             variationParentTypeID
+             variationParentTypeID, process_size
              )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             type_id, name, description, copied_file,  published, volume, marketGroupID, metaGroupID, iconID, groupID,
             group_name, category_id, category_name, pg_need,
             cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, high_slot,
-            mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID))
+            mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID, process_size))
 
     process_trait_data(types_data, cursor, lang)
 

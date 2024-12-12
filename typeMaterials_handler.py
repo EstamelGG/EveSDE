@@ -25,6 +25,7 @@ def process_data(yaml_data, cursor, language):
     
     # 创建材料信息缓存字典
     material_info = {}
+    type_info = {}
     
     def get_material_info(material_id):
         """从缓存或数据库获取材料信息"""
@@ -37,9 +38,23 @@ def process_data(yaml_data, cursor, language):
                 material_info[material_id] = {'name': None, 'icon': None}
         return material_info[material_id]
     
+    def get_type_category(type_id):
+        """从缓存或数据库获取物品的categoryid"""
+        if type_id not in type_info:
+            cursor.execute('SELECT categoryID FROM types WHERE type_id = ?', (type_id,))
+            result = cursor.fetchone()
+            if result:
+                type_info[type_id] = result[0]
+            else:
+                type_info[type_id] = None
+        return type_info[type_id]
+    
     # 处理每个物品的材料数据
     for type_id, type_data in yaml_data.items():
         if 'materials' in type_data:
+            # 获取物品的categoryid
+            category_id = get_type_category(type_id)
+            
             for material in type_data['materials']:
                 material_type_id = material['materialTypeID']
                 quantity = material['quantity']
@@ -50,5 +65,5 @@ def process_data(yaml_data, cursor, language):
                     '''INSERT OR REPLACE INTO typeMaterials 
                        (typeid, categoryid, output_material, output_quantity, output_material_name, output_material_icon) 
                        VALUES (?, ?, ?, ?, ?, ?)''',
-                    (type_id, material_type_id, quantity, material_data['name'], material_data['icon'])
+                    (type_id, category_id, material_type_id, quantity, material_data['name'], material_data['icon'])
                 )
