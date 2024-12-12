@@ -12,6 +12,7 @@ def process_data(yaml_data, cursor, language):
     CREATE TABLE IF NOT EXISTS typeMaterials (
         typeid INTEGER,
         categoryid INTEGER,
+        process_size INTEGER,
         output_material INTEGER,
         output_quantity INTEGER,
         output_material_name TEXT,
@@ -38,22 +39,24 @@ def process_data(yaml_data, cursor, language):
                 material_info[material_id] = {'name': None, 'icon': None}
         return material_info[material_id]
     
-    def get_type_category(type_id):
-        """从缓存或数据库获取物品的categoryid"""
+    def get_type_info(type_id):
+        """从缓存或数据库获取物品的categoryid和process_size"""
         if type_id not in type_info:
-            cursor.execute('SELECT categoryID FROM types WHERE type_id = ?', (type_id,))
+            cursor.execute('SELECT categoryID, process_size FROM types WHERE type_id = ?', (type_id,))
             result = cursor.fetchone()
             if result:
-                type_info[type_id] = result[0]
+                type_info[type_id] = {'categoryid': result[0], 'process_size': result[1]}
             else:
-                type_info[type_id] = None
+                type_info[type_id] = {'categoryid': None, 'process_size': None}
         return type_info[type_id]
     
     # 处理每个物品的材料数据
     for type_id, type_data in yaml_data.items():
         if 'materials' in type_data:
-            # 获取物品的categoryid
-            category_id = get_type_category(type_id)
+            # 获取物品的信息
+            type_data = get_type_info(type_id)
+            category_id = type_data['categoryid']
+            process_size = type_data['process_size']
             
             for material in type_data['materials']:
                 material_type_id = material['materialTypeID']
@@ -63,7 +66,7 @@ def process_data(yaml_data, cursor, language):
                 # 逐行插入数据
                 cursor.execute(
                     '''INSERT OR REPLACE INTO typeMaterials 
-                       (typeid, categoryid, output_material, output_quantity, output_material_name, output_material_icon) 
-                       VALUES (?, ?, ?, ?, ?, ?)''',
-                    (type_id, category_id, material_type_id, quantity, material_data['name'], material_data['icon'])
+                       (typeid, categoryid, process_size, output_material, output_quantity, output_material_name, output_material_icon) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?)''',
+                    (type_id, category_id, process_size, material_type_id, quantity, material_data['name'], material_data['icon'])
                 )
