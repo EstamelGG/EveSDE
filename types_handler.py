@@ -71,9 +71,9 @@ def copy_and_rename_icon(x):
     # 检查MD5是否存在于映射中
     if file_md5 in icon_md5_map:
         # 如果存在，直接返回之前保存的文件名
-        return icon_md5_map[file_md5]
+        output_file = icon_md5_map[file_md5]
 
-    # 如果MD5不存在，进行正常的复制流程
+    # 如果MD5没有重复，则复制为新文件
     output_path = os.path.join(output_directory, output_file)
     
     # 复制文件并重命名

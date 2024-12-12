@@ -2,9 +2,6 @@ import os
 import shutil
 import sqlite3
 import zipfile
-import struct
-import zlib
-from pathlib import Path
 from categories_handler import read_yaml as read_categories_yaml, process_data as process_categories_data
 from groups_handler import read_yaml as read_groups_yaml, process_data as process_groups_data
 from types_handler import read_yaml as read_types_yaml, process_data as process_types_data
