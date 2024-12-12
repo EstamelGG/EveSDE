@@ -6,10 +6,10 @@ yaml = YAML(typ='safe')
 # 提取所有目录信息
 
 categories_id_icon_map = {
-    0: "items_7_64_4.png",
+    0: "icon_6_64.png",
     1: "items_70_128_11.png",
     2: "items_30_64_4.png",
-    3: "items_27_64_16.png",
+    3: "icon_1932_64.png",
     4: "icon_34_64.png",
     5: "icon_29668_64.png",
     6: "items_26_64_2.png",
@@ -20,16 +20,16 @@ categories_id_icon_map = {
     11: "items_26_64_10.png",
     14: "items_modules_fleetboost_infobase.png",
     16: "icon_2403_64.png",
-    17: "items_49_64_1.png",
+    17: "icon_11068_64.png",
     18: "icon_2454_64.png",
     20: "items_40_64_16.png",
     22: "icon_33475_64.png",
-    23: "icon_21027_64.png",
+    23: "icon_17174_64.png",
     24: "items_comprfuel_amarr.png",
     25: "items_inventory_moonasteroid_r4.png",
     30: "items_inventory_cratexvishirt.png",
     32: "items_76_64_7.png",
-    34: "items_55_64_15.png",
+    34: "icon_30752_64.png",
     35: "items_55_64_11.png",
     39: "items_95_64_6.png",
     40: "icon_32458_64.png",
@@ -42,9 +42,9 @@ categories_id_icon_map = {
     66: "icon_35923_64.png",
     87: "icon_23061_64.png",
     91: "items_rewardtrack_crateskincontainer.png",
-    2100: "items_74_64_13.png",
-    2118: "items_multiple_training.png",
-    2143: "items_skillpoints_500k.png",
+    2100: "icon_57203_64.png",
+    2118: "icon_83291_64.png",
+    2143: "icon_81143_64.png",
 }
 
 
