@@ -241,7 +241,7 @@ def process_data(yaml_data, cursor, language):
                 
                 # 记录处理时间
                 times = {
-                    'manufacturing_time': activities.get('manufacturing', {}).get('time', 0),
+                    'manufacturing_time': (activities.get('manufacturing') or activities.get('reaction') or {}).get('time', 0),
                     'research_material_time': activities.get('research_material', {}).get('time', 0),
                     'research_time_time': activities.get('research_time', {}).get('time', 0),
                     'copying_time': activities.get('copying', {}).get('time', 0),
@@ -253,8 +253,11 @@ def process_data(yaml_data, cursor, language):
                 )
                 
                 # 处理制造
-                if 'manufacturing' in activities:
-                    mfg = activities['manufacturing']
+                if 'manufacturing' in activities or "reaction" in activities:
+                    if "manufacturing" in activities:
+                        mfg = activities['manufacturing']
+                    else:
+                        mfg = activities['reaction']
                     # 处理材料
                     if 'materials' in mfg:
                         for material in mfg['materials']:

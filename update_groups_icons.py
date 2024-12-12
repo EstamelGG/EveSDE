@@ -21,6 +21,7 @@ FROM types
 WHERE groupID = ? 
   AND icon_filename != "items_73_16_50.png" 
   AND icon_filename != "items_7_64_15.png" 
+  AND icon_filename != "icon_0_64.png" 
 ORDER BY metaGroupID ASC 
 LIMIT 1
         ''', (group_id_value,))
