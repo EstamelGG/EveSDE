@@ -63,7 +63,7 @@ def copy_and_rename_icon(x):
 
     # 检查源文件是否存在
     if not os.path.exists(input_path):
-        return ""
+        return "items_7_64_15.png"
 
     # 计算源文件的MD5
     file_md5 = calculate_file_md5(input_path)
@@ -73,13 +73,12 @@ def copy_and_rename_icon(x):
         # 如果存在，直接返回之前保存的文件名
         output_file = icon_md5_map[file_md5]
 
-    # 如果MD5没有重复，则复制为新文件
+    # 如果MD5没有重复，则复制一次，如果已经复制了就不再重复复制
     output_path = os.path.join(output_directory, output_file)
-    
+    if os.path.exists(output_path):
+        return output_file
     # 复制文件并重命名
-    if not os.path.exists(output_path):
-        shutil.copy(input_path, output_path)
-    
+    shutil.copy(input_path, output_path)
     # 将新的MD5和文件名添加到映射中
     icon_md5_map[file_md5] = output_file
     # 保存更新后的映射
