@@ -11,6 +11,7 @@ def process_data(yaml_data, cursor, language):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS typeMaterials (
         typeid INTEGER,
+        categoryid INTEGER,
         output_material INTEGER,
         output_quantity INTEGER,
         output_material_name TEXT,
@@ -47,7 +48,7 @@ def process_data(yaml_data, cursor, language):
                 # 逐行插入数据
                 cursor.execute(
                     '''INSERT OR REPLACE INTO typeMaterials 
-                       (typeid, output_material, output_quantity, output_material_name, output_material_icon) 
-                       VALUES (?, ?, ?, ?, ?)''',
+                       (typeid, categoryid, output_material, output_quantity, output_material_name, output_material_icon) 
+                       VALUES (?, ?, ?, ?, ?, ?)''',
                     (type_id, material_type_id, quantity, material_data['name'], material_data['icon'])
                 )
