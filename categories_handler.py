@@ -6,9 +6,9 @@ yaml = YAML(typ='safe')
 # 提取所有目录信息
 
 categories_id_icon_map = {
-    0: "icon_6_64.png",
+    0: "items_7_64_4.png",
     1: "items_70_128_11.png",
-    2: "items_30_64_4.png",
+    2: "icon_6_64.png",
     3: "icon_1932_64.png",
     4: "icon_34_64.png",
     5: "icon_29668_64.png",
