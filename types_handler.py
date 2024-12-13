@@ -96,7 +96,9 @@ def create_types_table(cursor):
             description TEXT,
             icon_filename TEXT,
             published BOOLEAN,
-            volume INTEGER,
+            volume REAL,
+            capacity REAL,
+            mass REAL,
             marketGroupID INTEGER,
             metaGroupID INTEGER,
             iconID INTEGER,
@@ -152,12 +154,14 @@ def process_data(types_data, cursor, lang):
         description = item.get('description', {}).get(lang,
                                                       item.get('description', {}).get('en', ""))  # 优先取 lang，没有则取 en
         published = item.get('published', False)
-        volume = item.get('volume', 0)
+        volume = item.get('volume', None)
         marketGroupID = item.get('marketGroupID', 0)
         metaGroupID = item.get('metaGroupID', 1)
         iconID = item.get('iconID', 0)
         groupID = item.get('groupID', 0)
         process_size = item.get('portionSize', None)
+        capacity = item.get('capacity', None)
+        mass = item.get('mass', None)
         variationParentTypeID = item.get('variationParentTypeID', None)
         group_name = group_id_to_name.get(groupID, 'Unknown')
         category_id = group_to_category.get(groupID, 0)
@@ -182,14 +186,14 @@ def process_data(types_data, cursor, lang):
         # 使用 INSERT OR IGNORE 语句，避免重复插入
         cursor.execute('''
             INSERT OR IGNORE INTO types (
-            type_id, name, description, icon_filename, published, volume, marketGroupID,
+            type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
              metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
              em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot,gun_slot, miss_slot,
              variationParentTypeID, process_size
              )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            type_id, name, description, copied_file,  published, volume, marketGroupID, metaGroupID, iconID, groupID,
+            type_id, name, description, copied_file,  published, volume, capacity, mass, marketGroupID, metaGroupID, iconID, groupID,
             group_name, category_id, category_name, pg_need,
             cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, high_slot,
             mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID, process_size))
