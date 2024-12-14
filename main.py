@@ -15,6 +15,7 @@ from typeMaterials_handler import read_yaml as read_typeMaterials_yaml, process_
 from blueprints_handler import read_yaml as read_blueprints_yaml, process_data as process_blueprints_data
 from typeSkillRequirements_handler import process_skill_requirements
 from marketGroups_handler import read_yaml as read_marketGroups_yaml, process_data as process_marketGroups_data
+from factions_handler import read_yaml as read_factions_yaml, process_data as process_factions_data
 from icons_copy import copy_and_rename_png_files
 from update_groups_icons import update_groups_with_icon_filename
 from update_type_attributes_unit import update_type_attributes_unit
@@ -34,6 +35,7 @@ typeDogma_yaml_file_path = 'Data/sde/fsd/typeDogma.yaml'
 typeMaterials_yaml_file_path = 'Data/sde/fsd/typeMaterials.yaml'
 blueprints_yaml_file_path = 'Data/sde/fsd/blueprints.yaml'
 marketGroups_yaml_file_path = 'Data/sde/fsd/marketGroups.yaml'
+factions_yaml_file_path = 'Data/sde/fsd/factions.yaml'
 ZIP_ICONS_DEST = 'output/Icons/icons.zip'
 arch_ICONS_DEST = 'output/Icons/icons.aar'
 ICONS_DEST_DIR = 'output/Icons'
@@ -140,6 +142,9 @@ def main():
 
     print("\nProcessing metaGroups.yaml...")  # 物品衍生组
     process_yaml_file(metaGroups_yaml_file_path, read_metaGroups_yaml, process_metaGroups_data)
+
+    print("\nProcessing factions.yaml...")  # 派系数据
+    process_yaml_file(factions_yaml_file_path, read_factions_yaml, process_factions_data)
 
     print("\nProcessing dogmaAttributeCategories.yaml...")  # 物品属性目录
     process_yaml_file(dogmaAttributeCategories_yaml_file_path, read_dogmaAttributeCategories_yaml,
