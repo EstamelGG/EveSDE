@@ -185,10 +185,19 @@ def main():
     process_post_updates(update_groups_with_icon_filename, "groups icons")
     
     print("\nProcessing skill requirements...")  # 处理技能需求数据
+    def process_skills(cursor, lang):
+        process_skill_requirements(cursor, lang)
+    
     for lang in languages:
-        def process_skills(cursor):
-            process_skill_requirements(cursor, lang)
-        process_post_updates(process_skills, "skill requirements")
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+        conn = sqlite3.connect(db_filename)
+        cursor = conn.cursor()
+        try:
+            process_skills(cursor, lang)
+            conn.commit()
+        finally:
+            conn.close()
+        print(f"Database {db_filename} has been updated for language: {lang}.")
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
