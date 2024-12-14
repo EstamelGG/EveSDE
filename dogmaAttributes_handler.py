@@ -74,6 +74,11 @@ def process_data(data, cursor, lang):
     """处理 dogmaAttributes 数据并插入数据库（针对单一语言）"""
     create_dogma_attributes_table(cursor)
     unitDict = extract_display_names_from_file("thirdparty_data_source/dogmaunits.json")
+    
+    # 用于存储批量插入的数据
+    batch_data = []
+    batch_size = 1000  # 每批处理的记录数
+    
     for attr_id, attr_data in data.items():
         attributeID = attr_data.get('attributeID')
         unitID = attr_data.get("unitID", None)
@@ -88,9 +93,27 @@ def process_data(data, cursor, lang):
         categoryID = attr_data.get('categoryID', 0)
         tooltipDescription = attr_data.get('tooltipDescriptionID', {}).get(lang, "")
 
-        # 插入数据
-        cursor.execute('''
+        # 添加到批处理列表
+        batch_data.append((
+            attributeID, categoryID, name, displayName, description, 
+            tooltipDescription, iconID, unitID, unitName
+        ))
+        
+        # 当达到批处理大小时执行插入
+        if len(batch_data) >= batch_size:
+            cursor.executemany('''
+                INSERT OR REPLACE INTO dogmaAttributes (
+                    attribute_id, categoryID, name, display_name, description, 
+                    tooltipDescription, iconID, unitID, unitName
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', batch_data)
+            batch_data = []  # 清空批处理列表
+    
+    # 处理剩余的数据
+    if batch_data:
+        cursor.executemany('''
             INSERT OR REPLACE INTO dogmaAttributes (
-                attribute_id, categoryID, name, display_name, description, tooltipDescription, iconID, unitID, unitName
+                attribute_id, categoryID, name, display_name, description, 
+                tooltipDescription, iconID, unitID, unitName
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (attributeID, categoryID, name, displayName, description, tooltipDescription, iconID, unitID, unitName))
+        ''', batch_data)

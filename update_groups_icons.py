@@ -49,18 +49,4 @@ def update_groups_with_icon_filename(cursor):
         SET icon_filename = ?
         WHERE group_id = ?
     ''', updates)
-    
 
-if __name__ == '__main__':
-    # 示例用法
-    db_filename = 'output/db/zh.db'
-    conn = sqlite3.connect(db_filename)
-    cursor = conn.cursor()
-    
-    try:
-        update_groups_with_icon_filename(cursor)
-        conn.commit()
-    finally:
-        conn.close()
-    
-    print(f"Database {db_filename} has been updated.")

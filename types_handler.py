@@ -281,6 +281,10 @@ def process_data(types_data, cursor, lang):
     if lang == 'en':
         npc_classification_cache.clear()
     
+    # 用于存储批量插入的数据
+    batch_data = []
+    batch_size = 1000  # 每批处理的记录数
+    
     for type_id, item in types_data.items():
         name = item['name'].get(lang, item['name'].get('en', ""))
         description = item.get('description', {}).get(lang, item.get('description', {}).get('en', ""))
@@ -329,21 +333,37 @@ def process_data(types_data, cursor, lang):
         pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, \
         high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot = res
         
-        cursor.execute('''
-            INSERT OR IGNORE INTO types (
-                type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
-                metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
-                em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
-                variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (
+        # 添加到批处理列表
+        batch_data.append((
             type_id, name, description, copied_file, published, volume, capacity, mass, marketGroupID,
             metaGroupID, iconID, groupID, group_name, category_id, category_name,
             pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
             high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID,
             process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
         ))
+        
+        # 当达到批处理大小时执行插入
+        if len(batch_data) >= batch_size:
+            cursor.executemany('''
+                INSERT OR IGNORE INTO types (
+                    type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
+                    metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
+                    em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
+                    variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', batch_data)
+            batch_data = []  # 清空批处理列表
+    
+    # 处理剩余的数据
+    if batch_data:
+        cursor.executemany('''
+            INSERT OR IGNORE INTO types (
+                type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
+                metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
+                em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
+                variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', batch_data)
 
     process_trait_data(types_data, cursor, lang)
 
