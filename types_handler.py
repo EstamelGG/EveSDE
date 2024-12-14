@@ -45,7 +45,7 @@ NPC_SHIP_FACTIONS = [
 # NPC船只类型映射
 NPC_SHIP_TYPES = [
     "Frigate",
-    "Destoryer",
+    "Destroyer",
     "Cruiser",
     "BattleCruiser",
     "Battleship",
@@ -84,7 +84,7 @@ def get_npc_ship_type(group_name, name):
     
     # 然后检查物品名称是否以指定类型结尾
     for ship_type in NPC_SHIP_TYPES:
-        if name.endswith(ship_type):
+        if name.endswith(ship_type) or group_name.endswith(ship_type):
             return ship_type
     
     return "Other"
