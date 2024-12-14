@@ -8,7 +8,7 @@
 # 更新图标
 
 1. 如果需要更新图标，则单独执行 `thirdparty_data_source/sync_icon.py`
-2. 下载好图标后，执行 `thirdparty_data_source/replace_icon.py` 与 `Data/Types` 合并
+2. 下载好图标后，执行 `thirdparty_data_source/replace_icon.py` ，使下载的图标与 `Data/Types` 合并
 
 # 制作app图标
 
