@@ -83,6 +83,8 @@ NPC_SHIP_TYPES = [
 
 # 缓存字典
 npc_classification_cache = {}
+# 势力图标缓存字典
+faction_icon_cache = {}
 
 def get_npc_ship_scene(group_name):
     """根据组名确定NPC船只场景"""
@@ -253,13 +255,18 @@ def fetch_and_process_data(cursor):
 
 def get_faction_icon(cursor, faction_name):
     """根据势力名称获取图标"""
+    global faction_icon_cache
+    
+    # 如果缓存为空，则从数据库加载所有势力图标
+    if not faction_icon_cache:
+        cursor.execute('SELECT id, iconName FROM factions')
+        for faction_id, icon_name in cursor.fetchall():
+            faction_icon_cache[faction_id] = icon_name if icon_name else "items_7_64_15.png"
+    
+    # 从映射中获取势力ID
     faction_id = NPC_FACTION_ID_MAP.get(faction_name, 0)
-    if faction_id == 0:
-        return "items_7_64_15.png"
-        
-    cursor.execute('SELECT iconName FROM factions WHERE faction_id = ?', (faction_id,))
-    result = cursor.fetchone()
-    return result[0] if result and result[0] else "items_7_64_15.png"
+    # 从缓存中获取图标
+    return faction_icon_cache.get(faction_id, "items_7_64_15.png")
 
 def process_data(types_data, cursor, lang):
     """处理 types 数据并插入数据库（针对单一语言）"""
