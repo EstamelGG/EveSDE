@@ -76,11 +76,17 @@ def get_npc_ship_faction(group_name):
             return faction
     return "Other"
 
-def get_npc_ship_type(name):
-    """根据名称确定NPC船只类型"""
+def get_npc_ship_type(group_name, name):
+    """根据组名和物品名称确定NPC船只类型"""
+    # 首先检查组名是否以Officer结尾
+    if group_name.endswith("Officer"):
+        return "Officer"
+    
+    # 然后检查物品名称是否以指定类型结尾
     for ship_type in NPC_SHIP_TYPES:
         if name.endswith(ship_type):
             return ship_type
+    
     return "Other"
 
 def read_yaml(file_path):
@@ -249,14 +255,14 @@ def process_data(types_data, cursor, lang):
         category_name = category_id_to_name.get(category_id, 'Unknown')
         
         # 处理NPC船只分类
-        npc_ship_scene = "Other"
-        npc_ship_faction = "Other"
-        npc_ship_type = "Other"
+        npc_ship_scene = None
+        npc_ship_faction = None
+        npc_ship_type = None
         
         if lang == 'en' and category_id == 11:  # 只在英文数据库中处理分类
             npc_ship_scene = get_npc_ship_scene(group_name)
             npc_ship_faction = get_npc_ship_faction(group_name)
-            npc_ship_type = get_npc_ship_type(name)
+            npc_ship_type = get_npc_ship_type(group_name, name)
             # 保存到缓存
             npc_classification_cache[type_id] = {
                 'scene': npc_ship_scene,
