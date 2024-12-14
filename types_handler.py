@@ -93,14 +93,14 @@ def get_npc_ship_scene(group_name):
     """根据组名确定NPC船只场景"""
     for scene in NPC_SHIP_SCENES:
         if group_name.startswith(scene):
-            return scene
+            return scene.strip()
     return "Other"
 
 def get_npc_ship_faction(group_name):
     """根据组名确定NPC船只势力"""
     for faction in NPC_SHIP_FACTIONS:
         if faction in group_name:
-            return faction
+            return faction.strip()
     return "Other"
 
 def get_npc_ship_type(group_name, name):
@@ -112,7 +112,7 @@ def get_npc_ship_type(group_name, name):
     # 然后检查物品名称是否以指定类型结尾
     for ship_type in NPC_SHIP_TYPES:
         if name.endswith(ship_type) or group_name.endswith(ship_type):
-            return ship_type
+            return ship_type.strip()
     
     return "Other"
 
