@@ -141,9 +141,6 @@ def main():
     print("\nProcessing metaGroups.yaml...")  # 物品衍生组
     process_yaml_file(metaGroups_yaml_file_path, read_metaGroups_yaml, process_metaGroups_data)
 
-    print("\nProcessing marketGroups.yaml...")  # 市场分组
-    process_yaml_file(marketGroups_yaml_file_path, read_marketGroups_yaml, process_marketGroups_data)
-
     print("\nProcessing dogmaAttributeCategories.yaml...")  # 物品属性目录
     process_yaml_file(dogmaAttributeCategories_yaml_file_path, read_dogmaAttributeCategories_yaml,
                       process_dogmaAttributeCategories_data)
@@ -156,6 +153,9 @@ def main():
 
     print("\nProcessing types.yaml...")  # 物品详情
     process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
+
+    print("\nProcessing marketGroups.yaml...")  # 市场分组
+    process_yaml_file(marketGroups_yaml_file_path, read_marketGroups_yaml, process_marketGroups_data)
 
     print("\nProcessing typeMaterials.yaml...")  # 物品材料产出
     process_yaml_file(typeMaterials_yaml_file_path, read_typeMaterials_yaml, process_typeMaterials_data)

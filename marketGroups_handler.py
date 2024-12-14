@@ -36,6 +36,19 @@ def process_data(yaml_data, cursor, language):
             if result:
                 icon_name = result[0]
         
+        # 如果没有找到图标，从types表中获取
+        if not icon_name:
+            cursor.execute('''
+                SELECT icon_filename 
+                FROM types 
+                WHERE marketGroupID = ? 
+                AND icon_filename IS NOT NULL 
+                LIMIT 1
+            ''', (group_id,))
+            result = cursor.fetchone()
+            if result:
+                icon_name = result[0]
+        
         # 获取父组ID
         parentgroup_id = group_data.get('parentGroupID')
         
