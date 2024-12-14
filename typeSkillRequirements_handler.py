@@ -6,8 +6,8 @@ def process_skill_requirements(cursor, language):
         typeid INTEGER,
         typename TEXT,
         typeicon TEXT,
-        groupid INTEGER,
-        groupname TEXT,
+        categoryID INTEGER,
+        category_name TEXT,
         required_skill_id INTEGER,
         required_skill_level INTEGER,
         PRIMARY KEY (typeid, required_skill_id)
@@ -29,14 +29,14 @@ def process_skill_requirements(cursor, language):
     
     # 获取所有categoryID=16的物品（技能）
     cursor.execute('''
-        SELECT type_id, name, icon_filename, groupID, group_name 
+        SELECT type_id, name, icon_filename, categoryID, category_name 
         FROM types 
     ''')
     items = cursor.fetchall()
     
     # 处理每个物品的技能需求
     for item in items:
-        type_id, type_name, type_icon, group_id, group_name = item
+        type_id, type_name, type_icon, categoryID, category_name = item
         
         # 检查每个可能的技能需求
         for skill_attr_id, level_attr_id in skill_requirements:
@@ -65,6 +65,6 @@ def process_skill_requirements(cursor, language):
                     # 插入数据
                     cursor.execute('''
                         INSERT OR REPLACE INTO typeSkillRequirement 
-                        (typeid, typename, typeicon, groupid, groupname, required_skill_id, required_skill_level)
+                        (typeid, typename, typeicon, categoryID, category_name, required_skill_id, required_skill_level)
                         VALUES (?, ?, ?, ?, ?, ?, ?)
-                    ''', (type_id, type_name, type_icon, group_id, group_name, required_skill_id, required_level)) 
+                    ''', (type_id, type_name, type_icon, categoryID, category_name, required_skill_id, required_level))
