@@ -189,9 +189,10 @@ def main():
     process_post_updates(update_type_attributes_unit, "type attributes unit")
     
     print("\nProcessing skill requirements...")  # 处理技能需求数据
-    def process_skills(cursor):
-        process_skill_requirements(cursor, lang)
-    process_post_updates(process_skills, "skill requirements")
+    for lang in languages:
+        def process_skills(cursor):
+            process_skill_requirements(cursor, lang)
+        process_post_updates(process_skills, "skill requirements")
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
