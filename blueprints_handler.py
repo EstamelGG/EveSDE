@@ -225,8 +225,6 @@ def clear_tables(cursor):
 def process_data(yaml_data, cursor, language):
     """处理YAML数据并写入数据库"""
     try:
-        print(f"开始处理蓝图数据...")
-        
         # 创建表
         create_tables(cursor)
         # 清空表

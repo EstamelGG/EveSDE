@@ -13,6 +13,7 @@ from dogmaAttributeCategories_handler import read_yaml as read_dogmaAttributeCat
 from typeDogma_handler import read_yaml as read_typeDogma_yaml, process_data as process_typeDogma_data
 from typeMaterials_handler import read_yaml as read_typeMaterials_yaml, process_data as process_typeMaterials_data
 from blueprints_handler import read_yaml as read_blueprints_yaml, process_data as process_blueprints_data
+from typeSkillRequirements_handler import process_skill_requirements
 from icons_copy import copy_and_rename_png_files
 from update_groups_icons import update_groups_with_icon_filename
 from update_type_attributes_unit import update_type_attributes_unit
@@ -167,6 +168,16 @@ def main():
         db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
         update_type_attributes_unit(db_filename)
         print(f"Updated unitID in typeAttributes table for {lang}")
+    
+    print("\nProcessing skill requirements...") # 处理技能需求数据
+    for lang in languages:
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+        conn = sqlite3.connect(db_filename)
+        cursor = conn.cursor()
+        process_skill_requirements(cursor, lang)
+        conn.commit()
+        conn.close()
+        print(f"Processed skill requirements for {lang}")
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
