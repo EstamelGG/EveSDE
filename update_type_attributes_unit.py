@@ -48,8 +48,7 @@ def update_type_attributes_unit(cursor):
             SET unitID = ?
             WHERE attribute_id = ?
         ''', updates)
-    
-    print("Updated unitID for all type attributes.")
+
 
 if __name__ == '__main__':
     # 示例用法

@@ -119,9 +119,7 @@ def read_yaml(file_path):
     start_time = time.time()
     
     with open(file_path, 'r', encoding='utf-8') as file:
-        types_data = {}
-        for part in yaml.load_all(file):
-            types_data.update(part)
+        types_data = yaml.load(file)
     
     end_time = time.time()
     print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")

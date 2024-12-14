@@ -50,7 +50,6 @@ def update_groups_with_icon_filename(cursor):
         WHERE group_id = ?
     ''', updates)
     
-    print("Updated icon_filename for all groups.")
 
 if __name__ == '__main__':
     # 示例用法
