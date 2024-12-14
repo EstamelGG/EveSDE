@@ -1,6 +1,7 @@
 import sqlite3
 import os
 from ruamel.yaml import YAML
+import time
 
 # 提取科技等级组对应的名字
 
@@ -17,8 +18,14 @@ os.makedirs(output_dir, exist_ok=True)
 
 def read_yaml(file_path):
     """读取 metaGroups.yaml 文件"""
+    start_time = time.time()
+    
     with open(file_path, 'r', encoding='utf-8') as file:
-        return yaml.load(file)
+        data = yaml.load(file)
+    
+    end_time = time.time()
+    print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
+    return data
 
 
 def create_meta_groups_table(cursor):

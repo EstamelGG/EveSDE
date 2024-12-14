@@ -1,9 +1,16 @@
 import yaml
+import time
 
 def read_yaml(file_path):
     """读取YAML文件"""
+    start_time = time.time()
+    
     with open(file_path, 'r', encoding='utf-8') as file:
-        return yaml.safe_load(file)
+        data = yaml.safe_load(file)
+    
+    end_time = time.time()
+    print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
+    return data
 
 def get_type_name(cursor, type_id):
     """从types表获取类型名称"""

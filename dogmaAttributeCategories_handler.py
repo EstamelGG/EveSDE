@@ -1,5 +1,6 @@
 from ruamel.yaml import YAML
 import sqlite3
+import time
 
 yaml = YAML(typ='safe')
 
@@ -7,11 +8,16 @@ yaml = YAML(typ='safe')
 
 def read_yaml(file_path):
     """读取 dogmaAttributeCategories.yaml 文件"""
+    start_time = time.time()
+    
     with open(file_path, 'r', encoding='utf-8') as file:
         data = {}
         for part in yaml.load_all(file):
             data.update(part)
-        return data
+    
+    end_time = time.time()
+    print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
+    return data
 
 
 def create_dogma_attribute_categories_table(cursor):

@@ -5,6 +5,7 @@ import shutil
 import os
 import hashlib
 import json
+import time
 
 yaml = YAML(typ='safe')
 
@@ -115,11 +116,16 @@ def get_npc_ship_type(group_name, name):
 
 def read_yaml(file_path):
     """读取 types.yaml 文件"""
+    start_time = time.time()
+    
     with open(file_path, 'r', encoding='utf-8') as file:
         types_data = {}
         for part in yaml.load_all(file):
             types_data.update(part)
-        return types_data
+    
+    end_time = time.time()
+    print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
+    return types_data
 
 
 def load_md5_map():
