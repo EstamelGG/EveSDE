@@ -123,6 +123,20 @@ def process_yaml_file(yaml_file_path, read_func, process_func):
 
         print(f"Database {db_filename} has been updated for language: {lang}.")
 
+def process_post_updates(process_func, description):
+    """处理后续更新操作，保持与process_yaml_file相似的处理模式"""
+    for lang in languages:
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+        conn = sqlite3.connect(db_filename)
+        cursor = conn.cursor()
+        
+        try:
+            process_func(cursor)
+            conn.commit()
+        finally:
+            conn.close()
+        
+        print(f"Database {db_filename} has been updated for language: {lang}.")
 
 def main():
     rebuild_directory("./output")
@@ -168,26 +182,16 @@ def main():
     print("\nProcessing blueprints.yaml...")  # 蓝图数据
     process_yaml_file(blueprints_yaml_file_path, read_blueprints_yaml, process_blueprints_data)
 
-    print("\nUpdating groups...") # 给 groups 更新图标名称
-    for lang in languages:
-        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
-        update_groups_with_icon_filename(db_filename)
+    print("\nUpdating groups icons...")  # 给 groups 更新图标名称
+    process_post_updates(update_groups_with_icon_filename, "groups icons")
     
-    print("\nUpdating type attributes unit...") # 更新typeAttributes表的unitID
-    for lang in languages:
-        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
-        update_type_attributes_unit(db_filename)
-        print(f"Updated unitID in typeAttributes table for {lang}")
+    print("\nUpdating type attributes unit...")  # 更新typeAttributes表的unitID
+    process_post_updates(update_type_attributes_unit, "type attributes unit")
     
-    print("\nProcessing skill requirements...") # 处理技能需求数据
-    for lang in languages:
-        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
-        conn = sqlite3.connect(db_filename)
-        cursor = conn.cursor()
+    print("\nProcessing skill requirements...")  # 处理技能需求数据
+    def process_skills(cursor):
         process_skill_requirements(cursor, lang)
-        conn.commit()
-        conn.close()
-        print(f"Processed skill requirements for {lang}")
+    process_post_updates(process_skills, "skill requirements")
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
