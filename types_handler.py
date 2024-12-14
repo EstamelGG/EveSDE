@@ -43,26 +43,26 @@ NPC_SHIP_FACTIONS = [
     "Thukker"
 ]
 
-# NPC势力ID映射
-NPC_FACTION_ID_MAP = {
-    "Angel Cartel": 500011,
-    "Blood Raider": 500012,
-    "Guristas": 500010,
-    "Mordu": 500018,
-    "Rogue Drone": 500025,
-    "Sansha": 500019,
-    "Serpentis": 500020,
-    "Overseer": 0,
-    "Sleeper": 0,
-    "Amarr Empire": 500003,
-    "Gallente Federation": 500004,
-    "Minmatar Republic": 500002,
-    "Caldari State": 500001,
-    "CONCORD": 500006,
-    "Faction": 0,
-    "Generic": 0,
-    "Khanid": 500008,
-    "Thukker": 500015
+# NPC势力ICON映射
+NPC_FACTION_ICON_MAP = {
+    "Angel Cartel": "corporations_45_128_2.png",
+    "Blood Raider": "corporations_19_128_3.png",
+    "Guristas": "corporations_28_128_3.png",
+    "Mordu": "corporations_34_128_2.png",
+    "Rogue Drone": "corporations_roguedronesgeneric.png",
+    "Sansha": "corporations_44_128_2.png",
+    "Serpentis": "corporations_45_128_1.png",
+    "Overseer": "items_73_16_50.png",  # 使用默认图标
+    "Sleeper": "corporations_48_128_1.png",
+    "Amarr Empire": "items_19_128_4.png",
+    "Gallente Federation": "items_19_128_3.png",
+    "Minmatar Republic": "items_19_128_2.png",
+    "Caldari State": "items_19_128_1.png",
+    "CONCORD": "corporations_26_128_3.png",
+    "Faction": "items_73_16_50.png",  # 使用默认图标
+    "Generic": "items_73_16_50.png",  # 使用默认图标
+    "Khanid": "corporations_11_128_1.png",
+    "Thukker": "corporations_44_128_3.png"
 }
 
 # NPC船只类型映射
@@ -258,19 +258,8 @@ def fetch_and_process_data(cursor):
     return group_to_category, category_id_to_name, group_id_to_name
 
 def get_faction_icon(cursor, faction_name):
-    """根据势力名称获取图标"""
-    global faction_icon_cache
-    
-    # 如果缓存为空，则从数据库加载所有势力图标
-    if not faction_icon_cache:
-        cursor.execute('SELECT id, iconName FROM factions')
-        for faction_id, icon_name in cursor.fetchall():
-            faction_icon_cache[faction_id] = icon_name if icon_name else "items_7_64_15.png"
-    
-    # 从映射中获取势力ID
-    faction_id = NPC_FACTION_ID_MAP.get(faction_name, 0)
-    # 从缓存中获取图标
-    return faction_icon_cache.get(faction_id, "items_7_64_15.png")
+    """根据势力名称直接获取图标"""
+    return NPC_FACTION_ICON_MAP.get(faction_name, "items_7_64_15.png")
 
 def process_data(types_data, cursor, lang):
     """处理 types 数据并插入数据库（针对单一语言）"""
