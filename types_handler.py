@@ -11,14 +11,13 @@ yaml = YAML(typ='safe')
 
 # NPC船只场景映射
 NPC_SHIP_SCENES = [
-    "Asteroid",
-    "Deadspace",
-    "FW",
-    "Ghost Site",
-    "Incursion",
-    "Mission",
-    "Drifter",
-    "Storyline"
+    "Asteroid ",
+    "Deadspace ",
+    "FW ",
+    "Ghost Site ",
+    "Incursion ",
+    "Mission ",
+    "Storyline "
 ]
 
 # NPC船只势力映射
@@ -32,6 +31,7 @@ NPC_SHIP_FACTIONS = [
     "Serpentis",
     "Overseer",
     "Sleeper",
+    "Drifter",
     "Amarr Empire",
     "Gallente Federation",
     "Minmatar Republic",
@@ -54,6 +54,7 @@ NPC_FACTION_ICON_MAP = {
     "Serpentis": "corporations_45_128_1.png",
     "Overseer": "items_73_16_50.png",  # 使用默认图标
     "Sleeper": "corporations_48_128_1.png",
+    "Drifter": "corporations_48_128_1.png",
     "Amarr Empire": "items_19_128_4.png",
     "Gallente Federation": "items_19_128_3.png",
     "Minmatar Republic": "items_19_128_2.png",
@@ -67,19 +68,20 @@ NPC_FACTION_ICON_MAP = {
 
 # NPC船只类型映射
 NPC_SHIP_TYPES = [
-    "Frigate",
-    "Destroyer",
-    "Cruiser",
-    "BattleCruiser",
-    "Battleship",
-    "Hauler",
-    "Dreadnought",
-    "Titan",
-    "Supercarrier",
-    "Carrier",
-    "Officer",
-    "Sentry",
-    "Drone"
+    " Frigate",
+    " Destroyer",
+    " Battlecruiser",
+    " Cruiser",
+    " Battleship",
+    " Hauler",
+    " Transports",
+    " Dreadnought",
+    " Titan",
+    " Supercarrier",
+    " Carrier",
+    " Officer",
+    " Sentry",
+    " Drone"
 ]
 
 # 缓存字典
