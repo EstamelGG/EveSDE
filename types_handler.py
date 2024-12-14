@@ -8,6 +8,80 @@ import json
 
 yaml = YAML(typ='safe')
 
+# NPC船只场景映射
+NPC_SHIP_SCENES = [
+    "Asteroid",
+    "Deadspace",
+    "FW",
+    "Ghost Site",
+    "Incursion",
+    "Mission",
+    "Drifter",
+    "Storyline"
+]
+
+# NPC船只势力映射
+NPC_SHIP_FACTIONS = [
+    "Angel Cartel",
+    "Blood Raider",
+    "Guristas",
+    "Mordu",
+    "Rogue Drone",
+    "Sanshas",
+    "Serpentis",
+    "Overseer",
+    "Sleeper",
+    "Amarr Empire",
+    "Gallente Federation",
+    "Minmatar Republic",
+    "Caldari State",
+    "CONCORD",
+    "Faction",
+    "Generic",
+    "Khanid",
+    "Thukker"
+]
+
+# NPC船只类型映射
+NPC_SHIP_TYPES = [
+    "Frigate",
+    "Destoryer",
+    "Cruiser",
+    "BattleCruiser",
+    "Battleship",
+    "Hauler",
+    "Dreadnought",
+    "Titan",
+    "Supercarrier",
+    "Carrier",
+    "Officer",
+    "Sentry",
+    "Drone"
+]
+
+# 缓存字典
+npc_classification_cache = {}
+
+def get_npc_ship_scene(group_name):
+    """根据组名确定NPC船只场景"""
+    for scene in NPC_SHIP_SCENES:
+        if group_name.startswith(scene):
+            return scene
+    return "Other"
+
+def get_npc_ship_faction(group_name):
+    """根据组名确定NPC船只势力"""
+    for faction in NPC_SHIP_FACTIONS:
+        if faction in group_name:
+            return faction
+    return "Other"
+
+def get_npc_ship_type(name):
+    """根据名称确定NPC船只类型"""
+    for ship_type in NPC_SHIP_TYPES:
+        if name.endswith(ship_type):
+            return ship_type
+    return "Other"
 
 def read_yaml(file_path):
     """读取 types.yaml 文件"""
@@ -120,7 +194,10 @@ def create_types_table(cursor):
             gun_slot INTEGER,
             miss_slot INTEGER,
             variationParentTypeID INTEGER,
-            process_size INTEGER
+            process_size INTEGER,
+            npc_ship_scene TEXT,
+            npc_ship_faction TEXT,
+            npc_ship_type TEXT
         )
     ''')
 
@@ -149,10 +226,14 @@ def process_data(types_data, cursor, lang):
     """处理 types 数据并插入数据库（针对单一语言）"""
     create_types_table(cursor)
     group_to_category, category_id_to_name, group_id_to_name = fetch_and_process_data(cursor)
+    
+    # 如果是英文数据库，清空缓存
+    if lang == 'en':
+        npc_classification_cache.clear()
+    
     for type_id, item in types_data.items():
-        name = item['name'].get(lang, item['name'].get('en', ""))  # 优先取 lang，没有则取 en
-        description = item.get('description', {}).get(lang,
-                                                      item.get('description', {}).get('en', ""))  # 优先取 lang，没有则取 en
+        name = item['name'].get(lang, item['name'].get('en', ""))
+        description = item.get('description', {}).get(lang, item.get('description', {}).get('en', ""))
         published = item.get('published', False)
         volume = item.get('volume', None)
         marketGroupID = item.get('marketGroupID', None)
@@ -166,37 +247,49 @@ def process_data(types_data, cursor, lang):
         group_name = group_id_to_name.get(groupID, 'Unknown')
         category_id = group_to_category.get(groupID, 0)
         category_name = category_id_to_name.get(category_id, 'Unknown')
-        copied_file = copy_and_rename_icon(type_id)  # 复制物品图像
-        # 获取 pg_need 和 cpu_need 的值
-        res = get_attributes_value(cursor, type_id, [30, 50, 1153, 114, 118, 117, 116, 14, 13, 12, 1154, 102, 101, 1367]) # 获取 pg占用 的值 (pg_need)和 cpu占用 的值 (cpu_need)
-        pg_need =  res[0]
-        cpu_need = res[1]
-        rig_cost = res[2]
-        em_damage = res[3]
-        them_damage = res[4]
-        kin_damage = res[5]
-        exp_damage = res[6]
-        high_slot = res[7]
-        mid_slot = res[8]
-        low_slot = res[9]
-        rig_slot = res[10]
-        gun_slot = res[11]
-        miss_slot = res[12]
-
-        # 使用 INSERT OR IGNORE 语句，避免重复插入
+        
+        # 处理NPC船只分类
+        npc_ship_scene = "Other"
+        npc_ship_faction = "Other"
+        npc_ship_type = "Other"
+        
+        if lang == 'en' and category_id == 11:  # 只在英文数据库中处理分类
+            npc_ship_scene = get_npc_ship_scene(group_name)
+            npc_ship_faction = get_npc_ship_faction(group_name)
+            npc_ship_type = get_npc_ship_type(name)
+            # 保存到缓存
+            npc_classification_cache[type_id] = {
+                'scene': npc_ship_scene,
+                'faction': npc_ship_faction,
+                'type': npc_ship_type
+            }
+        elif type_id in npc_classification_cache:  # 其他语言从缓存获取
+            cached_data = npc_classification_cache[type_id]
+            npc_ship_scene = cached_data['scene']
+            npc_ship_faction = cached_data['faction']
+            npc_ship_type = cached_data['type']
+        
+        copied_file = copy_and_rename_icon(type_id)
+        res = get_attributes_value(cursor, type_id, [30, 50, 1153, 114, 118, 117, 116, 14, 13, 12, 1154, 102, 101])
+        
+        pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, \
+        high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot = res
+        
         cursor.execute('''
             INSERT OR IGNORE INTO types (
-            type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
-             metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
-             em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot,gun_slot, miss_slot,
-             variationParentTypeID, process_size
-             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
+                metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
+                em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
+                variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            type_id, name, description, copied_file,  published, volume, capacity, mass, marketGroupID, metaGroupID, iconID, groupID,
-            group_name, category_id, category_name, pg_need,
-            cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, high_slot,
-            mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID, process_size))
+            type_id, name, description, copied_file, published, volume, capacity, mass, marketGroupID,
+            metaGroupID, iconID, groupID, group_name, category_id, category_name,
+            pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
+            high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID,
+            process_size, npc_ship_scene, npc_ship_faction, npc_ship_type
+        ))
 
     process_trait_data(types_data, cursor, lang)
 
