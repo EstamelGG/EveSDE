@@ -17,7 +17,8 @@ NPC_SHIP_SCENES = [
     "Ghost Site ",
     "Incursion ",
     "Mission ",
-    "Storyline "
+    "Storyline ",
+    "Abyssal "
 ]
 
 # NPC船只势力映射
