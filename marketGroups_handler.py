@@ -1,17 +1,39 @@
 import yaml
+from collections import defaultdict
 
 def read_yaml(file_path):
     """读取YAML文件"""
     with open(file_path, 'r', encoding='utf-8') as file:
         return yaml.safe_load(file)
 
-def get_child_groups(cursor, parent_group_id):
-    """获取指定组的所有直接子组"""
-    cursor.execute('SELECT group_id FROM marketGroups WHERE parentgroup_id = ?', (parent_group_id,))
-    return [row[0] for row in cursor.fetchall()]
+def build_group_hierarchies(cursor):
+    """构建组层级关系和组信息的缓存"""
+    # 获取所有组的层级关系
+    cursor.execute('SELECT group_id, parentgroup_id, icon_name FROM marketGroups')
+    results = cursor.fetchall()
+    
+    # 构建父子关系映射
+    children_map = defaultdict(list)
+    group_info = {}
+    for group_id, parent_id, icon_name in results:
+        if parent_id is not None:
+            children_map[parent_id].append(group_id)
+        group_info[group_id] = {'icon_name': icon_name}
+    
+    return children_map, group_info
 
-def get_icon_from_children(cursor, group_id, visited=None):
-    """递归查找子组的图标"""
+def build_group_items_map(cursor):
+    """构建组与物品数量的映射"""
+    cursor.execute('''
+        SELECT marketGroupID, COUNT(*) as count 
+        FROM types 
+        WHERE marketGroupID IS NOT NULL 
+        GROUP BY marketGroupID
+    ''')
+    return dict(cursor.fetchall())
+
+def get_icon_for_group(group_id, children_map, group_info, visited=None):
+    """使用缓存的数据递归查找组的图标"""
     if visited is None:
         visited = set()
     
@@ -19,25 +41,21 @@ def get_icon_from_children(cursor, group_id, visited=None):
         return None
     visited.add(group_id)
     
-    # 获取所有子组
-    child_groups = get_child_groups(cursor, group_id)
+    # 检查当前组的图标
+    current_icon = group_info[group_id]['icon_name']
+    if current_icon:
+        return current_icon
     
-    for child_id in child_groups:
-        # 检查子组是否有图标
-        cursor.execute('SELECT icon_name FROM marketGroups WHERE group_id = ?', (child_id,))
-        result = cursor.fetchone()
-        if result and result[0]:
-            return result[0]
-        
-        # 递归检查子组的子组
-        child_icon = get_icon_from_children(cursor, child_id, visited)
+    # 检查子组的图标
+    for child_id in children_map[group_id]:
+        child_icon = get_icon_for_group(child_id, children_map, group_info, visited)
         if child_icon:
             return child_icon
     
     return None
 
-def check_group_has_items(cursor, group_id, visited=None):
-    """递归检查组及其子组是否包含物品"""
+def check_group_has_items_cached(group_id, children_map, items_map, visited=None):
+    """使用缓存的数据递归检查组是否包含物品"""
     if visited is None:
         visited = set()
     
@@ -46,14 +64,12 @@ def check_group_has_items(cursor, group_id, visited=None):
     visited.add(group_id)
     
     # 检查当前组是否有物品
-    cursor.execute('SELECT COUNT(*) FROM types WHERE marketGroupID = ?', (group_id,))
-    if cursor.fetchone()[0] > 0:
+    if items_map.get(group_id, 0) > 0:
         return True
     
     # 检查子组
-    child_groups = get_child_groups(cursor, group_id)
-    for child_id in child_groups:
-        if check_group_has_items(cursor, child_id, visited):
+    for child_id in children_map[group_id]:
+        if check_group_has_items_cached(child_id, children_map, items_map, visited):
             return True
     
     return False
@@ -76,6 +92,7 @@ def process_data(yaml_data, cursor, language):
     cursor.execute('DELETE FROM marketGroups')
     
     # 处理每个市场组
+    insert_data = []
     for group_id, group_data in yaml_data.items():
         # 获取当前语言的名称和描述
         name = group_data.get('nameID', {}).get(language, '')
@@ -106,37 +123,46 @@ def process_data(yaml_data, cursor, language):
         # 获取父组ID
         parentgroup_id = group_data.get('parentGroupID')
         
-        # 插入数据
-        cursor.execute('''
-            INSERT OR REPLACE INTO marketGroups 
-            (group_id, name, description, icon_name, parentgroup_id)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (group_id, name, description, icon_name, parentgroup_id))
+        # 收集插入数据
+        insert_data.append((group_id, name, description, icon_name, parentgroup_id))
+    
+    # 批量插入数据
+    cursor.executemany('''
+        INSERT OR REPLACE INTO marketGroups 
+        (group_id, name, description, icon_name, parentgroup_id)
+        VALUES (?, ?, ?, ?, ?)
+    ''', insert_data)
+    
+    # 构建缓存数据
+    children_map, group_info = build_group_hierarchies(cursor)
+    items_map = build_group_items_map(cursor)
     
     # 后处理：处理图标继承
-    cursor.execute('SELECT group_id FROM marketGroups WHERE icon_name IS NULL')
-    groups_without_icon = cursor.fetchall()
+    updates_icon = []
+    for group_id in group_info:
+        if not group_info[group_id]['icon_name']:
+            icon_name = get_icon_for_group(group_id, children_map, group_info)
+            if not icon_name:
+                icon_name = 'items_73_16_50.png'
+            updates_icon.append((icon_name, group_id))
     
-    for (group_id,) in groups_without_icon:
-        # 尝试从子组获取图标
-        icon_name = get_icon_from_children(cursor, group_id)
-        if not icon_name:
-            icon_name = 'items_73_16_50.png'  # 默认图标
-        
-        cursor.execute('''
+    # 批量更新图标
+    if updates_icon:
+        cursor.executemany('''
             UPDATE marketGroups 
             SET icon_name = ? 
             WHERE group_id = ?
-        ''', (icon_name, group_id))
+        ''', updates_icon)
     
     # 后处理：检查显示状态
-    cursor.execute('SELECT group_id FROM marketGroups')
-    all_groups = cursor.fetchall()
+    updates_show = []
+    for group_id in group_info:
+        should_show = check_group_has_items_cached(group_id, children_map, items_map)
+        updates_show.append((should_show, group_id))
     
-    for (group_id,) in all_groups:
-        should_show = check_group_has_items(cursor, group_id)
-        cursor.execute('''
-            UPDATE marketGroups 
-            SET show = ? 
-            WHERE group_id = ?
-        ''', (should_show, group_id))
+    # 批量更新显示状态
+    cursor.executemany('''
+        UPDATE marketGroups 
+        SET show = ? 
+        WHERE group_id = ?
+    ''', updates_show)
