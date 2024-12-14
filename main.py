@@ -18,7 +18,6 @@ from marketGroups_handler import read_yaml as read_marketGroups_yaml, process_da
 from factions_handler import read_yaml as read_factions_yaml, process_data as process_factions_data
 from icons_copy import copy_and_rename_png_files
 from update_groups_icons import update_groups_with_icon_filename
-from update_type_attributes_unit import update_type_attributes_unit
 from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, process_data as process_planetSchematics_data
 
 
@@ -184,9 +183,6 @@ def main():
 
     print("\nUpdating groups icons...")  # 给 groups 更新图标名称
     process_post_updates(update_groups_with_icon_filename, "groups icons")
-    
-    print("\nUpdating type attributes unit...")  # 更新typeAttributes表的unitID
-    process_post_updates(update_type_attributes_unit, "type attributes unit")
     
     print("\nProcessing skill requirements...")  # 处理技能需求数据
     for lang in languages:
