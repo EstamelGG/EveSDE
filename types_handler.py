@@ -155,7 +155,7 @@ def process_data(types_data, cursor, lang):
                                                       item.get('description', {}).get('en', ""))  # 优先取 lang，没有则取 en
         published = item.get('published', False)
         volume = item.get('volume', None)
-        marketGroupID = item.get('marketGroupID', 0)
+        marketGroupID = item.get('marketGroupID', None)
         metaGroupID = item.get('metaGroupID', 1)
         iconID = item.get('iconID', 0)
         groupID = item.get('groupID', 0)

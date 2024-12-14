@@ -114,6 +114,7 @@ def process_data(yaml_data, cursor, language):
                 FROM types 
                 WHERE marketGroupID = ? 
                 AND icon_filename IS NOT NULL 
+                ORDER BY metaGroupID 
                 LIMIT 1
             ''', (group_id,))
             result = cursor.fetchone()
