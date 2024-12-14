@@ -27,7 +27,7 @@ NPC_SHIP_FACTIONS = [
     "Guristas",
     "Mordu",
     "Rogue Drone",
-    "Sanshas",
+    "Sansha",
     "Serpentis",
     "Overseer",
     "Sleeper",
