@@ -48,18 +48,3 @@ def update_type_attributes_unit(cursor):
             SET unitID = ?
             WHERE attribute_id = ?
         ''', updates)
-
-
-if __name__ == '__main__':
-    # 示例用法
-    db_path = 'output/db/zh.db'
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-    
-    try:
-        update_type_attributes_unit(cursor)
-        conn.commit()
-    finally:
-        conn.close()
-    
-    print(f"Database {db_path} has been updated.") 
