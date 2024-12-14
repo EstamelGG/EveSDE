@@ -106,7 +106,6 @@ def create_types_table(cursor):
             group_name TEXT,
             categoryID INTEGER,
             category_name TEXT,
-            sofFactionName TEXT,
             pg_need INTEGER,
             cpu_need INTEGER,
             rig_cost INTEGER,
@@ -163,7 +162,6 @@ def process_data(types_data, cursor, lang):
         process_size = item.get('portionSize', None)
         capacity = item.get('capacity', None)
         mass = item.get('mass', None)
-        sofFactionName = item.get('sofFactionName', None)
         variationParentTypeID = item.get('variationParentTypeID', None)
         group_name = group_id_to_name.get(groupID, 'Unknown')
         category_id = group_to_category.get(groupID, 0)
@@ -189,14 +187,14 @@ def process_data(types_data, cursor, lang):
         cursor.execute('''
             INSERT OR IGNORE INTO types (
             type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
-             metaGroupID, iconID, groupID, group_name, categoryID, category_name, sofFactionName, pg_need, cpu_need, rig_cost,
+             metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
              em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot,gun_slot, miss_slot,
              variationParentTypeID, process_size
              )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             type_id, name, description, copied_file,  published, volume, capacity, mass, marketGroupID, metaGroupID, iconID, groupID,
-            group_name, category_id, category_name, sofFactionName, pg_need,
+            group_name, category_id, category_name, pg_need,
             cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, high_slot,
             mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID, process_size))
 
