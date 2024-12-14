@@ -42,6 +42,28 @@ NPC_SHIP_FACTIONS = [
     "Thukker"
 ]
 
+# NPC势力ID映射
+NPC_FACTION_ID_MAP = {
+    "Angel Cartel": 500011,
+    "Blood Raider": 500012,
+    "Guristas": 500010,
+    "Mordu": 500018,
+    "Rogue Drone": 500025,
+    "Sansha": 500019,
+    "Serpentis": 500020,
+    "Overseer": 0,
+    "Sleeper": 0,
+    "Amarr Empire": 500003,
+    "Gallente Federation": 500004,
+    "Minmatar Republic": 500002,
+    "Caldari State": 500001,
+    "CONCORD": 500006,
+    "Faction": 0,
+    "Generic": 0,
+    "Khanid": 500008,
+    "Thukker": 500015
+}
+
 # NPC船只类型映射
 NPC_SHIP_TYPES = [
     "Frigate",
@@ -203,7 +225,8 @@ def create_types_table(cursor):
             process_size INTEGER,
             npc_ship_scene TEXT,
             npc_ship_faction TEXT,
-            npc_ship_type TEXT
+            npc_ship_type TEXT,
+            npc_ship_faction_icon TEXT
         )
     ''')
 
@@ -227,6 +250,16 @@ def fetch_and_process_data(cursor):
     group_id_to_name = {group_id: name for group_id, name, _ in groups_data}
 
     return group_to_category, category_id_to_name, group_id_to_name
+
+def get_faction_icon(cursor, faction_name):
+    """根据势力名称获取图标"""
+    faction_id = NPC_FACTION_ID_MAP.get(faction_name, 0)
+    if faction_id == 0:
+        return "items_7_64_15.png"
+        
+    cursor.execute('SELECT iconName FROM factions WHERE faction_id = ?', (faction_id,))
+    result = cursor.fetchone()
+    return result[0] if result and result[0] else "items_7_64_15.png"
 
 def process_data(types_data, cursor, lang):
     """处理 types 数据并插入数据库（针对单一语言）"""
@@ -258,22 +291,26 @@ def process_data(types_data, cursor, lang):
         npc_ship_scene = None
         npc_ship_faction = None
         npc_ship_type = None
+        npc_ship_faction_icon = None
         
         if lang == 'en' and category_id == 11:  # 只在英文数据库中处理分类
             npc_ship_scene = get_npc_ship_scene(group_name)
             npc_ship_faction = get_npc_ship_faction(group_name)
             npc_ship_type = get_npc_ship_type(group_name, name)
+            npc_ship_faction_icon = get_faction_icon(cursor, npc_ship_faction)
             # 保存到缓存
             npc_classification_cache[type_id] = {
                 'scene': npc_ship_scene,
                 'faction': npc_ship_faction,
-                'type': npc_ship_type
+                'type': npc_ship_type,
+                'faction_icon': npc_ship_faction_icon
             }
         elif type_id in npc_classification_cache:  # 其他语言从缓存获取
             cached_data = npc_classification_cache[type_id]
             npc_ship_scene = cached_data['scene']
             npc_ship_faction = cached_data['faction']
             npc_ship_type = cached_data['type']
+            npc_ship_faction_icon = cached_data['faction_icon']
         
         copied_file = copy_and_rename_icon(type_id)
         res = get_attributes_value(cursor, type_id, [30, 50, 1153, 114, 118, 117, 116, 14, 13, 12, 1154, 102, 101])
@@ -286,15 +323,15 @@ def process_data(types_data, cursor, lang):
                 type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
                 metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
                 em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
-                variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type
+                variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             type_id, name, description, copied_file, published, volume, capacity, mass, marketGroupID,
             metaGroupID, iconID, groupID, group_name, category_id, category_name,
             pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
             high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID,
-            process_size, npc_ship_scene, npc_ship_faction, npc_ship_type
+            process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
         ))
 
     process_trait_data(types_data, cursor, lang)
