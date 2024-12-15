@@ -5,6 +5,7 @@ except ImportError:
     from yaml import SafeLoader
 import time
 from cache_manager import register_cache_cleaner
+from collections import defaultdict
 
 # 用于缓存数据的全局变量
 _cached_data = None
@@ -15,7 +16,7 @@ def clear_cache():
     _cached_data = None
 
 # 注册缓存清理函数
-register_cache_cleaner('marketGroups', clear_cache)
+register_cache_cleaner('marketGroups_handler', clear_cache)
 
 def read_yaml(file_path):
     """读取 marketGroups.yaml 文件并返回数据"""
