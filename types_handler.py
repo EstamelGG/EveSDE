@@ -352,6 +352,7 @@ def process_data(types_data, cursor, lang):
         try:
             # 对于非英文数据库，从英文数据库复制表
             cursor.execute('DROP TABLE IF EXISTS types')
+            cursor.execute('DROP TABLE IF EXISTS typeTraits')
             
             # 从英文数据库复制表结构和数据
             cursor.execute('ATTACH DATABASE "output/db/item_db_en.sqlite" AS en_db')
@@ -359,6 +360,11 @@ def process_data(types_data, cursor, lang):
             cursor.execute('''
                 CREATE TABLE types AS 
                 SELECT * FROM en_db.types
+            ''')
+            
+            cursor.execute('''
+                CREATE TABLE typeTraits AS 
+                SELECT * FROM en_db.typeTraits
             ''')
             
             # 更新非英文的 name 和 description

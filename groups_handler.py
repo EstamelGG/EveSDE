@@ -15,7 +15,7 @@ def clear_cache():
     _cached_data = None
 
 # 注册缓存清理函数
-register_cache_cleaner('groups_handler', clear_cache)
+register_cache_cleaner('groups', clear_cache)
 
 def read_yaml(file_path):
     """读取 groups.yaml 文件并返回数据"""

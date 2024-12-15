@@ -1,11 +1,12 @@
 import sqlite3
 import os
+from ruamel.yaml import YAML
+import time
 import yaml
 try:
     from yaml import CSafeLoader as SafeLoader
 except ImportError:
     from yaml import SafeLoader
-import time
 from cache_manager import register_cache_cleaner
 
 # 用于缓存数据的全局变量
@@ -17,7 +18,11 @@ def clear_cache():
     _cached_data = None
 
 # 注册缓存清理函数
-register_cache_cleaner('metaGroups_handler', clear_cache)
+register_cache_cleaner('metaGroups', clear_cache)
+
+# 提取科技等级组对应的名字
+
+yaml = YAML(typ='safe')
 
 # 定义语言列表
 languages = ['de', 'en', 'es', 'fr', 'ja', 'ko', 'ru', 'zh']
@@ -26,6 +31,7 @@ languages = ['de', 'en', 'es', 'fr', 'ja', 'ko', 'ru', 'zh']
 meta_groups_yaml_file_path = 'Data/sde/fsd/metaGroups.yaml'
 output_dir = 'output/db'
 os.makedirs(output_dir, exist_ok=True)
+
 
 def read_yaml(file_path):
     """读取 metaGroups.yaml 文件并返回数据"""
@@ -40,6 +46,7 @@ def read_yaml(file_path):
     print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
     return _cached_data
 
+
 def create_meta_groups_table(cursor):
     """创建 metaGroups 表"""
     cursor.execute('''
@@ -48,6 +55,7 @@ def create_meta_groups_table(cursor):
             name TEXT
         )
     ''')
+
 
 def process_data(meta_groups_data, cursor, lang):
     """处理 metaGroups 数据并插入数据库（针对单一语言）"""
@@ -62,6 +70,7 @@ def process_data(meta_groups_data, cursor, lang):
             INSERT OR IGNORE INTO metaGroups (metagroup_id, name)
             VALUES (?, ?)
         ''', (metagroup_id, name))
+
 
 def process_yaml_file(yaml_file_path, languages, output_dir):
     """处理 metaGroups.yaml 文件并写入数据库"""
@@ -84,11 +93,13 @@ def process_yaml_file(yaml_file_path, languages, output_dir):
 
         print(f"Database {db_filename} has been updated for language: {lang}.")
 
+
 def main():
     """主函数"""
     print("Processing metaGroups.yaml...")
     process_yaml_file(meta_groups_yaml_file_path, languages, output_dir)
     print("\nAll metaGroups databases have been updated.")
+
 
 if __name__ == "__main__":
     main()

@@ -1,11 +1,9 @@
-import yaml
-try:
-    from yaml import CSafeLoader as SafeLoader
-except ImportError:
-    from yaml import SafeLoader
+from ruamel.yaml import YAML
 import os
 import time
 from cache_manager import register_cache_cleaner
+
+yaml = YAML(typ='safe')
 
 # 用于缓存数据的全局变量
 _cached_data = None
@@ -16,9 +14,10 @@ def clear_cache():
     _cached_data = None
 
 # 注册缓存清理函数
-register_cache_cleaner('categories_handler', clear_cache)
+register_cache_cleaner('categories', clear_cache)
 
 # 提取所有目录信息
+
 categories_id_icon_map = {
     0: "items_7_64_4.png",
     1: "items_70_128_11.png",
@@ -61,6 +60,7 @@ categories_id_icon_map = {
     2143: "icon_81143_64.png",
 }
 
+
 def read_yaml(file_path):
     """读取 categories.yaml 文件并返回数据"""
     start_time = time.time()
@@ -74,6 +74,7 @@ def read_yaml(file_path):
     print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
     return _cached_data
 
+
 def create_categories_table(cursor):
     """创建 categories 表"""
     cursor.execute('''
@@ -85,6 +86,7 @@ def create_categories_table(cursor):
             published BOOLEAN
         )
     ''')
+
 
 def process_data(categories_data, cursor, lang):
     """处理 categories 数据并插入数据库（针对单一语言）"""

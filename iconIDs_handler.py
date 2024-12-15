@@ -1,11 +1,9 @@
-import yaml
-try:
-    from yaml import CSafeLoader as SafeLoader
-except ImportError:
-    from yaml import SafeLoader
+from ruamel.yaml import YAML
 import os
 import time
 from cache_manager import register_cache_cleaner
+
+yaml = YAML(typ='safe')
 
 # 定义源和目标目录
 ICONS_SOURCE_DIR = 'Data/Icons/items'
@@ -28,6 +26,7 @@ icon_path_map = {
     "/UI/Texture/Icons/Triglavian/": "items_Triglavian",
     "/ui/texture/corps/": "corporations",
     "/ui/texture/icons/": "items"
+
 }
 
 # 用于缓存数据的全局变量
@@ -39,7 +38,7 @@ def clear_cache():
     _cached_data = None
 
 # 注册缓存清理函数
-register_cache_cleaner('iconIDs_handler', clear_cache)
+register_cache_cleaner('iconIDs', clear_cache)
 
 def read_yaml(file_path):
     """读取 iconIDs.yaml 文件并返回数据"""
