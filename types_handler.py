@@ -347,9 +347,9 @@ def get_wormhole_size_type(max_jump_mass, lang):
     if not max_jump_mass:
         return None
     
-    mass = float(max_jump_mass)
+    # 直接使用浮点数进行比较
     for threshold, size_map in sorted(WORMHOLE_SIZE_MAP.items(), reverse=True):
-        if mass >= threshold:
+        if max_jump_mass >= threshold:
             return size_map["zh" if lang == "zh" else "other"]
     return None
 
@@ -378,16 +378,21 @@ def process_wormhole_data(cursor, type_id, name, description, lang):
     # 处理目标
     target = get_wormhole_target(target_value, name, lang)
     
-    # 处理稳定时间（转换为小时）
+    # 先进行数值计算
     if stable_time:
-        stable_time = format_number(float(stable_time)/60, "h")
+        stable_time = float(stable_time) / 60  # 转换为小时
+    if max_stable_mass:
+        max_stable_mass = float(max_stable_mass)  # 转换为浮点数
+    if max_jump_mass:
+        max_jump_mass = float(max_jump_mass)  # 转换为浮点数
     
-    # 处理质量数据
+    # 获取尺寸类型（在格式化之前）
+    size_type = get_wormhole_size_type(max_jump_mass, lang)
+    
+    # 格式化并添加单位
+    stable_time = format_number(stable_time, "h") if stable_time else None
     max_stable_mass = format_number(max_stable_mass, "Kg") if max_stable_mass else None
     max_jump_mass = format_number(max_jump_mass, "Kg") if max_jump_mass else None
-    
-    # 获取尺寸类型
-    size_type = get_wormhole_size_type(max_jump_mass.rstrip("Kg") if max_jump_mass else None, lang)
     
     # 插入数据
     cursor.execute('''
