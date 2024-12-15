@@ -22,6 +22,7 @@ from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, p
 from stations_handler import read_stations_yaml, process_data as process_stations_data
 from regions_handler import read_yaml as read_regions_yaml, process_data as process_regions_data
 from invUniqueNames_handler import read_yaml as read_invUniqueNames_yaml, process_data as process_invUniqueNames_data
+from cache_manager import clear_all_caches, clear_cache
 
 
 # 文件路径
@@ -126,6 +127,10 @@ def process_yaml_file(yaml_file_path, read_func, process_func):
         conn.close()
 
         print(f"Database {db_filename} has been updated for language: {lang}.")
+    
+    # 处理完所有语言后清理该模块的缓存
+    module_name = process_func.__module__.split('.')[0]
+    clear_cache(module_name)
 
 def process_post_updates(process_func, description):
     """处理后续更新操作，保持与process_yaml_file相似的处理模式"""
@@ -143,6 +148,9 @@ def process_post_updates(process_func, description):
         print(f"Database {db_filename} has been updated for language: {lang}.")
 
 def main():
+    # 在开始处理之前清理所有缓存
+    clear_all_caches()
+    
     rebuild_directory("./output")
     # 依次处理每个 YAML 文件
     copy_and_rename_png_files()
