@@ -1,4 +1,8 @@
-from ruamel.yaml import YAML
+import yaml
+try:
+    from yaml import CSafeLoader as SafeLoader
+except ImportError:
+    from yaml import SafeLoader
 import sqlite3
 from typeTraits_handler import process_trait_data
 import shutil
@@ -6,8 +10,6 @@ import os
 import hashlib
 import json
 import time
-
-yaml = YAML(typ='safe')
 
 # NPC船只场景映射
 NPC_SHIP_SCENES = [
@@ -122,7 +124,7 @@ def read_yaml(file_path):
     start_time = time.time()
     
     with open(file_path, 'r', encoding='utf-8') as file:
-        types_data = yaml.load(file)
+        types_data = yaml.load(file, Loader=SafeLoader)
     
     end_time = time.time()
     print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")

@@ -1,16 +1,18 @@
 import sqlite3
-from ruamel.yaml import YAML
+import yaml
+try:
+    from yaml import CSafeLoader as SafeLoader
+except ImportError:
+    from yaml import SafeLoader
 import time
 
-# 解析 YAML 文件
-yaml = YAML(typ='safe')
 
 def read_yaml(file_path):
     """读取 typeDogma.yaml 文件并返回数据"""
     start_time = time.time()
     
     with open(file_path, 'r', encoding='utf-8') as file:
-        data = yaml.load(file)
+        data = yaml.load(file, Loader=SafeLoader)
     
     end_time = time.time()
     print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
