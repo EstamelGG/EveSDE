@@ -334,6 +334,7 @@ def create_wormholes_table(cursor):
             type_id INTEGER PRIMARY KEY,
             name TEXT,
             description TEXT,
+            icon TEXT,
             target TEXT,
             stable_time TEXT,
             max_stable_mass TEXT,
@@ -356,11 +357,11 @@ def get_wormhole_size_type(max_jump_mass, lang):
 def get_wormhole_target(target_value, name, lang):
     """获取虫洞目标描述"""
     # 特殊处理 K162
-    if name == "K162":
+    if "K162" in name:
         return "出口虫洞" if lang == "zh" else "Exit WH"
     
     # 特殊处理 U372
-    if name == "U372":
+    if "U372" in name:
         return "0.0 无人机星域" if lang == "zh" else "Null-Sec Drone Regions"
     
     # 处理常规映射
@@ -369,7 +370,7 @@ def get_wormhole_target(target_value, name, lang):
     
     return "Unknown"
 
-def process_wormhole_data(cursor, type_id, name, description, lang):
+def process_wormhole_data(cursor, type_id, name, description, icon, lang):
     """处理虫洞数据"""
     # 获取虫洞属性
     attributes = get_attributes_value(cursor, type_id, [1381, 1382, 1383, 1385])
@@ -397,11 +398,11 @@ def process_wormhole_data(cursor, type_id, name, description, lang):
     # 插入数据
     cursor.execute('''
         INSERT OR IGNORE INTO wormholes (
-            type_id, name, description, target, stable_time, 
+            type_id, name, description, icon, target, stable_time, 
             max_stable_mass, max_jump_mass, size_type
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
-        type_id, name, description, target, stable_time,
+        type_id, name, description, icon, target, stable_time,
         max_stable_mass, max_jump_mass, size_type
     ))
 
@@ -469,7 +470,7 @@ def process_data(types_data, cursor, lang):
         
         # 处理虫洞数据
         if groupID == 988:
-            process_wormhole_data(cursor, type_id, name, description, lang)
+            process_wormhole_data(cursor, type_id, name, description, copied_file, lang)
             
         # 添加到批处理列表
         batch_data.append((
