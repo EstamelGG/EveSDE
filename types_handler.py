@@ -271,89 +271,90 @@ def process_data(types_data, cursor, lang):
     try:
         print(f"开始处理 {lang} 语言的数据库...")
         
+        # 创建新表
+        cursor.execute('DROP TABLE IF EXISTS types')
+        cursor.execute('''
+            CREATE TABLE types (
+                type_id INTEGER PRIMARY KEY,
+                name TEXT,
+                description TEXT,
+                icon_filename TEXT,
+                published BOOLEAN,
+                volume REAL,
+                capacity REAL,
+                mass REAL,
+                marketGroupID INTEGER,
+                metaGroupID INTEGER,
+                iconID INTEGER,
+                groupID INTEGER,
+                group_name TEXT,
+                categoryID INTEGER,
+                category_name TEXT,
+                pg_need INTEGER,
+                cpu_need INTEGER,
+                rig_cost INTEGER,
+                em_damage REAL,
+                them_damage REAL,
+                kin_damage REAL,
+                exp_damage REAL,
+                high_slot INTEGER,
+                mid_slot INTEGER,
+                low_slot INTEGER,
+                rig_slot INTEGER,
+                gun_slot INTEGER,
+                miss_slot INTEGER,
+                variationParentTypeID INTEGER,
+                process_size INTEGER,
+                npc_ship_scene TEXT,
+                npc_ship_faction TEXT,
+                npc_ship_type TEXT,
+                npc_ship_faction_icon TEXT
+            )
+        ''')
+        
+        print(f"正在处理 {lang} 语言的数据...")
+        total_items = len(types_data)
+        processed_items = 0
+        batch_data = []
+        batch_size = 500
+        
+        # 获取分类和组信息
+        cursor.execute("SELECT category_id, name FROM categories")
+        categories_data = dict(cursor.fetchall())
+        
+        cursor.execute("SELECT group_id, name, categoryID FROM groups")
+        groups_data = {row[0]: {'name': row[1], 'category_id': row[2]} for row in cursor.fetchall()}
+        
+        # 如果是英文数据库，清空NPC分类缓存
         if lang == 'en':
-            # 英文数据库保存完整数据
-            cursor.execute('DROP TABLE IF EXISTS types')
-            cursor.execute('''
-                CREATE TABLE types (
-                    type_id INTEGER PRIMARY KEY,
-                    name TEXT,
-                    description TEXT,
-                    icon_filename TEXT,
-                    published BOOLEAN,
-                    volume REAL,
-                    capacity REAL,
-                    mass REAL,
-                    marketGroupID INTEGER,
-                    metaGroupID INTEGER,
-                    iconID INTEGER,
-                    groupID INTEGER,
-                    group_name TEXT,
-                    categoryID INTEGER,
-                    category_name TEXT,
-                    pg_need INTEGER,
-                    cpu_need INTEGER,
-                    rig_cost INTEGER,
-                    em_damage REAL,
-                    them_damage REAL,
-                    kin_damage REAL,
-                    exp_damage REAL,
-                    high_slot INTEGER,
-                    mid_slot INTEGER,
-                    low_slot INTEGER,
-                    rig_slot INTEGER,
-                    gun_slot INTEGER,
-                    miss_slot INTEGER,
-                    variationParentTypeID INTEGER,
-                    process_size INTEGER,
-                    npc_ship_scene TEXT,
-                    npc_ship_faction TEXT,
-                    npc_ship_type TEXT,
-                    npc_ship_faction_icon TEXT
-                )
-            ''')
-            
-            print(f"正在处理英文数据...")
-            total_items = len(types_data)
-            processed_items = 0
-            batch_data = []
-            batch_size = 500
-            
-            # 获取分类和组信息
-            cursor.execute("SELECT category_id, name FROM categories")
-            categories_data = dict(cursor.fetchall())
-            
-            cursor.execute("SELECT group_id, name, categoryID FROM groups")
-            groups_data = {row[0]: {'name': row[1], 'category_id': row[2]} for row in cursor.fetchall()}
-            
-            # 清空NPC分类缓存
             npc_classification_cache.clear()
+        
+        for type_id, item in types_data.items():
+            name = item['name'].get(lang, item['name'].get('en', ""))
+            description = item.get('description', {}).get(lang, item.get('description', {}).get('en', ""))
+            published = item.get('published', False)
+            volume = item.get('volume', None)
+            marketGroupID = item.get('marketGroupID', None)
+            metaGroupID = item.get('metaGroupID', 1)
+            iconID = item.get('iconID', 0)
+            groupID = item.get('groupID', 0)
+            process_size = item.get('portionSize', None)
+            capacity = item.get('capacity', None)
+            mass = item.get('mass', None)
+            variationParentTypeID = item.get('variationParentTypeID', None)
             
-            for type_id, item in types_data.items():
-                name = item['name'].get(lang, "")
-                description = item.get('description', {}).get(lang, "")
-                published = item.get('published', False)
-                volume = item.get('volume', None)
-                marketGroupID = item.get('marketGroupID', None)
-                metaGroupID = item.get('metaGroupID', 1)
-                iconID = item.get('iconID', 0)
-                groupID = item.get('groupID', 0)
-                process_size = item.get('portionSize', None)
-                capacity = item.get('capacity', None)
-                mass = item.get('mass', None)
-                variationParentTypeID = item.get('variationParentTypeID', None)
-                
-                # 获取组和分类信息
-                group_info = groups_data.get(groupID, {'name': 'Unknown', 'category_id': 0})
-                group_name = group_info['name']
-                category_id = group_info['category_id']
-                category_name = categories_data.get(category_id, 'Unknown')
-                
-                # 处理图标
-                icon_filename = copy_and_rename_icon(type_id)
-                
-                # 获取NPC相关信息
-                if category_id == 11:  # 只处理船只类型
+            # 获取组和分类信息
+            group_info = groups_data.get(groupID, {'name': 'Unknown', 'category_id': 0})
+            group_name = group_info['name']
+            category_id = group_info['category_id']
+            category_name = categories_data.get(category_id, 'Unknown')
+            
+            # 处理图标
+            icon_filename = copy_and_rename_icon(type_id)
+            
+            # 获取NPC相关信息
+            if category_id == 11:  # 只处理船只类型
+                if lang == 'en':  # 英文数据库时进行分类并缓存
                     npc_ship_scene = get_npc_ship_scene(group_name)
                     npc_ship_faction = get_npc_ship_faction(group_name)
                     npc_ship_type = get_npc_ship_type(group_name, name)
@@ -366,116 +367,52 @@ def process_data(types_data, cursor, lang):
                         'type': npc_ship_type,
                         'faction_icon': npc_ship_faction_icon
                     }
-                else:
-                    npc_ship_scene = None
-                    npc_ship_faction = None
-                    npc_ship_type = None
-                    npc_ship_faction_icon = None
-                
-                # 获取属性值
-                res = get_attributes_value(cursor, type_id, [30, 50, 1153, 114, 118, 117, 116, 14, 13, 12, 1154, 102, 101])
-                pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, \
-                high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot = res
-                
-                batch_data.append((
-                    type_id, name, description, icon_filename, published, volume, capacity, mass,
-                    marketGroupID, metaGroupID, iconID, groupID, group_name, category_id, category_name,
-                    pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
-                    high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
-                    variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction,
-                    npc_ship_type, npc_ship_faction_icon
-                ))
-                
-                processed_items += 1
-                if len(batch_data) >= batch_size:
-                    cursor.executemany('''
-                        INSERT INTO types VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-                    ''', batch_data)
-                    print(f"已处理: {processed_items}/{total_items} ({(processed_items/total_items*100):.2f}%)")
-                    batch_data = []
+                else:  # 其他语言从缓存读取
+                    npc_info = npc_classification_cache.get(type_id)
+                    if npc_info:
+                        npc_ship_scene = npc_info['scene']
+                        npc_ship_faction = npc_info['faction']
+                        npc_ship_type = npc_info['type']
+                        npc_ship_faction_icon = npc_info['faction_icon']
+                    else:
+                        npc_ship_scene = None
+                        npc_ship_faction = None
+                        npc_ship_type = None
+                        npc_ship_faction_icon = None
+            else:  # 非船只类型
+                npc_ship_scene = None
+                npc_ship_faction = None
+                npc_ship_type = None
+                npc_ship_faction_icon = None
             
-            # 处理剩余的数据
-            if batch_data:
+            # 获取属性值
+            res = get_attributes_value(cursor, type_id, [30, 50, 1153, 114, 118, 117, 116, 14, 13, 12, 1154, 102, 101])
+            pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, \
+            high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot = res
+            
+            batch_data.append((
+                type_id, name, description, icon_filename, published, volume, capacity, mass,
+                marketGroupID, metaGroupID, iconID, groupID, group_name, category_id, category_name,
+                pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
+                high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
+                variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction,
+                npc_ship_type, npc_ship_faction_icon
+            ))
+            
+            processed_items += 1
+            if len(batch_data) >= batch_size:
                 cursor.executemany('''
                     INSERT INTO types VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
                 ''', batch_data)
                 print(f"已处理: {processed_items}/{total_items} ({(processed_items/total_items*100):.2f}%)")
+                batch_data = []
         
-        else:
-            # 非英文数据库只保存变化的字段
-            cursor.execute('DROP TABLE IF EXISTS types_translation')
-            # 先删除视图（如果存在）
-            cursor.execute('DROP VIEW IF EXISTS types')
-            
-            cursor.execute('''
-                CREATE TABLE types_translation (
-                    type_id INTEGER PRIMARY KEY,
-                    name TEXT,
-                    description TEXT,
-                    group_name TEXT,
-                    category_name TEXT
-                )
-            ''')
-            
-            # 连接英文数据库
-            cursor.execute('ATTACH DATABASE ? AS en_db', (os.path.join('output/db', 'item_db_en.sqlite'),))
-            
-            # 创建视图
-            cursor.execute('''
-                CREATE VIEW types AS
-                SELECT 
-                    e.*,
-                    COALESCE(t.name, e.name) as name,
-                    COALESCE(t.description, e.description) as description,
-                    COALESCE(t.group_name, e.group_name) as group_name,
-                    COALESCE(t.category_name, e.category_name) as category_name
-                FROM en_db.types e
-                LEFT JOIN types_translation t ON e.type_id = t.type_id
-            ''')
-            
-            print(f"正在处理 {lang} 语言的翻译数据...")
-            total_items = len(types_data)
-            processed_items = 0
-            batch_data = []
-            batch_size = 1000
-            
-            # 获取分类和组信息
-            cursor.execute("SELECT category_id, name FROM categories")
-            categories_data = dict(cursor.fetchall())
-            
-            cursor.execute("SELECT group_id, name, categoryID FROM groups")
-            groups_data = {row[0]: {'name': row[1], 'category_id': row[2]} for row in cursor.fetchall()}
-            
-            for type_id, item in types_data.items():
-                name = item['name'].get(lang, item['name'].get('en', ""))
-                description = item.get('description', {}).get(lang, item.get('description', {}).get('en', ""))
-                
-                # 获取组和分类信息
-                groupID = item.get('groupID', 0)
-                group_info = groups_data.get(groupID, {'name': 'Unknown', 'category_id': 0})
-                group_name = group_info['name']
-                category_id = group_info['category_id']
-                category_name = categories_data.get(category_id, 'Unknown')
-                
-                batch_data.append((type_id, name, description, group_name, category_name))
-                
-                processed_items += 1
-                if len(batch_data) >= batch_size:
-                    cursor.executemany('''
-                        INSERT INTO types_translation VALUES (?,?,?,?,?)
-                    ''', batch_data)
-                    print(f"已处理: {processed_items}/{total_items} ({(processed_items/total_items*100):.2f}%)")
-                    batch_data = []
-            
-            # 处理剩余的数据
-            if batch_data:
-                cursor.executemany('''
-                    INSERT INTO types_translation VALUES (?,?,?,?,?)
-                ''', batch_data)
-                print(f"已处理: {processed_items}/{total_items} ({(processed_items/total_items*100):.2f}%)")
-            
-            # 分离英文数据库
-            cursor.execute('DETACH DATABASE en_db')
+        # 处理剩余的数据
+        if batch_data:
+            cursor.executemany('''
+                INSERT INTO types VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            ''', batch_data)
+            print(f"已处理: {processed_items}/{total_items} ({(processed_items/total_items*100):.2f}%)")
         
         print(f"已成功完成 {lang} 数据库的处理")
         
