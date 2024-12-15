@@ -1,12 +1,11 @@
-from ruamel.yaml import YAML
-import sqlite3
-import json
-import time
 import yaml
 try:
     from yaml import CSafeLoader as SafeLoader
 except ImportError:
     from yaml import SafeLoader
+import sqlite3
+import json
+import time
 from cache_manager import register_cache_cleaner
 
 # 用于缓存数据的全局变量
@@ -18,12 +17,7 @@ def clear_cache():
     _cached_data = None
 
 # 注册缓存清理函数
-register_cache_cleaner('dogmaAttributes', clear_cache)
-
-# 用于处理物品属性信息
-# 提取出各属性id对应的名称
-
-yaml = YAML(typ='safe')
+register_cache_cleaner('dogmaAttributes_handler', clear_cache)
 
 def read_yaml(file_path):
     """读取 dogmaAttributes.yaml 文件并返回数据"""
