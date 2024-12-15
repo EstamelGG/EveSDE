@@ -335,6 +335,7 @@ def create_wormholes_table(cursor):
             name TEXT,
             description TEXT,
             icon TEXT,
+            target_value INTEGER,
             target TEXT,
             stable_time TEXT,
             max_stable_mass TEXT,
@@ -398,11 +399,11 @@ def process_wormhole_data(cursor, type_id, name, description, icon, lang):
     # 插入数据
     cursor.execute('''
         INSERT OR IGNORE INTO wormholes (
-            type_id, name, description, icon, target, stable_time, 
+            type_id, name, description, icon, target_value, target, stable_time, 
             max_stable_mass, max_jump_mass, size_type
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
-        type_id, name, description, icon, target, stable_time,
+        type_id, name, description, icon, target_value, target, stable_time,
         max_stable_mass, max_jump_mass, size_type
     ))
 
