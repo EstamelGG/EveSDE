@@ -1,20 +1,34 @@
-from ruamel.yaml import YAML
+import yaml
+try:
+    from yaml import CSafeLoader as SafeLoader
+except ImportError:
+    from yaml import SafeLoader
+import time
+from cache_manager import register_cache_cleaner
 
-yaml = YAML(typ='safe')
+# 用于缓存数据的全局变量
+_cached_data = None
 
-# 提取所有组信息
+def clear_cache():
+    """清理模块的缓存数据"""
+    global _cached_data
+    _cached_data = None
+
+# 注册缓存清理函数
+register_cache_cleaner('groups', clear_cache)
 
 def read_yaml(file_path):
-    """读取 groups.yaml 文件"""
-    import time
+    """读取 groups.yaml 文件并返回数据"""
     start_time = time.time()
     
-    with open(file_path, 'r', encoding='utf-8') as file:
-        data = yaml.load(file)
+    global _cached_data
+    if _cached_data is None:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            _cached_data = yaml.load(file, Loader=SafeLoader)
     
     end_time = time.time()
     print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
-    return data
+    return _cached_data
 
 def create_groups_table(cursor):
     """创建 groups 表"""
