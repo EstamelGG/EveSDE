@@ -37,11 +37,12 @@ def read_yaml_file(file_path: str) -> dict:
 def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, int]]:
     """处理universe目录下的所有数据"""
     universe_data = []
+    all_universe_data = []  # 用于存储所有数据
     
     # 检查目录是否存在
     if not os.path.exists(base_path):
         print(f"警告: 目录 {base_path} 不存在，跳过处理")
-        return universe_data
+        return all_universe_data
     
     # 遍历基础目录（星域级别）
     for region_name in os.listdir(base_path):
@@ -93,6 +94,7 @@ def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, i
                     
                 # 将关系数据添加到列表中
                 universe_data.append((region_id, constellation_id, system_id))
+                all_universe_data.append((region_id, constellation_id, system_id))
                 
                 # 如果数据量达到1000条，执行批量插入
                 if cursor and len(universe_data) >= 1000:
@@ -100,9 +102,16 @@ def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, i
                         'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id) VALUES (?, ?, ?)',
                         universe_data
                     )
-                    universe_data = []
+                    universe_data = []  # 清空临时数据，但保留在all_universe_data中
     
-    return universe_data
+    # 处理剩余的数据
+    if cursor and universe_data:
+        cursor.executemany(
+            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id) VALUES (?, ?, ?)',
+            universe_data
+        )
+    
+    return all_universe_data
 
 def process_all_universe_data(cursor=None) -> List[Tuple[int, int, int]]:
     """处理所有宇宙目录的数据"""
@@ -113,13 +122,14 @@ def process_all_universe_data(cursor=None) -> List[Tuple[int, int, int]]:
         print(f"处理目录: {universe_dir}")
         universe_data = process_universe_data(universe_dir, cursor)
         all_data.extend(universe_data)
-        
-        # 如果提供了cursor，执行批量插入
-        if cursor and universe_data:
-            cursor.executemany(
-                'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id) VALUES (?, ?, ?)',
-                universe_data
-            )
+    
+    # 在所有数据收集完成后，一次性执行批量插入
+    if cursor and all_data:
+        print(f"正在插入 {len(all_data)} 条宇宙数据记录...")
+        cursor.executemany(
+            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id) VALUES (?, ?, ?)',
+            all_data
+        )
     
     return all_data
 
@@ -133,15 +143,20 @@ def process_data(cursor, lang: str = 'en'):
     
     # 只在处理英文数据时读取文件
     if lang == 'en':
+        print("处理英文宇宙数据...")
         _universe_data.clear()  # 清空缓存
         _universe_data = process_all_universe_data(cursor)
+        print(f"缓存了 {len(_universe_data)} 条宇宙数据记录")
     else:
         # 使用缓存数据
         if _universe_data:
+            print(f"使用缓存数据插入 {len(_universe_data)} 条宇宙数据记录...")
             cursor.executemany(
                 'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id) VALUES (?, ?, ?)',
                 _universe_data
             )
+        else:
+            print("警告: 没有找到缓存的宇宙数据")
     
     end_time = time.time()
     print(f"处理universe数据耗时: {end_time - start_time:.2f} 秒")
