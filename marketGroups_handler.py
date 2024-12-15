@@ -108,7 +108,15 @@ def process_data(yaml_data, cursor, language):
         # 获取图标ID并查找对应的图标文件名
         icon_id = group_data.get('iconID')
         icon_name = None
-        if icon_id is not None:
+        if icon_id == 20966:
+            icon_name = "items_19_128_1.png"
+        if icon_id == 20959:
+            icon_name = "items_19_128_4.png"
+        if icon_id == 20967:
+            icon_name = "items_19_128_3.png"
+        if icon_id == 20968:
+            icon_name = "items_19_128_2.png"
+        if icon_id is not None and icon_name is None:
             cursor.execute('SELECT iconFile_new FROM iconIDs WHERE icon_id = ?', (icon_id,))
             result = cursor.fetchone()
             if result:
