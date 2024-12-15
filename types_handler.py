@@ -87,6 +87,36 @@ NPC_SHIP_TYPES = [
     " Drone"
 ]
 
+# 虫洞目标映射
+WORMHOLE_TARGET_MAP = {
+    1: {"zh": "1级虫洞空间", "other": "W-Space C2"},
+    2: {"zh": "2级虫洞空间", "other": "W-Space C3"},
+    3: {"zh": "3级虫洞空间", "other": "W-Space C4"},
+    4: {"zh": "4级虫洞空间", "other": "W-Space C5"},
+    5: {"zh": "5级虫洞空间", "other": "W-Space C6"},
+    6: {"zh": "6级虫洞空间", "other": "W-Space C7"},
+    7: {"zh": "高安星系", "other": "High-Sec Space"},
+    8: {"zh": "低安星系", "other": "Low-Sec Space"},
+    9: {"zh": "0.0星系", "other": "Null-Sec Space"},
+    12: {"zh": "希拉星系", "other": "Thera"},
+    13: {"zh": "破碎星系", "other": "Shattered WH"},
+    14: {"zh": "流浪者 Sentinel", "other": "Drifter Sentinel"},
+    15: {"zh": "流浪者 Barbican", "other": "Drifter Barbican"},
+    16: {"zh": "流浪者 Vidette", "other": "Drifter Vidette"},
+    17: {"zh": "流浪者 Conflux", "other": "Drifter Conflux"},
+    18: {"zh": "流浪者 Redoubt", "other": "Drifter Redoubt"},
+    25: {"zh": "波赫文", "other": "Pochven"}
+}
+
+# 虫洞尺寸映射
+WORMHOLE_SIZE_MAP = {
+    2000000000: {"zh": "XL(旗舰)", "other": "XL(Capital)"},
+    1000000000: {"zh": "XL(货舰)", "other": "XL(Freighter)"},
+    375000000: {"zh": "L(战列舰)", "other": "L(Battleship)"},
+    62000000: {"zh": "M(战巡)", "other": "M(Battlecruiser)"},
+    5000000: {"zh": "S(驱逐舰)", "other": "S(Destroyer)"}
+}
+
 # 缓存字典
 npc_classification_cache = {}
 # 势力图标缓存字典
@@ -266,9 +296,114 @@ def get_faction_icon(cursor, faction_name):
     """根据势力名称直接获取图标"""
     return NPC_FACTION_ICON_MAP.get(faction_name, "items_73_16_50.png")
 
+def format_number(value, unit=""):
+    """格式化数字，添加千分位分隔符，去除多余的零和小数点，添加单位"""
+    if not value:
+        return None
+    
+    # 转换为浮点数
+    num = float(value)
+    
+    # 将数字转换为字符串，并去除多余的零和小数点
+    formatted = f"{num:f}".rstrip('0').rstrip('.')
+    
+    # 处理整数部分的千分位
+    parts = formatted.split('.')
+    integer_part = parts[0]
+    decimal_part = parts[1] if len(parts) > 1 else ""
+    
+    # 添加千分位分隔符
+    integer_part = "{:,}".format(int(integer_part))
+    
+    # 重新组合整数和小数部分
+    if decimal_part:
+        formatted = f"{integer_part}.{decimal_part}"
+    else:
+        formatted = integer_part
+    
+    # 添加单位（如果有）
+    if unit:
+        formatted += unit
+    
+    return formatted
+
+def create_wormholes_table(cursor):
+    """创建虫洞数据表"""
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS wormholes (
+            type_id INTEGER PRIMARY KEY,
+            name TEXT,
+            description TEXT,
+            target TEXT,
+            stable_time TEXT,
+            max_stable_mass TEXT,
+            max_jump_mass TEXT,
+            size_type TEXT
+        )
+    ''')
+
+def get_wormhole_size_type(max_jump_mass, lang):
+    """根据最大跳跃质量确定虫洞尺寸类型"""
+    if not max_jump_mass:
+        return None
+    
+    mass = float(max_jump_mass)
+    for threshold, size_map in sorted(WORMHOLE_SIZE_MAP.items(), reverse=True):
+        if mass >= threshold:
+            return size_map["zh" if lang == "zh" else "other"]
+    return None
+
+def get_wormhole_target(target_value, name, lang):
+    """获取虫洞目标描述"""
+    # 特殊处理 K162
+    if name == "K162":
+        return "出口虫洞" if lang == "zh" else "Exit WH"
+    
+    # 特殊处理 U372
+    if name == "U372":
+        return "0.0 无人机星域" if lang == "zh" else "Null-Sec Drone Regions"
+    
+    # 处理常规映射
+    if target_value and int(target_value) in WORMHOLE_TARGET_MAP:
+        return WORMHOLE_TARGET_MAP[int(target_value)]["zh" if lang == "zh" else "other"]
+    
+    return "Unknown"
+
+def process_wormhole_data(cursor, type_id, name, description, lang):
+    """处理虫洞数据"""
+    # 获取虫洞属性
+    attributes = get_attributes_value(cursor, type_id, [1381, 1382, 1383, 1385])
+    target_value, stable_time, max_stable_mass, max_jump_mass = attributes
+    
+    # 处理目标
+    target = get_wormhole_target(target_value, name, lang)
+    
+    # 处理稳定时间（转换为小时）
+    if stable_time:
+        stable_time = format_number(float(stable_time)/60, "h")
+    
+    # 处理质量数据
+    max_stable_mass = format_number(max_stable_mass, "Kg") if max_stable_mass else None
+    max_jump_mass = format_number(max_jump_mass, "Kg") if max_jump_mass else None
+    
+    # 获取尺寸类型
+    size_type = get_wormhole_size_type(max_jump_mass.rstrip("Kg") if max_jump_mass else None, lang)
+    
+    # 插入数据
+    cursor.execute('''
+        INSERT OR IGNORE INTO wormholes (
+            type_id, name, description, target, stable_time, 
+            max_stable_mass, max_jump_mass, size_type
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        type_id, name, description, target, stable_time,
+        max_stable_mass, max_jump_mass, size_type
+    ))
+
 def process_data(types_data, cursor, lang):
     """处理 types 数据并插入数据库（针对单一语言）"""
     create_types_table(cursor)
+    create_wormholes_table(cursor)  # 创建虫洞表
     group_to_category, category_id_to_name, group_id_to_name = fetch_and_process_data(cursor)
     
     # 如果是英文数据库，清空缓存
@@ -327,6 +462,10 @@ def process_data(types_data, cursor, lang):
         pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, \
         high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot = res
         
+        # 处理虫洞数据
+        if groupID == 988:
+            process_wormhole_data(cursor, type_id, name, description, lang)
+            
         # 添加到批处理列表
         batch_data.append((
             type_id, name, description, copied_file, published, volume, capacity, mass, marketGroupID,
