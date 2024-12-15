@@ -19,6 +19,7 @@ from factions_handler import read_yaml as read_factions_yaml, process_data as pr
 from icons_copy import copy_and_rename_png_files
 from update_groups_icons import update_groups_with_icon_filename
 from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, process_data as process_planetSchematics_data
+from stations_handler import read_stations_yaml, process_data as process_stations_data
 
 
 # 文件路径
@@ -38,6 +39,7 @@ factions_yaml_file_path = 'Data/sde/fsd/factions.yaml'
 ZIP_ICONS_DEST = 'output/Icons/icons.zip'
 arch_ICONS_DEST = 'output/Icons/icons.aar'
 ICONS_DEST_DIR = 'output/Icons'
+stations_yaml_file_path = 'Data/sde/bsd/staStations.yaml'
 
 # aa archive -o ../icons.aar -d .
 
@@ -152,6 +154,9 @@ def main():
 
     print("\nProcessing groups.yaml...")  # 物品组
     process_yaml_file(groups_yaml_file_path, read_groups_yaml, process_groups_data)
+
+    print("\nProcessing stations.yaml...")  # 空间站数据
+    process_yaml_file(stations_yaml_file_path, read_stations_yaml, process_stations_data)
 
     print("\nProcessing metaGroups.yaml...")  # 物品衍生组
     process_yaml_file(metaGroups_yaml_file_path, read_metaGroups_yaml, process_metaGroups_data)
