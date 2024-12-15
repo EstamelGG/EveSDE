@@ -317,7 +317,7 @@ def process_data(types_data, cursor, lang):
             total_items = len(types_data)
             processed_items = 0
             batch_data = []
-            batch_size = 500
+            batch_size = 1000
             
             # 获取分类和组信息
             cursor.execute("SELECT category_id, name FROM categories")
