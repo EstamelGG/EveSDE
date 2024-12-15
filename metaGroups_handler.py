@@ -2,23 +2,6 @@ import sqlite3
 import os
 from ruamel.yaml import YAML
 import time
-import yaml
-try:
-    from yaml import CSafeLoader as SafeLoader
-except ImportError:
-    from yaml import SafeLoader
-from cache_manager import register_cache_cleaner
-
-# 用于缓存数据的全局变量
-_cached_data = None
-
-def clear_cache():
-    """清理模块的缓存数据"""
-    global _cached_data
-    _cached_data = None
-
-# 注册缓存清理函数
-register_cache_cleaner('metaGroups', clear_cache)
 
 # 提取科技等级组对应的名字
 
@@ -34,17 +17,15 @@ os.makedirs(output_dir, exist_ok=True)
 
 
 def read_yaml(file_path):
-    """读取 metaGroups.yaml 文件并返回数据"""
+    """读取 metaGroups.yaml 文件"""
     start_time = time.time()
     
-    global _cached_data
-    if _cached_data is None:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            _cached_data = yaml.load(file, Loader=SafeLoader)
+    with open(file_path, 'r', encoding='utf-8') as file:
+        data = yaml.load(file)
     
     end_time = time.time()
     print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
-    return _cached_data
+    return data
 
 
 def create_meta_groups_table(cursor):

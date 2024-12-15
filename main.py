@@ -19,7 +19,7 @@ from factions_handler import read_yaml as read_factions_yaml, process_data as pr
 from icons_copy import copy_and_rename_png_files
 from update_groups_icons import update_groups_with_icon_filename
 from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, process_data as process_planetSchematics_data
-from stations_handler import read_yaml as read_stations_yaml, process_data as process_stations_data
+from stations_handler import read_stations_yaml, process_data as process_stations_data
 from regions_handler import read_yaml as read_regions_yaml, process_data as process_regions_data
 from invUniqueNames_handler import read_yaml as read_invUniqueNames_yaml, process_data as process_invUniqueNames_data
 from cache_manager import clear_all_caches, clear_cache
