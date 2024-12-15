@@ -264,7 +264,7 @@ def fetch_and_process_data(cursor):
 
 def get_faction_icon(cursor, faction_name):
     """根据势力名称直接获取图标"""
-    return NPC_FACTION_ICON_MAP.get(faction_name, "items_7_64_15.png")
+    return NPC_FACTION_ICON_MAP.get(faction_name, "items_73_16_50.png")
 
 def process_data(types_data, cursor, lang):
     """处理 types 数据并插入数据库（针对单一语言）"""
