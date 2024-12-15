@@ -21,7 +21,6 @@ from update_groups_icons import update_groups_with_icon_filename
 from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, process_data as process_planetSchematics_data
 from stations_handler import read_stations_yaml, process_data as process_stations_data
 from regions_handler import read_yaml as read_regions_yaml, process_data as process_regions_data
-from invUniqueNames_handler import read_yaml as read_invUniqueNames_yaml, process_data as process_invUniqueNames_data
 
 
 # 文件路径
@@ -38,7 +37,6 @@ typeMaterials_yaml_file_path = 'Data/sde/fsd/typeMaterials.yaml'
 blueprints_yaml_file_path = 'Data/sde/fsd/blueprints.yaml'
 marketGroups_yaml_file_path = 'Data/sde/fsd/marketGroups.yaml'
 factions_yaml_file_path = 'Data/sde/fsd/factions.yaml'
-invUniqueNames_yaml_file_path = 'Data/sde/bsd/invUniqueNames.yaml'
 ZIP_ICONS_DEST = 'output/Icons/icons.zip'
 arch_ICONS_DEST = 'output/Icons/icons.aar'
 ICONS_DEST_DIR = 'output/Icons'
@@ -146,10 +144,6 @@ def main():
     rebuild_directory("./output")
     # 依次处理每个 YAML 文件
     copy_and_rename_png_files()
-    
-    print("\nProcessing invUniqueNames.yaml...")  # 处理唯一名称数据
-    process_yaml_file(invUniqueNames_yaml_file_path, read_invUniqueNames_yaml, process_invUniqueNames_data)
-    
     print("\nProcessing planetSchematics.yaml...")
     process_yaml_file(planetSchematics_yaml_file_path, read_planetSchematics_yaml, process_planetSchematics_data)
 
@@ -171,8 +165,8 @@ def main():
     print("\nProcessing factions.yaml...")  # 派系数据
     process_yaml_file(factions_yaml_file_path, read_factions_yaml, process_factions_data)
 
-    # print("\nProcessing regions data...")  # 星域数据
-    # process_yaml_file(None, read_regions_yaml, process_regions_data)
+    print("\nProcessing regions data...")  # 星域数据
+    process_yaml_file(None, read_regions_yaml, process_regions_data)
 
     print("\nProcessing dogmaAttributeCategories.yaml...")  # 物品属性目录
     process_yaml_file(dogmaAttributeCategories_yaml_file_path, read_dogmaAttributeCategories_yaml,
