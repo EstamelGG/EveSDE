@@ -404,9 +404,9 @@ def process_data(types_data, cursor, lang):
         else:
             # 非英文数据库只保存变化的字段
             cursor.execute('DROP TABLE IF EXISTS types_translation')
-            # 先删除视图（如果存在）
-            cursor.execute('DROP VIEW IF EXISTS types')
+            cursor.execute('DROP TABLE IF EXISTS types')
             
+            # 创建翻译表
             cursor.execute('''
                 CREATE TABLE types_translation (
                     type_id INTEGER PRIMARY KEY,
@@ -420,17 +420,9 @@ def process_data(types_data, cursor, lang):
             # 连接英文数据库
             cursor.execute('ATTACH DATABASE ? AS en_db', (os.path.join('output/db', 'item_db_en.sqlite'),))
             
-            # 创建视图
+            # 创建types表并从英文数据库复制数据
             cursor.execute('''
-                CREATE VIEW types AS
-                SELECT 
-                    e.*,
-                    COALESCE(t.name, e.name) as name,
-                    COALESCE(t.description, e.description) as description,
-                    COALESCE(t.group_name, e.group_name) as group_name,
-                    COALESCE(t.category_name, e.category_name) as category_name
-                FROM en_db.types e
-                LEFT JOIN types_translation t ON e.type_id = t.type_id
+                CREATE TABLE types AS SELECT * FROM en_db.types
             ''')
             
             print(f"正在处理 {lang} 语言的翻译数据...")
@@ -473,6 +465,16 @@ def process_data(types_data, cursor, lang):
                     INSERT INTO types_translation VALUES (?,?,?,?,?)
                 ''', batch_data)
                 print(f"已处理: {processed_items}/{total_items} ({(processed_items/total_items*100):.2f}%)")
+            
+            # 更新types表中的翻译字段
+            cursor.execute('''
+                UPDATE types
+                SET 
+                    name = COALESCE((SELECT name FROM types_translation WHERE types_translation.type_id = types.type_id), name),
+                    description = COALESCE((SELECT description FROM types_translation WHERE types_translation.type_id = types.type_id), description),
+                    group_name = COALESCE((SELECT group_name FROM types_translation WHERE types_translation.type_id = types.type_id), group_name),
+                    category_name = COALESCE((SELECT category_name FROM types_translation WHERE types_translation.type_id = types.type_id), category_name)
+            ''')
             
             # 分离英文数据库
             cursor.execute('DETACH DATABASE en_db')
