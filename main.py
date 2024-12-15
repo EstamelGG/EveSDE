@@ -21,6 +21,7 @@ from update_groups_icons import update_groups_with_icon_filename
 from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, process_data as process_planetSchematics_data
 from stations_handler import read_stations_yaml, process_data as process_stations_data
 from invUniqueNames_handler import read_yaml as read_invUniqueNames_yaml, process_data as process_invUniqueNames_data
+from universe import process_data as process_universe_data
 
 
 # 文件路径
@@ -126,25 +127,31 @@ def process_yaml_file(yaml_file_path, read_func, process_func):
 
         print(f"Database {db_filename} has been updated for language: {lang}.")
 
-def process_post_updates(process_func, description):
-    """处理后续更新操作，保持与process_yaml_file相似的处理模式"""
+def process_special_data(process_func, description, **kwargs):
+    """处理特殊数据（不需要读取YAML文件的处理器）"""
     for lang in languages:
         db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
         conn = sqlite3.connect(db_filename)
         cursor = conn.cursor()
         
         try:
-            process_func(cursor)
+            if 'lang' in kwargs:
+                process_func(cursor, lang)
+            else:
+                process_func(cursor)
             conn.commit()
         finally:
             conn.close()
         
-        print(f"Database {db_filename} has been updated for language: {lang}.")
+        print(f"Database {db_filename} has been updated for {description}.")
 
 def main():
     rebuild_directory("./output")
     # 依次处理每个 YAML 文件
     copy_and_rename_png_files()
+    
+    print("\nProcessing universe data...")
+    process_special_data(process_universe_data, "universe data", lang=True)
     
     print("\nProcessing invUniqueNames.yaml...")
     process_yaml_file(invUniqueNames_yaml_file_path, read_invUniqueNames_yaml, process_invUniqueNames_data)
@@ -193,22 +200,10 @@ def main():
     process_yaml_file(blueprints_yaml_file_path, read_blueprints_yaml, process_blueprints_data)
 
     print("\nUpdating groups icons...")  # 给 groups 更新图标名称
-    process_post_updates(update_groups_with_icon_filename, "groups icons")
+    process_special_data(update_groups_with_icon_filename, "groups icons")
     
     print("\nProcessing skill requirements...")  # 处理技能需求数据
-    def process_skills(cursor, lang):
-        process_skill_requirements(cursor, lang)
-    
-    for lang in languages:
-        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
-        conn = sqlite3.connect(db_filename)
-        cursor = conn.cursor()
-        try:
-            process_skills(cursor, lang)
-            conn.commit()
-        finally:
-            conn.close()
-        print(f"Database {db_filename} has been updated for language: {lang}.")
+    process_special_data(process_skill_requirements, "skill requirements", lang=True)
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
