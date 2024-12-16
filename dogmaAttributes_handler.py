@@ -86,12 +86,12 @@ def process_data(data, cursor, lang):
         if unitID != None and str(unitID) in unitDict.keys():
             unitName = unitDict[str(unitID)]
         # 多语言字段
-        displayName = attr_data.get('displayNameID', {}).get(lang, None)
-        name = attr_data.get('name', None)
-        description = attr_data.get('description', None)
-        iconID = attr_data.get('iconID', None)
-        categoryID = attr_data.get('categoryID', None)
-        tooltipDescription = attr_data.get('tooltipDescriptionID', {}).get(lang, None)
+        displayName = attr_data.get('displayNameID', {}).get(lang, "")
+        name = attr_data.get('name', "")
+        description = attr_data.get('description', "")
+        iconID = attr_data.get('iconID', 0)
+        categoryID = attr_data.get('categoryID', 0)
+        tooltipDescription = attr_data.get('tooltipDescriptionID', {}).get(lang, "")
 
         # 添加到批处理列表
         batch_data.append((
