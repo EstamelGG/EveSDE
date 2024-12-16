@@ -8,7 +8,7 @@ import time
 from typing import Dict, List, Tuple
 
 # 用于缓存universe数据
-_universe_data: List[Tuple[int, int, int]] = []
+_universe_data: List[Tuple[int, int, int, float]] = []
 
 # 需要处理的宇宙目录
 UNIVERSE_DIRS = [
@@ -25,6 +25,7 @@ def create_table(cursor):
             region_id INTEGER,
             constellation_id INTEGER,
             solarsystem_id INTEGER,
+            system_security REAL,
             PRIMARY KEY (region_id, constellation_id, solarsystem_id)
         )
     ''')
@@ -34,7 +35,7 @@ def read_yaml_file(file_path: str) -> dict:
     with open(file_path, 'r', encoding='utf-8') as file:
         return yaml.load(file, Loader=SafeLoader)
 
-def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, int]]:
+def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, int, float]]:
     """处理universe目录下的所有数据"""
     universe_data = []
     all_universe_data = []  # 用于存储所有数据
@@ -89,17 +90,18 @@ def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, i
                     
                 system_data = read_yaml_file(system_yaml_path)
                 system_id = system_data.get('solarSystemID')
+                system_security = system_data.get('security', 0)
                 if not system_id:
                     continue
                     
                 # 将关系数据添加到列表中
-                universe_data.append((region_id, constellation_id, system_id))
-                all_universe_data.append((region_id, constellation_id, system_id))
+                universe_data.append((region_id, constellation_id, system_id, system_security))
+                all_universe_data.append((region_id, constellation_id, system_id, system_security))
                 
                 # 如果数据量达到1000条，执行批量插入
                 if cursor and len(universe_data) >= 1000:
                     cursor.executemany(
-                        'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id) VALUES (?, ?, ?)',
+                        'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security) VALUES (?, ?, ?, ?)',
                         universe_data
                     )
                     universe_data = []  # 清空临时数据，但保留在all_universe_data中
@@ -107,13 +109,13 @@ def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, i
     # 处理剩余的数据
     if cursor and universe_data:
         cursor.executemany(
-            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id) VALUES (?, ?, ?)',
+            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security) VALUES (?, ?, ?, ?)',
             universe_data
         )
     
     return all_universe_data
 
-def process_all_universe_data(cursor=None) -> List[Tuple[int, int, int]]:
+def process_all_universe_data(cursor=None) -> List[Tuple[int, int, int, float]]:
     """处理所有宇宙目录的数据"""
     all_data = []
     
@@ -127,7 +129,7 @@ def process_all_universe_data(cursor=None) -> List[Tuple[int, int, int]]:
     if cursor and all_data:
         print(f"正在插入 {len(all_data)} 条宇宙数据记录...")
         cursor.executemany(
-            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id) VALUES (?, ?, ?)',
+            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security) VALUES (?, ?, ?, ?)',
             all_data
         )
     
@@ -152,7 +154,7 @@ def process_data(cursor, lang: str = 'en'):
         if _universe_data:
             print(f"使用缓存数据插入 {len(_universe_data)} 条宇宙数据记录...")
             cursor.executemany(
-                'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id) VALUES (?, ?, ?)',
+                'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security) VALUES (?, ?, ?, ?)',
                 _universe_data
             )
         else:
