@@ -89,12 +89,12 @@ NPC_SHIP_TYPES = [
 
 # 虫洞目标映射
 WORMHOLE_TARGET_MAP = {
-    1: {"zh": "1级虫洞空间", "other": "W-Space C2"},
-    2: {"zh": "2级虫洞空间", "other": "W-Space C3"},
-    3: {"zh": "3级虫洞空间", "other": "W-Space C4"},
-    4: {"zh": "4级虫洞空间", "other": "W-Space C5"},
-    5: {"zh": "5级虫洞空间", "other": "W-Space C6"},
-    6: {"zh": "6级虫洞空间", "other": "W-Space C7"},
+    1: {"zh": "1级虫洞空间", "other": "W-Space C1"},
+    2: {"zh": "2级虫洞空间", "other": "W-Space C2"},
+    3: {"zh": "3级虫洞空间", "other": "W-Space C3"},
+    4: {"zh": "4级虫洞空间", "other": "W-Space C4"},
+    5: {"zh": "5级虫洞空间", "other": "W-Space C5"},
+    6: {"zh": "6级虫洞空间", "other": "W-Space C6"},
     7: {"zh": "高安星系", "other": "High-Sec Space"},
     8: {"zh": "低安星系", "other": "Low-Sec Space"},
     9: {"zh": "0.0星系", "other": "Null-Sec Space"},
