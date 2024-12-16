@@ -48,25 +48,25 @@ NPC_SHIP_FACTIONS = [
 
 # NPC势力ICON映射
 NPC_FACTION_ICON_MAP = {
-    "Angel Cartel": "corporations_45_128_2.png",
-    "Blood Raider": "corporations_19_128_3.png",
-    "Guristas": "corporations_28_128_3.png",
-    "Mordu": "corporations_34_128_2.png",
-    "Rogue Drone": "corporations_roguedronesgeneric.png",
-    "Sansha": "corporations_44_128_2.png",
-    "Serpentis": "corporations_45_128_1.png",
-    "Overseer": "items_73_16_50.png",  # 使用默认图标
-    "Sleeper": "corporations_48_128_1.png",
-    "Drifter": "corporations_48_128_1.png",
-    "Amarr Empire": "items_19_128_4.png",
-    "Gallente Federation": "items_19_128_3.png",
-    "Minmatar Republic": "items_19_128_2.png",
-    "Caldari State": "items_19_128_1.png",
-    "CONCORD": "corporations_26_128_3.png",
-    "Faction": "items_73_16_50.png",  # 使用默认图标
-    "Generic": "items_73_16_50.png",  # 使用默认图标
-    "Khanid": "corporations_11_128_1.png",
-    "Thukker": "corporations_44_128_3.png"
+    "Angel Cartel": "faction_500011.png",
+    "Blood Raider": "faction_500012.png",
+    "Guristas": "faction_500010.png",
+    "Mordu": "faction_500018.png",
+    "Rogue Drone": "faction_500025.png",
+    "Sansha": "faction_500019.png",
+    "Serpentis": "faction_500020.png",
+    "Overseer": "faction_500021.png",  # 使用默认图标
+    "Sleeper": "faction_500005.png",
+    "Drifter": "faction_500024.png",
+    "Amarr Empire": "faction_500003.png",
+    "Gallente Federation": "faction_500004.png",
+    "Minmatar Republic": "faction_500002.png",
+    "Caldari State": "faction_500001.png",
+    "CONCORD": "faction_500006.png",
+    "Faction": "faction_500021.png",  # 使用默认图标
+    "Generic": "faction_500021.png",  # 使用默认图标
+    "Khanid": "faction_500008.png",
+    "Thukker": "faction_500015.png"
 }
 
 # NPC船只类型映射
