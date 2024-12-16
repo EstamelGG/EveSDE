@@ -32,6 +32,8 @@ def process_data(yaml_data, cursor, language):
     for schematic_id, schematic_data in yaml_data.items():
         cycle_time = schematic_data.get('cycleTime', 0)
         name = schematic_data.get('nameID', {}).get(language, '')
+        if not name:  # 如果当前语言的name为空，尝试获取英语的name
+            name = schematic_data.get('nameID', {}).get('en', '')
         facilitys = ','.join(map(str, schematic_data.get('pins', [])))
 
         input_typeids = []

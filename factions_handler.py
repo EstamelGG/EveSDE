@@ -42,6 +42,8 @@ def process_data(yaml_data, cursor, language):
         
         # 获取当前语言的名称
         name = faction_data.get('nameID', {}).get(language, '')
+        if not name:  # 如果当前语言的name为空，尝试获取英语的name
+            name = faction_data.get('nameID', {}).get('en', '')
         
         # 插入数据
         cursor.execute('''

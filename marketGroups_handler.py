@@ -101,9 +101,14 @@ def process_data(yaml_data, cursor, language):
     # 处理每个市场组
     insert_data = []
     for group_id, group_data in yaml_data.items():
-        # 获取当前语言的名称和描述
+        # 获取当前语言的名称和描述，如果为空则使用英语
         name = group_data.get('nameID', {}).get(language, '')
+        if not name:  # 如果当前语言的name为空，尝试获取英语的name
+            name = group_data.get('nameID', {}).get('en', '')
+            
         description = group_data.get('descriptionID', {}).get(language, '')
+        if not description:  # 如果当前语言的description为空，尝试获取英语的description
+            description = group_data.get('descriptionID', {}).get('en', '')
         
         # 获取图标ID并查找对应的图标文件名
         icon_id = group_data.get('iconID')

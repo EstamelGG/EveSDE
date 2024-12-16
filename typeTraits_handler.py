@@ -7,31 +7,13 @@ def process_single_data(type_id, traits_data, language):
     # 处理 roleBonuses
     if 'roleBonuses' in traits_data: # role bonuses,船体加成
         for bonus in traits_data['roleBonuses']:
-            if 'bonusText' in bonus and language in bonus['bonusText']:
-                content = bonus['bonusText'][language]
+            content = None
+            if 'bonusText' in bonus:
+                content = bonus['bonusText'].get(language, '')
+                if not content:  # 如果当前语言的内容为空，使用英语
+                    content = bonus['bonusText'].get('en', '')
                 
-                # 如果有bonus和unitID，需要添加到文本前面
-                if 'bonus' in bonus and 'unitID' in bonus:
-                    bonus_num = int(bonus['bonus']) if isinstance(bonus['bonus'], int) or bonus[
-                        'bonus'].is_integer() else round(bonus['bonus'], 2)
-                    if bonus['unitID'] == 105:  # 百分比
-                        prefix = f"<b>{bonus_num}%</b> "
-                    elif bonus['unitID'] == 104:  # 倍乘
-                        prefix = f"<b>{bonus_num}x</b> "
-                    elif bonus['unitID'] == 139:  # 加号
-                        prefix = f"<b>{bonus_num}+</b> "
-                    else:
-                        prefix = f"<b>{bonus_num}</b>  "
-                    content = prefix + content
-                
-                results.append((type_id, content, None, bonus.get('importance', 999999), "roleBonuses"))
-    
-    # 处理 typeBonuses
-    if 'types' in traits_data: # type bonuses,技能加成
-        for skill_id, skill_bonuses in traits_data['types'].items():
-            for bonus in skill_bonuses:
-                if 'bonusText' in bonus and language in bonus['bonusText']:
-                    content = bonus['bonusText'][language]
+                if content:  # 只有在有内容的情况下才处理
                     # 如果有bonus和unitID，需要添加到文本前面
                     if 'bonus' in bonus and 'unitID' in bonus:
                         bonus_num = int(bonus['bonus']) if isinstance(bonus['bonus'], int) or bonus[
@@ -46,7 +28,34 @@ def process_single_data(type_id, traits_data, language):
                             prefix = f"<b>{bonus_num}</b>  "
                         content = prefix + content
                     
-                    results.append((type_id, content, skill_id, bonus.get('importance', 999999), "typeBonuses"))
+                    results.append((type_id, content, None, bonus.get('importance', 999999), "roleBonuses"))
+    
+    # 处理 typeBonuses
+    if 'types' in traits_data: # type bonuses,技能加成
+        for skill_id, skill_bonuses in traits_data['types'].items():
+            for bonus in skill_bonuses:
+                content = None
+                if 'bonusText' in bonus:
+                    content = bonus['bonusText'].get(language, '')
+                    if not content:  # 如果当前语言的内容为空，使用英语
+                        content = bonus['bonusText'].get('en', '')
+                    
+                    if content:  # 只有在有内容的情况下才处理
+                        # 如果有bonus和unitID，需要添加到文本前面
+                        if 'bonus' in bonus and 'unitID' in bonus:
+                            bonus_num = int(bonus['bonus']) if isinstance(bonus['bonus'], int) or bonus[
+                                'bonus'].is_integer() else round(bonus['bonus'], 2)
+                            if bonus['unitID'] == 105:  # 百分比
+                                prefix = f"<b>{bonus_num}%</b> "
+                            elif bonus['unitID'] == 104:  # 倍乘
+                                prefix = f"<b>{bonus_num}x</b> "
+                            elif bonus['unitID'] == 139:  # 加号
+                                prefix = f"<b>{bonus_num}+</b> "
+                            else:
+                                prefix = f"<b>{bonus_num}</b>  "
+                            content = prefix + content
+                        
+                        results.append((type_id, content, skill_id, bonus.get('importance', 999999), "typeBonuses"))
     
     # 按importance排序
     return sorted(results, key=lambda x: x[3])
