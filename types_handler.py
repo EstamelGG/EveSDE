@@ -126,6 +126,8 @@ def get_npc_ship_scene(group_name):
     """根据组名确定NPC船只场景"""
     for scene in NPC_SHIP_SCENES:
         if group_name.startswith(scene):
+            if scene.strip() == 'FW':
+                return "Faction Warfare"
             return scene.strip()
     return "Other"
 
