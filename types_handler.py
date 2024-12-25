@@ -121,6 +121,8 @@ WORMHOLE_SIZE_MAP = {
 npc_classification_cache = {}
 # 势力图标缓存字典
 faction_icon_cache = {}
+# 英文名称映射缓存
+type_en_name_cache = {}
 
 def get_npc_ship_scene(group_name):
     """根据组名确定NPC船只场景"""
@@ -238,6 +240,7 @@ def create_types_table(cursor):
         CREATE TABLE IF NOT EXISTS types (
             type_id INTEGER PRIMARY KEY,
             name TEXT,
+            en_name TEXT,
             description TEXT,
             icon_filename TEXT,
             published BOOLEAN,
@@ -415,9 +418,13 @@ def process_data(types_data, cursor, lang):
     create_wormholes_table(cursor)  # 创建虫洞表
     group_to_category, category_id_to_name, group_id_to_name = fetch_and_process_data(cursor)
     
-    # 如果是英文数据库，清空缓存
+    # 如果是英文数据库，清空缓存并建立英文名称映射
     if lang == 'en':
         npc_classification_cache.clear()
+        type_en_name_cache.clear()
+        # 预处理所有英文名称
+        for type_id, item in types_data.items():
+            type_en_name_cache[type_id] = item['name'].get('en', "")
     
     # 用于存储批量插入的数据
     batch_data = []
@@ -425,6 +432,8 @@ def process_data(types_data, cursor, lang):
     
     for type_id, item in types_data.items():
         name = item['name'].get(lang, item['name'].get('en', ""))
+        # 只有在非英文数据库中才设置 en_name
+        en_name = None if lang == 'en' else type_en_name_cache.get(type_id, "")
         description = item.get('description', {}).get(lang, item.get('description', {}).get('en', ""))
         published = item.get('published', False)
         volume = item.get('volume', None)
@@ -477,7 +486,7 @@ def process_data(types_data, cursor, lang):
             
         # 添加到批处理列表
         batch_data.append((
-            type_id, name, description, copied_file, published, volume, capacity, mass, marketGroupID,
+            type_id, name, en_name, description, copied_file, published, volume, capacity, mass, marketGroupID,
             metaGroupID, iconID, groupID, group_name, category_id, category_name,
             pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
             high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID,
@@ -488,11 +497,11 @@ def process_data(types_data, cursor, lang):
         if len(batch_data) >= batch_size:
             cursor.executemany('''
                 INSERT OR IGNORE INTO types (
-                    type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
+                    type_id, name, en_name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
                     metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
                     em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
                     variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
     
@@ -500,11 +509,11 @@ def process_data(types_data, cursor, lang):
     if batch_data:
         cursor.executemany('''
             INSERT OR IGNORE INTO types (
-                type_id, name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
+                type_id, name, en_name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
                 metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
                 em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
                 variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data)
 
     process_trait_data(types_data, cursor, lang)
