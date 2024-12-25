@@ -74,7 +74,7 @@ def process_data(data, cursor, lang):
         cursor.executemany('''
             INSERT OR REPLACE INTO stations (
                 stationID,
-                stationTypeID
+                stationTypeID,
                 stationName,
                 regionID,
                 solarSystemID,
