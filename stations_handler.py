@@ -22,6 +22,7 @@ def create_stations_table(cursor):
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS stations (
             stationID INTEGER PRIMARY KEY,
+            stationTypeID INTEGER,
             stationName TEXT,
             regionID INTEGER,
             solarSystemID INTEGER,
@@ -39,6 +40,7 @@ def process_data(data, cursor, lang):
     
     for station in data:
         station_id = station['stationID']
+        stationTypeID = station['stationTypeID']
         station_name = station['stationName']
         region_id = station['regionID']
         solar_system_id = station['solarSystemID']
@@ -46,6 +48,7 @@ def process_data(data, cursor, lang):
         
         batch_data.append((
             station_id,
+            stationTypeID,
             station_name,
             region_id,
             solar_system_id,
@@ -57,11 +60,12 @@ def process_data(data, cursor, lang):
             cursor.executemany('''
                 INSERT OR REPLACE INTO stations (
                     stationID,
+                    stationTypeID,
                     stationName,
                     regionID,
                     solarSystemID,
                     security
-                ) VALUES (?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []
     
@@ -70,9 +74,10 @@ def process_data(data, cursor, lang):
         cursor.executemany('''
             INSERT OR REPLACE INTO stations (
                 stationID,
+                stationTypeID
                 stationName,
                 regionID,
                 solarSystemID,
                 security
-            ) VALUES (?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?)
         ''', batch_data) 
