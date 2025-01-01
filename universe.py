@@ -26,6 +26,7 @@ def create_table(cursor):
             constellation_id INTEGER,
             solarsystem_id INTEGER,
             system_security REAL,
+            system_type INTEGER,
             PRIMARY KEY (region_id, constellation_id, solarsystem_id)
         )
     ''')
@@ -91,6 +92,7 @@ def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, i
                 system_data = read_yaml_file(system_yaml_path)
                 system_id = system_data.get('solarSystemID')
                 system_security = system_data.get('security', 0)
+                system_type = system_data.get('sunTypeID', 6)
                 if not system_id:
                     continue
                     
@@ -101,7 +103,7 @@ def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, i
                 # 如果数据量达到1000条，执行批量插入
                 if cursor and len(universe_data) >= 1000:
                     cursor.executemany(
-                        'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security) VALUES (?, ?, ?, ?)',
+                        'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security, system_type) VALUES (?, ?, ?, ?, ?)',
                         universe_data
                     )
                     universe_data = []  # 清空临时数据，但保留在all_universe_data中
@@ -109,7 +111,7 @@ def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, i
     # 处理剩余的数据
     if cursor and universe_data:
         cursor.executemany(
-            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security) VALUES (?, ?, ?, ?)',
+            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security, system_type) VALUES (?, ?, ?, ?, ?)',
             universe_data
         )
     
@@ -129,7 +131,7 @@ def process_all_universe_data(cursor=None) -> List[Tuple[int, int, int, float]]:
     if cursor and all_data:
         print(f"正在插入 {len(all_data)} 条宇宙数据记录...")
         cursor.executemany(
-            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security) VALUES (?, ?, ?, ?)',
+            'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security, system_type) VALUES (?, ?, ?, ?, ?)',
             all_data
         )
     
@@ -154,7 +156,7 @@ def process_data(cursor, lang: str = 'en'):
         if _universe_data:
             print(f"使用缓存数据插入 {len(_universe_data)} 条宇宙数据记录...")
             cursor.executemany(
-                'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security) VALUES (?, ?, ?, ?)',
+                'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security, system_type) VALUES (?, ?, ?, ?, ?)',
                 _universe_data
             )
         else:
