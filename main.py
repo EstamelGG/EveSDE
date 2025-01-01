@@ -22,6 +22,8 @@ from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, p
 from stations_handler import read_stations_yaml, process_data as process_stations_data
 from invUniqueNames_handler import read_yaml as read_invUniqueNames_yaml, process_data as process_invUniqueNames_data
 from universe import process_data as process_universe_data
+from npcCorporations_handler import process_data as process_corporations_data
+from npcCorporations_handler import read_yaml as read_corporations_yaml
 
 
 # 文件路径
@@ -39,6 +41,7 @@ blueprints_yaml_file_path = 'Data/sde/fsd/blueprints.yaml'
 marketGroups_yaml_file_path = 'Data/sde/fsd/marketGroups.yaml'
 factions_yaml_file_path = 'Data/sde/fsd/factions.yaml'
 invUniqueNames_yaml_file_path = 'Data/sde/bsd/invUniqueNames.yaml'
+npcCorporations_yaml_file_path = 'Data/sde/fsd/npcCorporations.yaml'
 ZIP_ICONS_DEST = 'output/Icons/icons.zip'
 arch_ICONS_DEST = 'output/Icons/icons.aar'
 ICONS_DEST_DIR = 'output/Icons'
@@ -176,6 +179,9 @@ def main():
 
     print("\nProcessing factions.yaml...")  # 派系数据
     process_yaml_file(factions_yaml_file_path, read_factions_yaml, process_factions_data)
+
+    print("\nProcessing npcCorporations.yaml...")  # NPC公司数据
+    process_yaml_file(npcCorporations_yaml_file_path, read_corporations_yaml, process_corporations_data)
 
     print("\nProcessing dogmaAttributeCategories.yaml...")  # 物品属性目录
     process_yaml_file(dogmaAttributeCategories_yaml_file_path, read_dogmaAttributeCategories_yaml,
