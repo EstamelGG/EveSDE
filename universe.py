@@ -97,8 +97,8 @@ def process_universe_data(base_path: str, cursor=None) -> List[Tuple[int, int, i
                     continue
                     
                 # 将关系数据添加到列表中
-                universe_data.append((region_id, constellation_id, system_id, system_security))
-                all_universe_data.append((region_id, constellation_id, system_id, system_security))
+                universe_data.append((region_id, constellation_id, system_id, system_security, system_type))
+                all_universe_data.append((region_id, constellation_id, system_id, system_security, system_type))
                 
                 # 如果数据量达到1000条，执行批量插入
                 if cursor and len(universe_data) >= 1000:
