@@ -10,6 +10,11 @@
 1. 如果需要更新图标，则单独执行 `thirdparty_data_source/sync_icon.py`
 2. 下载好图标后，执行 `thirdparty_data_source/replace_icon.py` ，使下载的图标与 `Data/Types` 合并
 
+# 输出文件
+
+1. 静态数据库: output/db
+2. 图标文件压缩包: output/Icons/icons.zip
+
 # 制作app图标
 
 1. 做一个 png 图标，然后在预览中导出，选择png格式，并选择去除alpha通道
