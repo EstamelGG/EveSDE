@@ -75,7 +75,6 @@ def download_icon(type_id, skip_existing=True):
                     retry_count += 1
                     if retry_count < max_retries:
                         print(f"\n服务器临时错误（状态码：{response.status_code}），等待1秒后进行第{retry_count + 1}次重试...")
-                        time.sleep(1)
                 else:
                     # 其他状态码，直接尝试下一个URL
                     break
@@ -85,7 +84,6 @@ def download_icon(type_id, skip_existing=True):
                 retry_count += 1
                 if retry_count < max_retries:
                     print(f"\n网络连接错误，等待1秒后进行第{retry_count + 1}次重试...")
-                    time.sleep(1)
                 else:
                     break
     
@@ -144,7 +142,6 @@ def main(skip_existing=True):
         elif result is True:
             success_count += 1
             print(" - 成功")
-            time.sleep(0.1)
         elif result == 'failed':
             retry_fail_count += 1
             print(" - 重试5次后失败")
