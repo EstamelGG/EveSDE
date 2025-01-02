@@ -4,26 +4,34 @@ from ruamel.yaml import YAML
 import time
 
 def read_types_yaml():
-    """读取types.yaml文件并返回所有type ID，排除特定groupID的类型"""
+    """读取types.yaml文件并返回所有type ID，排除特定groupID的类型和404列表中的类型"""
     # 定义需要排除的groupID列表
     EXCLUDED_GROUP_IDS = {1950, 1951, 1952, 1953, 1954, 1955, 4040}
+    
+    # 读取404.txt中的ID
+    failed_ids = set()
+    if os.path.exists('404.txt'):
+        with open('404.txt', 'r') as f:
+            failed_ids = {int(line.strip()) for line in f if line.strip().isdigit()}
     
     # 首先检查是否存在缓存的typeids.txt
     if os.path.exists('typeids.txt'):
         print("从缓存文件读取type IDs...")
         with open('typeids.txt', 'r') as f:
-            return [int(line.strip()) for line in f.readlines()]
+            type_ids = [int(line.strip()) for line in f.readlines()]
+            # 过滤掉404列表中的ID
+            return [tid for tid in type_ids if tid not in failed_ids]
     
     print("从types.yaml读取type IDs...")
     yaml = YAML(typ='safe')
     with open('../Data/sde/fsd/types.yaml', 'r', encoding='utf-8') as file:
         types_data = yaml.load(file)
     
-    # 过滤掉指定groupID的type
+    # 过滤掉指定groupID的type和404列表中的ID
     type_ids = []
     for type_id, type_info in types_data.items():
         if isinstance(type_info, dict) and 'groupID' in type_info:
-            if type_info['groupID'] not in EXCLUDED_GROUP_IDS:
+            if type_info['groupID'] not in EXCLUDED_GROUP_IDS and type_id not in failed_ids:
                 type_ids.append(type_id)
     
     print("保存type IDs到缓存文件...")
@@ -116,12 +124,12 @@ def download_icon(type_id, skip_existing=True):
                     pass
             
             # 如果到这里还没有返回，说明所有尝试都失败了
-            with open('/Users/gg/PycharmProjects/EveSDE/thirdparty_data_source/error.txt', 'a') as f:
+            with open('404.txt', 'a') as f:
                 f.write(f"{type_id}\n")
             return 'failed'
                 
         except (requests.exceptions.RequestException, IOError):
-            with open('/Users/gg/PycharmProjects/EveSDE/thirdparty_data_source/error.txt', 'a') as f:
+            with open('404.txt', 'a') as f:
                 f.write(f"{type_id}\n")
             return 'failed'
     
