@@ -4,7 +4,10 @@ from ruamel.yaml import YAML
 import time
 
 def read_types_yaml():
-    """读取types.yaml文件并返回所有type ID"""
+    """读取types.yaml文件并返回所有type ID，排除特定groupID的类型"""
+    # 定义需要排除的groupID列表
+    EXCLUDED_GROUP_IDS = {1950, 1951, 1952, 1953, 1954, 1955, 4040}
+    
     # 首先检查是否存在缓存的typeids.txt
     if os.path.exists('typeids.txt'):
         print("从缓存文件读取type IDs...")
@@ -16,8 +19,13 @@ def read_types_yaml():
     with open('../Data/sde/fsd/types.yaml', 'r', encoding='utf-8') as file:
         types_data = yaml.load(file)
     
-    # 获取并保存type IDs到文件
-    type_ids = list(types_data.keys())
+    # 过滤掉指定groupID的type
+    type_ids = []
+    for type_id, type_info in types_data.items():
+        if isinstance(type_info, dict) and 'groupID' in type_info:
+            if type_info['groupID'] not in EXCLUDED_GROUP_IDS:
+                type_ids.append(type_id)
+    
     print("保存type IDs到缓存文件...")
     with open('typeids.txt', 'w') as f:
         for type_id in type_ids:
@@ -48,7 +56,7 @@ def download_icon(type_id, skip_existing=True):
     both_bad_category = True
     for url in urls:
         retry_count = 0
-        max_retries = 5
+        max_retries = 3
         while retry_count < max_retries:
             try:
                 response = requests.get(url, timeout=TIMEOUT)
