@@ -59,7 +59,7 @@ def read_yaml(file_path):
 def process_data(yaml_data, cursor, language):
     """处理YAML数据并写入数据库"""
     # 创建输出目录
-    output_dir = "/Users/gg/PycharmProjects/EveSDE/output/Icons"
+    output_dir = "output/Icons"
     os.makedirs(output_dir, exist_ok=True)
     
     # 创建factions表
