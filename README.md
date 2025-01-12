@@ -1,9 +1,9 @@
 # EVE SDE 数据库构造器
 
 1. 获取官方数据库：https://developers.eveonline.com/resource
-2. 解压后放在 `Data/sde`
+2. 解压后放在根目录 `Data/sde` 目录。
 2. 从第三方来源获取数据单位信息，如"%","+"等：https://sde.hoboleaks.space/tq/dogmaunits.json 下载后放在 `thirdparty_data_source`
-3. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types`。
+3. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。
 4. 开始构造数据库 `main.py`
 
 # 更新图标
