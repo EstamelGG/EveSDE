@@ -24,6 +24,7 @@ from invUniqueNames_handler import read_yaml as read_invUniqueNames_yaml, proces
 from universe import process_data as process_universe_data
 from npcCorporations_handler import process_data as process_corporations_data
 from npcCorporations_handler import read_yaml as read_corporations_yaml
+from invFlags_handler import read_yaml as read_invFlags_yaml, process_data as process_invFlags_data
 
 
 # 文件路径
@@ -46,6 +47,7 @@ ZIP_ICONS_DEST = 'output/Icons/icons.zip'
 arch_ICONS_DEST = 'output/Icons/icons.aar'
 ICONS_DEST_DIR = 'output/Icons'
 stations_yaml_file_path = 'Data/sde/bsd/staStations.yaml'
+invFlags_yaml_file_path = 'Data/sde/bsd/invFlags.yaml'
 
 # aa archive -o ../icons.aar -d .
 
@@ -204,6 +206,9 @@ def main():
 
     print("\nProcessing blueprints.yaml...")  # 蓝图数据
     process_yaml_file(blueprints_yaml_file_path, read_blueprints_yaml, process_blueprints_data)
+
+    print("\nProcessing invFlags.yaml...")  # 物品位置标识
+    process_yaml_file(invFlags_yaml_file_path, read_invFlags_yaml, process_invFlags_data)
 
     print("\nUpdating groups icons...")  # 给 groups 更新图标名称
     process_special_data(update_groups_with_icon_filename, "groups icons")
