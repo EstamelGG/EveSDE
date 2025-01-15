@@ -1,7 +1,6 @@
 import os
 import requests
 from ruamel.yaml import YAML
-import time
 
 def read_types_yaml():
     """读取types.yaml文件并返回所有type ID，排除特定groupID的类型和404列表中的类型"""
@@ -173,4 +172,4 @@ def main(skip_existing=True):
     print(f"已存在跳过: {skip_count}")
 
 if __name__ == '__main__':
-    main(skip_existing=True)  # 在这里直接指定是否跳过已存在文件
+    main(skip_existing=False)  # 在这里直接指定是否跳过已存在文件
