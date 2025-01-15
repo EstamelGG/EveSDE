@@ -1,5 +1,4 @@
 /Data/
-/output/
 /.idea/
 /__pycache__/
 /.venv/
@@ -8,3 +7,9 @@
 /icon_md5_map.txt
 thirdparty_data_source/error.txt
 thirdparty_data_source/not_exist.txt
+/output/db/item_db_de.sqlite
+/output/db/item_db_es.sqlite
+/output/db/item_db_fr.sqlite
+/output/db/item_db_ja.sqlite
+/output/db/item_db_ko.sqlite
+/output/db/item_db_ru.sqlite
