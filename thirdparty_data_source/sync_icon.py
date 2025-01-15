@@ -1,9 +1,102 @@
 import os
+import time
 import requests
 from ruamel.yaml import YAML
 
+class IconDownloader:
+    def __init__(self):
+        self.save_dir = './icon_from_api'
+        self.timeout = (5, 10)  # (连接超时, 读取超时)
+        self.max_retries = 5
+        os.makedirs(self.save_dir, exist_ok=True)
+        
+    def _make_request(self, url, retry_message="网络错误"):
+        """统一的请求处理函数，包含重试逻辑"""
+        retry_count = 0
+        while retry_count < self.max_retries:
+            try:
+                response = requests.get(url, timeout=self.timeout)
+                return response
+            except (requests.exceptions.RequestException, IOError) as e:
+                retry_count += 1
+                if retry_count < self.max_retries:
+                    print(f"\n{retry_message} {e}，等待1秒后进行第{retry_count + 1}次重试...")
+                    time.sleep(1)
+                else:
+                    raise  # 重试耗尽，抛出异常
+        
+    def _save_image(self, content, type_id):
+        """保存图片到文件"""
+        save_path = os.path.join(self.save_dir, f'{type_id}_64.png')
+        with open(save_path, 'wb') as f:
+            f.write(content)
+        return True
+
+    def download_icon(self, type_id, skip_existing=True):
+        """下载指定type ID的图标"""
+        # 检查是否已存在
+        save_path = os.path.join(self.save_dir, f'{type_id}_64.png')
+        if os.path.exists(save_path) and skip_existing:
+            return 'exists'
+            
+        try:
+            # 1. 首先尝试常见的变体
+            common_variants = ['icon', 'bp']
+            for variant in common_variants:
+                url = f'https://images.evetech.net/types/{type_id}/{variant}?size=64'
+                try:
+                    response = self._make_request(url, f"获取{variant}时网络错误")
+                    if response.status_code == 200 and b"bad category or variation" not in response.content:
+                        return self._save_image(response.content, type_id)
+                except (requests.exceptions.RequestException, IOError):
+                    continue
+                
+            # 2. 如果常见变体都失败，获取可用的变体列表
+            variants_url = f'https://images.evetech.net/types/{type_id}/'
+            response = self._make_request(variants_url, "获取变体列表时网络错误")
+            
+            # 如果返回404，说明ID不存在
+            if response.status_code == 404:
+                self._record_not_exist(type_id)
+                return 'not_exist'
+                
+            if response.status_code == 200:
+                try:
+                    variants = response.json()
+                    # 3. 尝试列表中的其他变体（排除已尝试过的）
+                    other_variants = [v for v in variants if v not in common_variants]
+                    for variant in other_variants:
+                        variant_url = f'https://images.evetech.net/types/{type_id}/{variant}?size=64'
+                        try:
+                            response = self._make_request(variant_url, f"获取{variant}变体时网络错误")
+                            if response.status_code == 200 and b"bad category or variation" not in response.content:
+                                return self._save_image(response.content, type_id)
+                        except (requests.exceptions.RequestException, IOError):
+                            continue
+                except (ValueError, IndexError):
+                    pass  # JSON解析错误或空列表
+                    
+            # 所有尝试都失败，记录为不存在
+            self._record_not_exist(type_id)
+            return 'not_exist'
+            
+        except (requests.exceptions.RequestException, IOError):
+            # 所有重试都失败，记录到failed.txt
+            self._record_failed(type_id)
+            return 'failed'
+
+    def _record_not_exist(self, type_id):
+        """记录不存在的ID"""
+        with open('not_exist.txt', 'a') as f:
+            f.write(f"{type_id}\n")
+            
+    def _record_failed(self, type_id):
+        """记录下载失败的ID"""
+        with open('failed.txt', 'a') as f:
+            f.write(f"{type_id}\n")
+
 def read_types_yaml():
-    """读取types.yaml文件并返回所有type ID，排除特定groupID的类型和不存在的ID"""
+    """读取types.yaml文件并返回所有type ID"""
     EXCLUDED_GROUP_IDS = {1950, 1951, 1952, 1953, 1954, 1955, 4040}
     
     # 读取not_exist.txt中的ID
@@ -17,7 +110,6 @@ def read_types_yaml():
         print("从缓存文件读取type IDs...")
         with open('typeids.txt', 'r') as f:
             type_ids = [int(line.strip()) for line in f.readlines()]
-            # 过滤掉不存在的ID
             return [tid for tid in type_ids if tid not in not_exist_ids]
     
     print("从types.yaml读取type IDs...")
@@ -25,7 +117,6 @@ def read_types_yaml():
     with open('../Data/sde/fsd/types.yaml', 'r', encoding='utf-8') as file:
         types_data = yaml.load(file)
     
-    # 过滤掉指定groupID的type和404列表中的ID
     type_ids = []
     for type_id, type_info in types_data.items():
         if isinstance(type_info, dict) and 'groupID' in type_info:
@@ -39,114 +130,18 @@ def read_types_yaml():
     
     return type_ids
 
-def download_icon(type_id, skip_existing=True):
-    """下载指定type ID的图标"""
-    # 检查文件是否已存在
-    save_dir = './icon_from_api'
-    save_path = os.path.join(save_dir, f'{type_id}_64.png')
-    if os.path.exists(save_path) and skip_existing:
-        return 'exists'  # 返回特殊状态表示文件已存在
-    
-    urls = [
-        f'https://images.evetech.net/types/{type_id}/icon',
-        f'https://images.evetech.net/types/{type_id}/bp'
-    ]
-    
-    # 需要重试的状态码（服务器临时错误）
-    RETRY_STATUS_CODES = {500, 502, 503, 504}
-    
-    # 设置超时时间：(连接超时, 读取超时)
-    TIMEOUT = (5, 10)
-    
-    # 尝试基本URL
-    both_bad_category = True
-    for url in urls:
-        retry_count = 0
-        max_retries = 5  # 增加到5次重试
-        while retry_count < max_retries:
-            try:
-                response = requests.get(url, timeout=TIMEOUT)
-                if response.status_code == 200:
-                    if b"bad category or variation" in response.content:
-                        if url == urls[0]:
-                            break
-                        break
-                    else:
-                        both_bad_category = False
-                        os.makedirs(save_dir, exist_ok=True)
-                        with open(save_path, 'wb') as f:
-                            f.write(response.content)
-                        return True
-                else:
-                    # 有响应但不是200，记录到not_exist.txt
-                    with open('not_exist.txt', 'a') as f:
-                        f.write(f"{type_id}\n")
-                    return 'not_exist'
-                    
-            except (requests.exceptions.RequestException, IOError) as e:
-                retry_count += 1
-                if retry_count < max_retries:
-                    print(f"\n网络连接错误 {e}，等待1秒后进行第{retry_count + 1}次重试...")
-                else:
-                    # 5次重试后仍然失败，记录到failed.txt
-                    with open('failed.txt', 'a') as f:
-                        f.write(f"{type_id}\n")
-                    return 'failed'
-    
-    # 如果两个基本URL都返回bad category，尝试获取变体
-    if both_bad_category:
-        try:
-            variants_url = f'https://images.evetech.net/types/{type_id}/'
-            response = requests.get(variants_url, timeout=TIMEOUT)
-            if response.status_code == 200:
-                try:
-                    variants = response.json()
-                    if variants and len(variants) > 0:
-                        variant_url = f'https://images.evetech.net/types/{type_id}/{variants[0]}'
-                        variant_response = requests.get(variant_url, timeout=TIMEOUT)
-                        if variant_response.status_code == 200 and b"bad category or variation" not in variant_response.content:
-                            os.makedirs(save_dir, exist_ok=True)
-                            with open(save_path, 'wb') as f:
-                                f.write(variant_response.content)
-                            return True
-                        else:
-                            # 变体请求响应不是200
-                            with open('not_exist.txt', 'a') as f:
-                                f.write(f"{type_id}\n")
-                            return 'not_exist'
-                except (ValueError, IndexError):
-                    with open('not_exist.txt', 'a') as f:
-                        f.write(f"{type_id}\n")
-                    return 'not_exist'
-                
-        except (requests.exceptions.RequestException, IOError):
-            # 网络错误，记录到failed.txt
-            with open('failed.txt', 'a') as f:
-                f.write(f"{type_id}\n")
-            return 'failed'
-    
-    # 所有尝试都失败
-    with open('not_exist.txt', 'a') as f:
-        f.write(f"{type_id}\n")
-    return 'not_exist'
-
 def main(skip_existing=True):
-    # 获取所有type ID
     type_ids = read_types_yaml()
     print(f"总共发现 {len(type_ids)} 个type ID")
     print(f"跳过已存在文件: {'是' if skip_existing else '否'}")
     
-    # 创建计数器
-    success_count = 0
-    not_exist_count = 0
-    failed_count = 0
-    skip_count = 0
+    downloader = IconDownloader()
+    success_count = not_exist_count = failed_count = skip_count = 0
     
-    # 下载所有图标
     for i, type_id in enumerate(type_ids, 1):
         print(f"正在处理 {i}/{len(type_ids)}: Type ID {type_id}", end='')
         
-        result = download_icon(type_id, skip_existing)
+        result = downloader.download_icon(type_id, skip_existing)
         if result == 'exists':
             skip_count += 1
             print(" - 已存在，跳过")
@@ -167,4 +162,4 @@ def main(skip_existing=True):
     print(f"已存在跳过: {skip_count}")
 
 if __name__ == '__main__':
-    main(skip_existing=False)  # 在这里直接指定是否跳过已存在文件
+    main(skip_existing=True)
