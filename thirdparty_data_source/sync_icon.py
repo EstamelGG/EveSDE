@@ -2,12 +2,18 @@ import os
 import time
 import requests
 from ruamel.yaml import YAML
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 
 class IconDownloader:
-    def __init__(self):
+    def __init__(self, num_threads=10):
         self.save_dir = './icon_from_api'
         self.timeout = (5, 10)  # (连接超时, 读取超时)
         self.max_retries = 5
+        self.num_threads = num_threads
+        # 添加锁用于线程安全的文件写入
+        self.not_exist_lock = Lock()
+        self.failed_lock = Lock()
         os.makedirs(self.save_dir, exist_ok=True)
         
     def _make_request(self, url, retry_message="网络错误"):
@@ -86,14 +92,52 @@ class IconDownloader:
             return 'failed'
 
     def _record_not_exist(self, type_id):
-        """记录不存在的ID"""
-        with open('not_exist.txt', 'a') as f:
-            f.write(f"{type_id}\n")
+        """记录不存在的ID（线程安全）"""
+        with self.not_exist_lock:
+            with open('not_exist.txt', 'a') as f:
+                f.write(f"{type_id}\n")
             
     def _record_failed(self, type_id):
-        """记录下载失败的ID"""
-        with open('failed.txt', 'a') as f:
-            f.write(f"{type_id}\n")
+        """记录下载失败的ID（线程安全）"""
+        with self.failed_lock:
+            with open('failed.txt', 'a') as f:
+                f.write(f"{type_id}\n")
+
+    def download_batch(self, type_ids, skip_existing=True):
+        """并发下载一批图标"""
+        results = {'success': 0, 'not_exist': 0, 'failed': 0, 'skip': 0}
+        total = len(type_ids)
+        completed = 0
+
+        def download_with_progress(type_id):
+            nonlocal completed
+            result = self.download_icon(type_id, skip_existing)
+            completed += 1
+            print(f"\r进度: {completed}/{total} ({completed/total*100:.1f}%) - 处理 Type ID {type_id} - {result}", 
+                  end='', flush=True)
+            return result
+
+        with ThreadPoolExecutor(max_workers=self.num_threads) as executor:
+            future_to_id = {executor.submit(download_with_progress, tid): tid 
+                          for tid in type_ids}
+            
+            for future in as_completed(future_to_id):
+                try:
+                    result = future.result()
+                    if result == 'exists':
+                        results['skip'] += 1
+                    elif result is True:
+                        results['success'] += 1
+                    elif result == 'not_exist':
+                        results['not_exist'] += 1
+                    elif result == 'failed':
+                        results['failed'] += 1
+                except Exception as e:
+                    type_id = future_to_id[future]
+                    print(f"\n处理 Type ID {type_id} 时发生错误: {e}")
+                    results['failed'] += 1
+
+        return results
 
 def read_types_yaml():
     """读取types.yaml文件并返回所有type ID"""
@@ -130,36 +174,20 @@ def read_types_yaml():
     
     return type_ids
 
-def main(skip_existing=True):
+def main(skip_existing=True, num_threads=10):
     type_ids = read_types_yaml()
     print(f"总共发现 {len(type_ids)} 个type ID")
     print(f"跳过已存在文件: {'是' if skip_existing else '否'}")
+    print(f"使用线程数: {num_threads}")
     
-    downloader = IconDownloader()
-    success_count = not_exist_count = failed_count = skip_count = 0
+    downloader = IconDownloader(num_threads=num_threads)
+    results = downloader.download_batch(type_ids, skip_existing)
     
-    for i, type_id in enumerate(type_ids, 1):
-        print(f"正在处理 {i}/{len(type_ids)}: Type ID {type_id}", end='')
-        
-        result = downloader.download_icon(type_id, skip_existing)
-        if result == 'exists':
-            skip_count += 1
-            print(" - 已存在，跳过")
-        elif result is True:
-            success_count += 1
-            print(" - 成功")
-        elif result == 'not_exist':
-            not_exist_count += 1
-            print(" - 资源不存在")
-        elif result == 'failed':
-            failed_count += 1
-            print(" - 网络错误")
-    
-    print(f"\n下载完成！")
-    print(f"成功: {success_count}")
-    print(f"资源不存在: {not_exist_count}")
-    print(f"网络错误: {failed_count}")
-    print(f"已存在跳过: {skip_count}")
+    print(f"\n\n下载完成！")
+    print(f"成功: {results['success']}")
+    print(f"资源不存在: {results['not_exist']}")
+    print(f"网络错误: {results['failed']}")
+    print(f"已存在跳过: {results['skip']}")
 
 if __name__ == '__main__':
-    main(skip_existing=True)
+    main(skip_existing=True, num_threads=20)
