@@ -98,7 +98,7 @@ def download_icon(type_id, skip_existing=True):
                 # 网络错误时增加重试计数
                 retry_count += 1
                 if retry_count < max_retries:
-                    print(f"\n网络连接错误，等待1秒后进行第{retry_count + 1}次重试...")
+                    print(f"\n网络连接错误 {e}，等待1秒后进行第{retry_count + 1}次重试...")
                 else:
                     break
     
