@@ -11,7 +11,7 @@
 1. 如果需要更新图标，则单独执行 `thirdparty_data_source/sync_icon.py`
 2. 下载好图标后，执行 `thirdparty_data_source/replace_icon.py` ，使下载的图标与 `Data/Types` 合并
 3. 最后重新执行 `main.py` 构造资源包
-4. 如果需要完全重新构造图标资源包，则下载全部图标，删除 `icon_md5_map.txt`，并执行 `main.py`。
+4. 如果需要完全重新构造图标资源包，则删除 `icon_md5_map.txt` 和 `thirdparty_data_source/typeids.txt`，执行前三步。
 
 # 输出文件
 
