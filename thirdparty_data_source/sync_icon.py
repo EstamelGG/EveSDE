@@ -3,23 +3,22 @@ import requests
 from ruamel.yaml import YAML
 
 def read_types_yaml():
-    """读取types.yaml文件并返回所有type ID，排除特定groupID的类型和404列表中的类型"""
-    # 定义需要排除的groupID列表
+    """读取types.yaml文件并返回所有type ID，排除特定groupID的类型和不存在的ID"""
     EXCLUDED_GROUP_IDS = {1950, 1951, 1952, 1953, 1954, 1955, 4040}
     
-    # 读取404.txt中的ID
-    failed_ids = set()
-    if os.path.exists('404.txt'):
-        with open('404.txt', 'r') as f:
-            failed_ids = {int(line.strip()) for line in f if line.strip().isdigit()}
+    # 读取not_exist.txt中的ID
+    not_exist_ids = set()
+    if os.path.exists('not_exist.txt'):
+        with open('not_exist.txt', 'r') as f:
+            not_exist_ids = {int(line.strip()) for line in f if line.strip().isdigit()}
     
     # 首先检查是否存在缓存的typeids.txt
     if os.path.exists('typeids.txt'):
         print("从缓存文件读取type IDs...")
         with open('typeids.txt', 'r') as f:
             type_ids = [int(line.strip()) for line in f.readlines()]
-            # 过滤掉404列表中的ID
-            return [tid for tid in type_ids if tid not in failed_ids]
+            # 过滤掉不存在的ID
+            return [tid for tid in type_ids if tid not in not_exist_ids]
     
     print("从types.yaml读取type IDs...")
     yaml = YAML(typ='safe')
@@ -30,7 +29,7 @@ def read_types_yaml():
     type_ids = []
     for type_id, type_info in types_data.items():
         if isinstance(type_info, dict) and 'groupID' in type_info:
-            if type_info['groupID'] not in EXCLUDED_GROUP_IDS and type_id not in failed_ids:
+            if type_info['groupID'] not in EXCLUDED_GROUP_IDS and type_id not in not_exist_ids:
                 type_ids.append(type_id)
     
     print("保存type IDs到缓存文件...")
@@ -63,46 +62,38 @@ def download_icon(type_id, skip_existing=True):
     both_bad_category = True
     for url in urls:
         retry_count = 0
-        max_retries = 3
+        max_retries = 5  # 增加到5次重试
         while retry_count < max_retries:
             try:
                 response = requests.get(url, timeout=TIMEOUT)
                 if response.status_code == 200:
-                    # 检查是否返回"bad category or variation"
                     if b"bad category or variation" in response.content:
-                        # 如果是第一个URL，继续尝试第二个URL
                         if url == urls[0]:
                             break
-                        # 如果是第二个URL，继续尝试变体
                         break
                     else:
                         both_bad_category = False
-                        # 保存成功获取的图标
                         os.makedirs(save_dir, exist_ok=True)
                         with open(save_path, 'wb') as f:
                             f.write(response.content)
                         return True
-                elif response.status_code == 404:
-                    # 404表示资源不存在，直接尝试下一个URL
-                    break
-                elif response.status_code in RETRY_STATUS_CODES:
-                    # 只有服务器临时错误才重试
-                    retry_count += 1
-                    if retry_count < max_retries:
-                        print(f"\n服务器临时错误（状态码：{response.status_code}），等待1秒后进行第{retry_count + 1}次重试...")
                 else:
-                    # 其他状态码，直接尝试下一个URL
-                    break
+                    # 有响应但不是200，记录到not_exist.txt
+                    with open('not_exist.txt', 'a') as f:
+                        f.write(f"{type_id}\n")
+                    return 'not_exist'
                     
             except (requests.exceptions.RequestException, IOError) as e:
-                # 网络错误时增加重试计数
                 retry_count += 1
                 if retry_count < max_retries:
                     print(f"\n网络连接错误 {e}，等待1秒后进行第{retry_count + 1}次重试...")
                 else:
-                    break
+                    # 5次重试后仍然失败，记录到failed.txt
+                    with open('failed.txt', 'a') as f:
+                        f.write(f"{type_id}\n")
+                    return 'failed'
     
-    # 如果两个基本URL都返回bad category，尝试获取可用的变体类型
+    # 如果两个基本URL都返回bad category，尝试获取变体
     if both_bad_category:
         try:
             variants_url = f'https://images.evetech.net/types/{type_id}/'
@@ -111,7 +102,6 @@ def download_icon(type_id, skip_existing=True):
                 try:
                     variants = response.json()
                     if variants and len(variants) > 0:
-                        # 使用第一个变体尝试获取图标
                         variant_url = f'https://images.evetech.net/types/{type_id}/{variants[0]}'
                         variant_response = requests.get(variant_url, timeout=TIMEOUT)
                         if variant_response.status_code == 200 and b"bad category or variation" not in variant_response.content:
@@ -119,20 +109,26 @@ def download_icon(type_id, skip_existing=True):
                             with open(save_path, 'wb') as f:
                                 f.write(variant_response.content)
                             return True
+                        else:
+                            # 变体请求响应不是200
+                            with open('not_exist.txt', 'a') as f:
+                                f.write(f"{type_id}\n")
+                            return 'not_exist'
                 except (ValueError, IndexError):
-                    pass
-            
-            # 如果到这里还没有返回，说明所有尝试都失败了
-            with open('404.txt', 'a') as f:
-                f.write(f"{type_id}\n")
-            return 'failed'
+                    with open('not_exist.txt', 'a') as f:
+                        f.write(f"{type_id}\n")
+                    return 'not_exist'
                 
         except (requests.exceptions.RequestException, IOError):
-            with open('404.txt', 'a') as f:
+            # 网络错误，记录到failed.txt
+            with open('failed.txt', 'a') as f:
                 f.write(f"{type_id}\n")
             return 'failed'
     
-    return 'failed'
+    # 所有尝试都失败
+    with open('not_exist.txt', 'a') as f:
+        f.write(f"{type_id}\n")
+    return 'not_exist'
 
 def main(skip_existing=True):
     # 获取所有type ID
@@ -142,9 +138,9 @@ def main(skip_existing=True):
     
     # 创建计数器
     success_count = 0
-    fail_count = 0
+    not_exist_count = 0
+    failed_count = 0
     skip_count = 0
-    retry_fail_count = 0
     
     # 下载所有图标
     for i, type_id in enumerate(type_ids, 1):
@@ -157,18 +153,17 @@ def main(skip_existing=True):
         elif result is True:
             success_count += 1
             print(" - 成功")
+        elif result == 'not_exist':
+            not_exist_count += 1
+            print(" - 资源不存在")
         elif result == 'failed':
-            retry_fail_count += 1
-            print(" - 重试5次后失败")
-        else:
-            fail_count += 1
-            print(" - 未找到图标")
-
+            failed_count += 1
+            print(" - 网络错误")
     
     print(f"\n下载完成！")
     print(f"成功: {success_count}")
-    print(f"失败（非200）: {fail_count}")
-    print(f"重试失败: {retry_fail_count}")
+    print(f"资源不存在: {not_exist_count}")
+    print(f"网络错误: {failed_count}")
     print(f"已存在跳过: {skip_count}")
 
 if __name__ == '__main__':
