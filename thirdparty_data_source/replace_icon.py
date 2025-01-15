@@ -44,6 +44,7 @@ def copy_icons():
         source_size = get_file_size(source_path)
         target_size = get_file_size(target_path)
         print(f" - 已替换 (新文件: {source_size}字节, 原文件: {target_size}字节)")
+        replaced += 1
 
     print("\n处理完成！")
     print(f"新复制: {copied} 个文件")
