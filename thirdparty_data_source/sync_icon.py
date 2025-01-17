@@ -190,4 +190,4 @@ def main(skip_existing=True, num_threads=10):
     print(f"已存在跳过: {results['skip']}")
 
 if __name__ == '__main__':
-    main(skip_existing=True, num_threads=20)
+    main(skip_existing=False, num_threads=50)
