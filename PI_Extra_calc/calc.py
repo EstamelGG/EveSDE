@@ -30,7 +30,7 @@ class ExtractorCalculator:
         hourly_yield = decay * (1.0 + self.noise_factor * sins)
 
         # 返回总产量（16小时）
-        return round(16 * hourly_yield)
+        return int(16 * hourly_yield)
 
     def calculate_range(self, start_cycle, end_cycle):
         """计算一个范围内的所有周期产量"""
@@ -59,5 +59,5 @@ def main(quantity_per_cycle):
 
 
 if __name__ == "__main__":
-    quantity_per_cycle = 5620 # from esi response: pins.extractor_details.qty_per_cycle
+    quantity_per_cycle = 7944 # from esi response: pins.extractor_details.qty_per_cycle
     main(quantity_per_cycle)
