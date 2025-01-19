@@ -64,9 +64,29 @@ def calculate_total_cycles(install_time, expiry_time, cycle_time):
     return total_cycles - 1  # 减1是因为周期从0开始
 
 
+def get_current_cycle(install_time, cycle_time):
+    """获取当前周期"""
+    # 将安装时间转换为datetime对象
+    install_dt = datetime.strptime(install_time, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+
+    # 获取当前UTC时间
+    current_dt = datetime.now(timezone.utc)
+
+    # 计算从安装到现在经过的秒数
+    elapsed_seconds = (current_dt - install_dt).total_seconds()
+
+    # 计算当前周期
+    current_cycle = int(elapsed_seconds / cycle_time)
+
+    return current_cycle
+
+
 def main(quantity_per_cycle, cycle_time, install_time, expiry_time):
     # 计算总周期数
     total_cycles = calculate_total_cycles(install_time, expiry_time, cycle_time)
+
+    # 获取当前周期
+    current_cycle = get_current_cycle(install_time, cycle_time)
 
     # 创建计算器实例
     calculator = ExtractorCalculator(quantity_per_cycle, cycle_time)
@@ -79,10 +99,12 @@ def main(quantity_per_cycle, cycle_time, install_time, expiry_time):
     print(f"周期时间: {cycle_time}秒 ({cycle_time / 3600}小时)")
     print(f"15分钟单位数: {cycle_time / 900}")
     print(f"总周期数: {total_cycles + 1}")  # +1是为了显示实际周期数
+    print(f"当前周期: {current_cycle + 1}")  # +1是为了显示从1开始的周期编号
     print("\n周期\t产量")
     print("-" * 20)
     for result in results:
-        print(f"{result['cycle']}\t{result['yield']}")
+        cycle_marker = " <--" if result['cycle'] == current_cycle + 1 else ""
+        print(f"{result['cycle']}\t{result['yield']}{cycle_marker}")
 
 
 if __name__ == "__main__":
