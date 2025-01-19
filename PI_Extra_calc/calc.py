@@ -1,4 +1,5 @@
 import math
+from datetime import datetime, timezone
 
 
 class ExtractorCalculator:
@@ -48,17 +49,36 @@ class ExtractorCalculator:
         return results
 
 
-def main(quantity_per_cycle, cycle_time):
+def calculate_total_cycles(install_time, expiry_time, cycle_time):
+    """计算总周期数"""
+    # 将时间字符串转换为datetime对象
+    install_dt = datetime.strptime(install_time, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    expiry_dt = datetime.strptime(expiry_time, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+
+    # 计算总秒数
+    total_seconds = (expiry_dt - install_dt).total_seconds()
+
+    # 计算总周期数
+    total_cycles = int(total_seconds / cycle_time)
+
+    return total_cycles - 1  # 减1是因为周期从0开始
+
+
+def main(quantity_per_cycle, cycle_time, install_time, expiry_time):
+    # 计算总周期数
+    total_cycles = calculate_total_cycles(install_time, expiry_time, cycle_time)
+
     # 创建计算器实例
     calculator = ExtractorCalculator(quantity_per_cycle, cycle_time)
 
-    # 计算前100个周期的产量
-    results = calculator.calculate_range(0, 83)
+    # 计算所有周期的产量
+    results = calculator.calculate_range(0, total_cycles)
 
     # 打印结果
     print(f"基础产量: {quantity_per_cycle}")
     print(f"周期时间: {cycle_time}秒 ({cycle_time / 3600}小时)")
     print(f"15分钟单位数: {cycle_time / 900}")
+    print(f"总周期数: {total_cycles + 1}")  # +1是为了显示实际周期数
     print("\n周期\t产量")
     print("-" * 20)
     for result in results:
@@ -68,4 +88,6 @@ def main(quantity_per_cycle, cycle_time):
 if __name__ == "__main__":
     quantity_per_cycle = 7313  # from esi response: pins.extractor_details.qty_per_cycle
     cycle_time = 3600  # from esi response: pins.extractor_details.cycle_time
-    main(quantity_per_cycle, cycle_time)
+    expiry_time = "2025-01-21T19:49:51Z"
+    install_time = "2025-01-19T09:49:51Z"
+    main(quantity_per_cycle, cycle_time, install_time, expiry_time)
