@@ -3,13 +3,13 @@ def process_skill_requirements(cursor, language):
     # 创建技能需求表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS typeSkillRequirement (
-        typeid INTEGER,
+        typeid INTEGER NOT NULL,
         typename TEXT,
         typeicon TEXT,
         published BOOLEAN,
         categoryID INTEGER,
         category_name TEXT,
-        required_skill_id INTEGER,
+        required_skill_id INTEGER NOT NULL,
         required_skill_level INTEGER,
         PRIMARY KEY (typeid, required_skill_id)
     )

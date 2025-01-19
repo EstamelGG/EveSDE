@@ -75,7 +75,7 @@ def create_iconIDs_table(cursor):
     """创建 iconIDs 表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS iconIDs (
-            icon_id INTEGER PRIMARY KEY,
+            icon_id INTEGER NOT NULL PRIMARY KEY,
             description TEXT,
             iconFile TEXT,
             iconFile_new TEXT

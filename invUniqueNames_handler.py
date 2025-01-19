@@ -25,7 +25,7 @@ def create_table(cursor):
     # 创建星域表
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS regions (
-            regionID INTEGER PRIMARY KEY,
+            regionID INTEGER NOT NULL PRIMARY KEY,
             regionName TEXT
         )
     ''')
@@ -33,7 +33,7 @@ def create_table(cursor):
     # 创建星座表
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS constellations (
-            constellationID INTEGER PRIMARY KEY,
+            constellationID INTEGER NOT NULL PRIMARY KEY,
             constellationName TEXT
         )
     ''')
@@ -41,7 +41,7 @@ def create_table(cursor):
     # 创建恒星系表
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS solarsystems (
-            solarSystemID INTEGER PRIMARY KEY,
+            solarSystemID INTEGER NOT NULL PRIMARY KEY,
             solarSystemName TEXT
         )
     ''')

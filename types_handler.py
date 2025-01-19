@@ -238,7 +238,7 @@ def create_types_table(cursor):
     """创建 types 表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS types (
-            type_id INTEGER PRIMARY KEY,
+            type_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT,
             en_name TEXT,
             description TEXT,
@@ -336,7 +336,7 @@ def create_wormholes_table(cursor):
     """创建虫洞数据表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS wormholes (
-            type_id INTEGER PRIMARY KEY,
+            type_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT,
             description TEXT,
             icon TEXT,

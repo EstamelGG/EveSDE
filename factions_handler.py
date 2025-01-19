@@ -65,7 +65,7 @@ def process_data(yaml_data, cursor, language):
     # 创建factions表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS factions (
-        id INTEGER PRIMARY KEY,
+        id INTEGER NOT NULL PRIMARY KEY,
         name TEXT,
         iconName TEXT
     )

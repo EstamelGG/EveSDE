@@ -17,10 +17,10 @@ def process_data(yaml_data, cursor, language):
     # 创建typeMaterials表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS typeMaterials (
-        typeid INTEGER,
+        typeid INTEGER NOT NULL,
         categoryid INTEGER,
         process_size INTEGER,
-        output_material INTEGER,
+        output_material INTEGER NOT NULL,
         output_material_categoryid INTEGER,
         output_material_groupid INTEGER,
         output_quantity INTEGER,

@@ -16,7 +16,7 @@ def create_tables(cursor):
     """创建必要的数据表"""
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS invFlags (
-        flagID INTEGER PRIMARY KEY,
+        flagID INTEGER NOT NULL PRIMARY KEY,
         flagName TEXT,
         flagText TEXT,
         orderID INTEGER

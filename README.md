@@ -2,16 +2,16 @@
 
 1. 获取官方数据库：https://developers.eveonline.com/resource
 2. 解压后放在根目录 `Data/sde` 目录。
-2. 从第三方来源获取数据单位信息，如"%","+"等：https://sde.hoboleaks.space/tq/dogmaunits.json 下载后放在 `thirdparty_data_source`
-3. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。
-4. 开始构造数据库 `main.py`
+3. 从第三方来源获取数据单位信息，如"%","+"等：https://sde.hoboleaks.space/tq/dogmaunits.json 下载后放在 `thirdparty_data_source`
+4. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。
+5. 开始构造数据库 `main.py`
 
 # 更新图标
 
 1. 如果需要更新图标，则单独执行 `thirdparty_data_source/sync_icon.py`
 2. 下载好图标后，执行 `thirdparty_data_source/replace_icon.py` ，使下载的图标与 `Data/Types` 合并
 3. 最后重新执行 `main.py` 构造资源包
-4. 如果需要完全重新构造图标资源包，则删除 `icon_md5_map.txt` 和 `thirdparty_data_source/typeids.txt`，执行前三步。
+4. 如果需要**完全重新构造**图标资源包，则删除 `icon_md5_map.txt` 、 `thirdparty_data_source/typeids.txt` 和 `thirdparty_data_source/not_exist.txt`，再重复执行前三步。
 
 # 输出文件
 

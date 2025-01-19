@@ -21,7 +21,7 @@ def create_stations_table(cursor):
     """创建 stations 表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS stations (
-            stationID INTEGER PRIMARY KEY,
+            stationID INTEGER NOT NULL PRIMARY KEY,
             stationTypeID INTEGER,
             stationName TEXT,
             regionID INTEGER,

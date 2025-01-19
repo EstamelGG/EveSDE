@@ -29,10 +29,10 @@ def create_tables(cursor):
     # 制造材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_manufacturing_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         quantity INTEGER,
@@ -43,10 +43,10 @@ def create_tables(cursor):
     # 制造产出表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_manufacturing_output (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         quantity INTEGER,
@@ -57,10 +57,10 @@ def create_tables(cursor):
     # 制造技能表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_manufacturing_skills (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         level INTEGER,
@@ -71,10 +71,10 @@ def create_tables(cursor):
     # 材料研究材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_material_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         quantity INTEGER,
@@ -85,10 +85,10 @@ def create_tables(cursor):
     # 材料研究技能表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_material_skills (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         level INTEGER,
@@ -99,10 +99,10 @@ def create_tables(cursor):
     # 时间研究材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_time_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         quantity INTEGER,
@@ -113,10 +113,10 @@ def create_tables(cursor):
     # 时间研究技能表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_research_time_skills (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         level INTEGER,
@@ -127,10 +127,10 @@ def create_tables(cursor):
     # 复制材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_copying_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         quantity INTEGER,
@@ -141,10 +141,10 @@ def create_tables(cursor):
     # 复制技能表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_copying_skills (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         level INTEGER,
@@ -155,10 +155,10 @@ def create_tables(cursor):
     # 发明材料表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_invention_materials (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         quantity INTEGER,
@@ -169,10 +169,10 @@ def create_tables(cursor):
     # 发明产出表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_invention_products (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         quantity INTEGER,
@@ -184,10 +184,10 @@ def create_tables(cursor):
     # 发明技能表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_invention_skills (
-        blueprintTypeID INTEGER,
+        blueprintTypeID INTEGER NOT NULL,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
-        typeID INTEGER,
+        typeID INTEGER NOT NULL,
         typeName TEXT,
         typeIcon TEXT,
         level INTEGER,
@@ -198,7 +198,7 @@ def create_tables(cursor):
     # 处理时间表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blueprint_process_time (
-        blueprintTypeID INTEGER PRIMARY KEY,
+        blueprintTypeID INTEGER NOT NULL PRIMARY KEY,
         blueprintTypeName TEXT,
         blueprintTypeIcon TEXT,
         manufacturing_time INTEGER,

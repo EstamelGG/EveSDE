@@ -86,7 +86,7 @@ def process_data(yaml_data, cursor, language):
     # 创建marketGroups表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS marketGroups (
-        group_id INTEGER PRIMARY KEY,
+        group_id INTEGER NOT NULL PRIMARY KEY,
         name TEXT,
         description TEXT,
         icon_name TEXT,

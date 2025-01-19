@@ -32,7 +32,7 @@ def create_meta_groups_table(cursor):
     """创建 metaGroups 表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS metaGroups (
-            metagroup_id INTEGER PRIMARY KEY,
+            metagroup_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT
         )
     ''')

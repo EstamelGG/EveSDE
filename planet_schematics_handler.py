@@ -18,7 +18,7 @@ def process_data(yaml_data, cursor, language):
     # 创建行星制造表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS planetSchematics (
-        output_typeid INTEGER,
+        output_typeid INTEGER NOT NULL PRIMARY KEY,
         name TEXT,
         facilitys TEXT,
         cycle_time INTEGER,

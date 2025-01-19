@@ -22,8 +22,8 @@ def create_tables(cursor):
     """创建数据库表以存储 typeAttributes 和 typeEffects"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS typeAttributes (
-            type_id INTEGER,
-            attribute_id INTEGER,
+            type_id INTEGER NOT NULL,
+            attribute_id INTEGER NOT NULL,
             value REAL,
             unitID INTEGER,
             PRIMARY KEY (type_id, attribute_id)
@@ -32,8 +32,8 @@ def create_tables(cursor):
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS typeEffects (
-            type_id INTEGER,
-            effect_id INTEGER,
+            type_id INTEGER NOT NULL,
+            effect_id INTEGER NOT NULL,
             is_default BOOLEAN,
             PRIMARY KEY (type_id, effect_id)
         )
@@ -42,8 +42,8 @@ def create_tables(cursor):
     # 添加新表
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS planetResourceHarvest (
-            typeid INTEGER,
-            harvest_typeid INTEGER,
+            typeid INTEGER NOT NULL,
+            harvest_typeid INTEGER NOT NULL,
             PRIMARY KEY (typeid, harvest_typeid)
         )
     ''')

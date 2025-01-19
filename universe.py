@@ -22,9 +22,9 @@ def create_table(cursor):
     """创建universe表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS universe (
-            region_id INTEGER,
-            constellation_id INTEGER,
-            solarsystem_id INTEGER,
+            region_id INTEGER NOT NULL,
+            constellation_id INTEGER NOT NULL,
+            solarsystem_id INTEGER NOT NULL,
             system_security REAL,
             system_type INTEGER,
             PRIMARY KEY (region_id, constellation_id, solarsystem_id)

@@ -24,7 +24,7 @@ def create_dogma_attribute_categories_table(cursor):
     """创建 dogmaAttributeCategories 表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS dogmaAttributeCategories (
-            attribute_category_id INTEGER PRIMARY KEY,
+            attribute_category_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT,
             description TEXT
         )

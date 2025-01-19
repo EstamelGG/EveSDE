@@ -21,7 +21,7 @@ def create_npc_corporations_table(cursor):
     """创建 npcCorporations 表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS npcCorporations (
-            corporation_id INTEGER PRIMARY KEY,
+            corporation_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT,
             en_name TEXT,
             description TEXT,

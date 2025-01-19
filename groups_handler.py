@@ -20,7 +20,7 @@ def create_groups_table(cursor):
     """创建 groups 表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS groups (
-            group_id INTEGER PRIMARY KEY,
+            group_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT,
             iconID INTEGER,
             categoryID INTEGER,

@@ -65,10 +65,10 @@ def process_trait_data(yaml_data, cursor, language):
     # 创建traits表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS traits (
-        typeid INTEGER,
+        typeid INTEGER NOT NULL,
         importance INTEGER,
         bonus_type TEXT,
-        content TEXT,
+        content TEXT NOT NULL,
         skill INTEGER,
         PRIMARY KEY (typeid, content, skill)
     )

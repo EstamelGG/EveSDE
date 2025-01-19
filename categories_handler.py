@@ -65,7 +65,7 @@ def create_categories_table(cursor):
     """创建 categories 表"""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS categories (
-            category_id INTEGER PRIMARY KEY,
+            category_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT,
             icon_filename TEXT,
             iconID INTEGER,

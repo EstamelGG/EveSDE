@@ -20,7 +20,7 @@ def create_tables(cursor):
     """创建必要的数据表"""
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS invNames (
-        itemID INTEGER PRIMARY KEY,
+        itemID INTEGER NOT NULL PRIMARY KEY,
         itemName TEXT
     )
     ''')
