@@ -59,5 +59,5 @@ def main(quantity_per_cycle):
 
 
 if __name__ == "__main__":
-    quantity_per_cycle = 5620
+    quantity_per_cycle = 5620 # from esi response: pins.extractor_details.qty_per_cycle
     main(quantity_per_cycle)
