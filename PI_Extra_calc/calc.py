@@ -1,5 +1,6 @@
 import math
 from datetime import datetime, timezone
+import json
 
 
 class ExtractorCalculator:
@@ -81,35 +82,80 @@ def get_current_cycle(install_time, cycle_time):
     return current_cycle
 
 
-def main(quantity_per_cycle, cycle_time, install_time, expiry_time):
-    # 计算总周期数
-    total_cycles = calculate_total_cycles(install_time, expiry_time, cycle_time)
+def load_extractor_data(json_file):
+    """从JSON文件加载提取器数据"""
+    with open(json_file, 'r') as f:
+        data = json.load(f)
 
-    # 获取当前周期
-    current_cycle = get_current_cycle(install_time, cycle_time)
+    # 查找类型为提取器的设施（type_id: 2848）
+    extractors = [pin for pin in data['pins'] if pin.get('type_id') == 2848 and pin.get('extractor_details')]
 
-    # 创建计算器实例
-    calculator = ExtractorCalculator(quantity_per_cycle, cycle_time)
+    if not extractors:
+        raise ValueError("No extractors found in JSON data")
 
-    # 计算所有周期的产量
-    results = calculator.calculate_range(0, total_cycles)
+    results = []
+    for extractor in extractors:
+        details = extractor['extractor_details']
+        results.append({
+            'quantity_per_cycle': details['qty_per_cycle'],
+            'cycle_time': details['cycle_time'],
+            'install_time': extractor['install_time'],
+            'expiry_time': extractor['expiry_time'],
+            'product_type_id': details['product_type_id'],
+            'pin_id': extractor['pin_id']
+        })
 
-    # 打印结果
-    print(f"基础产量: {quantity_per_cycle}")
-    print(f"周期时间: {cycle_time}秒 ({cycle_time / 3600}小时)")
-    print(f"15分钟单位数: {cycle_time / 900}")
-    print(f"总周期数: {total_cycles + 1}")  # +1是为了显示实际周期数
-    print(f"当前周期: {current_cycle + 1}")  # +1是为了显示从1开始的周期编号
-    print("\n周期\t产量")
-    print("-" * 20)
-    for result in results:
-        cycle_marker = " <--" if result['cycle'] == current_cycle + 1 else ""
-        print(f"{result['cycle']}\t{result['yield']}{cycle_marker}")
+    return results
+
+
+def main():
+    # 从JSON文件加载数据
+    json_file = 'response_1737264298263.json'
+    extractors = load_extractor_data(json_file)
+
+    for extractor in extractors:
+        print(f"\n提取器 ID: {extractor['pin_id']}")
+        print(f"产品类型 ID: {extractor['product_type_id']}")
+
+        # 计算总周期数
+        total_cycles = calculate_total_cycles(
+            extractor['install_time'],
+            extractor['expiry_time'],
+            extractor['cycle_time']
+        )
+
+        # 获取当前周期
+        current_cycle = get_current_cycle(
+            extractor['install_time'],
+            extractor['cycle_time']
+        )
+
+        # 创建计算器实例
+        calculator = ExtractorCalculator(
+            extractor['quantity_per_cycle'],
+            extractor['cycle_time']
+        )
+
+        # 计算所有周期的产量
+        results = calculator.calculate_range(0, total_cycles)
+
+        # 打印结果
+        print(f"基础产量: {extractor['quantity_per_cycle']}")
+        print(f"周期时间: {extractor['cycle_time']}秒 ({extractor['cycle_time'] / 3600}小时)")
+        print(f"15分钟单位数: {extractor['cycle_time'] / 900}")
+        print(f"总周期数: {total_cycles + 1}")  # +1是为了显示实际周期数
+        print(f"当前周期: {current_cycle + 1}")  # +1是为了显示从1开始的周期编号
+        print("\n周期\t产量")
+        print("-" * 20)
+
+        total_yield = 0
+        for result in results:
+            cycle_marker = " <--" if result['cycle'] == current_cycle + 1 else ""
+            total_yield += result['yield']
+            print(f"{result['cycle']}\t{result['yield']}{cycle_marker}")
+
+        print(f"\n总产量: {total_yield}")
 
 
 if __name__ == "__main__":
-    quantity_per_cycle = 7313  # from esi response: pins.extractor_details.qty_per_cycle
-    cycle_time = 3600  # from esi response: pins.extractor_details.cycle_time
-    expiry_time = "2025-01-21T19:49:51Z"
-    install_time = "2025-01-19T09:49:51Z"
-    main(quantity_per_cycle, cycle_time, install_time, expiry_time)
+    main()
