@@ -18,6 +18,7 @@ def process_data(yaml_data, cursor, language):
     # 创建行星制造表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS planetSchematics (
+        schematic_id INTEGER NOT NULL,
         output_typeid INTEGER NOT NULL PRIMARY KEY,
         name TEXT,
         facilitys TEXT,
@@ -53,7 +54,7 @@ def process_data(yaml_data, cursor, language):
         input_value_str = ','.join(input_values)
 
         cursor.execute('''
-        INSERT INTO planetSchematics (output_typeid, name, facilitys, cycle_time, output_value, input_typeid, input_value)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (output_typeid, name, facilitys, cycle_time, output_value, input_typeid_str, input_value_str))
+        INSERT INTO planetSchematics (schematic_id, output_typeid, name, facilitys, cycle_time, output_value, input_typeid, input_value)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (schematic_id, output_typeid, name, facilitys, cycle_time, output_value, input_typeid_str, input_value_str))
 
