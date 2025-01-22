@@ -1,8 +1,9 @@
 import sqlite3
 import json
 from datetime import datetime, timezone
-from typing import Dict, Tuple, Optional, List
+from typing import Dict, Tuple, Optional, List, Union
 from dataclasses import dataclass
+from enum import Enum
 
 class DataProvider:
     def __init__(self, db_path: str = "output/db/item_db_zh.sqlite"):
@@ -97,34 +98,57 @@ class DataProvider:
             
         return float(row['capacity'])
 
+class PinStatus(Enum):
+    """设施状态"""
+    IDLE = "idle"           # 空闲
+    RUNNING = "running"     # 运行中
+    BLOCKED = "blocked"     # 阻塞（等待资源或存储空间）
+
 @dataclass
-class Pin:
-    """基础设施类"""
+class Schematic:
+    """生产图纸"""
+    schematic_id: int
+    cycle_time: int
+    input_type_id: int
+    input_value: int
+    output_type_id: int
+    output_value: int
+
+@dataclass
+class PinBase:
+    """设施基础信息"""
     pin_id: int
     type_id: int
     contents: Dict[int, int]  # type_id -> amount
     last_cycle_start: Optional[datetime]
     latitude: float
     longitude: float
+    status: PinStatus = PinStatus.IDLE
 
 @dataclass
-class Extractor(Pin):
+class Extractor:
     """提取器"""
-    expiry_time: datetime
-    install_time: datetime
+    base: PinBase
     cycle_time: int
     quantity_per_cycle: int
     product_type_id: int
+    expiry_time: datetime
+    install_time: datetime
 
 @dataclass
-class Factory(Pin):
+class Factory:
     """工厂设施"""
+    base: PinBase
     schematic_id: int
+    schematic: Optional[Schematic] = None  # 完整的图纸信息
 
 @dataclass
-class Storage(Pin):
+class Storage:
     """存储设施"""
-    capacity: float  # 存储容量（立方米）
+    base: PinBase
+    capacity: float
+
+Pin = Union[Extractor, Factory, Storage]
 
 @dataclass
 class Route:
@@ -156,6 +180,18 @@ class ColonyLoader:
         for pin_data in data['pins']:
             pin = self._create_pin(pin_data)
             if pin:
+                # 如果是工厂，加载完整的图纸信息
+                if isinstance(pin, Factory):
+                    schematic_info = self.data_provider.get_schematic_info(pin.schematic_id)
+                    if schematic_info:
+                        pin.schematic = Schematic(
+                            schematic_id=pin.schematic_id,
+                            cycle_time=schematic_info['cycle_time'],
+                            input_type_id=schematic_info['input_typeid'],
+                            input_value=schematic_info['input_value'],
+                            output_type_id=schematic_info['output_typeid'],
+                            output_value=schematic_info['output_value']
+                        )
                 pins.append(pin)
 
         # 加载所有路线
@@ -172,9 +208,9 @@ class ColonyLoader:
         # 使用最早的last_cycle_start作为当前时间
         current_time = None
         for pin in pins:
-            if pin.last_cycle_start:
-                if current_time is None or pin.last_cycle_start < current_time:
-                    current_time = pin.last_cycle_start
+            if pin.base.last_cycle_start:
+                if current_time is None or pin.base.last_cycle_start < current_time:
+                    current_time = pin.base.last_cycle_start
 
         if not current_time:
             current_time = datetime.now(timezone.utc)
@@ -201,6 +237,16 @@ class ColonyLoader:
         latitude = float(data.get('latitude', 0))
         longitude = float(data.get('longitude', 0))
 
+        # 创建基础设施对象
+        base = PinBase(
+            pin_id=pin_id,
+            type_id=type_id,
+            contents=contents,
+            last_cycle_start=last_cycle_start,
+            latitude=latitude,
+            longitude=longitude
+        )
+
         # 创建提取器
         if 'extractor_details' in data:
             extractor_data = data['extractor_details']
@@ -214,28 +260,18 @@ class ColonyLoader:
             ).replace(tzinfo=timezone.utc)
             
             return Extractor(
-                pin_id=pin_id,
-                type_id=type_id,
-                contents=contents,
-                last_cycle_start=last_cycle_start,
-                latitude=latitude,
-                longitude=longitude,
-                expiry_time=expiry_time,
-                install_time=install_time,
+                base=base,
                 cycle_time=extractor_data['cycle_time'],
                 quantity_per_cycle=extractor_data['qty_per_cycle'],
-                product_type_id=extractor_data['product_type_id']
+                product_type_id=extractor_data['product_type_id'],
+                expiry_time=expiry_time,
+                install_time=install_time
             )
             
         # 创建工厂
         elif 'schematic_id' in data:
             return Factory(
-                pin_id=pin_id,
-                type_id=type_id,
-                contents=contents,
-                last_cycle_start=last_cycle_start,
-                latitude=latitude,
-                longitude=longitude,
+                base=base,
                 schematic_id=data['schematic_id']
             )
             
@@ -243,12 +279,7 @@ class ColonyLoader:
         else:
             capacity = self.data_provider.get_storage_capacity(type_id)
             return Storage(
-                pin_id=pin_id,
-                type_id=type_id,
-                contents=contents,
-                last_cycle_start=last_cycle_start,
-                latitude=latitude,
-                longitude=longitude,
+                base=base,
                 capacity=capacity
             )
 
@@ -267,23 +298,24 @@ def test_colony_loading():
     
     # 打印每个设施的信息
     for pin in colony.pins:
-        print(f"\n设施ID: {pin.pin_id}")
+        print(f"\n设施ID: {pin.base.pin_id}")
         print(f"类型: {type(pin).__name__}")
-        print(f"类型ID: {pin.type_id}")
-        if pin.contents:
+        print(f"类型ID: {pin.base.type_id}")
+        print(f"状态: {pin.base.status.value}")
+        
+        if pin.base.contents:
             print("库存:")
-            for type_id, amount in pin.contents.items():
+            for type_id, amount in pin.base.contents.items():
                 type_info = provider.get_type_info(type_id)
                 name = type_info['name'] if type_info else f"Unknown({type_id})"
                 print(f"  - {name}: {amount}")
                 
         if isinstance(pin, Factory):
-            schematic = provider.get_schematic_info(pin.schematic_id)
-            if schematic:
+            if pin.schematic:
                 print(f"图纸信息:")
-                print(f"  - 周期: {schematic['cycle_time']}秒")
-                print(f"  - 输入: {schematic['input_value']} x type_id({schematic['input_typeid']})")
-                print(f"  - 输出: {schematic['output_value']} x type_id({schematic['output_typeid']})")
+                print(f"  - 周期: {pin.schematic.cycle_time}秒")
+                print(f"  - 输入: {pin.schematic.input_value} x type_id({pin.schematic.input_type_id})")
+                print(f"  - 输出: {pin.schematic.output_value} x type_id({pin.schematic.output_type_id})")
         
         elif isinstance(pin, Extractor):
             print(f"提取器信息:")
