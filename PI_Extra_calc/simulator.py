@@ -271,29 +271,21 @@ class ColonySimulator:
         self.facilities: Dict[int, Pin] = {}
         self.routes = []
         self.type_volumes = {}
-        self.type_names = {}  # 添加类型名称字典
         self.event_queue = PriorityQueue()
         self.current_time = datetime.now(timezone.utc)
         self.sim_end_time = None
-        self.db_path = db_path  # 保存数据库路径
         
-        self.load_type_info(db_path)  # 加载类型信息
+        self.load_type_volumes(db_path)
         self.load_colony_data(json_file)
         self.initialize_simulation()
         
-    def load_type_info(self, db_path: str):
-        """从数据库加载物品类型信息"""
+    def load_type_volumes(self, db_path: str):
+        """从数据库加载物品体积数据"""
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
-        cursor.execute("SELECT type_id, volume, name FROM types")
-        for row in cursor.fetchall():
-            self.type_volumes[row[0]] = row[1]
-            self.type_names[row[0]] = row[2]
+        cursor.execute("SELECT type_id, volume FROM types")
+        self.type_volumes = {row[0]: row[1] for row in cursor.fetchall()}
         conn.close()
-        
-    def get_type_name(self, type_id: int) -> str:
-        """获取类型名称"""
-        return self.type_names.get(type_id, f"Unknown Type ({type_id})")
         
     def load_schematic(self, db_path: str, schematic_id: int) -> Dict:
         """从数据库加载工厂配方"""
@@ -631,23 +623,17 @@ def main():
     print("\n设施状态:")
     for facility in simulator.facilities.values():
         print(f"\n设施 ID: {facility.pin_id}")
-        print(f"类型 ID: {facility.type_id} ({simulator.get_type_name(facility.type_id)})")
+        print(f"类型 ID: {facility.type_id}")
         print(f"状态: {facility.status.name}")
-        print("内容物:")
-        for type_id, amount in facility.contents.items():
-            print(f"  - {simulator.get_type_name(type_id)}: {amount}")
+        print(f"内容物: {facility.contents}")
         if isinstance(facility, Factory):
             print(f"配方 ID: {facility.schematic_id}")
             print(f"上次循环开始时间: {facility.last_cycle_start_time}")
             print(f"是否活跃: {facility.is_active}")
             if facility.schematic:
                 print(f"循环时间: {facility.schematic['cycle_time']}秒")
-                print("输入材料:")
-                for type_id, amount in facility.schematic['input'].items():
-                    print(f"  - {simulator.get_type_name(type_id)}: {amount}")
-                print("输出产品:")
-                output = facility.schematic['output']
-                print(f"  - {simulator.get_type_name(output['type_id'])}: {output['quantity']}")
+                print(f"输入材料: {facility.schematic['input']}")
+                print(f"输出产品: {facility.schematic['output']}")
         elif isinstance(facility, Storage):
             print(f"容量: {facility.capacity}")
             print(f"已使用容量: {facility.used_capacity}")
