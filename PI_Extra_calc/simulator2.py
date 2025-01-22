@@ -322,8 +322,9 @@ def test_colony_loading():
             print(f"  - 周期: {pin.cycle_time}秒")
             print(f"  - 产量: {pin.quantity_per_cycle}/周期")
             print(f"  - 产品: type_id({pin.product_type_id})")
+            print(f"  - 安装时间: {pin.install_time}")
             print(f"  - 到期时间: {pin.expiry_time}")
-            
+
         elif isinstance(pin, Storage):
             print(f"存储设施信息:")
             print(f"  - 容量: {pin.capacity}立方米")
