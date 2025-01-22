@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 class DataProvider:
-    def __init__(self, db_path: str = "/Users/gg/PycharmProjects/EveSDE/output/db/item_db_zh.sqlite"):
+    def __init__(self, db_path: str = "output/db/item_db_zh.sqlite"):
         """初始化数据提供者
         
         Args:
@@ -289,7 +289,7 @@ def test_colony_loading():
     loader = ColonyLoader(provider)
     
     # 加载殖民地数据
-    colony = loader.load_from_json('/Users/gg/PycharmProjects/EveSDE/PI_Extra_calc/response_1737264298263.json')
+    colony = loader.load_from_json('PI_Extra_calc/response_1737264298263.json')
     
     # 打印殖民地信息
     print(f"\n当前时间: {colony.current_time}")
