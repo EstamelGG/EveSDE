@@ -75,6 +75,28 @@ class DataProvider:
             'volume': row['volume']
         }
 
+    def get_storage_capacity(self, type_id: int) -> Optional[float]:
+        """获取存储设施的容量
+        
+        Args:
+            type_id: 建筑物类型ID
+            
+        Returns:
+            存储容量（立方米）
+        """
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT capacity 
+            FROM types 
+            WHERE type_id = ?
+        """, (type_id,))
+        row = cursor.fetchone()
+        
+        if not row or 'capacity' not in row.keys():
+            return 10000.0  # 默认容量
+            
+        return float(row['capacity'])
+
 @dataclass
 class Pin:
     """基础设施类"""
@@ -102,7 +124,7 @@ class Factory(Pin):
 @dataclass
 class Storage(Pin):
     """存储设施"""
-    capacity: float = 10000.0  # 固定容量
+    capacity: float  # 存储容量（立方米）
 
 @dataclass
 class Route:
@@ -219,13 +241,15 @@ class ColonyLoader:
             
         # 创建存储设施
         else:
+            capacity = self.data_provider.get_storage_capacity(type_id)
             return Storage(
                 pin_id=pin_id,
                 type_id=type_id,
                 contents=contents,
                 last_cycle_start=last_cycle_start,
                 latitude=latitude,
-                longitude=longitude
+                longitude=longitude,
+                capacity=capacity
             )
 
 def test_colony_loading():
@@ -267,6 +291,10 @@ def test_colony_loading():
             print(f"  - 产量: {pin.quantity_per_cycle}/周期")
             print(f"  - 产品: type_id({pin.product_type_id})")
             print(f"  - 到期时间: {pin.expiry_time}")
+            
+        elif isinstance(pin, Storage):
+            print(f"存储设施信息:")
+            print(f"  - 容量: {pin.capacity}立方米")
 
 if __name__ == "__main__":
     test_colony_loading() 
