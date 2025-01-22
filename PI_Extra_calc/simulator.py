@@ -125,7 +125,9 @@ class Factory(Pin):
             return True
         if self.has_received_inputs or self.received_inputs_last_cycle:
             return True
-        return self.has_enough_inputs()
+        if self.has_enough_inputs():
+            return False
+        return True
         
     def has_enough_inputs(self) -> bool:
         if not self.schematic:
@@ -188,6 +190,20 @@ class Factory(Pin):
             'received_inputs_last_cycle': self.received_inputs_last_cycle
         })
         return base_dict
+
+    def get_input_buffer_state(self) -> float:
+        """计算工厂的输入缓冲状态"""
+        if not self.schematic:
+            return 0.0
+            
+        products_ratio = 0.0
+        input_count = len(self.schematic['input'])
+        
+        for input_type, input_amount in self.schematic['input'].items():
+            current_amount = self.contents.get(input_type, 0)
+            products_ratio += current_amount / input_amount
+            
+        return (1.0 - products_ratio) / input_count if input_count > 0 else 0.0
 
 class Storage(Pin):
     def __init__(self, pin_id: int, type_id: int, contents: Dict[int, int], 
@@ -265,6 +281,51 @@ class Storage(Pin):
             'used_capacity': self.used_capacity
         })
         return base_dict
+
+    def get_free_space(self) -> float:
+        """计算存储设施的剩余空间比例"""
+        return float(self.get_capacity_remaining()) / self.capacity if self.capacity > 0 else 0.0
+
+    def _process_routes(self, source_facility: Pin, routes: List[dict], type_id: int, amount: int):
+        """处理特定类型的路由，考虑目标设施状态"""
+        if not routes:
+            return
+            
+        # 计算路由优先级
+        prioritized_routes = []
+        for route in routes:
+            dest_facility = self.facilities[route['destination_pin_id']]
+            priority = 0.0
+            
+            if isinstance(dest_facility, Factory):
+                priority = dest_facility.get_input_buffer_state()
+            elif isinstance(dest_facility, Storage):
+                priority = dest_facility.get_free_space()
+                
+            prioritized_routes.append((priority, route))
+            
+        # 按优先级排序
+        prioritized_routes.sort(key=lambda x: x[0])
+        
+        # 处理路由
+        remaining_amount = amount
+        for _, route in prioritized_routes:
+            if remaining_amount <= 0:
+                break
+                
+            route_amount = min(remaining_amount, route['quantity'])
+            if route_amount <= 0:
+                continue
+                
+            _, transferred = self.transfer_commodities(
+                source_facility.pin_id,
+                route['destination_pin_id'],
+                type_id,
+                route_amount,
+                source_facility.contents
+            )
+            
+            remaining_amount -= transferred
 
 class ColonySimulator:
     def __init__(self, json_file: str, db_path: str):
@@ -462,27 +523,66 @@ class ColonySimulator:
                      
             if not routes:
                 continue
+                
+            # 将路由分为处理器路由和存储路由
+            processor_routes = []
+            storage_routes = []
             
-            # 计算每个路由的分配量
-            total_route_quantity = sum(r['quantity'] for r in routes)
-            if total_route_quantity == 0:
-                continue
-            
-            # 按比例分配
             for route in routes:
-                route_share = route['quantity'] / total_route_quantity
-                route_amount = int(amount * route_share)
+                dest_facility = self.facilities[route['destination_pin_id']]
+                if isinstance(dest_facility, Factory):
+                    processor_routes.append(route)
+                else:
+                    storage_routes.append(route)
+            
+            # 先处理处理器路由
+            self._process_routes(source_facility, processor_routes, type_id, amount)
+            
+            # 再处理存储路由
+            remaining_amount = source_facility.contents.get(type_id, 0)
+            if remaining_amount > 0:
+                self._process_routes(source_facility, storage_routes, type_id, remaining_amount)
                 
-                if route_amount <= 0:
-                    continue
+    def _process_routes(self, source_facility: Pin, routes: List[dict], type_id: int, amount: int):
+        """处理特定类型的路由，考虑目标设施状态"""
+        if not routes:
+            return
+            
+        # 计算路由优先级
+        prioritized_routes = []
+        for route in routes:
+            dest_facility = self.facilities[route['destination_pin_id']]
+            priority = 0.0
+            
+            if isinstance(dest_facility, Factory):
+                priority = dest_facility.get_input_buffer_state()
+            elif isinstance(dest_facility, Storage):
+                priority = dest_facility.get_free_space()
                 
-                _, transferred = self.transfer_commodities(
-                    source_pin_id,
-                    route['destination_pin_id'],
-                    type_id,
-                    route_amount,
-                    source_facility.contents
-                )
+            prioritized_routes.append((priority, route))
+            
+        # 按优先级排序
+        prioritized_routes.sort(key=lambda x: x[0])
+        
+        # 处理路由
+        remaining_amount = amount
+        for _, route in prioritized_routes:
+            if remaining_amount <= 0:
+                break
+                
+            route_amount = min(remaining_amount, route['quantity'])
+            if route_amount <= 0:
+                continue
+                
+            _, transferred = self.transfer_commodities(
+                source_facility.pin_id,
+                route['destination_pin_id'],
+                type_id,
+                route_amount,
+                source_facility.contents
+            )
+            
+            remaining_amount -= transferred
 
     def simulate(self, until: SimulationEndCondition) -> datetime:
         # 1. 检查是否需要继续工作
