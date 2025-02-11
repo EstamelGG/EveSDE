@@ -51,7 +51,7 @@ class IconDownloader:
             for variant in common_variants:
                 url = f'https://images.evetech.net/types/{type_id}/{variant}?size=64'
                 try:
-                    response = self._make_request(url, f"获取{variant}时网络错误")
+                    response = self._make_request(url, f"获取{type_id} 的 {variant}时网络错误")
                     if response.status_code == 200 and b"bad category or variation" not in response.content:
                         return self._save_image(response.content, type_id)
                 except (requests.exceptions.RequestException, IOError):
