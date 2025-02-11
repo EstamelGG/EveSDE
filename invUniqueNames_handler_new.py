@@ -1,135 +1,87 @@
-import yaml
-try:
-    from yaml import CSafeLoader as SafeLoader
-except ImportError:
-    from yaml import SafeLoader
-import time
-from typing import Dict, Optional, List
+import json
+import sqlite3
+from typing import Dict
 
-# 用于缓存数据
-_regions_data: List[Dict] = []
-_constellations_data: List[Dict] = []
-_solarsystems_data: List[Dict] = []
+# 支持的语言列表
+LANGUAGES = ['de', 'en', 'es', 'fr', 'ja', 'ko', 'ru', 'zh']
 
-def read_yaml(file_path: str = 'Data/sde/bsd/invUniqueNames.yaml') -> list:
-    """读取 invUniqueNames.yaml 文件"""
-    start_time = time.time()
+def read_universe_data(file_path: str = 'fetchUniverse/universe_data.json') -> dict:
+    """读取 universe_data.json 文件"""
     with open(file_path, 'r', encoding='utf-8') as file:
-        data = yaml.load(file, Loader=SafeLoader)
-    end_time = time.time()
-    print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
-    return data
+        return json.load(file)
 
 def create_table(cursor):
     """创建所需的表"""
+    # 构建语言列的SQL片段
+    lang_columns = ', '.join([f"name_{lang} TEXT" for lang in LANGUAGES])
+    
     # 创建星域表
-    cursor.execute('''
+    cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS regions (
             regionID INTEGER NOT NULL PRIMARY KEY,
-            regionName TEXT
+            {lang_columns}
         )
     ''')
     
     # 创建星座表
-    cursor.execute('''
+    cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS constellations (
             constellationID INTEGER NOT NULL PRIMARY KEY,
-            constellationName TEXT
+            {lang_columns}
         )
     ''')
     
     # 创建恒星系表
-    cursor.execute('''
+    cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS solarsystems (
             solarSystemID INTEGER NOT NULL PRIMARY KEY,
-            solarSystemName TEXT
+            {lang_columns},
+            security_status REAL
         )
     ''')
 
-def process_data(data: list, cursor, lang: str):
+def process_data(data: dict, cursor):
     """处理数据并插入到数据库"""
-    global _regions_data, _constellations_data, _solarsystems_data
-    
-    # 创建表（无论是什么语言都需要创建表）
+    # 创建表
     create_table(cursor)
     
-    # 只在处理英文数据时处理和缓存数据
-    if lang == 'en':
-        # 清空缓存
-        _regions_data.clear()
-        _constellations_data.clear()
-        _solarsystems_data.clear()
+    # 准备SQL语句
+    regions_sql = f'''
+        INSERT OR REPLACE INTO regions (regionID, {', '.join([f'name_{lang}' for lang in LANGUAGES])})
+        VALUES (?, {', '.join(['?' for _ in LANGUAGES])})
+    '''
+    
+    constellations_sql = f'''
+        INSERT OR REPLACE INTO constellations (constellationID, {', '.join([f'name_{lang}' for lang in LANGUAGES])})
+        VALUES (?, {', '.join(['?' for _ in LANGUAGES])})
+    '''
+    
+    solarsystems_sql = f'''
+        INSERT OR REPLACE INTO solarsystems (solarSystemID, {', '.join([f'name_{lang}' for lang in LANGUAGES])}, security_status)
+        VALUES (?, {', '.join(['?' for _ in LANGUAGES])}, ?)
+    '''
+    
+    # 处理星域数据
+    for region_id, region_data in data.items():
+        region_names = region_data['region_name']
+        region_values = [int(region_id)]
+        for lang in LANGUAGES:
+            region_values.append(region_names.get(lang))
+        cursor.execute(regions_sql, region_values)
         
-        # 准备批量插入的数据
-        regions_batch = []
-        constellations_batch = []
-        solarsystems_batch = []
-        batch_size = 1000
-        
-        for item in data:
-            if isinstance(item, dict) and all(key in item for key in ['itemID', 'itemName']):
-                if item['groupID'] == 3:  # 星域数据
-                    regions_batch.append((item['itemID'], item['itemName']))
-                    _regions_data.append(item)
-                elif item['groupID'] == 4:  # 星座数据
-                    constellations_batch.append((item['itemID'], item['itemName']))
-                    _constellations_data.append(item)
-                elif item['groupID'] == 5:  # 恒星系数据
-                    solarsystems_batch.append((item['itemID'], item['itemName']))
-                    _solarsystems_data.append(item)
-                
-                # 批量插入数据
-                if len(regions_batch) >= batch_size:
-                    cursor.executemany(
-                        'INSERT OR REPLACE INTO regions (regionID, regionName) VALUES (?, ?)',
-                        regions_batch
-                    )
-                    regions_batch = []
-                
-                if len(constellations_batch) >= batch_size:
-                    cursor.executemany(
-                        'INSERT OR REPLACE INTO constellations (constellationID, constellationName) VALUES (?, ?)',
-                        constellations_batch
-                    )
-                    constellations_batch = []
-                
-                if len(solarsystems_batch) >= batch_size:
-                    cursor.executemany(
-                        'INSERT OR REPLACE INTO solarsystems (solarSystemID, solarSystemName) VALUES (?, ?)',
-                        solarsystems_batch
-                    )
-                    solarsystems_batch = []
-        
-        # 处理剩余的数据
-        if regions_batch:
-            cursor.executemany(
-                'INSERT OR REPLACE INTO regions (regionID, regionName) VALUES (?, ?)',
-                regions_batch
-            )
-        if constellations_batch:
-            cursor.executemany(
-                'INSERT OR REPLACE INTO constellations (constellationID, constellationName) VALUES (?, ?)',
-                constellations_batch
-            )
-        if solarsystems_batch:
-            cursor.executemany(
-                'INSERT OR REPLACE INTO solarsystems (solarSystemID, solarSystemName) VALUES (?, ?)',
-                solarsystems_batch
-            )
-    else:
-        # 非英文数据库，直接从缓存中插入数据
-        if _regions_data:
-            cursor.executemany(
-                'INSERT OR REPLACE INTO regions (regionID, regionName) VALUES (?, ?)',
-                [(item['itemID'], item['itemName']) for item in _regions_data]
-            )
-        if _constellations_data:
-            cursor.executemany(
-                'INSERT OR REPLACE INTO constellations (constellationID, constellationName) VALUES (?, ?)',
-                [(item['itemID'], item['itemName']) for item in _constellations_data]
-            )
-        if _solarsystems_data:
-            cursor.executemany(
-                'INSERT OR REPLACE INTO solarsystems (solarSystemID, solarSystemName) VALUES (?, ?)',
-                [(item['itemID'], item['itemName']) for item in _solarsystems_data]
-            )
+        # 处理星座数据
+        for const_id, const_data in region_data['constellations'].items():
+            const_names = const_data['constellation_name']
+            const_values = [int(const_id)]
+            for lang in LANGUAGES:
+                const_values.append(const_names.get(lang))
+            cursor.execute(constellations_sql, const_values)
+            
+            # 处理星系数据
+            for sys_id, sys_data in const_data['systems'].items():
+                sys_names = sys_data['system_name']
+                sys_values = [int(sys_id)]
+                for lang in LANGUAGES:
+                    sys_values.append(sys_names.get(lang))
+                sys_values.append(sys_data['system_info']['security_status'])
+                cursor.execute(solarsystems_sql, sys_values)
