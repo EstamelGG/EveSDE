@@ -27,6 +27,9 @@ RETRY_TIMES = 3  # 最大重试次数
 # 缓存配置
 CACHE_DIR = './cache'
 
+# 并发配置
+BATCH_SIZE = 10  # 每批处理的星系数量
+
 def get_cache_path(url: str) -> str:
     """获取缓存文件路径"""
     # 从URL中提取ID和语言参数
@@ -91,7 +94,7 @@ async def fetch_json(session: aiohttp.ClientSession, url: str) -> dict:
             
             # 保存到缓存
             save_to_cache(url, data)
-            logger.info(f"从API获取新数据: {url}")
+            # logger.info(f"从API获取新数据: {url}")
             return data
     except Exception as e:
         logger.error(f"请求出错: {url}, 错误: {str(e)}")
@@ -132,6 +135,47 @@ async def fetch_details_with_languages(session: aiohttp.ClientSession, base_url:
         logger.error(f"处理多语言数据时出错: {str(e)}")
         raise
 
+async def process_systems_batch(session: aiohttp.ClientSession, systems_batch: List[int], 
+                              total_systems_processed: int, total_systems_count: int) -> Dict[str, dict]:
+    """批量处理星系数据"""
+    tasks = []
+    for sys_id in systems_batch:
+        tasks.append(fetch_details_with_languages(
+            session,
+            f"{BASE_URL}/universe/systems",
+            sys_id
+        ))
+    
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    
+    systems_data = {}
+    for i, (sys_id, result) in enumerate(zip(systems_batch, results)):
+        try:
+            if isinstance(result, Exception):
+                logger.error(f"处理星系 {sys_id} 时出错: {str(result)}")
+                continue
+                
+            names, sys_details = result
+            security_status = sys_details.get('security_status')
+            
+            systems_data[str(sys_id)] = {
+                'system_name': names,
+                'system_info': {
+                    'security_status': security_status
+                }
+            }
+            
+            current_processed = total_systems_processed + i + 1
+            progress_percentage = (current_processed / total_systems_count) * 100
+            logger.info(f"处理星系 {sys_id} 完成 - 总进度: {current_processed}/{total_systems_count} ({progress_percentage:.2f}%)")
+            logger.debug(f"星系 {sys_id} 安全等级: {security_status}")
+            
+        except Exception as e:
+            logger.error(f"处理星系 {sys_id} 时出错: {str(e)}")
+            continue
+            
+    return systems_data
+
 async def fetch_universe_data():
     """获取完整的宇宙数据"""
     # 创建缓存目录
@@ -141,7 +185,7 @@ async def fetch_universe_data():
     ssl_context = ssl.create_default_context(cafile=certifi.where())
     
     # 配置ClientSession使用SSL上下文
-    conn = aiohttp.TCPConnector(ssl=ssl_context, limit=10)  # 限制并发连接数
+    conn = aiohttp.TCPConnector(ssl=ssl_context, limit=20)  # 增加并发连接数限制
     async with aiohttp.ClientSession(connector=conn, timeout=TIMEOUT) as session:
         try:
             # 获取所有ID列表
@@ -188,45 +232,33 @@ async def fetch_universe_data():
                             
                             # 获取该星座下的所有星系
                             system_data = {}
-                            total_systems = len(const_details['systems'])
+                            systems_list = const_details['systems']
+                            total_systems = len(systems_list)
                             logger.info(f"星座 {const_id} 包含 {total_systems} 个星系")
                             
-                            for sys_index, sys_id in enumerate(const_details['systems'], 1):
-                                total_systems_processed += 1
-                                progress_percentage = (total_systems_processed / total_systems_count) * 100
-                                logger.info(f"处理星系 {sys_id} - 星座进度: {sys_index}/{total_systems}, 总进度: {total_systems_processed}/{total_systems_count} ({progress_percentage:.2f}%)")
-                                try:
-                                    sys_names, sys_details = await fetch_details_with_languages(
-                                        session,
-                                        f"{BASE_URL}/universe/systems",
-                                        sys_id
-                                    )
-                                    
-                                    security_status = sys_details.get('security_status')
-                                    logger.debug(f"星系 {sys_id} 安全等级: {security_status}")
-                                    
-                                    system_data[str(sys_id)] = {
-                                        'name': sys_names,
-                                        'contains': {
-                                            'security_status': security_status
-                                        }
-                                    }
-                                    logger.debug(f"星系 {sys_id} 处理完成，名称: {sys_names.get('zh', 'N/A')}")
-                                except Exception as e:
-                                    logger.error(f"处理星系 {sys_id} 时出错: {str(e)}")
-                                    continue
+                            # 批量处理星系
+                            for batch_start in range(0, total_systems, BATCH_SIZE):
+                                batch = systems_list[batch_start:batch_start + BATCH_SIZE]
+                                batch_data = await process_systems_batch(
+                                    session, 
+                                    batch,
+                                    total_systems_processed,
+                                    total_systems_count
+                                )
+                                system_data.update(batch_data)
+                                total_systems_processed += len(batch)
                             
                             constellation_data[str(const_id)] = {
-                                'name': const_names,
-                                'contains': system_data
+                                'constellation_name': const_names,
+                                'systems': system_data
                             }
                         except Exception as e:
                             logger.error(f"处理星座 {const_id} 时出错: {str(e)}")
                             continue
                     
                     universe_data[str(region_id)] = {
-                        'name': names,
-                        'contains': constellation_data
+                        'region_name': names,
+                        'constellations': constellation_data
                     }
                 except Exception as e:
                     logger.error(f"处理星域 {region_id} 时出错: {str(e)}")
