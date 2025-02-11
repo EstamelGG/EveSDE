@@ -20,7 +20,8 @@ from icons_copy import copy_and_rename_png_files
 from update_groups_icons import update_groups_with_icon_filename
 from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, process_data as process_planetSchematics_data
 from stations_handler import read_stations_yaml, process_data as process_stations_data
-from invUniqueNames_handler import read_yaml as read_invUniqueNames_yaml, process_data as process_invUniqueNames_data
+# from invUniqueNames_handler import read_yaml as read_invUniqueNames_yaml, process_data as process_invUniqueNames_data  # 注释掉旧的导入
+from invUniqueNames_handler_new import read_universe_data, process_data as process_invUniqueNames_data  # 新的导入
 from universe import process_data as process_universe_data
 from npcCorporations_handler import process_data as process_corporations_data
 from npcCorporations_handler import read_yaml as read_corporations_yaml
@@ -42,7 +43,7 @@ typeMaterials_yaml_file_path = 'Data/sde/fsd/typeMaterials.yaml'
 blueprints_yaml_file_path = 'Data/sde/fsd/blueprints.yaml'
 marketGroups_yaml_file_path = 'Data/sde/fsd/marketGroups.yaml'
 factions_yaml_file_path = 'Data/sde/fsd/factions.yaml'
-invUniqueNames_yaml_file_path = 'Data/sde/bsd/invUniqueNames.yaml'
+# invUniqueNames_yaml_file_path = 'Data/sde/bsd/invUniqueNames.yaml'  # 注释掉旧的文件路径
 npcCorporations_yaml_file_path = 'Data/sde/fsd/npcCorporations.yaml'
 ZIP_ICONS_DEST = 'output/Icons/icons.zip'
 arch_ICONS_DEST = 'output/Icons/icons.aar'
@@ -152,6 +153,22 @@ def process_special_data(process_func, description, **kwargs):
         
         print(f"Database {db_filename} has been updated for {description}.")
 
+def process_universe_names():
+    """处理宇宙名称数据"""
+    data = read_universe_data()
+    for lang in languages:
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+        conn = sqlite3.connect(db_filename)
+        cursor = conn.cursor()
+        
+        try:
+            process_invUniqueNames_data(data, cursor)
+            conn.commit()
+        finally:
+            conn.close()
+        
+        print(f"Database {db_filename} has been updated for universe names.")
+
 def main():
     rebuild_directory("./output")
     # 依次处理每个 YAML 文件
@@ -160,8 +177,11 @@ def main():
     print("\nProcessing universe data...")
     process_special_data(process_universe_data, "universe data", lang=True)
     
-    print("\nProcessing invUniqueNames.yaml...")
-    process_yaml_file(invUniqueNames_yaml_file_path, read_invUniqueNames_yaml, process_invUniqueNames_data)
+    # print("\nProcessing invUniqueNames.yaml...")  # 注释掉旧的处理方式
+    # process_yaml_file(invUniqueNames_yaml_file_path, read_invUniqueNames_yaml, process_invUniqueNames_data)
+    
+    print("\nProcessing universe names...")  # 新的处理方式
+    process_universe_names()
     
     print("\nProcessing planetSchematics.yaml...")
     process_yaml_file(planetSchematics_yaml_file_path, read_planetSchematics_yaml, process_planetSchematics_data)
