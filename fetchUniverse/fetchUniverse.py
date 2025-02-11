@@ -32,17 +32,15 @@ BATCH_SIZE = 10  # 每批处理的星系数量
 
 def get_cache_path(url: str) -> str:
     """获取缓存文件路径"""
-    # 从URL中提取ID和语言参数
-    if 'language=' in url:
-        # 详情API的URL
-        item_type = 'regions' if '/regions/' in url else 'constellations' if '/constellations/' in url else 'systems'
-        item_id = url.split(f'/{item_type}/')[1].split('/')[0]
-        lang = url.split('language=')[1].split('&')[0]
-        filename = f"{item_type}_{item_id}_{lang}.json"
-    else:
-        # 列表API的URL
-        item_type = 'regions' if '/regions' in url else 'constellations' if '/constellations' in url else 'systems'
-        filename = f"{item_type}_list.json"
+    # 只缓存详情API的响应
+    if 'language=' not in url:
+        return None
+        
+    # 详情API的URL
+    item_type = 'regions' if '/regions/' in url else 'constellations' if '/constellations/' in url else 'systems'
+    item_id = url.split(f'/{item_type}/')[1].split('/')[0]
+    lang = url.split('language=')[1].split('&')[0]
+    filename = f"{item_type}_{item_id}_{lang}.json"
     
     return os.path.join(CACHE_DIR, filename)
 
@@ -50,6 +48,9 @@ def save_to_cache(url: str, data: dict):
     """保存数据到缓存"""
     try:
         cache_path = get_cache_path(url)
+        if cache_path is None:  # 不缓存列表API的响应
+            return
+            
         os.makedirs(os.path.dirname(cache_path), exist_ok=True)
         
         with open(cache_path, 'w', encoding='utf-8') as f:
@@ -62,6 +63,9 @@ def load_from_cache(url: str) -> Optional[dict]:
     """从缓存加载数据"""
     try:
         cache_path = get_cache_path(url)
+        if cache_path is None:  # 不从缓存加载列表API的响应
+            return None
+            
         if not os.path.exists(cache_path):
             return None
             

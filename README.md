@@ -13,6 +13,14 @@
 3. 最后重新执行 `main.py` 构造资源包
 4. 如果EVE有新增的物品等内容，导致需要**完全重新构造**图标资源包，则删除 `icon_md5_map.txt` 、 `thirdparty_data_source/typeids.txt` 和 `thirdparty_data_source/not_exist.txt`，再重复执行前三步。
 
+# 更新星系信息
+
+1. 执行 `fetchUniverse/fetchUniverse.py`
+2. 脚本会自动缓存各id的详情并跳过已有缓存。但星系列表、星域列表、星座列表总是会获取。 
+3. 如果要重新联网更新，则删除 `fetchUniverse/cache` 目录并重新执行 1
+4. 上述完成后会生成 `universe_data.json`
+5. 执行 `main.py` 即可
+
 # 输出文件
 
 1. 静态数据库: output/db
