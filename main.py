@@ -22,7 +22,8 @@ from planet_schematics_handler import read_yaml as read_planetSchematics_yaml, p
 from stations_handler import read_stations_yaml, process_data as process_stations_data
 # from invUniqueNames_handler import read_yaml as read_invUniqueNames_yaml, process_data as process_invUniqueNames_data  # 注释掉旧的导入
 from invUniqueNames_handler_new import read_universe_data, process_data as process_invUniqueNames_data  # 新的导入
-from universe import process_data as process_universe_data
+# from universe import process_data as process_universe_data  # 注释掉旧的导入
+from universe_new import process_data as process_universe_data  # 新的导入
 from npcCorporations_handler import process_data as process_corporations_data
 from npcCorporations_handler import read_yaml as read_corporations_yaml
 from invFlags_handler import read_yaml as read_invFlags_yaml, process_data as process_invFlags_data

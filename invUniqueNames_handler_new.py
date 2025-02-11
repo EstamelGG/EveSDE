@@ -12,14 +12,21 @@ def read_universe_data(file_path: str = 'fetchUniverse/universe_data.json') -> d
 
 def create_table(cursor):
     """创建所需的表"""
-    # 构建语言列的SQL片段
-    lang_columns = ', '.join([f"name_{lang} TEXT" for lang in LANGUAGES])
+    # 构建语言列的SQL片段 - regions表
+    region_lang_columns = ', '.join([f"regionName_{lang} TEXT" for lang in LANGUAGES])
+    
+    # 构建语言列的SQL片段 - constellations表
+    constellation_lang_columns = ', '.join([f"constellationName_{lang} TEXT" for lang in LANGUAGES])
+    
+    # 构建语言列的SQL片段 - solarsystems表
+    system_lang_columns = ', '.join([f"solarSystemName_{lang} TEXT" for lang in LANGUAGES])
     
     # 创建星域表
     cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS regions (
             regionID INTEGER NOT NULL PRIMARY KEY,
-            {lang_columns}
+            regionName TEXT,  -- 英文名称
+            {region_lang_columns}
         )
     ''')
     
@@ -27,7 +34,8 @@ def create_table(cursor):
     cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS constellations (
             constellationID INTEGER NOT NULL PRIMARY KEY,
-            {lang_columns}
+            constellationName TEXT,  -- 英文名称
+            {constellation_lang_columns}
         )
     ''')
     
@@ -35,7 +43,8 @@ def create_table(cursor):
     cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS solarsystems (
             solarSystemID INTEGER NOT NULL PRIMARY KEY,
-            {lang_columns},
+            solarSystemName TEXT,  -- 英文名称
+            {system_lang_columns},
             security_status REAL
         )
     ''')
@@ -47,24 +56,24 @@ def process_data(data: dict, cursor):
     
     # 准备SQL语句
     regions_sql = f'''
-        INSERT OR REPLACE INTO regions (regionID, {', '.join([f'name_{lang}' for lang in LANGUAGES])})
-        VALUES (?, {', '.join(['?' for _ in LANGUAGES])})
+        INSERT OR REPLACE INTO regions (regionID, regionName, {', '.join([f'regionName_{lang}' for lang in LANGUAGES])})
+        VALUES (?, ?, {', '.join(['?' for _ in LANGUAGES])})
     '''
     
     constellations_sql = f'''
-        INSERT OR REPLACE INTO constellations (constellationID, {', '.join([f'name_{lang}' for lang in LANGUAGES])})
-        VALUES (?, {', '.join(['?' for _ in LANGUAGES])})
+        INSERT OR REPLACE INTO constellations (constellationID, constellationName, {', '.join([f'constellationName_{lang}' for lang in LANGUAGES])})
+        VALUES (?, ?, {', '.join(['?' for _ in LANGUAGES])})
     '''
     
     solarsystems_sql = f'''
-        INSERT OR REPLACE INTO solarsystems (solarSystemID, {', '.join([f'name_{lang}' for lang in LANGUAGES])}, security_status)
-        VALUES (?, {', '.join(['?' for _ in LANGUAGES])}, ?)
+        INSERT OR REPLACE INTO solarsystems (solarSystemID, solarSystemName, {', '.join([f'solarSystemName_{lang}' for lang in LANGUAGES])}, security_status)
+        VALUES (?, ?, {', '.join(['?' for _ in LANGUAGES])}, ?)
     '''
     
     # 处理星域数据
     for region_id, region_data in data.items():
         region_names = region_data['region_name']
-        region_values = [int(region_id)]
+        region_values = [int(region_id), region_names.get('en')]  # 英文名称
         for lang in LANGUAGES:
             region_values.append(region_names.get(lang))
         cursor.execute(regions_sql, region_values)
@@ -72,7 +81,7 @@ def process_data(data: dict, cursor):
         # 处理星座数据
         for const_id, const_data in region_data['constellations'].items():
             const_names = const_data['constellation_name']
-            const_values = [int(const_id)]
+            const_values = [int(const_id), const_names.get('en')]  # 英文名称
             for lang in LANGUAGES:
                 const_values.append(const_names.get(lang))
             cursor.execute(constellations_sql, const_values)
@@ -80,7 +89,7 @@ def process_data(data: dict, cursor):
             # 处理星系数据
             for sys_id, sys_data in const_data['systems'].items():
                 sys_names = sys_data['system_name']
-                sys_values = [int(sys_id)]
+                sys_values = [int(sys_id), sys_names.get('en')]  # 英文名称
                 for lang in LANGUAGES:
                     sys_values.append(sys_names.get(lang))
                 sys_values.append(sys_data['system_info']['security_status'])
