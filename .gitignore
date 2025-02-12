@@ -3,10 +3,10 @@
 /__pycache__/
 /.venv/
 .DS_Store
-/thirdparty_data_source/icon_from_api
+/fetchIcons/icon_from_api
 /icon_md5_map.txt
 thirdparty_data_source/error.txt
-thirdparty_data_source/not_exist.txt
+fetchIcons/not_exist.txt
 /output/db/item_db_de.sqlite
 /output/db/item_db_es.sqlite
 /output/db/item_db_fr.sqlite
@@ -14,4 +14,4 @@ thirdparty_data_source/not_exist.txt
 /output/db/item_db_ko.sqlite
 /output/db/item_db_ru.sqlite
 /fetchUniverse/cache
-thirdparty_data_source/typeids.txt
+fetchIcons/typeids.txt

@@ -8,10 +8,10 @@
 
 # 更新图标
 
-1. 如果需要根据当前已有物品信息来更新图标，则单独执行 `thirdparty_data_source/sync_icon.py`
-2. 下载好图标后，执行 `thirdparty_data_source/replace_icon.py` ，使下载的图标与 `Data/Types` 合并
+1. 如果需要根据当前已有物品信息来更新图标，则单独执行 `fetchIcons/sync_icon.py`
+2. 下载好图标后，执行 `fetchIcons/replace_icon.py` ，使下载的图标与 `Data/Types` 合并
 3. 最后重新执行 `main.py` 构造资源包
-4. 如果EVE有新增的物品等内容，导致需要**完全重新构造**图标资源包，则删除 `icon_md5_map.txt` 、 `thirdparty_data_source/typeids.txt` 和 `thirdparty_data_source/not_exist.txt`，再重复执行前三步。
+4. 如果EVE有新增的物品等内容，导致需要**完全重新构造**图标资源包，则删除 `icon_md5_map.txt` 、 `fetchIcons/typeids.txt` 和 `fetchIcons/not_exist.txt`，再重复执行前三步。
 
 # 更新星系信息
 

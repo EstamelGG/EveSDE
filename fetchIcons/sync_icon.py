@@ -1,7 +1,6 @@
 import os
 import time
 import requests
-from ruamel.yaml import YAML
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
 
@@ -9,7 +8,7 @@ EXCLUDED_GROUP_IDS = {1950, 1951, 1952, 1953, 1954, 1955, 4040}
 
 class IconDownloader:
     def __init__(self, num_threads=10):
-        self.save_dir = './icon_from_api'
+        self.save_dir = 'icon_from_api'
         self.timeout = (5, 10)  # (连接超时, 读取超时)
         self.max_retries = 5
         self.num_threads = num_threads
@@ -249,4 +248,4 @@ def main(skip_existing=True, num_threads=10):
     print(f"已存在跳过: {results['skip']}")
 
 if __name__ == '__main__':
-    main(skip_existing=False, num_threads=50)
+    main(skip_existing=True, num_threads=50)

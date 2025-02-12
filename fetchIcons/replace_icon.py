@@ -10,7 +10,7 @@ def get_file_size(image_path):
 
 def copy_icons():
     # 定义源目录和目标目录
-    source_dir = "./icon_from_api"
+    source_dir = "icon_from_api"
     target_dir = "../Data/Types"
 
     # 确保目标目录存在
