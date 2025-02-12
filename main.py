@@ -163,7 +163,7 @@ def process_universe_names():
         cursor = conn.cursor()
         
         try:
-            process_invUniqueNames_data(data, cursor)
+            process_invUniqueNames_data(data, cursor, lang)
             conn.commit()
         finally:
             conn.close()

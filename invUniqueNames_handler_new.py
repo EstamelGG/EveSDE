@@ -49,8 +49,15 @@ def create_table(cursor):
         )
     ''')
 
-def process_data(data: dict, cursor):
-    """处理数据并插入到数据库"""
+def process_data(data: dict, cursor, lang: str = 'en'):
+    """
+    处理数据并插入到数据库
+    
+    Args:
+        data: 数据字典
+        cursor: 数据库游标
+        lang: 数据库使用的语言代码
+    """
     # 创建表
     create_table(cursor)
     
@@ -73,24 +80,33 @@ def process_data(data: dict, cursor):
     # 处理星域数据
     for region_id, region_data in data.items():
         region_names = region_data['region_name']
-        region_values = [int(region_id), region_names.get('en')]  # 英文名称
-        for lang in LANGUAGES:
-            region_values.append(region_names.get(lang))
+        region_values = [
+            int(region_id), 
+            region_names.get(lang, region_names.get('en'))  # 使用指定语言的名称，如果没有则使用英文
+        ]
+        for lang_code in LANGUAGES:
+            region_values.append(region_names.get(lang_code))
         cursor.execute(regions_sql, region_values)
         
         # 处理星座数据
         for const_id, const_data in region_data['constellations'].items():
             const_names = const_data['constellation_name']
-            const_values = [int(const_id), const_names.get('en')]  # 英文名称
-            for lang in LANGUAGES:
-                const_values.append(const_names.get(lang))
+            const_values = [
+                int(const_id), 
+                const_names.get(lang, const_names.get('en'))  # 使用指定语言的名称，如果没有则使用英文
+            ]
+            for lang_code in LANGUAGES:
+                const_values.append(const_names.get(lang_code))
             cursor.execute(constellations_sql, const_values)
             
             # 处理星系数据
             for sys_id, sys_data in const_data['systems'].items():
                 sys_names = sys_data['system_name']
-                sys_values = [int(sys_id), sys_names.get('en')]  # 英文名称
-                for lang in LANGUAGES:
-                    sys_values.append(sys_names.get(lang))
+                sys_values = [
+                    int(sys_id), 
+                    sys_names.get(lang, sys_names.get('en'))  # 使用指定语言的名称，如果没有则使用英文
+                ]
+                for lang_code in LANGUAGES:
+                    sys_values.append(sys_names.get(lang_code))
                 sys_values.append(sys_data['system_info']['security_status'])
                 cursor.execute(solarsystems_sql, sys_values)
