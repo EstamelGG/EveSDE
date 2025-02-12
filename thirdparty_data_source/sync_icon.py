@@ -28,7 +28,7 @@ class IconDownloader:
             except (requests.exceptions.RequestException, IOError) as e:
                 retry_count += 1
                 if retry_count < self.max_retries:
-                    print(f"\n{retry_message} {e}，等待1秒后进行第{retry_count + 1}次重试...")
+                    print(f"\n{retry_message} {e}，等待1秒后进行第{retry_count + 1}/{self.max_retries}次重试...")
                     time.sleep(1)
                 else:
                     raise  # 重试耗尽，抛出异常
@@ -53,7 +53,7 @@ class IconDownloader:
             for variant in common_variants:
                 url = f'https://images.evetech.net/types/{type_id}/{variant}?size=64'
                 try:
-                    response = self._make_request(url, f"获取{type_id} 的 {variant}时网络错误")
+                    response = self._make_request(url, f"获取{type_id} 的 {variant} 时网络错误")
                     if response.status_code == 200 and b"bad category or variation" not in response.content:
                         return self._save_image(response.content, type_id)
                 except (requests.exceptions.RequestException, IOError):

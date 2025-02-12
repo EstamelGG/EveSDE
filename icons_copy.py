@@ -9,7 +9,7 @@ source_root = "Data/Icons"
 destination_root = "output/Icons"
 
 if not os.path.exists(source_root):
-    print(f"Error: Icon source directory '{source_root}' does not exist.")
+    print(f"Error: Icon source directory '{source_root}' does not exist. Download from \"https://developers.eveonline.com/resource\"")
     sys.exit(1)
 
 def normalize_filename(path):
