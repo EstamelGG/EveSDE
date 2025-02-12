@@ -6,6 +6,8 @@
 4. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。
 5. 开始构造数据库 `main.py`
 
+![img.png](img.png)
+
 # 更新图标
 
 1. 如果需要根据当前已有物品信息来更新图标，则单独执行 `fetchIcons/sync_icon.py`
