@@ -5,6 +5,8 @@ from ruamel.yaml import YAML
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
 
+EXCLUDED_GROUP_IDS = {1950, 1951, 1952, 1953, 1954, 1955, 4040}
+
 class IconDownloader:
     def __init__(self, num_threads=10):
         self.save_dir = './icon_from_api'
@@ -140,9 +142,7 @@ class IconDownloader:
         return results
 
 def read_types_yaml():
-    """读取types.yaml文件并返回所有type ID"""
-    EXCLUDED_GROUP_IDS = {1950, 1951, 1952, 1953, 1954, 1955, 4040}
-    
+    """读取或获取所有type ID"""
     # 读取not_exist.txt中的ID
     not_exist_ids = set()
     if os.path.exists('not_exist.txt'):
@@ -156,23 +156,82 @@ def read_types_yaml():
             type_ids = [int(line.strip()) for line in f.readlines()]
             return [tid for tid in type_ids if tid not in not_exist_ids]
     
-    print("从types.yaml读取type IDs...")
-    yaml = YAML(typ='safe')
-    with open('../Data/sde/fsd/types.yaml', 'r', encoding='utf-8') as file:
-        types_data = yaml.load(file)
+    print("从ESI API获取type IDs...")
+    type_ids = set()
+    completed_pages = 0
+    total_pages = None
     
-    type_ids = []
-    for type_id, type_info in types_data.items():
-        if isinstance(type_info, dict) and 'groupID' in type_info:
-            if type_info['groupID'] not in EXCLUDED_GROUP_IDS and type_id not in not_exist_ids:
-                type_ids.append(type_id)
+    def fetch_page(page):
+        try:
+            url = f'https://esi.evetech.net/latest/universe/types/?datasource=tranquility&page={page}'
+            response = requests.get(url, timeout=(5, 10))
+            
+            if response.status_code == 200:
+                return page, response.json()
+            elif "Requested page does not exist!" in response.text:
+                return page, None
+            else:
+                print(f"\n获取第 {page} 页时出错: HTTP {response.status_code}")
+                return page, None
+                
+        except Exception as e:
+            print(f"\n获取第 {page} 页时发生错误: {e}")
+            return page, None
     
-    print("保存type IDs到缓存文件...")
+    # 先获取第一页来确定总页数
+    first_page_result = fetch_page(1)
+    if first_page_result[1]:
+        type_ids.update(first_page_result[1])
+        completed_pages = 1
+        
+        # 使用线程池并发获取剩余页面
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            page = 2
+            futures = []
+            
+            while True:
+                # 提交新的任务
+                future = executor.submit(fetch_page, page)
+                futures.append(future)
+                page += 1
+                
+                # 处理完成的任务
+                for future in [f for f in futures if f.done()]:
+                    futures.remove(future)
+                    page_num, page_data = future.result()
+                    
+                    if page_data is None:
+                        # 如果页面不存在，说明已经到达末尾
+                        total_pages = page_num - 1
+                        break
+                    
+                    type_ids.update(page_data)
+                    completed_pages += 1
+                    print(f"\r已获取页面: {completed_pages}, 累计获取: {len(type_ids)} 个type IDs", 
+                          end='', flush=True)
+                
+                if total_pages is not None:
+                    break
+                
+                time.sleep(0.1)  # 小延迟避免过快提交任务
+            
+            # 等待所有进行中的任务完成
+            for future in futures:
+                page_num, page_data = future.result()
+                if page_data is not None:
+                    type_ids.update(page_data)
+                    completed_pages += 1
+                    print(f"\r已获取页面: {completed_pages}, 累计获取: {len(type_ids)} 个type IDs", 
+                          end='', flush=True)
+    
+    print(f"\n总共获取了 {completed_pages} 页数据")
+    print("\n保存type IDs到缓存文件...")
+    type_ids = sorted(list(type_ids))  # 转换为排序列表
     with open('typeids.txt', 'w') as f:
         for type_id in type_ids:
             f.write(f"{type_id}\n")
     
-    return type_ids
+    return [tid for tid in type_ids if tid not in not_exist_ids]
 
 def main(skip_existing=True, num_threads=10):
     type_ids = read_types_yaml()

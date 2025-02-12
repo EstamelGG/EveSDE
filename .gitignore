@@ -14,3 +14,4 @@ thirdparty_data_source/not_exist.txt
 /output/db/item_db_ko.sqlite
 /output/db/item_db_ru.sqlite
 /fetchUniverse/cache
+thirdparty_data_source/typeids.txt
