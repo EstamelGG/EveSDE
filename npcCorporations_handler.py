@@ -23,7 +23,14 @@ def create_npc_corporations_table(cursor):
         CREATE TABLE IF NOT EXISTS npcCorporations (
             corporation_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT,
+            de_name TEXT,
             en_name TEXT,
+            es_name TEXT,
+            fr_name TEXT,
+            ja_name TEXT,
+            ko_name TEXT,
+            ru_name TEXT,
+            zh_name TEXT,
             description TEXT,
             faction_id INTEGER,
             icon_id INTEGER
@@ -39,10 +46,21 @@ def process_data(corporations_data, cursor, lang):
     batch_size = 1000  # 每批处理的记录数
     
     for corp_id, corp_info in corporations_data.items():
-        # 获取名称，如果没有对应语言的就用英文
+        # 获取当前语言的名称作为主要name
         name = corp_info.get('nameID', {}).get(lang) or corp_info.get('nameID', {}).get('en')
-        # 英文数据库不需要 en_name，其他语言数据库存储英文名称
-        en_name = None if lang == 'en' else corp_info.get('nameID', {}).get('en')
+        
+        # 获取所有语言的名称
+        names = {
+            'de': corp_info.get('nameID', {}).get('de', ''),
+            'en': corp_info.get('nameID', {}).get('en', ''),
+            'es': corp_info.get('nameID', {}).get('es', ''),
+            'fr': corp_info.get('nameID', {}).get('fr', ''),
+            'ja': corp_info.get('nameID', {}).get('ja', ''),
+            'ko': corp_info.get('nameID', {}).get('ko', ''),
+            'ru': corp_info.get('nameID', {}).get('ru', ''),
+            'zh': corp_info.get('nameID', {}).get('zh', '')
+        }
+        
         # 获取描述，如果没有对应语言的就用英文
         description = corp_info.get('descriptionID', {}).get(lang) or corp_info.get('descriptionID', {}).get('en')
         
@@ -54,7 +72,14 @@ def process_data(corporations_data, cursor, lang):
         batch_data.append((
             corp_id,
             name,
-            en_name,
+            names['de'],
+            names['en'],
+            names['es'],
+            names['fr'],
+            names['ja'],
+            names['ko'],
+            names['ru'],
+            names['zh'],
             description,
             faction_id,
             icon_id
@@ -66,11 +91,12 @@ def process_data(corporations_data, cursor, lang):
                 INSERT OR REPLACE INTO npcCorporations (
                     corporation_id,
                     name,
-                    en_name,
+                    de_name, en_name, es_name, fr_name,
+                    ja_name, ko_name, ru_name, zh_name,
                     description,
                     faction_id,
                     icon_id
-                ) VALUES (?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
     
@@ -80,9 +106,10 @@ def process_data(corporations_data, cursor, lang):
             INSERT OR REPLACE INTO npcCorporations (
                 corporation_id,
                 name,
-                en_name,
+                de_name, en_name, es_name, fr_name,
+                ja_name, ko_name, ru_name, zh_name,
                 description,
                 faction_id,
                 icon_id
-            ) VALUES (?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data) 

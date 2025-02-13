@@ -240,7 +240,14 @@ def create_types_table(cursor):
         CREATE TABLE IF NOT EXISTS types (
             type_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT,
+            de_name TEXT,
             en_name TEXT,
+            es_name TEXT,
+            fr_name TEXT,
+            ja_name TEXT,
+            ko_name TEXT,
+            ru_name TEXT,
+            zh_name TEXT,
             description TEXT,
             icon_filename TEXT,
             published BOOLEAN,
@@ -431,9 +438,21 @@ def process_data(types_data, cursor, lang):
     batch_size = 1000  # 每批处理的记录数
     
     for type_id, item in types_data.items():
+        # 获取当前语言的名称作为主要name
         name = item['name'].get(lang, item['name'].get('en', ""))
-        # 只有在非英文数据库中才设置 en_name
-        en_name = None if lang == 'en' else type_en_name_cache.get(type_id, "")
+        
+        # 获取所有语言的名称
+        names = {
+            'de': item['name'].get('de', ''),
+            'en': item['name'].get('en', ''),
+            'es': item['name'].get('es', ''),
+            'fr': item['name'].get('fr', ''),
+            'ja': item['name'].get('ja', ''),
+            'ko': item['name'].get('ko', ''),
+            'ru': item['name'].get('ru', ''),
+            'zh': item['name'].get('zh', '')
+        }
+        
         description = item.get('description', {}).get(lang, item.get('description', {}).get('en', ""))
         published = item.get('published', False)
         volume = item.get('volume', None)
@@ -486,7 +505,10 @@ def process_data(types_data, cursor, lang):
             
         # 添加到批处理列表
         batch_data.append((
-            type_id, name, en_name, description, copied_file, published, volume, capacity, mass, marketGroupID,
+            type_id, name, 
+            names['de'], names['en'], names['es'], names['fr'], 
+            names['ja'], names['ko'], names['ru'], names['zh'],
+            description, copied_file, published, volume, capacity, mass, marketGroupID,
             metaGroupID, iconID, groupID, group_name, category_id, category_name,
             pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
             high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID,
@@ -497,11 +519,17 @@ def process_data(types_data, cursor, lang):
         if len(batch_data) >= batch_size:
             cursor.executemany('''
                 INSERT OR IGNORE INTO types (
-                    type_id, name, en_name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
-                    metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
-                    em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
-                    variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    type_id, name, 
+                    de_name, en_name, es_name, fr_name, 
+                    ja_name, ko_name, ru_name, zh_name,
+                    description, icon_filename, published, volume, capacity, mass, marketGroupID,
+                    metaGroupID, iconID, groupID, group_name, categoryID, category_name,
+                    pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
+                    high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
+                    variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, 
+                    npc_ship_type, npc_ship_faction_icon
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+                         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
     
@@ -509,11 +537,17 @@ def process_data(types_data, cursor, lang):
     if batch_data:
         cursor.executemany('''
             INSERT OR IGNORE INTO types (
-                type_id, name, en_name, description, icon_filename, published, volume, capacity, mass, marketGroupID,
-                metaGroupID, iconID, groupID, group_name, categoryID, category_name, pg_need, cpu_need, rig_cost,
-                em_damage, them_damage, kin_damage, exp_damage, high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
-                variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, npc_ship_type, npc_ship_faction_icon
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                type_id, name, 
+                de_name, en_name, es_name, fr_name, 
+                ja_name, ko_name, ru_name, zh_name,
+                description, icon_filename, published, volume, capacity, mass, marketGroupID,
+                metaGroupID, iconID, groupID, group_name, categoryID, category_name,
+                pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
+                high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
+                variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, 
+                npc_ship_type, npc_ship_faction_icon
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+                     ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data)
 
     process_trait_data(types_data, cursor, lang)
