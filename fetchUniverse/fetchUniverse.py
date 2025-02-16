@@ -33,14 +33,19 @@ BATCH_SIZE = 10  # 每批处理的星系数量
 def get_cache_path(url: str) -> str:
     """获取缓存文件路径"""
     # 只缓存详情API的响应
-    if 'language=' not in url:
+    if 'language=' not in url and 'stars' not in url:
         return None
         
     # 详情API的URL
-    item_type = 'regions' if '/regions/' in url else 'constellations' if '/constellations/' in url else 'systems'
-    item_id = url.split(f'/{item_type}/')[1].split('/')[0]
-    lang = url.split('language=')[1].split('&')[0]
-    filename = f"{item_type}_{item_id}_{lang}.json"
+    if 'stars' in url:
+        item_type = 'stars'
+        item_id = url.split(f'/{item_type}/')[1].split('/')[0]
+        filename = f"{item_type}_{item_id}.json"
+    else:
+        item_type = 'regions' if '/regions/' in url else 'constellations' if '/constellations/' in url else 'systems'
+        item_id = url.split(f'/{item_type}/')[1].split('/')[0]
+        lang = url.split('language=')[1].split('&')[0]
+        filename = f"{item_type}_{item_id}_{lang}.json"
     
     return os.path.join(CACHE_DIR, filename)
 
@@ -139,6 +144,50 @@ async def fetch_details_with_languages(session: aiohttp.ClientSession, base_url:
         logger.error(f"处理多语言数据时出错: {str(e)}")
         raise
 
+async def fetch_star_info(session: aiohttp.ClientSession, star_id: int) -> Optional[int]:
+    """获取恒星信息"""
+    try:
+        url = f"{BASE_URL}/universe/stars/{star_id}/?datasource=tranquility"
+        star_data = await fetch_json(session, url)
+        return star_data.get('type_id')
+    except Exception as e:
+        logger.error(f"获取恒星信息失败 star_id {star_id}: {str(e)}")
+        return 6 # 默认用6号恒星类型
+
+async def fetch_stars_batch(session: aiohttp.ClientSession, star_ids: List[int]) -> Dict[int, Optional[int]]:
+    """批量获取恒星信息"""
+    if not star_ids:
+        return {}
+    
+    star_type_map = {}
+    valid_star_ids = [sid for sid in star_ids if sid is not None]
+    
+    # 按BATCH_SIZE分批处理
+    for i in range(0, len(valid_star_ids), BATCH_SIZE):
+        batch_star_ids = valid_star_ids[i:i + BATCH_SIZE]
+        tasks = []
+        for star_id in batch_star_ids:
+            url = f"{BASE_URL}/universe/stars/{star_id}/?datasource=tranquility"
+            tasks.append(fetch_json(session, url))
+        
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        
+        for star_id, result in zip(batch_star_ids, results):
+            try:
+                if isinstance(result, Exception):
+                    logger.error(f"获取恒星信息失败 star_id {star_id}: {str(result)}")
+                    star_type_map[star_id] = 6  # 默认用6号恒星类型
+                    continue
+                star_type_map[star_id] = result.get('type_id', 6)
+            except Exception as e:
+                logger.error(f"处理恒星信息失败 star_id {star_id}: {str(e)}")
+                star_type_map[star_id] = 6  # 默认用6号恒星类型
+        
+        logger.info(f"完成处理恒星批次 {i//BATCH_SIZE + 1}/{(len(valid_star_ids) + BATCH_SIZE - 1)//BATCH_SIZE}, "
+                   f"当前批次大小: {len(batch_star_ids)}")
+            
+    return star_type_map
+
 async def process_systems_batch(session: aiohttp.ClientSession, systems_batch: List[int], 
                               total_systems_processed: int, total_systems_count: int) -> Dict[str, dict]:
     """批量处理星系数据"""
@@ -152,27 +201,45 @@ async def process_systems_batch(session: aiohttp.ClientSession, systems_batch: L
     
     results = await asyncio.gather(*tasks, return_exceptions=True)
     
-    systems_data = {}
-    for i, (sys_id, result) in enumerate(zip(systems_batch, results)):
+    # 收集所有star_ids
+    star_ids = []
+    valid_systems = []
+    for sys_id, result in zip(systems_batch, results):
         try:
             if isinstance(result, Exception):
                 logger.error(f"处理星系 {sys_id} 时出错: {str(result)}")
                 continue
-                
             names, sys_details = result
+            star_id = sys_details.get('star_id')
+            star_ids.append(star_id)
+            valid_systems.append((sys_id, names, sys_details, star_id))
+        except Exception as e:
+            logger.error(f"处理星系 {sys_id} 时出错: {str(e)}")
+            continue
+    
+    # 批量获取恒星类型
+    star_type_map = await fetch_stars_batch(session, star_ids)
+    
+    # 处理结果
+    systems_data = {}
+    for i, (sys_id, names, sys_details, star_id) in enumerate(valid_systems):
+        try:
             security_status = sys_details.get('security_status')
+            solar_type_id = star_type_map.get(star_id) if star_id else None
             
             systems_data[str(sys_id)] = {
                 'system_name': names,
                 'system_info': {
-                    'security_status': security_status
+                    'security_status': security_status,
+                    'solar_type_id': solar_type_id,
+                    'star_id': star_id
                 }
             }
             
             current_processed = total_systems_processed + i + 1
             progress_percentage = (current_processed / total_systems_count) * 100
             logger.info(f"处理星系 {sys_id} 完成 - 总进度: {current_processed}/{total_systems_count} ({progress_percentage:.2f}%)")
-            logger.debug(f"星系 {sys_id} 安全等级: {security_status}")
+            logger.debug(f"星系 {sys_id} 安全等级: {security_status}, 恒星ID: {star_id}, 恒星类型ID: {solar_type_id}")
             
         except Exception as e:
             logger.error(f"处理星系 {sys_id} 时出错: {str(e)}")

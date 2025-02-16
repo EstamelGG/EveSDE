@@ -48,7 +48,7 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple[int, int, int, 
                 # 获取安全等级
                 security_status = sys_info.get('system_info', {}).get('security_status', 0.0)
                 # 默认恒星类型为6（标准黄色恒星）
-                system_type = 6
+                system_type = sys_info.get('system_info', {}).get('solar_type_id', 6)
                 
                 # 将数据添加到列表
                 universe_data.append((
