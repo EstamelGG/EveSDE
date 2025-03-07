@@ -1,0 +1,5 @@
+Pillow==11.1.0
+PyYAML==6.0.2
+Requests==2.32.3
+ruamel.base==1.0.0
+ruamel.yaml==0.18.10
