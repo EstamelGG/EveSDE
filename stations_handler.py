@@ -29,6 +29,9 @@ def create_stations_table(cursor):
             security REAL
         )
     ''')
+    
+    # 创建索引以优化查询性能
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_stations_solarSystemID ON stations(solarSystemID)')
 
 def process_data(data, cursor, lang):
     """处理空间站数据并插入数据库"""

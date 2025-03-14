@@ -37,6 +37,11 @@ def process_agents_data(agents_data, agents_in_space_data, cursor, language=None
     )
     ''')
     
+    # 创建索引以优化查询性能
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_agents_solarSystemID ON agents(solarSystemID)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_agents_locationID ON agents(locationID)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_agents_corporationID ON agents(corporationID)')
+    
     # 清空现有数据
     cursor.execute('DELETE FROM agents')
     

@@ -36,6 +36,9 @@ def create_npc_corporations_table(cursor):
             icon_id INTEGER
         )
     ''')
+    
+    # 创建索引以优化查询性能
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_npcCorporations_faction_id ON npcCorporations(faction_id)')
 
 def process_data(corporations_data, cursor, lang):
     """处理 npcCorporations 数据并插入数据库"""
