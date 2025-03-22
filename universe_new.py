@@ -141,6 +141,13 @@ def process_data(cursor, lang: str = 'en'):
                     'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security, system_type, x, y, z) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
                     batch
                 )
+            
+            # 重新读取数据以处理starmap
+            data = read_universe_data()
+            if data:
+                process_universe_data(data, cursor)
+            else:
+                logger.error("无法读取universe数据用于处理starmap")
         else:
             logger.warning("没有找到缓存的宇宙数据")
     
