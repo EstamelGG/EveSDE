@@ -27,7 +27,7 @@ RETRY_TIMES = 3  # 最大重试次数
 CACHE_DIR = './cache'
 
 # 并发配置
-BATCH_SIZE = 10  # 每批处理的星系数量
+BATCH_SIZE = 3  # 每批处理的星系数量, 建议10
 
 def get_cache_path(url: str) -> str:
     """获取缓存文件路径"""
