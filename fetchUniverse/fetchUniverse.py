@@ -5,6 +5,7 @@ import ssl
 import certifi
 import logging
 import os
+import random
 from typing import Dict, List, Optional
 from aiohttp import ClientTimeout
 from tenacity import retry, stop_after_attempt, wait_exponential
@@ -341,6 +342,42 @@ async def fetch_universe_data():
             logger.error(f"获取宇宙数据时出错: {str(e)}")
             raise
 
+def analyze_stargates(universe_data: dict):
+    """分析所有星系的星门数据"""
+    # 收集所有星门ID
+    stargate_ids = set()
+    
+    # 遍历所有星域
+    for region_id, region_data in universe_data.items():
+        # 遍历所有星座
+        for constellation_id, constellation_data in region_data['constellations'].items():
+            # 遍历所有星系
+            for system_id, system_data in constellation_data['systems'].items():
+                # 获取该星系的星门列表
+                stargates = system_data['system_info'].get('stargates', [])
+                stargate_ids.update(stargates)
+    
+    # 转换为列表以便随机选择
+    stargate_list = list(stargate_ids)
+    
+    # 随机选择5个星门ID
+    random_stargates = random.sample(stargate_list, min(5, len(stargate_list)))
+    
+    # 打印统计信息
+    logger.info(f"总共有 {len(stargate_ids)} 个唯一的星门ID")
+    logger.info(f"随机选择的5个星门ID: {random_stargates}")
+
+def analyze_stargates_from_file():
+    """从保存的文件中分析星门数据"""
+    try:
+        logger.info("开始分析星门数据...")
+        with open('universe_data.json', 'r', encoding='utf-8') as f:
+            universe_data = json.load(f)
+        analyze_stargates(universe_data)
+    except Exception as e:
+        logger.error(f"分析星门数据时出错: {str(e)}")
+        raise
+
 async def main():
     """主函数"""
     try:
@@ -353,9 +390,14 @@ async def main():
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(universe_data, f, ensure_ascii=False, indent=2)
         logger.info("数据保存完成")
+        
     except Exception as e:
         logger.error(f"程序执行出错: {str(e)}")
         raise
 
 if __name__ == "__main__":
+    # 首先获取宇宙数据
     asyncio.run(main())
+    
+    # 然后独立分析星门数据
+    analyze_stargates_from_file()
