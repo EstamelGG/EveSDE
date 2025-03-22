@@ -28,7 +28,7 @@ RETRY_TIMES = 3  # 最大重试次数
 CACHE_DIR = './cache'
 
 # 并发配置
-BATCH_SIZE = 3  # 每批处理的星系数量, 建议10
+BATCH_SIZE = 10  # 每批处理的星系数量, 建议10
 
 def get_cache_path(url: str) -> str:
     """获取缓存文件路径"""
@@ -211,14 +211,17 @@ async def process_systems_batch(session: aiohttp.ClientSession, systems_batch: L
                 continue
             names, sys_details = result
             star_id = sys_details.get('star_id')
-            star_ids.append(star_id)
+            if star_id:  # 只添加有效的star_id
+                star_ids.append(star_id)
             valid_systems.append((sys_id, names, sys_details, star_id))
         except Exception as e:
             logger.error(f"处理星系 {sys_id} 时出错: {str(e)}")
             continue
     
     # 批量获取恒星类型
-    star_type_map = await fetch_stars_batch(star_ids)
+    star_type_map = {}
+    if star_ids:  # 只在有有效的star_ids时调用
+        star_type_map = await fetch_stars_batch(session, star_ids)
     
     # 处理结果
     systems_data = {}
@@ -367,74 +370,29 @@ def analyze_stargates(universe_data: dict):
     logger.info(f"总共有 {len(stargate_ids)} 个唯一的星门ID")
     logger.info(f"随机选择的5个星门ID: {random_stargates}")
 
-async def fetch_stargate_info(session: aiohttp.ClientSession, stargate_id: int) -> Optional[dict]:
-    """获取单个星门信息"""
+async def fetch_stargate_info(session: aiohttp.ClientSession, stargate_id: int) -> dict:
+    """获取星门信息"""
     try:
         url = f"{BASE_URL}/universe/stargates/{stargate_id}/?datasource=tranquility"
-        data = await fetch_json(session, url)
+        stargate_data = await fetch_json(session, url)
         return {
-            'stargate_id': data['stargate_id'],
-            'system_id': data['system_id'],
+            'stargate_id': stargate_id,
+            'system_id': stargate_data.get('system_id'),
             'destination': {
-                'stargate_id': data['destination']['stargate_id'],
-                'system_id': data['destination']['system_id']
+                'system_id': stargate_data.get('destination', {}).get('system_id'),
+                'stargate_id': stargate_data.get('destination', {}).get('stargate_id')
             }
         }
     except Exception as e:
         logger.error(f"获取星门信息失败 stargate_id {stargate_id}: {str(e)}")
         return None
 
-async def fetch_stargates_batch(session: aiohttp.ClientSession, stargate_ids: List[int], 
-                              processed_stargates: set, system_connections: dict) -> None:
-    """批量获取星门信息"""
-    if not stargate_ids:
-        return
-    
-    # 过滤掉已处理的星门
-    new_stargate_ids = [sid for sid in stargate_ids if sid not in processed_stargates]
-    if not new_stargate_ids:
-        return
-    
-    tasks = []
-    for stargate_id in new_stargate_ids:
-        tasks.append(fetch_stargate_info(session, stargate_id))
-    
-    results = await asyncio.gather(*tasks, return_exceptions=True)
-    
-    for result in results:
-        try:
-            if isinstance(result, Exception):
-                continue
-            if not result:
-                continue
-                
-            # 获取源星门和目标星门信息
-            source_stargate_id = result['stargate_id']
-            source_system_id = result['system_id']
-            dest_stargate_id = result['destination']['stargate_id']
-            dest_system_id = result['destination']['system_id']
-            
-            # 记录已处理的星门
-            processed_stargates.add(source_stargate_id)
-            processed_stargates.add(dest_stargate_id)
-            
-            # 添加双向连接
-            if source_system_id not in system_connections:
-                system_connections[source_system_id] = set()
-            if dest_system_id not in system_connections:
-                system_connections[dest_system_id] = set()
-                
-            system_connections[source_system_id].add(dest_system_id)
-            system_connections[dest_system_id].add(source_system_id)
-            
-        except Exception as e:
-            logger.error(f"处理星门信息时出错: {str(e)}")
-            continue
-
-async def analyze_stargates_from_file():
-    """从保存的文件中分析星门数据并获取详细信息"""
+async def fetch_all_stargates():
+    """获取所有星门信息并缓存"""
     try:
-        logger.info("开始分析星门数据...")
+        logger.info("开始获取所有星门信息...")
+        
+        # 读取universe_data.json获取所有星门ID
         with open('universe_data.json', 'r', encoding='utf-8') as f:
             universe_data = json.load(f)
         
@@ -445,39 +403,112 @@ async def analyze_stargates_from_file():
                 for system_data in constellation_data['systems'].values():
                     stargate_ids.update(system_data['system_info'].get('stargates', []))
         
-        logger.info(f"找到 {len(stargate_ids)} 个唯一的星门ID")
+        logger.info(f"总共有 {len(stargate_ids)} 个唯一的星门ID")
         
-        # 创建SSL上下文和会话
+        # 创建SSL上下文，增加并发连接数限制
         ssl_context = ssl.create_default_context(cafile=certifi.where())
-        conn = aiohttp.TCPConnector(ssl=ssl_context, limit=100)  # 设置100个并发连接
+        conn = aiohttp.TCPConnector(ssl=ssl_context, limit=150)
+        
         async with aiohttp.ClientSession(connector=conn, timeout=TIMEOUT) as session:
-            # 用于存储已处理的星门ID
-            processed_stargates = set()
-            # 用于存储星系连接关系
-            system_connections = {}
+            # 使用100并发获取星门信息
+            CONCURRENT_LIMIT = 100
+            semaphore = asyncio.Semaphore(CONCURRENT_LIMIT)
             
-            # 按批次处理星门
-            stargate_list = list(stargate_ids)
-            batch_size = 100
-            total_batches = (len(stargate_list) + batch_size - 1) // batch_size
+            async def fetch_with_semaphore(stargate_id: int):
+                async with semaphore:
+                    try:
+                        return await fetch_stargate_info(session, stargate_id)
+                    except Exception as e:
+                        logger.error(f"获取星门信息失败 stargate_id {stargate_id}: {str(e)}")
+                        return None
             
-            for i in range(0, len(stargate_list), batch_size):
-                batch = stargate_list[i:i + batch_size]
-                await fetch_stargates_batch(session, batch, processed_stargates, system_connections)
-                logger.info(f"完成处理星门批次 {i//batch_size + 1}/{total_batches}")
+            # 创建所有任务
+            tasks = [fetch_with_semaphore(stargate_id) for stargate_id in stargate_ids]
             
-            # 将集合转换为列表以便JSON序列化
-            for system_id in system_connections:
-                system_connections[system_id] = list(system_connections[system_id])
+            # 使用gather并发执行所有任务
+            results = await asyncio.gather(*tasks, return_exceptions=True)
             
-            # 保存星系连接关系
-            output_file = 'system_connections.json'
-            with open(output_file, 'w', encoding='utf-8') as f:
-                json.dump(system_connections, f, ensure_ascii=False, indent=2)
-            logger.info(f"星系连接关系已保存到 {output_file}")
+            # 处理结果
+            stargate_info_map = {}
+            for stargate_id, result in zip(stargate_ids, results):
+                try:
+                    if isinstance(result, Exception):
+                        logger.error(f"处理星门信息失败 stargate_id {stargate_id}: {str(result)}")
+                        continue
+                    if result:
+                        stargate_info_map[stargate_id] = result
+                except Exception as e:
+                    logger.error(f"处理星门信息失败 stargate_id {stargate_id}: {str(e)}")
+            
+            logger.info(f"完成处理所有星门信息，共 {len(stargate_info_map)}/{len(stargate_ids)} 个成功")
+            
+            # 保存星门信息到文件
+            with open('stargate_info.json', 'w', encoding='utf-8') as f:
+                json.dump(stargate_info_map, f, ensure_ascii=False, indent=2)
+            logger.info("星门信息已保存到 stargate_info.json")
+            
+            return stargate_info_map
             
     except Exception as e:
-        logger.error(f"分析星门数据时出错: {str(e)}")
+        logger.error(f"获取星门信息时出错: {str(e)}")
+        raise
+
+def build_system_connections(stargate_info_map: dict) -> dict:
+    """根据星门信息构建星系连接关系"""
+    system_connections = {}
+    
+    for stargate_info in stargate_info_map.values():
+        if not stargate_info:
+            continue
+            
+        source_system = str(stargate_info['system_id'])
+        dest_system = stargate_info['destination']['system_id']
+        
+        # 添加双向连接
+        if source_system not in system_connections:
+            system_connections[source_system] = set()
+        if dest_system not in system_connections:
+            system_connections[dest_system] = set()
+            
+        system_connections[source_system].add(dest_system)
+        system_connections[dest_system].add(source_system)
+    
+    # 将集合转换为列表
+    for system_id in system_connections:
+        system_connections[system_id] = list(system_connections[system_id])
+    
+    return system_connections
+
+def merge_universe_data():
+    """合并universe_data.json和星门信息"""
+    try:
+        logger.info("开始合并宇宙数据和星门信息...")
+        
+        # 读取universe_data.json
+        with open('universe_data.json', 'r', encoding='utf-8') as f:
+            universe_data = json.load(f)
+            
+        # 读取星门信息
+        with open('stargate_info.json', 'r', encoding='utf-8') as f:
+            stargate_info_map = json.load(f)
+        
+        # 构建星系连接关系
+        system_connections = build_system_connections(stargate_info_map)
+        
+        # 合并数据
+        merged_data = merge_system_connections(universe_data, system_connections)
+        
+        # 保存合并后的数据
+        merged_output_file = 'universe_data_with_connections.json'
+        with open(merged_output_file, 'w', encoding='utf-8') as f:
+            json.dump(merged_data, f, ensure_ascii=False, indent=2)
+        logger.info(f"合并后的数据已保存到 {merged_output_file}")
+        
+    except FileNotFoundError as e:
+        logger.error(f"找不到所需的文件: {str(e)}")
+        raise
+    except Exception as e:
+        logger.error(f"合并数据时出错: {str(e)}")
         raise
 
 async def main():
@@ -497,9 +528,40 @@ async def main():
         logger.error(f"程序执行出错: {str(e)}")
         raise
 
+def merge_system_connections(universe_data: dict, system_connections: dict) -> dict:
+    """将星系连接关系合并到宇宙数据中"""
+    try:
+        logger.info("开始合并星系连接关系...")
+        
+        # 遍历所有星域
+        for region_data in universe_data.values():
+            # 遍历所有星座
+            for constellation_data in region_data['constellations'].values():
+                # 遍历所有星系
+                for system_id, system_data in constellation_data['systems'].items():
+                    # 添加neighbours字段
+                    system_data['system_info']['neighbours'] = system_connections.get(system_id, [])
+        
+        logger.info("星系连接关系合并完成")
+        return universe_data
+    except Exception as e:
+        logger.error(f"合并星系连接关系时出错: {str(e)}")
+        raise
+
 if __name__ == "__main__":
-    # 首先获取宇宙数据
-    # asyncio.run(main())
-    
-    # 然后独立分析星门数据
-    asyncio.run(analyze_stargates_from_file())
+    try:
+        # 第一步：获取宇宙数据
+        logger.info("第一步：获取宇宙数据...")
+        asyncio.run(main())
+
+        # 第二步：获取所有星门信息
+        logger.info("第二步：获取所有星门信息...")
+        asyncio.run(fetch_all_stargates())
+
+        # 第三步：合并数据
+        logger.info("第三步：合并数据...")
+        merge_universe_data()
+        
+    except Exception as e:
+        logger.error(f"程序执行出错: {str(e)}")
+        raise
