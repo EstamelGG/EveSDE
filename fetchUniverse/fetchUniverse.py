@@ -231,7 +231,9 @@ async def process_systems_batch(session: aiohttp.ClientSession, systems_batch: L
                 'system_info': {
                     'security_status': security_status,
                     'solar_type_id': solar_type_id,
-                    'star_id': star_id
+                    'star_id': star_id,
+                    'position': sys_details.get('position', {}),
+                    'stargates': sys_details.get('stargates', [])
                 }
             }
             
