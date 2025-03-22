@@ -498,11 +498,10 @@ def merge_universe_data():
         # 合并数据
         merged_data = merge_system_connections(universe_data, system_connections)
         
-        # 保存合并后的数据
-        merged_output_file = 'universe_data_with_connections.json'
-        with open(merged_output_file, 'w', encoding='utf-8') as f:
+        # 直接覆盖 universe_data.json
+        with open('universe_data.json', 'w', encoding='utf-8') as f:
             json.dump(merged_data, f, ensure_ascii=False, indent=2)
-        logger.info(f"合并后的数据已保存到 {merged_output_file}")
+        logger.info("合并后的数据已保存到 universe_data.json")
         
     except FileNotFoundError as e:
         logger.error(f"找不到所需的文件: {str(e)}")
