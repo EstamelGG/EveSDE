@@ -220,38 +220,20 @@ def copy_and_rename_icon(x):
     
     # 检查MD5是否存在于映射中
     if file_md5 in icon_md5_map:
-        # 如果存在，直接返回之前保存的文件名
+        # 如果存在，检查目标文件是否存在
         output_file = icon_md5_map[file_md5]
-
-    # 如果MD5没有重复，则复制一次，如果已经复制了就不再重复复制
-    output_path = os.path.join(output_directory, output_file)
-    if os.path.exists(output_path):
-        # 检查是否存在bpc图标
-        if os.path.exists(input_bpc_path):
-            # 计算bpc文件的MD5
-            bpc_md5 = calculate_file_md5(input_bpc_path)
-            
-            # 检查bpc的MD5是否存在于映射中
-            if bpc_md5 in icon_md5_map:
-                output_bpc_file = icon_md5_map[bpc_md5]
-            else:
-                # 复制bpc文件并重命名
-                output_bpc_path = os.path.join(output_directory, output_bpc_file)
-                if not os.path.exists(output_bpc_path):
-                    shutil.copy(input_bpc_path, output_bpc_path)
-                    # 将新的MD5和文件名添加到映射中
-                    icon_md5_map[bpc_md5] = output_bpc_file
-                    # 保存更新后的映射
-                    save_md5_map(icon_md5_map)
-            return output_file, output_bpc_file
-        return output_file, None
-
-    # 复制普通图标文件
-    shutil.copy(input_path, output_path)
-    # 将新的MD5和文件名添加到映射中
-    icon_md5_map[file_md5] = output_file
-    # 保存更新后的映射
-    save_md5_map(icon_md5_map)
+        output_path = os.path.join(output_directory, output_file)
+        if not os.path.exists(output_path):
+            shutil.copy(input_path, output_path)
+    else:
+        # 如果MD5没有重复，则复制一次
+        output_path = os.path.join(output_directory, output_file)
+        if not os.path.exists(output_path):
+            shutil.copy(input_path, output_path)
+            # 将新的MD5和文件名添加到映射中
+            icon_md5_map[file_md5] = output_file
+            # 保存更新后的映射
+            save_md5_map(icon_md5_map)
     
     # 检查是否存在bpc图标
     if os.path.exists(input_bpc_path):
@@ -260,7 +242,11 @@ def copy_and_rename_icon(x):
         
         # 检查bpc的MD5是否存在于映射中
         if bpc_md5 in icon_md5_map:
+            # 如果存在，检查目标文件是否存在
             output_bpc_file = icon_md5_map[bpc_md5]
+            output_bpc_path = os.path.join(output_directory, output_bpc_file)
+            if not os.path.exists(output_bpc_path):
+                shutil.copy(input_bpc_path, output_bpc_path)
         else:
             # 复制bpc文件并重命名
             output_bpc_path = os.path.join(output_directory, output_bpc_file)
