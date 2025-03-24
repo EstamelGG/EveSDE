@@ -24,6 +24,12 @@ def get_type_icon(cursor, type_id):
     result = cursor.fetchone()
     return result[0] if result else None
 
+def get_bpc_icon(cursor, type_id):
+    """从types表获取类型名称"""
+    cursor.execute('SELECT bpc_icon_filename FROM types WHERE type_id = ?', (type_id,))
+    result = cursor.fetchone()
+    return result[0] if result else get_type_icon(cursor, type_id)
+
 def create_tables(cursor):
     """创建所需的数据表"""
     # 制造材料表
@@ -389,13 +395,13 @@ def process_data(yaml_data, cursor, language):
                                     'INSERT OR REPLACE INTO blueprint_invention_materials (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)',
                                     (blueprint_type_id, blueprint_type_name, blueprint_type_icon, type_id, type_name, type_icon, material.get("quantity", -1))
                                 )
-                    # 处理产出
+                    # 处理蓝图发明产出
                     if 'products' in inv:
                         for product in inv['products']:
                             if "typeID" in product:
                                 type_id = product['typeID']
                                 type_name = get_type_name(cursor, type_id)
-                                type_icon = get_type_icon(cursor, type_id)
+                                type_icon = get_bpc_icon(cursor, type_id)
                                 cursor.execute(
                                     'INSERT OR REPLACE INTO blueprint_invention_products (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, typeID, typeName, typeIcon, quantity, probability) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
                                     (blueprint_type_id, blueprint_type_name, blueprint_type_icon, type_id, type_name, type_icon, product.get("quantity", -1), product.get("probability", 0))
