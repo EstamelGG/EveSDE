@@ -54,6 +54,15 @@ class IconDownloader:
                 try:
                     response = self._make_request(url, f"获取{type_id} 的 {variant} 时网络错误")
                     if response.status_code == 200 and b"bad category or variation" not in response.content:
+                        # 如果成功获取到bp图标，尝试获取bpc图标
+                        if variant == 'bp':
+                            bpc_url = f'https://images.evetech.net/types/{type_id}/bpc?size=64'
+                            try:
+                                bpc_response = self._make_request(bpc_url, f"获取{type_id} 的 bpc 时网络错误")
+                                if bpc_response.status_code == 200 and b"bad category or variation" not in bpc_response.content:
+                                    self._save_image(bpc_response.content, f"{type_id}_bpc")
+                            except (requests.exceptions.RequestException, IOError):
+                                pass  # bpc获取失败不影响主流程
                         return self._save_image(response.content, type_id)
                 except (requests.exceptions.RequestException, IOError):
                     continue
