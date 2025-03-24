@@ -15,6 +15,12 @@ class IconDownloader:
         # 添加锁用于线程安全的文件写入
         self.not_exist_lock = Lock()
         self.failed_lock = Lock()
+        self.bp_lock = Lock()  # 新增：用于bp_id.txt的线程安全写入
+        # 缓存蓝图类型ID
+        self.blueprint_ids = set()
+        if os.path.exists('bp_id.txt'):
+            with open('bp_id.txt', 'r') as f:
+                self.blueprint_ids = {int(line.strip()) for line in f if line.strip().isdigit()}
         os.makedirs(self.save_dir, exist_ok=True)
         
     def _make_request(self, url, retry_message="网络错误"):
@@ -39,11 +45,25 @@ class IconDownloader:
             f.write(content)
         return True
 
+    def _record_bp_id(self, type_id):
+        """记录蓝图类型的ID（线程安全）"""
+        with self.bp_lock:
+            with open('bp_id.txt', 'a') as f:
+                f.write(f"{type_id}\n")
+            self.blueprint_ids.add(type_id)  # 添加到缓存
+
     def download_icon(self, type_id, skip_existing=True):
         """下载指定type ID的图标"""
         # 检查是否已存在
         save_path = os.path.join(self.save_dir, f'{type_id}_64.png')
-        if os.path.exists(save_path) and skip_existing:
+        bpc_path = os.path.join(self.save_dir, f'{type_id}_bpc_64.png')
+        
+        # 如果是蓝图类型，需要同时检查普通图标和bpc图标
+        if type_id in self.blueprint_ids:
+            if os.path.exists(save_path) and os.path.exists(bpc_path):
+                return 'exists'
+        # 如果不是蓝图类型，只检查普通图标
+        elif os.path.exists(save_path) and skip_existing:
             return 'exists'
             
         try:
@@ -54,8 +74,9 @@ class IconDownloader:
                 try:
                     response = self._make_request(url, f"获取{type_id} 的 {variant} 时网络错误")
                     if response.status_code == 200 and b"bad category or variation" not in response.content:
-                        # 如果成功获取到bp图标，尝试获取bpc图标
+                        # 如果成功获取到bp图标，尝试获取bpc图标并记录type_id
                         if variant == 'bp':
+                            self._record_bp_id(type_id)  # 记录蓝图类型ID
                             bpc_url = f'https://images.evetech.net/types/{type_id}/bpc?size=64'
                             try:
                                 bpc_response = self._make_request(bpc_url, f"获取{type_id} 的 bpc 时网络错误")

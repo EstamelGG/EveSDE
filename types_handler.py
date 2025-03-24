@@ -201,16 +201,19 @@ def copy_and_rename_icon(x):
     output_directory = "output/Icons"
     input_file = f"{x}_64.png"
     output_file = f"icon_{x}_64.png"
+    input_bpc_file = f"{x}_bpc_64.png"
+    output_bpc_file = f"icon_{x}_bpc_64.png"
 
     # 确保输出目录存在
     os.makedirs(output_directory, exist_ok=True)
 
     # 构造输入文件完整路径
     input_path = os.path.join(input_directory, input_file)
+    input_bpc_path = os.path.join(input_directory, input_bpc_file)
 
     # 检查源文件是否存在
     if not os.path.exists(input_path):
-        return "items_7_64_15.png"
+        return "items_7_64_15.png", None
 
     # 计算源文件的MD5
     file_md5 = calculate_file_md5(input_path)
@@ -223,15 +226,53 @@ def copy_and_rename_icon(x):
     # 如果MD5没有重复，则复制一次，如果已经复制了就不再重复复制
     output_path = os.path.join(output_directory, output_file)
     if os.path.exists(output_path):
-        return output_file
-    # 复制文件并重命名
+        # 检查是否存在bpc图标
+        if os.path.exists(input_bpc_path):
+            # 计算bpc文件的MD5
+            bpc_md5 = calculate_file_md5(input_bpc_path)
+            
+            # 检查bpc的MD5是否存在于映射中
+            if bpc_md5 in icon_md5_map:
+                output_bpc_file = icon_md5_map[bpc_md5]
+            else:
+                # 复制bpc文件并重命名
+                output_bpc_path = os.path.join(output_directory, output_bpc_file)
+                if not os.path.exists(output_bpc_path):
+                    shutil.copy(input_bpc_path, output_bpc_path)
+                    # 将新的MD5和文件名添加到映射中
+                    icon_md5_map[bpc_md5] = output_bpc_file
+                    # 保存更新后的映射
+                    save_md5_map(icon_md5_map)
+            return output_file, output_bpc_file
+        return output_file, None
+
+    # 复制普通图标文件
     shutil.copy(input_path, output_path)
     # 将新的MD5和文件名添加到映射中
     icon_md5_map[file_md5] = output_file
     # 保存更新后的映射
     save_md5_map(icon_md5_map)
     
-    return output_file
+    # 检查是否存在bpc图标
+    if os.path.exists(input_bpc_path):
+        # 计算bpc文件的MD5
+        bpc_md5 = calculate_file_md5(input_bpc_path)
+        
+        # 检查bpc的MD5是否存在于映射中
+        if bpc_md5 in icon_md5_map:
+            output_bpc_file = icon_md5_map[bpc_md5]
+        else:
+            # 复制bpc文件并重命名
+            output_bpc_path = os.path.join(output_directory, output_bpc_file)
+            if not os.path.exists(output_bpc_path):
+                shutil.copy(input_bpc_path, output_bpc_path)
+                # 将新的MD5和文件名添加到映射中
+                icon_md5_map[bpc_md5] = output_bpc_file
+                # 保存更新后的映射
+                save_md5_map(icon_md5_map)
+        return output_file, output_bpc_file
+    
+    return output_file, None
 
 
 def create_types_table(cursor):
@@ -250,6 +291,7 @@ def create_types_table(cursor):
             zh_name TEXT,
             description TEXT,
             icon_filename TEXT,
+            bpc_icon_filename TEXT,
             published BOOLEAN,
             volume REAL,
             capacity REAL,
@@ -493,7 +535,7 @@ def process_data(types_data, cursor, lang):
             npc_ship_type = cached_data['type']
             npc_ship_faction_icon = cached_data['faction_icon']
         
-        copied_file = copy_and_rename_icon(type_id)
+        copied_file, bpc_copied_file = copy_and_rename_icon(type_id)
         res = get_attributes_value(cursor, type_id, [30, 50, 1153, 114, 118, 117, 116, 14, 13, 12, 1154, 102, 101])
         
         pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage, \
@@ -508,7 +550,7 @@ def process_data(types_data, cursor, lang):
             type_id, name, 
             names['de'], names['en'], names['es'], names['fr'], 
             names['ja'], names['ko'], names['ru'], names['zh'],
-            description, copied_file, published, volume, capacity, mass, marketGroupID,
+            description, copied_file, bpc_copied_file, published, volume, capacity, mass, marketGroupID,
             metaGroupID, iconID, groupID, group_name, category_id, category_name,
             pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
             high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID,
@@ -522,14 +564,14 @@ def process_data(types_data, cursor, lang):
                     type_id, name, 
                     de_name, en_name, es_name, fr_name, 
                     ja_name, ko_name, ru_name, zh_name,
-                    description, icon_filename, published, volume, capacity, mass, marketGroupID,
+                    description, icon_filename, bpc_icon_filename, published, volume, capacity, mass, marketGroupID,
                     metaGroupID, iconID, groupID, group_name, categoryID, category_name,
                     pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
                     high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
                     variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, 
                     npc_ship_type, npc_ship_faction_icon
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-                         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
     
@@ -540,14 +582,14 @@ def process_data(types_data, cursor, lang):
                 type_id, name, 
                 de_name, en_name, es_name, fr_name, 
                 ja_name, ko_name, ru_name, zh_name,
-                description, icon_filename, published, volume, capacity, mass, marketGroupID,
+                description, icon_filename, bpc_icon_filename, published, volume, capacity, mass, marketGroupID,
                 metaGroupID, iconID, groupID, group_name, categoryID, category_name,
                 pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
                 high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
                 variationParentTypeID, process_size, npc_ship_scene, npc_ship_faction, 
                 npc_ship_type, npc_ship_faction_icon
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-                     ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data)
 
     process_trait_data(types_data, cursor, lang)
