@@ -237,7 +237,8 @@ async def process_systems_batch(session: aiohttp.ClientSession, systems_batch: L
                     'solar_type_id': solar_type_id,
                     'star_id': star_id,
                     'position': sys_details.get('position', {}),
-                    'stargates': sys_details.get('stargates', [])
+                    'stargates': sys_details.get('stargates', []),
+                    'stations': sys_details.get('stations', [])
                 }
             }
             
