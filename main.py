@@ -30,6 +30,7 @@ from invFlags_handler import read_yaml as read_invFlags_yaml, process_data as pr
 from invNames_handler import read_yaml as read_invNames_yaml, process_data as process_invNames_data
 from agents_handler import read_agents_yaml, read_agents_in_space_yaml, process_agents_data
 from divisions_handler import read_divisions_yaml, process_divisions_data
+from dynamic_items_handler import process_data as process_dynamic_items_data
 
 
 # 文件路径
@@ -271,6 +272,9 @@ def main():
     
     print("\nProcessing skill requirements...")  # 处理技能需求数据
     process_special_data(process_skill_requirements, "skill requirements", lang=True)
+    
+    print("\nProcessing dynamic items data...")  # 动态物品属性数据
+    process_special_data(process_dynamic_items_data, "dynamic items data", lang=True)
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
