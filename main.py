@@ -200,13 +200,13 @@ def main():
     # 依次处理每个 YAML 文件
     copy_and_rename_png_files()
     
+    print("\nProcessing dynamic items data...")  # 动态物品属性数据
+    process_special_data(process_dynamic_items_data, "dynamic items data")
+
     print("\nProcessing universe data...")
     process_special_data(process_universe_data, "universe data", lang=True)
     
-    # print("\nProcessing invUniqueNames.yaml...")  # 注释掉旧的处理方式
-    # process_yaml_file(invUniqueNames_yaml_file_path, read_invUniqueNames_yaml, process_invUniqueNames_data)
-    
-    print("\nProcessing universe names...")  # 新的处理方式
+    print("\nProcessing universe names...")
     process_universe_names()
     
     print("\nProcessing planetSchematics.yaml...")
@@ -272,9 +272,6 @@ def main():
     
     print("\nProcessing skill requirements...")  # 处理技能需求数据
     process_special_data(process_skill_requirements, "skill requirements", lang=True)
-    
-    print("\nProcessing dynamic items data...")  # 动态物品属性数据
-    process_special_data(process_dynamic_items_data, "dynamic items data", lang=True)
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)

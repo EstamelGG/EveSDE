@@ -44,7 +44,7 @@ def create_dynamic_items_tables(cursor: sqlite3.Cursor):
         )
     ''')
 
-def process_data(cursor: sqlite3.Cursor, lang: str):
+def process_data(cursor: sqlite3.Cursor):
     """
     处理动态物品数据并插入到数据库
     """
