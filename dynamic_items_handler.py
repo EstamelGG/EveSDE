@@ -24,23 +24,21 @@ def create_dynamic_items_tables(cursor: sqlite3.Cursor):
     # 创建动态物品属性表
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS dynamic_item_attributes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
             type_id INTEGER,
             attribute_id INTEGER,
             min_value REAL,
             max_value REAL,
-            UNIQUE(type_id, attribute_id)
+            PRIMARY KEY (type_id, attribute_id)
         )
     ''')
 
     # 创建动态物品映射表
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS dynamic_item_mappings (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
             type_id INTEGER,
             applicable_type INTEGER,
             resulting_type INTEGER,
-            UNIQUE(type_id, applicable_type, resulting_type)
+            PRIMARY KEY (type_id, applicable_type)
         )
     ''')
 
@@ -75,8 +73,8 @@ def process_data(cursor: sqlite3.Cursor):
                 attributes_batch.append((
                     type_id,
                     int(attr_id),
-                    attr_data.get("min", 0.0),
-                    attr_data.get("max", 0.0)
+                    round(attr_data.get("min", 0.0), 4),
+                    round(attr_data.get("max", 0.0), 4)
                 ))
 
         # 处理映射数据
