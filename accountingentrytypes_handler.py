@@ -1,3 +1,9 @@
+# 部分字段缺失，如bounty prizes等，暂时不可用
+from dataclasses import dataclass
+from typing import Dict, Optional
+import json
+import requests
+
 accountingentrytypes_map = {
     "player_trading": 1,
     "market_transaction": 2,
@@ -146,3 +152,74 @@ accountingentrytypes_map = {
     "cosmetic_market_skin_sale_tax": 182,
     "cosmetic_market_skin_transaction": 183
 }
+
+@dataclass
+class AccountingEntryType:
+    type: str
+    name: str
+    description: str
+
+class AccountingEntryTypesHandler:
+    def __init__(self):
+        self.entry_types: Dict[str, AccountingEntryType] = {}
+        self._load_data()
+
+    def _load_data(self):
+        # 从远程获取数据
+        response = requests.get('https://sde.hoboleaks.space/tq/accountingentrytypes.json')
+        if response.status_code != 200:
+            raise Exception("Failed to fetch accounting entry types data")
+        
+        data = response.json()
+        
+        # 处理每个条目
+        for type_name, type_id in accountingentrytypes_map.items():
+            entry_id = str(type_id)
+            if entry_id in data:
+                entry_data = data[entry_id]
+                # 获取描述字段，按优先级选择
+                description = self._get_description(entry_data)
+                
+                # 创建条目对象
+                entry_type = AccountingEntryType(
+                    type=type_name,
+                    name=entry_data.get('name', ''),
+                    description=description
+                )
+                
+                # 存储到映射中
+                self.entry_types[type_name] = entry_type
+
+    def _get_description(self, entry_data: dict) -> str:
+        """按优先级获取描述字段"""
+        # 按优先级检查各个字段
+        if entry_data.get('entryJournalMessageTranslated'):
+            return entry_data['entryJournalMessageTranslated']
+        if entry_data.get('entryTypeDescriptionTranslated'):
+            return entry_data['entryTypeDescriptionTranslated']
+        if entry_data.get('description'):
+            return entry_data['description']
+        return entry_data.get('name', '')
+
+    def get_entry_type(self, type_name: str) -> Optional[AccountingEntryType]:
+        """获取指定类型的条目"""
+        return self.entry_types.get(type_name)
+
+    def get_all_entry_types(self) -> Dict[str, AccountingEntryType]:
+        """获取所有条目类型"""
+        return self.entry_types
+
+# 使用示例
+if __name__ == "__main__":
+    handler = AccountingEntryTypesHandler()
+    
+    # 获取并打印所有条目
+    all_entries = handler.get_all_entry_types()
+    print(f"Total entries: {len(all_entries)}")
+    print("\nAll entries:")
+    print("-" * 80)
+    for type_name, entry in sorted(all_entries.items()):
+        print(f"Type: {entry.type}")
+        print(f"Name: {entry.name}")
+        print(f"Description: {entry.description}")
+        print("-" * 80)
