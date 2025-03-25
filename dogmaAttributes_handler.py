@@ -32,7 +32,8 @@ def create_dogma_attributes_table(cursor):
             tooltipDescription TEXT,
             iconID INTEGER,
             unitID INTEGER,
-            unitName TEXT
+            unitName TEXT,
+            highIsGood BOOLEAN
         )
     ''')
 
@@ -92,11 +93,12 @@ def process_data(data, cursor, lang):
         iconID = attr_data.get('iconID', 0)
         categoryID = attr_data.get('categoryID', 0)
         tooltipDescription = attr_data.get('tooltipDescriptionID', {}).get(lang, None)
+        highIsGood = attr_data.get('highIsGood', None)
 
         # 添加到批处理列表
         batch_data.append((
             attributeID, categoryID, name, displayName, description, 
-            tooltipDescription, iconID, unitID, unitName
+            tooltipDescription, iconID, unitID, unitName, highIsGood
         ))
         
         # 当达到批处理大小时执行插入
@@ -104,8 +106,8 @@ def process_data(data, cursor, lang):
             cursor.executemany('''
                 INSERT OR REPLACE INTO dogmaAttributes (
                     attribute_id, categoryID, name, display_name, description, 
-                    tooltipDescription, iconID, unitID, unitName
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    tooltipDescription, iconID, unitID, unitName, highIsGood
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
     
@@ -114,6 +116,6 @@ def process_data(data, cursor, lang):
         cursor.executemany('''
             INSERT OR REPLACE INTO dogmaAttributes (
                 attribute_id, categoryID, name, display_name, description, 
-                tooltipDescription, iconID, unitID, unitName
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                tooltipDescription, iconID, unitID, unitName, highIsGood
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data)
