@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # 用于缓存universe数据
-_universe_data: List[Tuple[int, int, int, float, int, float, float, float, bool]] = []
+_universe_data: List[Tuple[int, int, int, float, int, float, float, float, bool, bool]] = []
 
 def create_table(cursor):
     """创建universe表和starmap表"""
@@ -23,6 +23,7 @@ def create_table(cursor):
             y REAL,
             z REAL,
             hasStation BOOLEAN NOT NULL DEFAULT 0,
+            hasJumpGate BOOLEAN NOT NULL DEFAULT 0,
             PRIMARY KEY (region_id, constellation_id, solarsystem_id)
         )
     ''')
@@ -47,7 +48,7 @@ def read_universe_data(file_path: str = 'fetchUniverse/universe_data.json') -> d
         logger.error(f"文件 {file_path} 不是有效的JSON格式")
         return {}
 
-def process_universe_data(data: dict, cursor=None) -> List[Tuple[int, int, int, float, int, float, float, float, bool]]:
+def process_universe_data(data: dict, cursor=None) -> List[Tuple[int, int, int, float, int, float, float, float, bool, bool]]:
     """处理universe数据"""
     universe_data = []
     neighbour_count = 0
@@ -73,6 +74,10 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple[int, int, int, 
                 stations = sys_info.get('system_info', {}).get('stations', [])
                 has_station = isinstance(stations, list) and len(stations) > 0
                 
+                # 检查是否有星门
+                jump_gates = sys_info.get('system_info', {}).get('stargates', [])
+                has_stargates = isinstance(jump_gates, list) and len(jump_gates) > 0
+                
                 # 将数据添加到列表
                 universe_data.append((
                     int(region_id),
@@ -83,7 +88,8 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple[int, int, int, 
                     float(x),
                     float(y),
                     float(z),
-                    has_station
+                    has_station,
+                    has_stargates
                 ))
                 
                 # 处理邻居星系
@@ -106,7 +112,7 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple[int, int, int, 
         for i in range(0, len(universe_data), batch_size):
             batch = universe_data[i:i + batch_size]
             cursor.executemany(
-                'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security, system_type, x, y, z, hasStation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security, system_type, x, y, z, hasStation, hasJumpGate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 batch
             )
             logger.debug(f"已插入 {i + len(batch)}/{len(universe_data)} 条记录")
@@ -144,7 +150,7 @@ def process_data(cursor, lang: str = 'en'):
             for i in range(0, len(_universe_data), batch_size):
                 batch = _universe_data[i:i + batch_size]
                 cursor.executemany(
-                    'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security, system_type, x, y, z, hasStation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    'INSERT OR REPLACE INTO universe (region_id, constellation_id, solarsystem_id, system_security, system_type, x, y, z, hasStation, hasJumpGate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                     batch
                 )
             
