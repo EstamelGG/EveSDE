@@ -31,6 +31,8 @@ from invNames_handler import read_yaml as read_invNames_yaml, process_data as pr
 from agents_handler import read_agents_yaml, read_agents_in_space_yaml, process_agents_data
 from divisions_handler import read_divisions_yaml, process_divisions_data
 from dynamic_items_handler import process_data as process_dynamic_items_data
+from star_map import calculate_distance_matrix
+from jump_map_handler import process_jump_map_data
 
 
 # 文件路径
@@ -205,10 +207,16 @@ def main():
 
     print("\nProcessing universe data...")
     process_special_data(process_universe_data, "universe data", lang=True)
+        
+    # 计算星系间距离并生成JSON
+    calculate_distance_matrix()
+    
+    # 处理jumpMap数据
+    process_special_data(process_jump_map_data, "jump map data")
     
     print("\nProcessing universe names...")
     process_universe_names()
-    
+
     print("\nProcessing planetSchematics.yaml...")
     process_yaml_file(planetSchematics_yaml_file_path, read_planetSchematics_yaml, process_planetSchematics_data)
 
