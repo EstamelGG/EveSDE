@@ -13,6 +13,12 @@ fetchIcons/not_exist.txt
 /output/db/item_db_ja.sqlite
 /output/db/item_db_ko.sqlite
 /output/db/item_db_ru.sqlite
+/output/db/item_db_de.duckdb
+/output/db/item_db_es.duckdb
+/output/db/item_db_fr.duckdb
+/output/db/item_db_ja.duckdb
+/output/db/item_db_ko.duckdb
+/output/db/item_db_ru.duckdb
 /fetchUniverse/cache
 fetchIcons/typeids.txt
 /output_old
