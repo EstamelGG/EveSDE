@@ -215,6 +215,10 @@ def main():
     print("\nProcessing universe names...")
     process_universe_names()
     
+    print("\nProcessing jump navigation data...")
+    from jump_navi_handler import process_jump_navigation_data
+    process_special_data(process_jump_navigation_data, "jump navigation data")
+    
     print("\nProcessing planetSchematics.yaml...")
     process_yaml_file(planetSchematics_yaml_file_path, read_planetSchematics_yaml, process_planetSchematics_data)
 
