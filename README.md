@@ -23,6 +23,10 @@
 4. 上述完成后会生成 `universe_data.json`
 5. 执行 `main.py` 即可
 
+# 转为 duckDB
+
+DuckDB 比 SQLite 更高效，更精简，如果有需求，可以使用 `sqlite_to_duckdb.py` 进行转换。
+
 # 输出文件
 
 1. 静态数据库: output/db
