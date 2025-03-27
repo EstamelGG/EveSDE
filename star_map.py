@@ -18,9 +18,18 @@ def calculate_distance_matrix():
     cursor.execute("""
         SELECT solarsystem_id, x, y, z 
         FROM universe 
+        WHERE hasJumpGate = true 
+        AND isJSpace = false
+        AND system_security <= 0.5
+        AND region_id NOT IN (10000019, 10000017, 10000004)
         ORDER BY solarsystem_id
     """)
     systems = cursor.fetchall()
+
+    if not systems:
+        print("错误：未找到符合条件的星系")
+        conn.close()
+        return
 
     # 转换为numpy数组
     system_ids = np.array([s[0] for s in systems])
@@ -35,7 +44,7 @@ def calculate_distance_matrix():
     chunk_size = 100  # 每次处理100个星系
     max_distance_ly = 10  # 最大距离（光年）
 
-    print(f"开始计算近邻星系，共 {n_systems} 个星系...")
+    print(f"开始计算近邻星系，共 {n_systems} 个符合条件的星系...")
 
     # 光年转换系数
     light_year_conversion = 9460528400000000
@@ -80,7 +89,7 @@ def calculate_distance_matrix():
 
     # 输出一些统计信息
     print("\n统计信息：")
-    print(f"总星系数：{n_systems}")
+    print(f"符合条件的星系数：{n_systems}")
     print(f"有近邻星系的星系数：{len(nearby_systems)}")
     print(f"最大距离阈值：{max_distance_ly} 光年")
 
