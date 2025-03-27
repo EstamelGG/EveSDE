@@ -4,6 +4,7 @@ from scipy.spatial import cKDTree
 import pandas as pd
 from tqdm import tqdm
 import os
+import json
 
 
 def calculate_distance_matrix():
@@ -32,16 +33,17 @@ def calculate_distance_matrix():
     # 计算距离矩阵（分块处理以避免内存溢出）
     n_systems = len(systems)
     chunk_size = 100  # 每次处理100个星系
+    max_distance_ly = 10  # 最大距离（光年）
 
-    print(f"开始计算距离矩阵，共 {n_systems} 个星系...")
-
-    # 创建结果文件
-    output_file = "distance_matrix.csv"
+    print(f"开始计算近邻星系，共 {n_systems} 个星系...")
 
     # 光年转换系数
     light_year_conversion = 9460528400000000
 
-    # 分块处理并保存
+    # 存储结果的字典
+    nearby_systems = {}
+
+    # 分块处理
     for i in tqdm(range(0, n_systems, chunk_size)):
         end_idx = min(i + chunk_size, n_systems)
 
@@ -51,26 +53,36 @@ def calculate_distance_matrix():
         # 将距离转换为光年
         distances = distances / light_year_conversion
 
-        # 创建DataFrame
-        df_chunk = pd.DataFrame(
-            distances,
-            index=system_ids[i:end_idx],
-            columns=system_ids
-        )
+        # 处理每个星系
+        for j in range(end_idx - i):
+            current_system = system_ids[i + j]
+            # 找出距离小于等于10光年的星系
+            nearby_mask = distances[j] <= max_distance_ly
+            nearby_indices = indices[j][nearby_mask]
+            nearby_distances = distances[j][nearby_mask]
+            
+            # 创建近邻星系字典（排除自身）
+            nearby_dict = {
+                int(system_ids[idx]): float(dist)
+                for idx, dist in zip(nearby_indices, nearby_distances)
+                if system_ids[idx] != current_system
+            }
+            
+            if nearby_dict:  # 只保存有近邻星系的记录
+                nearby_systems[int(current_system)] = nearby_dict
 
-        # 追加到CSV文件
-        if i == 0:
-            df_chunk.to_csv(output_file)
-        else:
-            df_chunk.to_csv(output_file, mode='a', header=False)
+    # 保存为JSON文件
+    output_file = "nearby_systems.json"
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(nearby_systems, f, ensure_ascii=False, indent=2)
 
-    print(f"距离矩阵已保存到 {output_file}")
+    print(f"\n近邻星系数据已保存到 {output_file}")
 
     # 输出一些统计信息
     print("\n统计信息：")
     print(f"总星系数：{n_systems}")
-    print(f"矩阵大小：{n_systems} x {n_systems}")
-    print("距离单位：光年")
+    print(f"有近邻星系的星系数：{len(nearby_systems)}")
+    print(f"最大距离阈值：{max_distance_ly} 光年")
 
     # 计算文件大小
     file_size = os.path.getsize(output_file) / (1024 * 1024)  # 转换为MB
@@ -118,3 +130,4 @@ def calculate_distance_between_systems(from_system_id: int, to_system_id: int) -
 
 if __name__ == "__main__":
     calculate_distance_between_systems(30004759, 30004708)
+    calculate_distance_matrix()
