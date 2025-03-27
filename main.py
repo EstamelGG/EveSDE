@@ -195,6 +195,12 @@ def process_agents_yaml_files():
         
         print(f"Database {db_filename} has been updated for agents data.")
 
+def get_file_size(file_path):
+    """获取文件大小并返回格式化的字符串"""
+    size_bytes = os.path.getsize(file_path)
+    size_mb = size_bytes / (1024 * 1024)  # 转换为MB
+    return f"{size_mb:.2f}MB"
+
 def main():
     rebuild_directory("./output")
     # 依次处理每个 YAML 文件
@@ -275,6 +281,36 @@ def main():
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
+    
+    # 对所有语言的数据库执行VACUUM命令
+    print("\n正在压缩数据库...")
+    total_saved = 0
+    for lang in languages:
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+        print(f"\n压缩数据库: {db_filename}")
+        
+        # 获取压缩前的大小
+        before_size = get_file_size(db_filename)
+        print(f"压缩前大小: {before_size}")
+        
+        # 执行VACUUM
+        conn = sqlite3.connect(db_filename)
+        cursor = conn.cursor()
+        cursor.execute("VACUUM")
+        conn.commit()
+        conn.close()
+        
+        # 获取压缩后的大小
+        after_size = get_file_size(db_filename)
+        print(f"压缩后大小: {after_size}")
+        
+        # 计算节省的空间
+        saved = float(before_size.replace('MB', '')) - float(after_size.replace('MB', ''))
+        total_saved += saved
+        print(f"节省空间: {saved:.2f}MB")
+    
+    print(f"\n数据库压缩完成，总共节省空间: {total_saved:.2f}MB")
+    
     print("\n所有数据库已更新。")
 
 
