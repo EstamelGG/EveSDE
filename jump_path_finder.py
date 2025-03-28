@@ -163,15 +163,7 @@ class JumpPathFinder:
         return path, distances[end_id]
 
 def main():
-    # 获取最新的JSON文件
-    jump_map_dir = 'output/jump_map'
-    json_files = [f for f in os.listdir(jump_map_dir) if f.endswith('.json')]
-    if not json_files:
-        print("错误：找不到跳跃地图JSON文件")
-        return
-    
-    latest_file = max(json_files, key=lambda x: os.path.getctime(os.path.join(jump_map_dir, x)))
-    json_path = os.path.join(jump_map_dir, latest_file)
+    json_path = "output/jump_map/jump_map.json"
     
     # 创建寻路器实例
     path_finder = JumpPathFinder(json_path, 'output/db/item_db_en.sqlite')

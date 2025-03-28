@@ -106,8 +106,7 @@ def save_to_json(data):
     os.makedirs(output_dir, exist_ok=True)
     
     # 生成文件名（包含时间戳）
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    filename = os.path.join(output_dir, f'jump_map_{timestamp}.json')
+    filename = os.path.join(output_dir, f'jump_map.json')
     
     # 准备输出数据
     output_data = {
