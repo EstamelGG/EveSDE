@@ -24,8 +24,6 @@ def process_data(yaml_data, cursor, language):
         output_material_categoryid INTEGER,
         output_material_groupid INTEGER,
         output_quantity INTEGER,
-        output_material_name TEXT,
-        output_material_icon TEXT,
         PRIMARY KEY (typeid, output_material)
     )
     ''')
@@ -39,19 +37,17 @@ def process_data(yaml_data, cursor, language):
     def get_type_info(type_id):
         """从缓存或数据库获取物品的所有相关信息"""
         if type_id not in type_info_cache:
-            cursor.execute('SELECT name, icon_filename, categoryID, groupID, process_size FROM types WHERE type_id = ?', (type_id,))
+            cursor.execute('SELECT icon_filename, categoryID, groupID, process_size FROM types WHERE type_id = ?', (type_id,))
             result = cursor.fetchone()
             if result:
                 type_info_cache[type_id] = {
-                    'name': result[0],
-                    'icon': result[1],
-                    'categoryid': result[2],
-                    'groupID': result[3],
-                    'process_size': result[4]
+                    'icon': result[0],
+                    'categoryid': result[1],
+                    'groupID': result[2],
+                    'process_size': result[3]
                 }
             else:
                 type_info_cache[type_id] = {
-                    'name': None,
                     'icon': None,
                     'categoryid': None,
                     'groupID': None,
@@ -75,7 +71,7 @@ def process_data(yaml_data, cursor, language):
                 # 逐行插入数据
                 cursor.execute(
                     '''INSERT OR REPLACE INTO typeMaterials 
-                       (typeid, categoryid, process_size, output_material, output_material_categoryid, output_material_groupid, output_quantity, output_material_name, output_material_icon) 
-                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                    (type_id, category_id, process_size, material_type_id, material_info['categoryid'], material_info['groupID'], quantity, material_info['name'], material_info['icon'])
+                       (typeid, categoryid, process_size, output_material, output_material_categoryid, output_material_groupid, output_quantity) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?)''',
+                    (type_id, category_id, process_size, material_type_id, material_info['categoryid'], material_info['groupID'], quantity)
                 )
