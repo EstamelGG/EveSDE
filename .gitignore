@@ -22,3 +22,9 @@ fetchIcons/not_exist.txt
 /fetchUniverse/cache
 fetchIcons/typeids.txt
 /output_old
+/output/db/item_db_es.sqlite.zip
+/output/db/item_db_fr.sqlite.zip
+/output/db/item_db_ja.sqlite.zip
+/output/db/item_db_ko.sqlite.zip
+/output/db/item_db_ru.sqlite.zip
+/output/db/item_db_de.sqlite.zip
