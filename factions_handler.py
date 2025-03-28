@@ -66,7 +66,6 @@ def process_data(yaml_data, cursor, language):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS factions (
         id INTEGER NOT NULL PRIMARY KEY,
-        name TEXT,
         de_name TEXT,
         en_name TEXT,
         es_name TEXT,
@@ -84,10 +83,6 @@ def process_data(yaml_data, cursor, language):
     
     # 处理每个派系
     for faction_id, faction_data in yaml_data.items():
-        # 获取当前语言的名称作为主要name
-        name = faction_data.get('nameID', {}).get(language, '')
-        if not name:  # 如果当前语言的name为空，使用英语名称
-            name = faction_data.get('nameID', {}).get('en', '')
             
         # 获取所有语言的名称
         names = {
@@ -110,11 +105,10 @@ def process_data(yaml_data, cursor, language):
         # 插入数据
         cursor.execute('''
             INSERT OR REPLACE INTO factions 
-            (id, name, de_name, en_name, es_name, fr_name, ja_name, ko_name, ru_name, zh_name, iconName)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (id, de_name, en_name, es_name, fr_name, ja_name, ko_name, ru_name, zh_name, iconName)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            faction_id, 
-            name,
+            faction_id,
             names['de'],
             names['en'],
             names['es'],

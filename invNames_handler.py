@@ -46,6 +46,8 @@ def process_data(data, cursor, lang):
     try:
         for item in data:
             itemID = item.get('itemID')
+            if not (itemID >= 40000000 and itemID <= 49999999):
+                continue
             itemName = item.get('itemName')
             
             # 添加到批处理列表

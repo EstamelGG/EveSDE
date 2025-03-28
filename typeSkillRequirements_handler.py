@@ -4,11 +4,9 @@ def process_skill_requirements(cursor, language):
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS typeSkillRequirement (
         typeid INTEGER NOT NULL,
-        typename TEXT,
         typeicon TEXT,
         published BOOLEAN,
         categoryID INTEGER,
-        category_name TEXT,
         required_skill_id INTEGER NOT NULL,
         required_skill_level INTEGER,
         PRIMARY KEY (typeid, required_skill_id)
@@ -30,14 +28,14 @@ def process_skill_requirements(cursor, language):
     
     # 获取所有物品
     cursor.execute('''
-        SELECT type_id, name, icon_filename, published, categoryID, category_name 
+        SELECT type_id, icon_filename, published, categoryID 
         FROM types 
     ''')
     items = cursor.fetchall()
     
     # 处理每个物品的技能需求
     for item in items:
-        type_id, type_name, type_icon, published, categoryID, category_name = item
+        type_id, type_icon, published, categoryID = item
         
         # 检查每个可能的技能需求
         for skill_attr_id, level_attr_id in skill_requirements:
@@ -66,6 +64,6 @@ def process_skill_requirements(cursor, language):
                     # 插入数据
                     cursor.execute('''
                         INSERT OR REPLACE INTO typeSkillRequirement 
-                        (typeid, typename, typeicon, published, categoryID, category_name, required_skill_id, required_skill_level)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (type_id, type_name, type_icon, published, categoryID, category_name, required_skill_id, required_level))
+                        (typeid, typeicon, published, categoryID, required_skill_id, required_skill_level)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    ''', (type_id, type_icon, published, categoryID, required_skill_id, required_level))

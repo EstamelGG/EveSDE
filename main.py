@@ -182,13 +182,18 @@ def process_agents_yaml_files():
     agents_data = read_agents_yaml(agents_yaml_file_path)
     agents_in_space_data = read_agents_in_space_yaml(agents_in_space_yaml_file_path)
     
+    # 读取 invNames 数据并创建映射
+    inv_names_data = read_invNames_yaml(invNames_yaml_file_path)
+    # 将列表格式转换为字典映射
+    inv_names = {str(item['itemID']): item['itemName'] for item in inv_names_data}
+    
     for lang in languages:
         db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
         conn = sqlite3.connect(db_filename)
         cursor = conn.cursor()
         
         try:
-            process_agents_data(agents_data, agents_in_space_data, cursor, lang)
+            process_agents_data(agents_data, agents_in_space_data, cursor, lang, inv_names)
             conn.commit()
         finally:
             conn.close()
@@ -217,7 +222,7 @@ def main():
     
     print("\nProcessing jump navigation data...")
     from jump_navi_handler import process_jump_navigation_data
-    process_special_data(process_jump_navigation_data, "jump navigation data")
+    # process_special_data(process_jump_navigation_data, "jump navigation data")
     
     print("\nProcessing planetSchematics.yaml...")
     process_yaml_file(planetSchematics_yaml_file_path, read_planetSchematics_yaml, process_planetSchematics_data)

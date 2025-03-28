@@ -21,12 +21,13 @@ def read_agents_in_space_yaml(file_path):
     """读取agentsInSpace.yaml文件"""
     return read_yaml(file_path)
 
-def process_agents_data(agents_data, agents_in_space_data, cursor, language=None):
+def process_agents_data(agents_data, agents_in_space_data, cursor, language=None, inv_names=None):
     """处理代理数据并写入数据库"""
     # 创建agents表
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS agents (
         agent_id INTEGER NOT NULL PRIMARY KEY,
+        agent_name TEXT,
         agent_type INTEGER,
         corporationID INTEGER,
         divisionID INTEGER,
@@ -53,6 +54,7 @@ def process_agents_data(agents_data, agents_in_space_data, cursor, language=None
     # 处理每个代理
     for agent_id, agent_data in agents_data.items():
         # 获取代理数据
+        agent_name = inv_names.get(str(agent_id)) if inv_names else None
         agent_type = agent_data.get('agentTypeID')
         corporation_id = agent_data.get('corporationID')
         division_id = agent_data.get('divisionID')
@@ -66,10 +68,11 @@ def process_agents_data(agents_data, agents_in_space_data, cursor, language=None
         # 插入数据
         cursor.execute('''
             INSERT OR REPLACE INTO agents 
-            (agent_id, agent_type, corporationID, divisionID, isLocator, level, locationID, solarSystemID)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            (agent_id, agent_name, agent_type, corporationID, divisionID, isLocator, level, locationID, solarSystemID)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            agent_id, 
+            agent_id,
+            agent_name,
             agent_type,
             corporation_id,
             division_id,

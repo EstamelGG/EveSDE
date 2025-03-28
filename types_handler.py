@@ -311,21 +311,21 @@ def create_types_table(cursor):
 
 def fetch_and_process_data(cursor):
     # 查询 categories 表
-    cursor.execute("SELECT category_id, name FROM categories")
+    cursor.execute("SELECT category_id, en_name FROM categories")
     categories_data = cursor.fetchall()
 
     # 查询 groups 表
-    cursor.execute("SELECT group_id, name, categoryID FROM groups")
+    cursor.execute("SELECT group_id, en_name, categoryID FROM groups")
     groups_data = cursor.fetchall()
 
     # 1. 创建 category_id 与 group_id 的关系
     group_to_category = {group_id: category_id for group_id, _, category_id in groups_data}
 
     # 2. 创建 categories 中 category_id 与 name 的映射关系
-    category_id_to_name = {category_id: name for category_id, name in categories_data}
+    category_id_to_name = {category_id: en_name for category_id, en_name in categories_data}
 
     # 3. 创建 groups 中 group_id 与 name 的映射关系
-    group_id_to_name = {group_id: name for group_id, name, _ in groups_data}
+    group_id_to_name = {group_id: en_name for group_id, en_name, _ in groups_data}
 
     return group_to_category, category_id_to_name, group_id_to_name
 
@@ -492,7 +492,7 @@ def process_data(types_data, cursor, lang):
         group_name = group_id_to_name.get(groupID, 'Unknown')
         category_id = group_to_category.get(groupID, 0)
         category_name = category_id_to_name.get(category_id, 'Unknown')
-        
+
         # 处理NPC船只分类
         npc_ship_scene = None
         npc_ship_faction = None

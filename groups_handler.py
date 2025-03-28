@@ -21,7 +21,6 @@ def create_groups_table(cursor):
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS groups (
             group_id INTEGER NOT NULL PRIMARY KEY,
-            name TEXT,
             de_name TEXT,
             en_name TEXT,
             es_name TEXT,
@@ -51,7 +50,6 @@ def process_data(groups_data, cursor, lang):
 
     for group_id, item in groups_data.items():
         # 获取当前语言的名称作为主要name
-        name = item['name'].get(lang, item['name'].get('en', ""))
         
         # 获取所有语言的名称
         names = {
@@ -64,10 +62,7 @@ def process_data(groups_data, cursor, lang):
             'ru': item['name'].get('ru', ''),
             'zh': item['name'].get('zh', '')
         }
-
-        if name is None:
-            continue
-
+        
         categoryID = item['categoryID']
         iconID = item.get('iconID', 0)
         anchorable = item['anchorable']
@@ -78,7 +73,7 @@ def process_data(groups_data, cursor, lang):
 
         # 添加到批处理列表
         batch_data.append((
-            group_id, name,
+            group_id,
             names['de'], names['en'], names['es'], names['fr'],
             names['ja'], names['ko'], names['ru'], names['zh'],
             categoryID, iconID, anchorable, anchored, fittableNonSingleton,
@@ -89,12 +84,12 @@ def process_data(groups_data, cursor, lang):
         if len(batch_data) >= batch_size:
             cursor.executemany('''
                 INSERT OR IGNORE INTO groups (
-                    group_id, name,
+                    group_id,
                     de_name, en_name, es_name, fr_name,
                     ja_name, ko_name, ru_name, zh_name,
                     categoryID, iconID, anchorable, anchored,
                     fittableNonSingleton, published, useBasePrice, icon_filename
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
 
@@ -102,10 +97,10 @@ def process_data(groups_data, cursor, lang):
     if batch_data:
         cursor.executemany('''
             INSERT OR IGNORE INTO groups (
-                group_id, name,
+                group_id,
                 de_name, en_name, es_name, fr_name,
                 ja_name, ko_name, ru_name, zh_name,
                 categoryID, iconID, anchorable, anchored,
                 fittableNonSingleton, published, useBasePrice, icon_filename
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data)

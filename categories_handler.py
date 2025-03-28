@@ -66,7 +66,6 @@ def create_categories_table(cursor):
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS categories (
             category_id INTEGER NOT NULL PRIMARY KEY,
-            name TEXT,
             de_name TEXT,
             en_name TEXT,
             es_name TEXT,
@@ -91,9 +90,6 @@ def process_data(categories_data, cursor, lang):
     batch_size = 1000  # 每批处理的记录数
 
     for item_id, item in categories_data.items():
-        # 获取当前语言的名称作为主要name
-        name = item['name'].get(lang, item['name'].get('en', ""))
-        
         # 获取所有语言的名称
         names = {
             'de': item['name'].get('de', ''),
@@ -106,16 +102,13 @@ def process_data(categories_data, cursor, lang):
             'zh': item['name'].get('zh', '')
         }
 
-        if name is None:
-            continue
-
         published = item['published']
         iconID = item.get('iconID', 0)  # 获取 iconID，如果没有则设为 0
         dest_icon_filename = categories_id_icon_map.get(item_id, "items_73_16_50.png")
 
         # 添加到批处理列表
         batch_data.append((
-            item_id, name,
+            item_id,
             names['de'], names['en'], names['es'], names['fr'],
             names['ja'], names['ko'], names['ru'], names['zh'],
             dest_icon_filename, iconID, published
@@ -125,11 +118,11 @@ def process_data(categories_data, cursor, lang):
         if len(batch_data) >= batch_size:
             cursor.executemany('''
                 INSERT OR REPLACE INTO categories (
-                    category_id, name,
+                    category_id,
                     de_name, en_name, es_name, fr_name,
                     ja_name, ko_name, ru_name, zh_name,
                     icon_filename, iconID, published
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
 
@@ -137,9 +130,9 @@ def process_data(categories_data, cursor, lang):
     if batch_data:
         cursor.executemany('''
             INSERT OR REPLACE INTO categories (
-                category_id, name,
+                category_id,
                 de_name, en_name, es_name, fr_name,
                 ja_name, ko_name, ru_name, zh_name,
                 icon_filename, iconID, published
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data)

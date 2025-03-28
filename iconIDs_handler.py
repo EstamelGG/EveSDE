@@ -76,7 +76,6 @@ def create_iconIDs_table(cursor):
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS iconIDs (
             icon_id INTEGER NOT NULL PRIMARY KEY,
-            description TEXT,
             iconFile_new TEXT
         )
     ''')
@@ -85,17 +84,15 @@ def create_iconIDs_table(cursor):
 def insert_iconIDs(cursor, icon_data, raw_icon_filename_mapping, icon_filename_mapping):
     """将整理好的 iconIDs 数据插入到数据库"""
     for icon_id, details in icon_data.items():
-        description = details.get('description', "")
-
         # 获取新的 iconFile（如果有映射的话）
         new_icon_file = icon_filename_mapping.get(icon_id, details.get('iconFile', ""))
         old_icon_file = raw_icon_filename_mapping.get(icon_id, details.get('iconFile', ""))
 
         # 插入或替换数据
         cursor.execute('''
-            INSERT OR REPLACE INTO iconIDs (icon_id, description, iconFile_new)
-            VALUES (?, ?, ?)
-        ''', (icon_id, description, new_icon_file))
+            INSERT OR REPLACE INTO iconIDs (icon_id, iconFile_new)
+            VALUES (?, ?)
+        ''', (icon_id, new_icon_file))
 
 
 def process_data(icon_data, cursor, lang):

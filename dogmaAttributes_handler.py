@@ -28,7 +28,6 @@ def create_dogma_attributes_table(cursor):
             categoryID INTEGER,
             name TEXT,
             display_name TEXT,
-            description TEXT,
             tooltipDescription TEXT,
             iconID INTEGER,
             unitID INTEGER,
@@ -89,7 +88,6 @@ def process_data(data, cursor, lang):
         # 多语言字段
         displayName = attr_data.get('displayNameID', {}).get(lang, None)
         name = attr_data.get('name', None)
-        description = attr_data.get('description', None)
         iconID = attr_data.get('iconID', 0)
         categoryID = attr_data.get('categoryID', 0)
         tooltipDescription = attr_data.get('tooltipDescriptionID', {}).get(lang, None)
@@ -97,7 +95,7 @@ def process_data(data, cursor, lang):
 
         # 添加到批处理列表
         batch_data.append((
-            attributeID, categoryID, name, displayName, description, 
+            attributeID, categoryID, name, displayName,
             tooltipDescription, iconID, unitID, unitName, highIsGood
         ))
         
@@ -105,9 +103,9 @@ def process_data(data, cursor, lang):
         if len(batch_data) >= batch_size:
             cursor.executemany('''
                 INSERT OR REPLACE INTO dogmaAttributes (
-                    attribute_id, categoryID, name, display_name, description, 
+                    attribute_id, categoryID, name, display_name, 
                     tooltipDescription, iconID, unitID, unitName, highIsGood
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
     
@@ -115,7 +113,7 @@ def process_data(data, cursor, lang):
     if batch_data:
         cursor.executemany('''
             INSERT OR REPLACE INTO dogmaAttributes (
-                attribute_id, categoryID, name, display_name, description, 
+                attribute_id, categoryID, name, display_name, 
                 tooltipDescription, iconID, unitID, unitName, highIsGood
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data)
