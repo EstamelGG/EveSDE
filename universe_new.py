@@ -30,13 +30,13 @@ def create_table(cursor):
         )
     ''')
     
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS starmap (
-            system_id INTEGER NOT NULL,
-            neighbour INTEGER NOT NULL,
-            PRIMARY KEY (system_id, neighbour)
-        )
-    ''')
+    # cursor.execute('''
+    #     CREATE TABLE IF NOT EXISTS starmap (
+    #         system_id INTEGER NOT NULL,
+    #         neighbour INTEGER NOT NULL,
+    #         PRIMARY KEY (system_id, neighbour)
+    #     )
+    # ''')
 
 def read_universe_data(file_path: str = 'fetchUniverse/universe_data.json') -> dict:
     """读取universe_data.json文件"""
@@ -103,19 +103,19 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple[int, int, int, 
                 ))
                 
                 # 处理邻居星系
-                system_info = sys_info.get('system_info', {})
-                if cursor and 'neighbours' in system_info:
-                    neighbours = system_info['neighbours']
-                    for neighbour in neighbours:
-                        try:
-                            cursor.execute(
-                                'INSERT OR REPLACE INTO starmap (system_id, neighbour) VALUES (?, ?)',
-                                (int(sys_id), int(neighbour))
-                            )
-                            neighbour_count += 1
-                        except Exception as e:
-                            logger.error(f"插入邻居星系数据失败: system_id={sys_id}, neighbour={neighbour}, error={str(e)}")
-    
+                # system_info = sys_info.get('system_info', {})
+                # if cursor and 'neighbours' in system_info:
+                #     neighbours = system_info['neighbours']
+                #     for neighbour in neighbours:
+                #         try:
+                #             cursor.execute(
+                #                 'INSERT OR REPLACE INTO starmap (system_id, neighbour) VALUES (?, ?)',
+                #                 (int(sys_id), int(neighbour))
+                #             )
+                #             neighbour_count += 1
+                #         except Exception as e:
+                #             logger.error(f"插入邻居星系数据失败: system_id={sys_id}, neighbour={neighbour}, error={str(e)}")
+                #
     # 如果提供了cursor，执行批量插入
     if cursor and universe_data:
         batch_size = 1000
