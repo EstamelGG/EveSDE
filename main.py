@@ -201,6 +201,52 @@ def get_file_size(file_path):
     size_mb = size_bytes / (1024 * 1024)  # 转换为MB
     return f"{size_mb:.2f}MB"
 
+def compress_database(db_filename):
+    """压缩单个数据库文件"""
+    try:
+        # 获取压缩前的大小
+        before_size = os.path.getsize(db_filename) / (1024 * 1024)  # 转换为MB
+        print(f"\n压缩数据库: {db_filename}")
+        print(f"压缩前大小: {before_size:.2f}MB")
+
+        # 创建zip文件路径
+        zip_filename = f"{db_filename}.zip"
+        
+        # 如果zip文件已存在，先删除
+        if os.path.exists(zip_filename):
+            os.remove(zip_filename)
+            print(f"已删除现有ZIP文件: {zip_filename}")
+
+        # 创建一个压缩的ZIP文件
+        with zipfile.ZipFile(zip_filename, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
+            # 将数据库文件添加到ZIP中
+            zipf.write(db_filename, os.path.basename(db_filename))
+            # 删除原始数据库文件
+            os.remove(db_filename)
+
+        # 获取压缩后的大小
+        after_size = os.path.getsize(zip_filename) / (1024 * 1024)  # 转换为MB
+        print(f"压缩后大小: {after_size:.2f}MB")
+        print(f"节省空间: {(before_size - after_size):.2f}MB")
+        
+        return before_size - after_size
+    except Exception as e:
+        print(f"压缩数据库 {db_filename} 时发生错误: {e}")
+        return 0
+
+def compress_all_databases():
+    """压缩所有语言的数据库"""
+    print("\n开始压缩所有数据库...")
+    total_saved = 0
+    
+    for lang in languages:
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+        if os.path.exists(db_filename):
+            saved = compress_database(db_filename)
+            total_saved += saved
+    
+    print(f"\n数据库压缩完成，总共节省空间: {total_saved:.2f}MB")
+
 def main():
     rebuild_directory("./output")
     # 依次处理每个 YAML 文件
@@ -286,34 +332,8 @@ def main():
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
     
-    # 对所有语言的数据库执行VACUUM命令
-    print("\n正在压缩数据库...")
-    total_saved = 0
-    for lang in languages:
-        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
-        print(f"\n压缩数据库: {db_filename}")
-        
-        # 获取压缩前的大小
-        before_size = get_file_size(db_filename)
-        print(f"压缩前大小: {before_size}")
-        
-        # 执行VACUUM
-        conn = sqlite3.connect(db_filename)
-        cursor = conn.cursor()
-        cursor.execute("VACUUM")
-        conn.commit()
-        conn.close()
-        
-        # 获取压缩后的大小
-        after_size = get_file_size(db_filename)
-        print(f"压缩后大小: {after_size}")
-        
-        # 计算节省的空间
-        saved = float(before_size.replace('MB', '')) - float(after_size.replace('MB', ''))
-        total_saved += saved
-        print(f"节省空间: {saved:.2f}MB")
-    
-    print(f"\n数据库压缩完成，总共节省空间: {total_saved:.2f}MB")
+    # 压缩所有数据库
+    compress_all_databases()
     
     print("\n所有数据库已更新。")
 
