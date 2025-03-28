@@ -85,7 +85,7 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple[int, int, int, 
                 
                 # 检查是否为JSpace
                 system_name = sys_info.get('system_name', {}).get('en', '')
-                is_jspace = bool(jspace_pattern.match(system_name)) and not has_stargates
+                is_jspace = bool(jspace_pattern.match(system_name) or system_name == "J1226-0") and not has_stargates
                 
                 # 将数据添加到列表
                 universe_data.append((
