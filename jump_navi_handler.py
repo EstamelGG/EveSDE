@@ -2,6 +2,8 @@ import sqlite3
 import numpy as np
 from itertools import combinations
 import os
+import json
+from datetime import datetime
 
 def calculate_distance_ly(x1, y1, z1, x2, y2, z2):
     """计算两点之间的距离（光年）"""
@@ -13,9 +15,14 @@ def calculate_distance_ly(x1, y1, z1, x2, y2, z2):
     
     # 转换为光年
     distance_ly = float(distance_m * LY_CONVERSION)
-
     
     return distance_ly
+
+def calculate_display_security(true_sec):
+    """计算显示用的安全等级"""
+    if true_sec > 0.0 and true_sec < 0.05:
+        return 0.1  # 0.0到0.05之间向上取整到0.1
+    return round(true_sec * 10) / 10  # 其他情况四舍五入到小数点后一位
 
 def get_nearby_systems():
     """获取所有符合条件的星系对"""
@@ -25,9 +32,9 @@ def get_nearby_systems():
     
     # 执行查询
     query = """
-    SELECT solarsystem_id, x, y, z 
+    SELECT solarsystem_id, x, y, z, system_security 
     FROM universe 
-    WHERE system_security <= 0.5 
+    WHERE system_security < 0.5 
     AND hasJumpGate 
     AND NOT isJSpace 
     AND region_id NOT IN (10000019, 10000004, 10000017)
@@ -41,15 +48,25 @@ def get_nearby_systems():
         print("示例数据:")
         print(systems[0])
     
+    # 二次过滤：计算显示安全等级并过滤
+    filtered_systems = []
+    for system in systems:
+        solarsystem_id, x, y, z, sec = system
+        display_sec = calculate_display_security(float(sec))
+        if display_sec < 0.5:
+            filtered_systems.append((solarsystem_id, x, y, z, display_sec))
+    
+    print(f"二次过滤后剩余 {len(filtered_systems)} 个星系")
+    
     # 存储结果
     nearby_pairs = []
     
     # 计算所有星系对之间的距离
     total_pairs = 0
-    for (sys1, sys2) in combinations(systems, 2):
+    for (sys1, sys2) in combinations(filtered_systems, 2):
         total_pairs += 1
-        source_id, x1, y1, z1 = sys1
-        dest_id, x2, y2, z2 = sys2
+        source_id, x1, y1, z1, sec1 = sys1
+        dest_id, x2, y2, z2, sec2 = sys2
         
         # 确保数据类型正确
         x1, y1, z1 = float(x1), float(y1), float(z1)
@@ -60,7 +77,13 @@ def get_nearby_systems():
         if distance_ly < 10:
             # 只保存source_id < dest_id的情况，避免重复
             if source_id < dest_id:
-                nearby_pairs.append((int(source_id), int(dest_id), distance_ly))
+                nearby_pairs.append({
+                    'source_id': int(source_id),
+                    'dest_id': int(dest_id),
+                    'distance_ly': float(distance_ly),
+                    'source_security': float(sec1),
+                    'dest_security': float(sec2)
+                })
     
     print(f"\n总结:")
     print(f"计算了 {total_pairs} 对星系之间的距离")
@@ -72,86 +95,45 @@ def get_nearby_systems():
     conn.close()
     return nearby_pairs
 
-def create_jump_map_table(cursor):
-    """创建JumpMap表"""
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS JumpMap (
-        source_id INTEGER,
-        dest_id INTEGER,
-        distance_ly REAL,
-        PRIMARY KEY (source_id, dest_id)
-    )
-    ''')
-
-def batch_insert_data(cursor, data, batch_size=1000):
-    """批量插入数据"""
+def save_to_json(data):
+    """将数据保存到JSON文件"""
     if not data:
-        print("警告：没有数据需要插入")
+        print("警告：没有数据需要保存")
         return
         
-    print(f"准备插入 {len(data)} 条数据")
-    print(f"数据示例: {data[0] if data else 'No data'}")
+    # 创建输出目录
+    output_dir = 'output/jump_map'
+    os.makedirs(output_dir, exist_ok=True)
     
-    for i in range(0, len(data), batch_size):
-        batch = data[i:i + batch_size]
-        try:
-            cursor.executemany('''
-            INSERT INTO JumpMap (source_id, dest_id, distance_ly)
-            VALUES (?, ?, ?)
-            ''', batch)
-        except sqlite3.Error as e:
-            print(f"插入数据时出错: {e}")
-            print(f"问题数据示例: {batch[0] if batch else 'No data'}")
-            raise
+    # 生成文件名（包含时间戳）
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    filename = os.path.join(output_dir, f'jump_map_{timestamp}.json')
+    
+    # 准备输出数据
+    output_data = {
+        'metadata': {
+            'generated_at': datetime.now().isoformat(),
+            'total_pairs': len(data),
+            'max_distance_ly': 10.0
+        },
+        'jump_pairs': data
+    }
+    
+    # 保存到JSON文件
+    try:
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(output_data, f, indent=2, ensure_ascii=False)
+        print(f"数据已保存到: {filename}")
+    except Exception as e:
+        print(f"保存JSON文件时出错: {e}")
 
-def process_jump_navigation_data(cursor):
+def process_jump_navigation_data():
     """处理跳跃导航数据"""
-    # 创建JumpMap表
-    create_jump_map_table(cursor)
-    
-    # 清空现有数据
-    cursor.execute('DELETE FROM JumpMap')
-    
     # 获取结果
     results = get_nearby_systems()
     
-    # 批量插入数据
-    batch_insert_data(cursor, results)
-
-def process_all_languages():
-    """处理所有语言的数据库"""
-    # 获取结果
-    results = get_nearby_systems()
-    print(f"找到 {len(results)} 对距离小于10光年的星系")
-    
-    if not results:
-        print("警告：没有找到符合条件的星系对")
-        return
-    
-    # 处理每种语言的数据库
-    languages = ['en', 'de', 'es', 'fr', 'ja', 'ko', 'ru', 'zh']
-    for lang in languages:
-        db_filename = os.path.join('output/db', f'item_db_{lang}.sqlite')
-        conn = sqlite3.connect(db_filename)
-        cursor = conn.cursor()
-        
-        try:
-            # 创建JumpMap表
-            create_jump_map_table(cursor)
-            
-            # 清空现有数据
-            cursor.execute('DELETE FROM JumpMap')
-            
-            # 批量插入数据
-            batch_insert_data(cursor, results)
-            
-            conn.commit()
-            print(f"数据库 {db_filename} 已更新")
-        except Exception as e:
-            print(f"处理数据库 {db_filename} 时出错: {e}")
-            conn.rollback()
-        finally:
-            conn.close()
+    # 保存到JSON文件
+    save_to_json(results)
 
 if __name__ == "__main__":
-    process_all_languages() 
+    process_jump_navigation_data() 
