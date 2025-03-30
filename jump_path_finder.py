@@ -99,9 +99,31 @@ class JumpPathFinder:
             print(f"加载JSON文件时出错: {e}")
             raise
     
-    def find_path(self, start_id: int, end_id: int, max_jump_distance: float) -> Tuple[List[int], float]:
+    def heuristic(self, current_id: int, end_id: int) -> Tuple[int, float]:
         """
-        使用Dijkstra算法寻找最短路径
+        启发式函数：返回(估计剩余跳跃次数, 估计剩余距离)
+        这个估计值一定小于等于实际值，满足A*算法的可采纳性
+        """
+        # 如果当前节点和终点之间有直接连接，返回(1, 实际距离)
+        for neighbor_id, distance in self.graph[current_id]:
+            if neighbor_id == end_id:
+                return (1, distance)
+                
+        # 否则，找到当前节点到所有邻居节点的最小距离
+        min_distance = float('inf')
+        for _, distance in self.graph[current_id]:
+            min_distance = min(min_distance, distance)
+            
+        # 如果找到了最小距离，返回(2, 最小距离)作为估计值
+        if min_distance != float('inf'):
+            return (2, min_distance)
+            
+        # 如果连最小距离都找不到，返回一个较大的估计值
+        return (10, 100.0)
+
+    def find_path_astar(self, start_id: int, end_id: int, max_jump_distance: float) -> Tuple[List[int], float]:
+        """
+        使用A*算法寻找最短路径，优先考虑跳跃次数最少，其次考虑总距离最短
         
         Args:
             start_id: 起点星系ID
@@ -114,42 +136,55 @@ class JumpPathFinder:
         if start_id not in self.graph or end_id not in self.graph:
             raise ValueError("起点或终点星系不存在")
         
-        # 初始化距离和路径
-        distances: Dict[int, float] = {start_id: 0}
-        previous: Dict[int, int] = {}
-        unvisited: Set[int] = set(self.graph.keys())
+        # 初始化开放列表和关闭列表
+        open_set = [(0, 0, start_id)]  # (估计总跳跃次数, 估计总距离, node_id)
+        closed_set = set()
+        came_from = {}
+        g_score = {start_id: (0, 0)}  # (跳跃次数, 总距离)
+        f_score = {start_id: self.heuristic(start_id, end_id)}  # (估计剩余跳跃次数, 估计剩余距离)
         
-        # 优先队列，用于选择最小距离的节点
-        pq = [(0, start_id)]
-        
-        while pq:
-            current_distance, current_id = heappop(pq)
+        while open_set:
+            current_f_jumps, current_f_dist, current_id = heappop(open_set)
             
-            # 如果当前距离大于已知距离，跳过
-            if current_distance > distances[current_id]:
-                continue
-            
-            # 如果到达终点，结束搜索
+            # 如果到达终点
             if current_id == end_id:
                 break
+                
+            # 将当前节点加入关闭列表
+            closed_set.add(current_id)
             
             # 遍历所有相邻节点
             for neighbor_id, jump_distance in self.graph[current_id]:
+                # 跳过已访问的节点
+                if neighbor_id in closed_set:
+                    continue
+                    
                 # 检查跳跃距离是否在限制内
                 if jump_distance > max_jump_distance:
                     continue
                 
-                # 计算到邻居的总距离
-                total_distance = current_distance + jump_distance
+                # 计算从起点经过当前节点到邻居节点的距离和跳跃次数
+                current_jumps, current_dist = g_score[current_id]
+                tentative_jumps = current_jumps + 1
+                tentative_dist = current_dist + jump_distance
                 
-                # 如果找到更短的路径，更新距离
-                if neighbor_id not in distances or total_distance < distances[neighbor_id]:
-                    distances[neighbor_id] = total_distance
-                    previous[neighbor_id] = current_id
-                    heappush(pq, (total_distance, neighbor_id))
+                # 如果找到更好的路径（跳跃次数更少，或者在相同跳跃次数下距离更短）
+                if (neighbor_id not in g_score or 
+                    tentative_jumps < g_score[neighbor_id][0] or 
+                    (tentative_jumps == g_score[neighbor_id][0] and tentative_dist < g_score[neighbor_id][1])):
+                    
+                    came_from[neighbor_id] = current_id
+                    g_score[neighbor_id] = (tentative_jumps, tentative_dist)
+                    
+                    # 计算f_score
+                    h_jumps, h_dist = self.heuristic(neighbor_id, end_id)
+                    f_jumps = tentative_jumps + h_jumps
+                    f_dist = tentative_dist + h_dist
+                    
+                    heappush(open_set, (f_jumps, f_dist, neighbor_id))
         
         # 如果找不到路径
-        if end_id not in distances:
+        if end_id not in came_from:
             raise ValueError("找不到符合条件的路径")
         
         # 重建路径
@@ -157,10 +192,10 @@ class JumpPathFinder:
         current = end_id
         while current is not None:
             path.append(current)
-            current = previous.get(current)
+            current = came_from.get(current)
         path.reverse()
         
-        return path, distances[end_id]
+        return path, g_score[end_id][1]  # 返回路径和总距离
 
 def main():
     json_path = "output/jump_map/jump_map.json"
@@ -197,7 +232,7 @@ def main():
                 print("请输入有效的数字")
         
         # 查找路径
-        path, total_distance = path_finder.find_path(start_id, end_id, max_distance)
+        path, total_distance = path_finder.find_path_astar(start_id, end_id, max_distance)
         
         # 显示结果
         print("\n找到路径:")
