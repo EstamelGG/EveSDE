@@ -36,3 +36,20 @@ DuckDB 比 SQLite 更高效，更精简，如果有需求，可以使用 `sqlite
 
 1. 做一个 png 图标，然后在预览中导出，选择png格式，并选择去除alpha通道
 2. 访问 https://makeappicon.com/ 制作各种尺寸的图标
+
+# 钱包日志文本本地化：
+
+1. 依次执行：`accounting_entry_types` 目录中的各脚本 (1-3)，会生成 `accounting_entry_types/output/accountingentrytypes_localized.json`
+2. 将该 `accounting_entry_types/output/accountingentrytypes_localized.json` 传到 IOS 项目的 `language` 目录即可
+
+# 代理人名称本地化：
+
+1. 依次执行：`accounting_entry_types` 目录中的各脚本 (1-4)，会生成 `accounting_entry_types/output/en_multi_lang_mapping.json`
+2. 执行 `main.py` 即可在各语言的sqlite文件的 `agents` 表创建 `agent_name` 列
+
+# 空间站名称本地化：
+
+1. 依次执行：`accounting_entry_types` 目录中的各脚本 (1-4)，会生成 `accounting_entry_types/output/combined_localization.json`
+2. 执行 `station_name_localization/station_template_generator.py` 即可生成各空间站的名称的模板。
+3. 注意 `accounting_entry_types/static_data/stations_202504102216.json` 文件来自 `stations` 表的导出。
+4. 
