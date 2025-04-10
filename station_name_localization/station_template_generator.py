@@ -76,7 +76,7 @@ def find_template_id(text: str, localization_data: Dict) -> Tuple[str, int]:
     # 首先检查缓存
     cached_result = template_cache.get(text)
     if cached_result is not None:
-        logger.debug(f"缓存命中: {text}")
+        print(f"缓存命中: {text}")
         return cached_result
     
     # 缓存未命中，执行查找
@@ -96,7 +96,7 @@ def find_template_id(text: str, localization_data: Dict) -> Tuple[str, int]:
 
 def process_station_name(station_name: str, localization_data: Dict) -> str:
     """处理单个空间站名称，返回模板格式"""
-    logger.debug(f"开始处理空间站名称: {station_name}")
+    print(f"\r\n开始处理空间站名称: {station_name}")
     
     # 保存已经替换的部分，避免重复替换
     replaced_parts = {}
@@ -106,12 +106,12 @@ def process_station_name(station_name: str, localization_data: Dict) -> str:
     # 1. 处理独立的罗马数字（前后有空格的）
     roman_numerals = re.findall(r' ([IVX]+) ', station_name)
     if roman_numerals:
-        logger.debug(f"发现罗马数字: {roman_numerals}")
+        print(f"发现罗马数字: {roman_numerals}")
     
     # 2. 处理"Moon"后面的数字
     moon_numbers = re.findall(r'Moon (\d+)', station_name)
     if moon_numbers:
-        logger.debug(f"发现Moon数字: {moon_numbers}")
+        print(f"发现Moon数字: {moon_numbers}")
     
     # 处理其他文本部分
     remaining_text = station_name
@@ -126,11 +126,13 @@ def process_station_name(station_name: str, localization_data: Dict) -> str:
                 # 替换模板中的文本
                 template = template.replace(combo, f"{{{template_id}}}")
                 replaced_parts[combo] = template_id
-                logger.debug(f"找到匹配: {combo} -> {template_id}")
+                print(f"找到匹配: {combo} -> {template_id}")
                 break
+            else:
+                print(f"未找到匹配: {combo}")
     
     if template != station_name:
-        logger.debug(f"处理结果: {template}")
+        print(f"处理结果: {template}")
     else:
         logger.warning(f"未能找到任何匹配项: {station_name}")
     
