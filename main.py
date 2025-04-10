@@ -31,6 +31,7 @@ from invNames_handler import read_yaml as read_invNames_yaml, process_data as pr
 from agents_handler import read_agents_yaml, read_agents_in_space_yaml, process_agents_data
 from divisions_handler import read_divisions_yaml, process_divisions_data
 from dynamic_items_handler import process_data as process_dynamic_items_data
+from agent_localization_handler import update_agents_localization  # 导入新的本地化处理函数
 
 
 # 文件路径
@@ -326,6 +327,9 @@ def main():
 
     print("\nProcessing invNames.yaml...")  # 物品名称
     process_yaml_file(invNames_yaml_file_path, read_invNames_yaml, process_invNames_data)
+
+    print("\nUpdating agents localization...")  # 更新agents表的本地化信息
+    update_agents_localization()
 
     print("\nUpdating groups icons...")  # 给 groups 更新图标名称
     process_special_data(update_groups_with_icon_filename, "groups icons")
