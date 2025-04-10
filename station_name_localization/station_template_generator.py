@@ -76,7 +76,7 @@ def find_template_id(text: str, localization_data: Dict) -> Tuple[str, int]:
     # 首先检查缓存
     cached_result = template_cache.get(text)
     if cached_result is not None:
-        print(f"缓存命中: {text}")
+        logger.debug(f"缓存命中: {text}")
         return cached_result
     
     # 缓存未命中，执行查找
@@ -96,7 +96,7 @@ def find_template_id(text: str, localization_data: Dict) -> Tuple[str, int]:
 
 def process_station_name(station_name: str, localization_data: Dict) -> str:
     """处理单个空间站名称，返回模板格式"""
-    print(f"\r\n开始处理空间站名称: {station_name}")
+    logger.debug(f"\n开始处理空间站名称: {station_name}")
     
     # 保存已经替换的部分，避免重复替换
     replaced_parts = {}
@@ -106,33 +106,49 @@ def process_station_name(station_name: str, localization_data: Dict) -> str:
     # 1. 处理独立的罗马数字（前后有空格的）
     roman_numerals = re.findall(r' ([IVX]+) ', station_name)
     if roman_numerals:
-        print(f"发现罗马数字: {roman_numerals}")
+        logger.debug(f"发现罗马数字: {roman_numerals}")
     
     # 2. 处理"Moon"后面的数字
     moon_numbers = re.findall(r'Moon (\d+)', station_name)
     if moon_numbers:
-        print(f"发现Moon数字: {moon_numbers}")
+        logger.debug(f"发现Moon数字: {moon_numbers}")
     
     # 处理其他文本部分
     remaining_text = station_name
     for part in remaining_text.split(' - '):
-        combinations = generate_word_combinations(part.strip())
-        for combo in combinations:
-            if combo in replaced_parts:
-                continue
-                
-            template_id, _ = find_template_id(combo, localization_data)
-            if template_id:
-                # 替换模板中的文本
-                template = template.replace(combo, f"{{{template_id}}}")
-                replaced_parts[combo] = template_id
-                print(f"找到匹配: {combo} -> {template_id}")
+        logger.debug(f"\n处理部分: {part}")
+        # 继续处理直到没有新的匹配
+        current_part = part.strip()
+        while current_part:
+            found_match = False
+            combinations = generate_word_combinations(current_part)
+            logger.debug(f"当前处理文本: {current_part}")
+            logger.debug(f"生成的词组组合: {combinations}")
+            
+            for combo in combinations:
+                if combo in replaced_parts:
+                    logger.debug(f"跳过已替换的词组: {combo}")
+                    continue
+                    
+                template_id, _ = find_template_id(combo, localization_data)
+                if template_id:
+                    old_template = template
+                    template = template.replace(combo, f"{{{template_id}}}")
+                    replaced_parts[combo] = template_id
+                    logger.debug(f"替换: {combo} -> {template_id}")
+                    logger.debug(f"模板变化: {old_template} -> {template}")
+                    # 更新剩余文本，移除已匹配的部分
+                    current_part = current_part.replace(combo, '').strip()
+                    found_match = True
+                    break
+            
+            if not found_match:
+                # 如果没有找到任何匹配，退出循环
+                logger.debug(f"未找到更多匹配: {current_part}")
                 break
-            else:
-                print(f"未找到匹配: {combo}")
     
     if template != station_name:
-        print(f"处理结果: {template}")
+        logger.debug(f"最终处理结果: {template}")
     else:
         logger.warning(f"未能找到任何匹配项: {station_name}")
     
