@@ -16,7 +16,8 @@ def unpickle_localization_files():
     # 定义目录路径
     raw_dir = "./raw"
     extra_dir = "./extra"
-    
+    output_dir = "./output"
+
     # 检查raw目录是否存在
     if not os.path.exists(raw_dir):
         print(f"错误: raw目录不存在: {raw_dir}")
@@ -30,10 +31,21 @@ def unpickle_localization_files():
         except Exception as e:
             print(f"删除extra目录时出错: {e}")
             return {}
-    
+
+    # 如果output目录存在，则先删除
+    if os.path.exists(output_dir):
+        try:
+            shutil.rmtree(output_dir)
+            print(f"已删除现有的output目录: {output_dir}")
+        except Exception as e:
+            print(f"删除output目录时出错: {e}")
+            return {}
+
     # 创建extra目录
     os.makedirs(extra_dir, exist_ok=True)
     print(f"已创建extra目录: {extra_dir}")
+    os.makedirs(output_dir, exist_ok=True)
+    print(f"已创建output目录: {output_dir}")
     
     # 存储解包结果的字典
     result = {}

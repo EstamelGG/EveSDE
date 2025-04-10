@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
+# 将输出的本地化字符串组合展示，同时提取出能够一一对应的英-中本地化对照
+
+
 import json
 import os
 import glob
@@ -69,22 +73,28 @@ def main():
     print(f"合并完成！共处理了 {len(combined_data)} 个条目，包含 {len(localization_data)} 种语言。")
     
     # 创建英文到中文的映射
-    en_to_zh = defaultdict(list)
+    en_to_zh = {}
+    # 用于记录每个英文文本出现的次数
+    en_count = {}
     
-    # 遍历所有条目，创建英文到中文的映射
+    # 遍历所有条目，统计每个英文文本出现的次数
+    for entry_id, translations in combined_data.items():
+        if "en" in translations and "zh" in translations:
+            en_text = translations["en"]
+            if en_text in en_count:
+                en_count[en_text] += 1
+            else:
+                en_count[en_text] = 1
+    
+    # 只保留出现次数为1的英文文本对应的中文文本
     for entry_id, translations in combined_data.items():
         if "en" in translations and "zh" in translations:
             en_text = translations["en"]
             zh_text = translations["zh"]
             
-            # 如果英文文本已经存在，则将中文添加到列表中
-            if en_text in en_to_zh:
-                # 检查中文是否已经在列表中
-                if zh_text not in en_to_zh[en_text]:
-                    en_to_zh[en_text].append(zh_text)
-            else:
-                # 如果英文文本不存在，则创建新的列表
-                en_to_zh[en_text] = [zh_text]
+            # 只有当英文文本只出现一次时，才添加到映射中
+            if en_count[en_text] == 1:
+                en_to_zh[en_text] = zh_text
     
     # 保存英文到中文的映射
     en_zh_file = os.path.join(base_dir, "output", "en_zh_mapping.json")
