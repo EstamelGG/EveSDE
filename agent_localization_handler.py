@@ -91,6 +91,7 @@ def update_agents_localization():
             
             # 更新每条记录的agent_name
             updated_count = 0
+            not_found_count = 0
             for agent_id, english_name in agents:
                 # 查找对应的本地化文本
                 if english_name in localization_mapping and lang in localization_mapping[english_name]:
@@ -104,10 +105,19 @@ def update_agents_localization():
                     """, (localized_name, agent_id))
                     
                     updated_count += 1
+                else:
+                    # 如果找不到本地化文本，使用原始英文名称
+                    cursor.execute("""
+                        UPDATE agents 
+                        SET agent_name = ? 
+                        WHERE agent_id = ?
+                    """, (english_name, agent_id))
+                    
+                    not_found_count += 1
             
             # 提交更改
             conn.commit()
-            print(f"成功更新了 {updated_count} 条记录")
+            print(f"成功更新了 {updated_count} 条记录，{not_found_count} 条记录使用原始英文名称")
             success_count += 1
             
         except Exception as e:

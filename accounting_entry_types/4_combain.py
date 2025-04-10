@@ -8,7 +8,7 @@
 import json
 import os
 import glob
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 def load_json_file(file_path):
     """加载JSON文件"""
@@ -76,32 +76,39 @@ def main():
     en_to_multi_lang = {}
     # 用于记录每个英文文本出现的次数
     en_count = {}
+    # 用于记录每个英文文本对应的所有本地化文本
+    en_translations = defaultdict(list)
     
-    # 遍历所有条目，统计每个英文文本出现的次数
+    # 遍历所有条目，统计每个英文文本出现的次数和对应的本地化文本
     for entry_id, translations in combined_data.items():
         if "en" in translations:
             en_text = translations["en"]
-            if en_text in en_count:
-                en_count[en_text] += 1
-            else:
-                en_count[en_text] = 1
-    
-    # 只保留出现次数为1的英文文本对应的所有语言文本
-    for entry_id, translations in combined_data.items():
-        if "en" in translations:
-            en_text = translations["en"]
+            en_count[en_text] = en_count.get(en_text, 0) + 1
             
-            # 只有当英文文本只出现一次时，才添加到映射中
-            if en_count[en_text] == 1:
-                # 创建一个包含所有语言翻译的字典
-                multi_lang_translations = {}
-                for lang_code, lang_text in translations.items():
-                    if lang_code != "en":  # 不包含英文本身
-                        multi_lang_translations[lang_code] = lang_text
-                
-                # 只有当至少有一种其他语言的翻译时才添加到映射中
-                if multi_lang_translations:
-                    en_to_multi_lang[en_text] = multi_lang_translations
+            # 收集每种语言的翻译
+            for lang_code, lang_text in translations.items():
+                if lang_code != "en":  # 不包含英文本身
+                    en_translations[en_text].append((lang_code, lang_text))
+    
+    # 处理英文到多种语言的映射
+    for en_text, translations_list in en_translations.items():
+        # 按语言代码分组
+        lang_translations = defaultdict(list)
+        for lang_code, lang_text in translations_list:
+            lang_translations[lang_code].append(lang_text)
+        
+        # 对于每种语言，选择出现次数最多的翻译
+        multi_lang_translations = {}
+        for lang_code, texts in lang_translations.items():
+            # 使用Counter统计每个翻译出现的次数
+            text_counter = Counter(texts)
+            # 选择出现次数最多的翻译
+            most_common_text = text_counter.most_common(1)[0][0]
+            multi_lang_translations[lang_code] = most_common_text
+        
+        # 添加到映射中
+        if multi_lang_translations:  # 确保至少有一种其他语言的翻译
+            en_to_multi_lang[en_text] = multi_lang_translations
     
     # 保存英文到多种语言的映射
     en_multi_lang_file = os.path.join(base_dir, "output", "en_multi_lang_mapping.json")
