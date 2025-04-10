@@ -32,6 +32,7 @@ from agents_handler import read_agents_yaml, read_agents_in_space_yaml, process_
 from divisions_handler import read_divisions_yaml, process_divisions_data
 from dynamic_items_handler import process_data as process_dynamic_items_data
 from agent_localization_handler import update_agents_localization  # 导入新的本地化处理函数
+from station_name_localization.station_localization_handler import update_stations_localization  # 导入空间站本地化处理函数
 
 
 # 文件路径
@@ -280,6 +281,9 @@ def main():
 
     print("\nProcessing stations.yaml...")  # 空间站数据
     process_yaml_file(stations_yaml_file_path, read_stations_yaml, process_stations_data)
+
+    print("\nUpdating station names localization...")  # 更新空间站名称的本地化信息
+    update_stations_localization()
 
     print("\nProcessing metaGroups.yaml...")  # 物品衍生组
     process_yaml_file(metaGroups_yaml_file_path, read_metaGroups_yaml, process_metaGroups_data)
