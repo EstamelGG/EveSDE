@@ -273,7 +273,7 @@ def compare_ref_types_with_esi_types(ref_type_to_id, esi_types):
 def main():
     # 加载accountingentrytypes.json
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    accounting_types_file = os.path.join(base_dir, "accountingentrytypes.json")
+    accounting_types_file = os.path.join(base_dir, "static_data", "accountingentrytypes.json")
     accounting_types = load_json_file(accounting_types_file)
     
     # 过滤掉key大于10000的项目
