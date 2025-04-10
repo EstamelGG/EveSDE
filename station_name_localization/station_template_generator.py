@@ -7,8 +7,11 @@ from datetime import datetime
 
 # 配置日志
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    level=logging.DEBUG,  # 改为DEBUG级别以显示更多信息
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(f'station_template_generator_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log', encoding='utf-8'),
+    ]
 )
 logger = logging.getLogger(__name__)
 
