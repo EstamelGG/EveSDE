@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-# 将输出的本地化字符串组合展示，同时提取出能够一一对应的英-中本地化对照
+# 将输出的本地化字符串组合展示，同时提取出能够一一对应的英文到多种语言的本地化对照
 
 
 import json
@@ -72,35 +72,42 @@ def main():
     
     print(f"合并完成！共处理了 {len(combined_data)} 个条目，包含 {len(localization_data)} 种语言。")
     
-    # 创建英文到中文的映射
-    en_to_zh = {}
+    # 创建英文到多种语言的映射
+    en_to_multi_lang = {}
     # 用于记录每个英文文本出现的次数
     en_count = {}
     
     # 遍历所有条目，统计每个英文文本出现的次数
     for entry_id, translations in combined_data.items():
-        if "en" in translations and "zh" in translations:
+        if "en" in translations:
             en_text = translations["en"]
             if en_text in en_count:
                 en_count[en_text] += 1
             else:
                 en_count[en_text] = 1
     
-    # 只保留出现次数为1的英文文本对应的中文文本
+    # 只保留出现次数为1的英文文本对应的所有语言文本
     for entry_id, translations in combined_data.items():
-        if "en" in translations and "zh" in translations:
+        if "en" in translations:
             en_text = translations["en"]
-            zh_text = translations["zh"]
             
             # 只有当英文文本只出现一次时，才添加到映射中
             if en_count[en_text] == 1:
-                en_to_zh[en_text] = zh_text
+                # 创建一个包含所有语言翻译的字典
+                multi_lang_translations = {}
+                for lang_code, lang_text in translations.items():
+                    if lang_code != "en":  # 不包含英文本身
+                        multi_lang_translations[lang_code] = lang_text
+                
+                # 只有当至少有一种其他语言的翻译时才添加到映射中
+                if multi_lang_translations:
+                    en_to_multi_lang[en_text] = multi_lang_translations
     
-    # 保存英文到中文的映射
-    en_zh_file = os.path.join(base_dir, "output", "en_zh_mapping.json")
-    save_json_file(en_to_zh, en_zh_file)
+    # 保存英文到多种语言的映射
+    en_multi_lang_file = os.path.join(base_dir, "output", "en_multi_lang_mapping.json")
+    save_json_file(en_to_multi_lang, en_multi_lang_file)
     
-    print(f"英文到中文的映射完成！共处理了 {len(en_to_zh)} 个英文条目。")
+    print(f"英文到多种语言的映射完成！共处理了 {len(en_to_multi_lang)} 个英文条目。")
 
 if __name__ == "__main__":
     main() 
