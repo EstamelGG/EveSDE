@@ -101,10 +101,6 @@ def process_station_name(station_name: str, localization_data: Dict) -> str:
     """处理单个空间站名称，返回模板格式"""
     logger.debug(f"\n开始处理空间站名称: {station_name}")
     
-    # 保存已经替换的部分，避免重复替换
-    replaced_parts = {}
-    template = station_name
-    
     # 处理特殊模式（罗马数字和Moon后的数字）
     # 1. 处理独立的罗马数字（前后有空格的）
     roman_numerals = re.findall(r' ([IVX]+) ', station_name)
@@ -117,38 +113,69 @@ def process_station_name(station_name: str, localization_data: Dict) -> str:
         logger.debug(f"发现Moon数字: {moon_numbers}")
     
     # 处理其他文本部分
-    remaining_text = station_name
-    for part in remaining_text.split(' - '):
+    result_parts = []  # 存储最终结果的各个部分
+    
+    for part in station_name.split(' - '):
         logger.debug(f"\n处理部分: {part}")
-        # 继续处理直到没有新的匹配
         current_part = part.strip()
-        while current_part:
-            found_match = False
-            combinations = generate_word_combinations(current_part)
-            logger.debug(f"当前处理文本: {current_part}")
-            logger.debug(f"生成的词组组合: {combinations}")
+        processed_part = current_part  # 当前部分的处理结果
+        
+        # 记录已处理的位置
+        processed_positions = set()  # 存储已处理字符的位置
+        
+        while True:
+            # 生成未处理部分的词组组合
+            unprocessed_segments = []  # 存储未处理的文本段
+            start = 0
+            current_segment = ""
             
-            for combo in combinations:
-                if combo in replaced_parts:
-                    logger.debug(f"跳过已替换的词组: {combo}")
-                    continue
-                    
-                template_id, _ = find_template_id(combo, localization_data)
-                if template_id:
-                    old_template = template
-                    template = template.replace(combo, f"{{{template_id}}}")
-                    replaced_parts[combo] = template_id
-                    logger.debug(f"替换: {combo} -> {template_id}")
-                    logger.debug(f"模板变化: {old_template} -> {template}")
-                    # 更新剩余文本，移除已匹配的部分
-                    current_part = current_part.replace(combo, '').strip()
-                    found_match = True
+            # 收集未处理的文本段
+            for i, char in enumerate(current_part):
+                if i in processed_positions:
+                    if current_segment:
+                        unprocessed_segments.append(current_segment.strip())
+                        current_segment = ""
+                else:
+                    current_segment += char
+            if current_segment:
+                unprocessed_segments.append(current_segment.strip())
+            
+            if not unprocessed_segments:  # 如果没有未处理的部分，退出循环
+                break
+                
+            logger.debug(f"未处理的文本段: {unprocessed_segments}")
+            
+            found_match = False
+            # 对每个未处理的段落尝试匹配
+            for segment in unprocessed_segments:
+                combinations = generate_word_combinations(segment)
+                logger.debug(f"当前处理文本段: {segment}")
+                logger.debug(f"生成的词组组合: {combinations}")
+                
+                for combo in combinations:
+                    template_id, _ = find_template_id(combo, localization_data)
+                    if template_id:
+                        logger.debug(f"找到匹配: {combo} -> {template_id}")
+                        # 在原文中定位这个组合
+                        start_pos = current_part.find(combo)
+                        if start_pos != -1:
+                            # 标记这些位置为已处理
+                            for i in range(start_pos, start_pos + len(combo)):
+                                processed_positions.add(i)
+                            # 替换对应位置的文本
+                            processed_part = processed_part.replace(combo, f"{{{template_id}}}")
+                            found_match = True
+                            break
+                if found_match:
                     break
             
             if not found_match:
-                # 如果没有找到任何匹配，退出循环
-                logger.debug(f"未找到更多匹配: {current_part}")
                 break
+        
+        result_parts.append(processed_part)
+    
+    # 将处理后的部分重新组合
+    template = ' - '.join(result_parts)
     
     if template != station_name:
         logger.debug(f"最终处理结果: {template}")
