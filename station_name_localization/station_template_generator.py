@@ -225,6 +225,23 @@ def main():
         logger.info(f"正在保存结果到: {output_file}")
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(templates, f, indent=2, ensure_ascii=False)
+        
+        # 保存缓存内容
+        cache_dict = {}
+        for text, result in template_cache.cache.items():
+            if result is not None:  # 只保存成功匹配的结果
+                template_id, _ = result
+                if template_id is not None:
+                    cache_dict[text] = template_id
+        
+        # 按键长度降序排序，这样可以更容易看到长词组在前
+        sorted_cache = dict(sorted(cache_dict.items(), key=lambda x: len(x[0]), reverse=True))
+        
+        cache_file = 'station_name_templates_cache.json'
+        logger.info(f"正在保存缓存字典到: {cache_file}")
+        with open(cache_file, 'w', encoding='utf-8') as f:
+            json.dump(sorted_cache, f, indent=2, ensure_ascii=False)
+        
         logger.info("处理完成！")
         
     except Exception as e:
