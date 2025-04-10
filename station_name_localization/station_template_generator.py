@@ -4,6 +4,7 @@ import logging
 from typing import Dict, List, Tuple, Optional
 from tqdm import tqdm
 from datetime import datetime
+import os
 
 # 配置日志
 logging.basicConfig(
@@ -44,6 +45,24 @@ class TemplateCache:
             "hit_rate": hit_rate,
             "cache_size": len(self.cache)
         }
+    
+    def load_from_file(self, file_path: str) -> bool:
+        """从文件加载缓存"""
+        try:
+            if os.path.exists(file_path):
+                logger.info(f"正在从文件加载缓存: {file_path}")
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    cache_data = json.load(f)
+                    # 将加载的数据转换为正确的格式
+                    for text, template_id in cache_data.items():
+                        # 将字符串ID转换为元组格式 (str_id, int_id)
+                        self.cache[text] = (template_id, int(template_id))
+                logger.info(f"成功加载缓存，包含 {len(cache_data)} 条记录")
+                return True
+            return False
+        except Exception as e:
+            logger.error(f"加载缓存文件失败: {str(e)}")
+            return False
 
 # 创建全局缓存实例
 template_cache = TemplateCache()
@@ -188,6 +207,10 @@ def main():
     logger.info("开始处理空间站名称模板生成")
     
     try:
+        # 尝试加载缓存文件
+        cache_file = 'station_name_templates_cache.json'
+        template_cache.load_from_file(cache_file)
+        
         # 加载数据文件
         stations_data = load_json_file('../accounting_entry_types/static_data/stations_202504102216.json')
         localization_data = load_json_file('../accounting_entry_types/output/combined_localization.json')
@@ -237,7 +260,6 @@ def main():
         # 按键长度降序排序，这样可以更容易看到长词组在前
         sorted_cache = dict(sorted(cache_dict.items(), key=lambda x: len(x[0]), reverse=True))
         
-        cache_file = 'station_name_templates_cache.json'
         logger.info(f"正在保存缓存字典到: {cache_file}")
         with open(cache_file, 'w', encoding='utf-8') as f:
             json.dump(sorted_cache, f, indent=2, ensure_ascii=False)
