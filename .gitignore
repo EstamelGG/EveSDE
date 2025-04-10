@@ -28,3 +28,11 @@ fetchIcons/typeids.txt
 /output/db/item_db_ko.sqlite.zip
 /output/db/item_db_ru.sqlite.zip
 /output/db/item_db_de.sqlite.zip
+/eve_client_data_extra/__pycache__
+/eve_client_data_extra/raw
+/eve_client_data_extra/extra
+/extra
+/raw
+/accounting_entry_types/extra
+/accounting_entry_types/raw
+/accounting_entry_types/output

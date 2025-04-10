@@ -311,6 +311,10 @@ def main():
     print("\nProcessing marketGroups.yaml...")  # 市场分组
     process_yaml_file(marketGroups_yaml_file_path, read_marketGroups_yaml, process_marketGroups_data)
 
+    # print("\nUpdating type localization...")  # 更新type描述
+    # from update_type_description import update_type_description
+    # update_type_description()
+
     print("\nProcessing typeMaterials.yaml...")  # 物品材料产出
     process_yaml_file(typeMaterials_yaml_file_path, read_typeMaterials_yaml, process_typeMaterials_data)
 

@@ -718,7 +718,8 @@
         "name": "Contract Reward Deposited (corp)"
     }, 
     "85": {
-        "entryTypeNameID": 59877, 
+        "entryTypeNameID": 59877,
+        "entryJournalMessageID": 234530,
         "entryTypeNameTranslated": "Bounty Prizes", 
         "description": "", 
         "name": "Bounty Prizes"
