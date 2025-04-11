@@ -39,3 +39,4 @@ fetchIcons/typeids.txt
 /accounting_entry_types/__pycache__
 station_template_generator_*.log
 /station_name_localization/__pycache__
+*.sqlite
