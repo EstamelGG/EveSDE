@@ -339,18 +339,52 @@ def main():
                 
                 # 处理entryTypeName
                 if "entryTypeNameID" in entry_data:
-                    entry_type_name = {"en": entry_data.get("entryTypeNameTranslated", "")}
-                    for lang_code, lang_data in localization_data.items():
-                        if str(entry_data["entryTypeNameID"]) in lang_data:
-                            entry_type_name[lang_code] = lang_data[str(entry_data["entryTypeNameID"])]["text"]
+                    # 检查entryTypeNameID是否为数组
+                    if isinstance(entry_data["entryTypeNameID"], list):
+                        entry_type_name = {"en": []}
+                        # 处理英文翻译
+                        for name_id in entry_data["entryTypeNameID"]:
+                            if "entryTypeNameTranslated" in entry_data:
+                                entry_type_name["en"].append(entry_data.get("entryTypeNameTranslated", ""))
+                        
+                        # 处理其他语言翻译
+                        for lang_code, lang_data in localization_data.items():
+                            entry_type_name[lang_code] = []
+                            for name_id in entry_data["entryTypeNameID"]:
+                                if str(name_id) in lang_data:
+                                    entry_type_name[lang_code].append(lang_data[str(name_id)]["text"])
+                    else:
+                        # 处理单个ID的情况
+                        entry_type_name = {"en": [entry_data.get("entryTypeNameTranslated", "")]}
+                        for lang_code, lang_data in localization_data.items():
+                            if str(entry_data["entryTypeNameID"]) in lang_data:
+                                entry_type_name[lang_code] = [lang_data[str(entry_data["entryTypeNameID"])]["text"]]
+                    
                     new_entry["entryTypeName"] = entry_type_name
 
                 # 处理entryJournalMessage
                 if "entryJournalMessageID" in entry_data:
-                    entry_journal_message = {"en": entry_data.get("entryJournalMessageTranslated", "")}
-                    for lang_code, lang_data in localization_data.items():
-                        if str(entry_data["entryJournalMessageID"]) in lang_data:
-                            entry_journal_message[lang_code] = lang_data[str(entry_data["entryJournalMessageID"])]["text"]
+                    # 检查entryJournalMessageID是否为数组
+                    if isinstance(entry_data["entryJournalMessageID"], list):
+                        entry_journal_message = {"en": []}
+                        # 处理英文翻译
+                        for message_id in entry_data["entryJournalMessageID"]:
+                            if "entryJournalMessageTranslated" in entry_data:
+                                entry_journal_message["en"].append(entry_data.get("entryJournalMessageTranslated", ""))
+                        
+                        # 处理其他语言翻译
+                        for lang_code, lang_data in localization_data.items():
+                            entry_journal_message[lang_code] = []
+                            for message_id in entry_data["entryJournalMessageID"]:
+                                if str(message_id) in lang_data:
+                                    entry_journal_message[lang_code].append(lang_data[str(message_id)]["text"])
+                    else:
+                        # 处理单个ID的情况
+                        entry_journal_message = {"en": [entry_data.get("entryJournalMessageTranslated", "")]}
+                        for lang_code, lang_data in localization_data.items():
+                            if str(entry_data["entryJournalMessageID"]) in lang_data:
+                                entry_journal_message[lang_code] = [lang_data[str(entry_data["entryJournalMessageID"])]["text"]]
+                    
                     new_entry["entryJournalMessage"] = entry_journal_message
                 
                 # 只有当至少有一个字段时才添加到新数据中

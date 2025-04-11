@@ -53,3 +53,10 @@ DuckDB 比 SQLite 更高效，更精简，如果有需求，可以使用 `sqlite
 2. 执行 `station_name_localization/1_station_template_generator.py` 即可生成各空间站的名称的模板。
 3. 注意 `accounting_entry_types/static_data/stations_202504102216.json` 文件来自 `stations` 表的导出。
 4. 执行 `main.py` 即可在各语言的sqlite文件的 `stations` 表更新 `stationName` 列
+
+# 虫洞数据
+
+1. 数据来自：[https://anoik.is/static/static.json?version=11](https://anoik.is/static/static.json?version=11)，放在 `jSpace\JSpace.json` 即可。
+2. 执行 `jSpace\1_split_jspace.py` 与 `jSpace\2_build_jspace.py`。
+3. 获得 `jSpace\localization_en.txt` 与 `jSpace\localization_zh.txt` 作为本地化文件。
+4. 执行 `main.py` 即可创建对应的数据表。

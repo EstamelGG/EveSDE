@@ -146,8 +146,9 @@
         "name": "Agents_temporary"
     }, 
     "19": {
-        "entryTypeNameID": 59811, 
-        "entryTypeNameTranslated": "Insurance", 
+        "entryTypeNameID": 59811,
+        "entryJournalMessageID": [234532, 234531, 234533],
+        "entryTypeNameTranslated": "Insurance",
         "description": "", 
         "name": "Insurance"
     }, 
@@ -720,7 +721,7 @@
     }, 
     "85": {
         "entryTypeNameID": 59877,
-        "entryJournalMessageID": 234530,
+        "entryJournalMessageID": [234530, 234529, 59722],
         "entryTypeNameTranslated": "Bounty Prizes", 
         "description": "", 
         "name": "Bounty Prizes"

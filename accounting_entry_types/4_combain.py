@@ -71,7 +71,30 @@ def main():
     save_json_file(combined_data, output_file)
     
     print(f"合并完成！共处理了 {len(combined_data)} 个条目，包含 {len(localization_data)} 种语言。")
-    
+
+    # 创建合并后的数据结构
+    combined_data = {}
+
+    # 获取所有ID
+    all_ids = set()
+    for lang_data in localization_data.values():
+        all_ids.update(lang_data.keys())
+
+    # 合并所有语言的文本
+    for entry_id in all_ids:
+        combined_data[entry_id] = {}
+
+        # 从每种语言中获取文本
+        for lang_code, lang_data in localization_data.items():
+            if entry_id in lang_data and lang_code in ["en", "zh"]:
+                combined_data[entry_id][lang_code] = lang_data[entry_id]["text"]
+
+    # 保存合并后的JSON文件
+    output_file = os.path.join(base_dir, "output", "combined_localization_en_zh.json")
+    save_json_file(combined_data, output_file)
+
+    print(f"合并zh精简文本完成！共处理了 {len(combined_data)} 个条目，包含 {len(localization_data)} 种语言。")
+
     # 创建英文到多种语言的映射
     en_to_multi_lang = {}
     # 用于记录每个英文文本出现的次数
