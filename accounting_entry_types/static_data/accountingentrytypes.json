@@ -309,7 +309,8 @@
         "description": "Withdrawal from corporation account", 
         "entryTypeDescriptionTranslated": "Withdrawal from corporation account", 
         "entryTypeDescriptionID": 59736, 
-        "entryTypeNameID": 59829, 
+        "entryTypeNameID": 59829,
+        "entryJournalMessageID": 234558,
         "entryTypeNameTranslated": "Corporation Account Withdrawal", 
         "name": "Corporation Account Withdrawal"
     }, 
