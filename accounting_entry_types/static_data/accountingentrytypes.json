@@ -376,7 +376,8 @@
     "46": {
         "entryTypeNameID": 59838, 
         "entryTypeNameTranslated": "Brokers Fee", 
-        "description": "", 
+        "description": "",
+        "entryJournalMessageID": [234569],
         "name": "Brokers Fee"
     }, 
     "47": {
