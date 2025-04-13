@@ -33,12 +33,20 @@ BATCH_SIZE = 10  # 每批处理的星系数量, 建议10
 def get_cache_path(url: str) -> str:
     """获取缓存文件路径"""
     # 只缓存详情API的响应
-    if 'language=' not in url and 'stars' not in url:
+    if 'language=' not in url and 'stars' not in url and 'stargates' not in url and 'planets' not in url:
         return None
         
     # 详情API的URL
     if 'stars' in url:
         item_type = 'stars'
+        item_id = url.split(f'/{item_type}/')[1].split('/')[0]
+        filename = f"{item_type}_{item_id}.json"
+    elif 'stargates' in url:
+        item_type = 'stargates'
+        item_id = url.split(f'/{item_type}/')[1].split('/')[0]
+        filename = f"{item_type}_{item_id}.json"
+    elif 'planets' in url:
+        item_type = 'planets'
         item_id = url.split(f'/{item_type}/')[1].split('/')[0]
         filename = f"{item_type}_{item_id}.json"
     else:
@@ -480,6 +488,92 @@ def build_system_connections(stargate_info_map: dict) -> dict:
     
     return system_connections
 
+async def fetch_planet_info(session: aiohttp.ClientSession, planet_id: int) -> Optional[dict]:
+    """获取行星信息"""
+    try:
+        url = f"{BASE_URL}/universe/planets/{planet_id}/?datasource=tranquility"
+        planet_data = await fetch_json(session, url)
+        return {
+            'planet_id': planet_id,
+            'type_id': planet_data.get('type_id'),
+            'system_id': planet_data.get('system_id'),
+            'position': planet_data.get('position', {})
+        }
+    except Exception as e:
+        logger.error(f"获取行星信息失败 planet_id {planet_id}: {str(e)}")
+        return None
+
+async def fetch_all_planets():
+    """获取所有行星信息并缓存"""
+    try:
+        logger.info("开始获取所有行星信息...")
+        
+        # 读取universe_data.json获取所有行星ID
+        with open('universe_data.json', 'r', encoding='utf-8') as f:
+            universe_data = json.load(f)
+        
+        # 收集所有行星ID
+        planet_ids = set()
+        for region_data in universe_data.values():
+            for constellation_data in region_data['constellations'].values():
+                for system_data in constellation_data['systems'].values():
+                    # 获取星系中的行星ID
+                    for planet in system_data['system_info'].get('planets', []):
+                        if isinstance(planet, dict) and 'planet_id' in planet:
+                            planet_ids.add(planet['planet_id'])
+                        elif isinstance(planet, int):
+                            planet_ids.add(planet)
+        
+        logger.info(f"总共有 {len(planet_ids)} 个唯一的行星ID")
+        
+        # 创建SSL上下文，增加并发连接数限制
+        ssl_context = ssl.create_default_context(cafile=certifi.where())
+        conn = aiohttp.TCPConnector(ssl=ssl_context, limit=150)
+        
+        async with aiohttp.ClientSession(connector=conn, timeout=TIMEOUT) as session:
+            # 使用50并发获取行星信息
+            CONCURRENT_LIMIT = 50
+            semaphore = asyncio.Semaphore(CONCURRENT_LIMIT)
+            
+            async def fetch_with_semaphore(planet_id: int):
+                async with semaphore:
+                    try:
+                        return await fetch_planet_info(session, planet_id)
+                    except Exception as e:
+                        logger.error(f"获取行星信息失败 planet_id {planet_id}: {str(e)}")
+                        return None
+            
+            # 创建所有任务
+            tasks = [fetch_with_semaphore(planet_id) for planet_id in planet_ids]
+            
+            # 使用gather并发执行所有任务
+            results = await asyncio.gather(*tasks, return_exceptions=True)
+            
+            # 处理结果
+            planet_info_map = {}
+            for planet_id, result in zip(planet_ids, results):
+                try:
+                    if isinstance(result, Exception):
+                        logger.error(f"处理行星信息失败 planet_id {planet_id}: {str(result)}")
+                        continue
+                    if result:
+                        planet_info_map[planet_id] = result
+                except Exception as e:
+                    logger.error(f"处理行星信息失败 planet_id {planet_id}: {str(e)}")
+            
+            logger.info(f"完成处理所有行星信息，共 {len(planet_info_map)}/{len(planet_ids)} 个成功")
+            
+            # 保存行星信息到文件
+            with open('planet_info.json', 'w', encoding='utf-8') as f:
+                json.dump(planet_info_map, f, ensure_ascii=False, indent=2)
+            logger.info("行星信息已保存到 planet_info.json")
+            
+            return planet_info_map
+            
+    except Exception as e:
+        logger.error(f"获取行星信息时出错: {str(e)}")
+        raise
+
 def merge_universe_data():
     """合并universe_data.json和星门信息"""
     try:
@@ -493,11 +587,48 @@ def merge_universe_data():
         with open('stargate_info.json', 'r', encoding='utf-8') as f:
             stargate_info_map = json.load(f)
         
+        # 读取行星信息
+        planet_info_map = {}
+        if os.path.exists('planet_info.json'):
+            with open('planet_info.json', 'r', encoding='utf-8') as f:
+                planet_info_map = json.load(f)
+        
         # 构建星系连接关系
         system_connections = build_system_connections(stargate_info_map)
         
         # 合并数据
         merged_data = merge_system_connections(universe_data, system_connections)
+        
+        # 添加行星信息到合并后的数据中
+        if planet_info_map:
+            logger.info("开始添加行星信息到宇宙数据中...")
+            for region_data in merged_data.values():
+                for constellation_data in region_data['constellations'].values():
+                    for system_id, system_data in constellation_data['systems'].items():
+                        # 获取星系中的行星
+                        planets = system_data['system_info'].get('planets', [])
+                        if planets:
+                            # 更新行星信息
+                            updated_planets = []
+                            for planet in planets:
+                                planet_id = planet['planet_id'] if isinstance(planet, dict) else planet
+                                if str(planet_id) in planet_info_map:
+                                    planet_info = planet_info_map[str(planet_id)]
+                                    if isinstance(planet, dict):
+                                        planet['type_id'] = planet_info.get('type_id')
+                                    else:
+                                        # 如果行星是ID而不是字典，创建一个新字典
+                                        updated_planets.append({
+                                            'planet_id': planet_id,
+                                            'type_id': planet_info.get('type_id')
+                                        })
+                                        continue
+                                updated_planets.append(planet)
+                            
+                            # 更新星系中的行星信息
+                            system_data['system_info']['planets'] = updated_planets
+            
+            logger.info("行星信息已添加到宇宙数据中")
         
         # 直接覆盖 universe_data.json
         with open('universe_data.json', 'w', encoding='utf-8') as f:
@@ -557,9 +688,13 @@ if __name__ == "__main__":
         # 第二步：获取所有星门信息
         logger.info("第二步：获取所有星门信息...")
         asyncio.run(fetch_all_stargates())
+        
+        # 第三步：获取所有行星信息
+        logger.info("第三步：获取所有行星信息...")
+        asyncio.run(fetch_all_planets())
 
-        # 第三步：合并数据
-        logger.info("第三步：合并数据...")
+        # 第四步：合并数据
+        logger.info("第四步：合并数据...")
         merge_universe_data()
         
     except Exception as e:
