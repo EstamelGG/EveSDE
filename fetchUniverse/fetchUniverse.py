@@ -238,6 +238,9 @@ async def process_systems_batch(session: aiohttp.ClientSession, systems_batch: L
             security_status = sys_details.get('security_status')
             solar_type_id = star_type_map.get(star_id) if star_id else None
             
+            # 获取行星信息
+            planets = sys_details.get('planets', [])
+            
             systems_data[str(sys_id)] = {
                 'system_name': names,
                 'system_info': {
@@ -246,14 +249,15 @@ async def process_systems_batch(session: aiohttp.ClientSession, systems_batch: L
                     'star_id': star_id,
                     'position': sys_details.get('position', {}),
                     'stargates': sys_details.get('stargates', []),
-                    'stations': sys_details.get('stations', [])
+                    'stations': sys_details.get('stations', []),
+                    'planets': planets  # 添加行星信息
                 }
             }
             
             current_processed = total_systems_processed + i + 1
             progress_percentage = (current_processed / total_systems_count) * 100
             logger.info(f"处理星系 {sys_id} 完成 - 总进度: {current_processed}/{total_systems_count} ({progress_percentage:.2f}%)")
-            logger.debug(f"星系 {sys_id} 安全等级: {security_status}, 恒星ID: {star_id}, 恒星类型ID: {solar_type_id}")
+            logger.debug(f"星系 {sys_id} 安全等级: {security_status}, 恒星ID: {star_id}, 恒星类型ID: {solar_type_id}, 行星数量: {len(planets)}")
             
         except Exception as e:
             logger.error(f"处理星系 {sys_id} 时出错: {str(e)}")
@@ -551,6 +555,7 @@ async def fetch_all_planets():
             
             # 处理结果
             planet_info_map = {}
+            planet_types = set()  # 收集所有行星类型
             for planet_id, result in zip(planet_ids, results):
                 try:
                     if isinstance(result, Exception):
@@ -558,17 +563,26 @@ async def fetch_all_planets():
                         continue
                     if result:
                         planet_info_map[planet_id] = result
+                        # 添加行星类型到集合中
+                        if 'type_id' in result and result['type_id']:
+                            planet_types.add(result['type_id'])
                 except Exception as e:
                     logger.error(f"处理行星信息失败 planet_id {planet_id}: {str(e)}")
             
             logger.info(f"完成处理所有行星信息，共 {len(planet_info_map)}/{len(planet_ids)} 个成功")
+            logger.info(f"发现 {len(planet_types)} 种不同的行星类型: {sorted(list(planet_types))}")
             
             # 保存行星信息到文件
             with open('planet_info.json', 'w', encoding='utf-8') as f:
                 json.dump(planet_info_map, f, ensure_ascii=False, indent=2)
             logger.info("行星信息已保存到 planet_info.json")
             
-            return planet_info_map
+            # 保存行星类型列表到文件
+            with open('planet_types.json', 'w', encoding='utf-8') as f:
+                json.dump(sorted(list(planet_types)), f, ensure_ascii=False, indent=2)
+            logger.info("行星类型列表已保存到 planet_types.json")
+            
+            return planet_info_map, planet_types
             
     except Exception as e:
         logger.error(f"获取行星信息时出错: {str(e)}")
@@ -589,9 +603,13 @@ def merge_universe_data():
         
         # 读取行星信息
         planet_info_map = {}
+        planet_types = set()
         if os.path.exists('planet_info.json'):
             with open('planet_info.json', 'r', encoding='utf-8') as f:
                 planet_info_map = json.load(f)
+            if os.path.exists('planet_types.json'):
+                with open('planet_types.json', 'r', encoding='utf-8') as f:
+                    planet_types = set(json.load(f))
         
         # 构建星系连接关系
         system_connections = build_system_connections(stargate_info_map)
@@ -608,25 +626,26 @@ def merge_universe_data():
                         # 获取星系中的行星
                         planets = system_data['system_info'].get('planets', [])
                         if planets:
-                            # 更新行星信息
-                            updated_planets = []
+                            # 按类型组织行星
+                            planets_by_type = {}
+                            # 初始化所有类型的空列表
+                            for planet_type in planet_types:
+                                planets_by_type[f"type_{planet_type}"] = []
+                            
+                            # 将行星按类型分类
                             for planet in planets:
                                 planet_id = planet['planet_id'] if isinstance(planet, dict) else planet
                                 if str(planet_id) in planet_info_map:
                                     planet_info = planet_info_map[str(planet_id)]
-                                    if isinstance(planet, dict):
-                                        planet['type_id'] = planet_info.get('type_id')
-                                    else:
-                                        # 如果行星是ID而不是字典，创建一个新字典
-                                        updated_planets.append({
-                                            'planet_id': planet_id,
-                                            'type_id': planet_info.get('type_id')
-                                        })
-                                        continue
-                                updated_planets.append(planet)
+                                    type_id = planet_info.get('type_id')
+                                    if type_id:
+                                        type_key = f"type_{type_id}"
+                                        if type_key not in planets_by_type:
+                                            planets_by_type[type_key] = []
+                                        planets_by_type[type_key].append(planet_id)
                             
                             # 更新星系中的行星信息
-                            system_data['system_info']['planets'] = updated_planets
+                            system_data['system_info']['planets'] = planets_by_type
             
             logger.info("行星信息已添加到宇宙数据中")
         
