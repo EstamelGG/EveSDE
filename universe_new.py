@@ -11,6 +11,17 @@ logger = logging.getLogger(__name__)
 # 用于缓存universe数据
 _universe_data: List[Tuple[int, int, int, float, int, float, float, float, bool, bool, bool]] = []
 
+planetary_typeIdMapping = {
+    "temperate": 11,
+    "barren": 2016,
+    "oceanic": 2014,
+    "ice": 12,
+    "gas": 13,
+    "lava": 2015,
+    "storm": 2017,
+    "plasma": 2063
+}
+
 def create_table(cursor):
     """创建universe表和starmap表"""
     # 首先读取universe数据以获取行星类型
