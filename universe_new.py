@@ -2,6 +2,7 @@ import json
 import time
 import logging
 import re
+import os
 from typing import List, Tuple
 
 # 配置日志
@@ -85,6 +86,9 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple]:
     # 创建行星类型ID到名称的反向映射
     planet_type_to_name = {type_id: name for name, type_id in planetary_typeIdMapping.items()}
     
+    # 用于收集邻居星系数据
+    neighbours_data = {}
+    
     # 遍历所有星域
     for region_id, region_info in data.items():
         # 遍历星域下的所有星座
@@ -163,19 +167,14 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple]:
                 universe_data.append(tuple(data_tuple))
                 
                 # 处理邻居星系
-                # system_info = sys_info.get('system_info', {})
-                # if cursor and 'neighbours' in system_info:
-                #     neighbours = system_info['neighbours']
-                #     for neighbour in neighbours:
-                #         try:
-                #             cursor.execute(
-                #                 'INSERT OR REPLACE INTO starmap (system_id, neighbour) VALUES (?, ?)',
-                #                 (int(sys_id), int(neighbour))
-                #             )
-                #             neighbour_count += 1
-                #         except Exception as e:
-                #             logger.error(f"插入邻居星系数据失败: system_id={sys_id}, neighbour={neighbour}, error={str(e)}")
-                #
+                system_info = sys_info.get('system_info', {})
+                if 'neighbours' in system_info:
+                    neighbours = system_info['neighbours']
+                    if neighbours:
+                        # 将邻居星系ID添加到字典中
+                        neighbours_data[str(sys_id)] = [int(neighbour) for neighbour in neighbours]
+                        neighbour_count += len(neighbours)
+    
     # 如果提供了cursor，执行批量插入
     if cursor and universe_data:
         # 构建动态SQL语句
@@ -199,8 +198,29 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple]:
             cursor.executemany(sql, batch)
             logger.debug(f"已插入 {i + len(batch)}/{len(universe_data)} 条记录")
     
+    # 保存邻居星系数据到JSON文件
+    if neighbours_data:
+        save_neighbours_to_json(neighbours_data)
+    
     logger.info(f"已处理 {neighbour_count} 条邻居星系关系")
     return universe_data
+
+def save_neighbours_to_json(neighbours_data: dict, output_file: str = 'output/db/neighbours_data.json'):
+    """将邻居星系数据保存为JSON文件"""
+    # 检查文件是否已存在
+    if os.path.exists(output_file):
+        logger.info(f"邻居星系数据文件 {output_file} 已存在，跳过保存")
+        return
+        
+    try:
+        # 确保目录存在
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        
+        with open(output_file, 'w', encoding='utf-8') as file:
+            json.dump(neighbours_data, file, indent=2)
+        logger.info(f"邻居星系数据已保存到 {output_file}")
+    except Exception as e:
+        logger.error(f"保存邻居星系数据失败: {str(e)}")
 
 def process_data(cursor, lang: str = 'en'):
     """主处理函数"""
