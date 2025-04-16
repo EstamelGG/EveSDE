@@ -73,14 +73,18 @@ def process_data(data, cursor, lang):
                 attribute_id = attribute['attributeID']
                 value = attribute['value']
                 unit_id = attribute_unit_map.get(attribute_id)  # 获取对应的 unitID
-                
+
+                if unit_id == 116: # typeID类使用Int
+                    value = int(value)
+
                 attribute_batch.append((type_id, attribute_id, value, unit_id))
                 
                 # 特殊处理 attribute_id = 709 的情况
                 if attribute_id == 709:
                     harvest_typeid = int(value)
                     harvest_batch.append((harvest_typeid, type_id))
-                
+
+
                 # 当达到批处理大小时执行插入
                 if len(attribute_batch) >= batch_size:
                     cursor.executemany('''
