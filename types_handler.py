@@ -164,6 +164,15 @@ def read_yaml(file_path):
     print(f"读取 {file_path} 耗时: {end_time - start_time:.2f} 秒")
     return types_data
 
+def read_repackaged_volumes():
+    """读取 repackagedvolumes.json 文件"""
+    try:
+        with open('thirdparty_data_source/repackagedvolumes.json', 'r', encoding='utf-8') as file:
+            repackaged_volumes = json.load(file)
+        return repackaged_volumes
+    except (FileNotFoundError, json.JSONDecodeError):
+        print("警告：无法读取repackagedvolumes.json文件或文件格式不正确")
+        return {}
 
 def load_md5_map():
     """从文件加载MD5映射"""
@@ -280,6 +289,7 @@ def create_types_table(cursor):
             bpc_icon_filename TEXT,
             published BOOLEAN,
             volume REAL,
+            repackaged_volume REAL,
             capacity REAL,
             mass REAL,
             marketGroupID INTEGER,
@@ -453,6 +463,9 @@ def process_data(types_data, cursor, lang):
     create_wormholes_table(cursor)  # 创建虫洞表
     group_to_category, category_id_to_name, group_id_to_name = fetch_and_process_data(cursor)
     
+    # 读取repackaged_volumes数据
+    repackaged_volumes = read_repackaged_volumes()
+    
     # 如果是英文数据库，清空缓存并建立英文名称映射
     if lang == 'en':
         npc_classification_cache.clear()
@@ -484,6 +497,8 @@ def process_data(types_data, cursor, lang):
         description = item.get('description', {}).get(lang, item.get('description', {}).get('en', ""))
         published = item.get('published', False)
         volume = item.get('volume', None)
+        # 获取重新打包体积
+        repackaged_volume = repackaged_volumes.get(str(type_id), None)
         marketGroupID = item.get('marketGroupID', None)
         metaGroupID = item.get('metaGroupID', 1)
         iconID = item.get('iconID', 0)
@@ -554,7 +569,7 @@ def process_data(types_data, cursor, lang):
             type_id, name, 
             names['de'], names['en'], names['es'], names['fr'], 
             names['ja'], names['ko'], names['ru'], names['zh'],
-            description, copied_file, bpc_copied_file, published, volume, capacity, mass, marketGroupID,
+            description, copied_file, bpc_copied_file, published, volume, repackaged_volume, capacity, mass, marketGroupID,
             metaGroupID, iconID, groupID, group_name, category_id, category_name,
             pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
             high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot, variationParentTypeID,
@@ -568,7 +583,7 @@ def process_data(types_data, cursor, lang):
                     type_id, name, 
                     de_name, en_name, es_name, fr_name, 
                     ja_name, ko_name, ru_name, zh_name,
-                    description, icon_filename, bpc_icon_filename, published, volume, capacity, mass, marketGroupID,
+                    description, icon_filename, bpc_icon_filename, published, volume, repackaged_volume, capacity, mass, marketGroupID,
                     metaGroupID, iconID, groupID, group_name, categoryID, category_name,
                     pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
                     high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
@@ -586,7 +601,7 @@ def process_data(types_data, cursor, lang):
                 type_id, name, 
                 de_name, en_name, es_name, fr_name, 
                 ja_name, ko_name, ru_name, zh_name,
-                description, icon_filename, bpc_icon_filename, published, volume, capacity, mass, marketGroupID,
+                description, icon_filename, bpc_icon_filename, published, volume, repackaged_volume, capacity, mass, marketGroupID,
                 metaGroupID, iconID, groupID, group_name, categoryID, category_name,
                 pg_need, cpu_need, rig_cost, em_damage, them_damage, kin_damage, exp_damage,
                 high_slot, mid_slot, low_slot, rig_slot, gun_slot, miss_slot,
