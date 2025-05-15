@@ -445,7 +445,7 @@ def main():
     process_yaml_file(dogmaAttributes_yaml_file_path, read_dogmaAttributes_yaml, process_dogmaAttributes_data)
 
     print("\nProcessing typeDogma.yaml...")  # 物品属性详情
-    load_online = False
+    load_online = False  # 在线属性同步比较麻烦，只在必要时重新同步，执行 fetch_type_dogma.py 即可
     if os.path.exists(update_typeDogma_yaml_file_path) and load_online :
         process_yaml_file(update_typeDogma_yaml_file_path, read_typeDogma_yaml, process_typeDogma_data)
     else:
