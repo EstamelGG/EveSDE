@@ -57,6 +57,32 @@ def process_single_data(type_id, traits_data, language):
                         
                         results.append((type_id, content, skill_id, bonus.get('importance', 999999), "typeBonuses"))
     
+    # 处理 miscBonuses
+    if 'miscBonuses' in traits_data: # misc bonuses,其他加成
+        for bonus in traits_data['miscBonuses']:
+            content = None
+            if 'bonusText' in bonus:
+                content = bonus['bonusText'].get(language, '')
+                if not content:  # 如果当前语言的内容为空，使用英语
+                    content = bonus['bonusText'].get('en', '')
+                
+                if content:  # 只有在有内容的情况下才处理
+                    # 如果有bonus和unitID，需要添加到文本前面
+                    if 'bonus' in bonus and 'unitID' in bonus:
+                        bonus_num = int(bonus['bonus']) if isinstance(bonus['bonus'], int) or bonus[
+                            'bonus'].is_integer() else round(bonus['bonus'], 2)
+                        if bonus['unitID'] == 105:  # 百分比
+                            prefix = f"<b>{bonus_num}%</b> "
+                        elif bonus['unitID'] == 104:  # 倍乘
+                            prefix = f"<b>{bonus_num}x</b> "
+                        elif bonus['unitID'] == 139:  # 加号
+                            prefix = f"<b>{bonus_num}+</b> "
+                        else:
+                            prefix = f"<b>{bonus_num}</b>  "
+                        content = prefix + content
+                    
+                    results.append((type_id, content, None, bonus.get('importance', 999999), "miscBonuses"))
+    
     # 按importance排序
     return sorted(results, key=lambda x: x[3])
 

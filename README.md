@@ -59,7 +59,6 @@
 - `typeDogma.yaml`
 - `typeMaterials.yaml`
 - `dogmaEffects.yaml`
-- `typeMaterials.yaml`
 - `marketGroups.yaml`
 - `agentsInSpace.yaml`
 - `ancestries.yaml`
@@ -80,7 +79,6 @@
 - `skins.yaml`
 - `stationOperations.yaml`
 - `stationServices.yaml`
-- `typeMaterials.yaml`
 
 差异无重要信息的：
 
@@ -92,6 +90,47 @@
 缺失重要信息的：
 
 - `types.yaml`
+
+在下载目录执行：
+
+```txt
+keep_files=(
+  "typeDogma.yaml"
+  "typeMaterials.yaml"
+  "dogmaEffects.yaml"
+  "marketGroups.yaml"
+  "agentsInSpace.yaml"
+  "ancestries.yaml"
+  "bloodlines.yaml"
+  "blueprints.yaml"
+  "categories.yaml"
+  "contrabandTypes.yaml"
+  "controlTowerResources.yaml"
+  "corporationActivities.yaml"
+  "dogmaAttributeCategories.yaml"
+  "groups.yaml"
+  "iconIDs.yaml"
+  "npcCorporationDivisions.yaml"
+  "npcCorporations.yaml"
+  "planetSchematics.yaml"
+  "researchAgents.yaml"
+  "skinLicenses.yaml"
+  "skins.yaml"
+  "stationOperations.yaml"
+  "stationServices.yaml"
+  "dogmaAttributes.yaml"
+  "factions.yaml"
+  "metaGroups.yaml"
+  "races.yaml"
+)
+
+for f in *; do
+  if [[ ! " ${keep_files[*]} " =~ " $f " ]]; then
+    rm -f -- "$f"
+  fi
+done
+```
+
 
 # 物品效果
 
