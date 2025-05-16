@@ -1,6 +1,7 @@
 from ruamel.yaml import YAML
 import sqlite3
 import time
+import json
 
 yaml = YAML(typ='safe')
 
@@ -27,7 +28,8 @@ def create_dogma_effects_table(cursor):
             published BOOLEAN,
             is_assistance BOOLEAN,
             is_offensive BOOLEAN,
-            resistance_attribute_id INTEGER
+            resistance_attribute_id INTEGER,
+            modifier_info TEXT
         )
     ''')
 
@@ -52,10 +54,14 @@ def process_data(data, cursor, lang):
         is_offensive = effect_data.get('isOffensive', False)
         resistance_attribute_id = effect_data.get('resistanceAttributeID', None)
         
+        # 处理modifierInfo字段，转换为JSON字符串
+        modifier_info = effect_data.get('modifierInfo', None)
+        modifier_info_json = json.dumps(modifier_info) if modifier_info is not None else None
+        
         # 添加到批处理列表
         batch_data.append((
             effect_id, effect_category, effect_name, display_name, description,
-            published, is_assistance, is_offensive, resistance_attribute_id
+            published, is_assistance, is_offensive, resistance_attribute_id, modifier_info_json
         ))
         
         # 当达到批处理大小时执行插入
@@ -63,8 +69,8 @@ def process_data(data, cursor, lang):
             cursor.executemany('''
                 INSERT OR REPLACE INTO dogmaEffects (
                     effect_id, effect_category, effect_name, display_name, description,
-                    published, is_assistance, is_offensive, resistance_attribute_id
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    published, is_assistance, is_offensive, resistance_attribute_id, modifier_info
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
     
@@ -73,6 +79,6 @@ def process_data(data, cursor, lang):
         cursor.executemany('''
             INSERT OR REPLACE INTO dogmaEffects (
                 effect_id, effect_category, effect_name, display_name, description,
-                published, is_assistance, is_offensive, resistance_attribute_id
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                published, is_assistance, is_offensive, resistance_attribute_id, modifier_info
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data) 
