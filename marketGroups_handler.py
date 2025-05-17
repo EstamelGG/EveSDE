@@ -105,6 +105,16 @@ def process_data(yaml_data, cursor, language):
         name = group_data.get('nameID', {}).get(language, '')
         if not name:  # 如果当前语言的name为空，尝试获取英语的name
             name = group_data.get('nameID', {}).get('en', '')
+        if group_id == 2396:
+            name += "(R4)"
+        if group_id == 2397:
+            name += "(R8)"
+        if group_id == 2398:
+            name += "(R16)"
+        if group_id == 2400:
+            name += "(R32)"
+        if group_id == 2401:
+            name += "(R64)"
             
         description = group_data.get('descriptionID', {}).get(language, '')
         if not description:  # 如果当前语言的description为空，尝试获取英语的description
