@@ -50,8 +50,6 @@ def process_data(groups_data, cursor, lang):
     batch_size = 1000  # 每批处理的记录数
 
     for group_id, item in groups_data.items():
-        # 获取当前语言的名称作为主要name
-        name = item['name'].get(lang, item['name'].get('en', ""))
         
         # 获取所有语言的名称
         names = {
@@ -68,15 +66,15 @@ def process_data(groups_data, cursor, lang):
         # 为特定 group_id 添加后缀
         suffix = ""
         if group_id == 1884:
-            suffix = " (R4)"
+            suffix = "(R4)"
         elif group_id == 1920:
-            suffix = " (R8)"
+            suffix = "(R8)"
         elif group_id == 1921:
-            suffix = " (R16)"
+            suffix = "(R16)"
         elif group_id == 1922:
-            suffix = " (R32)"
+            suffix = "(R32)"
         elif group_id == 1923:
-            suffix = " (R64)"
+            suffix = "(R64)"
 
         # 如果存在后缀，为所有语言添加后缀
         if suffix:
@@ -84,8 +82,8 @@ def process_data(groups_data, cursor, lang):
                 if names[lang]:  # 只有当名称不为空时才添加后缀
                     names[lang] = names[lang] + suffix
 
-        if name is None:
-            continue
+        # 获取当前语言的名称作为主要name
+        name = names[lang]
 
         categoryID = item['categoryID']
         iconID = item.get('iconID', 0)
