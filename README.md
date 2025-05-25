@@ -135,3 +135,9 @@ done
 # 物品效果
 
 效果的 effect_category 是该效果的类型，可以判断主动、被动等装备。目录id分类见 `https://sde.hoboleaks.space/tq/dogmaeffectcategories.json`
+
+# 比较新旧数据库
+
+```commandline
+C:\Windows\System32\sqldiff.exe --summary old.sqlite new.sqlite
+```
