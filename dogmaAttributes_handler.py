@@ -33,7 +33,8 @@ def create_dogma_attributes_table(cursor):
             icon_filename TEXT,
             unitID INTEGER,
             unitName TEXT,
-            highIsGood BOOLEAN
+            highIsGood BOOLEAN,
+            defaultValue REAL
         )
     ''')
 
@@ -111,6 +112,7 @@ def process_data(data, cursor, lang):
         displayName = attr_data.get('displayNameID', {}).get(lang, None)
         name = attr_data.get('name', None)
         iconID = attr_data.get('iconID', 0)
+        defaultValue = attr_data.get('defaultValue', None)
         
         # 获取图标文件名
         icon_filename = None
@@ -127,7 +129,7 @@ def process_data(data, cursor, lang):
         # 添加到批处理列表
         batch_data.append((
             attributeID, categoryID, name, displayName,
-            tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood
+            tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood, defaultValue
         ))
         
         # 当达到批处理大小时执行插入
@@ -135,8 +137,8 @@ def process_data(data, cursor, lang):
             cursor.executemany('''
                 INSERT OR REPLACE INTO dogmaAttributes (
                     attribute_id, categoryID, name, display_name, 
-                    tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood, defaultValue
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
     
@@ -145,6 +147,6 @@ def process_data(data, cursor, lang):
         cursor.executemany('''
             INSERT OR REPLACE INTO dogmaAttributes (
                 attribute_id, categoryID, name, display_name, 
-                tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood, defaultValue
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data)
