@@ -80,7 +80,7 @@
 - `stationOperations.yaml`
 - `stationServices.yaml`
 
-差异无重要信息的：
+有差异，但未缺失重要信息的：
 
 - `dogmaAttributes.yaml`
 - `factions.yaml`
@@ -89,9 +89,9 @@
 
 缺失重要信息的：
 
-- `types.yaml`
+- `types.yaml` （缺少 traits 字段）
 
-在下载目录执行：
+在下载目录执行命令，即可只保留有效数据：
 
 ```txt
 keep_files=(
@@ -140,4 +140,6 @@ done
 
 ```commandline
 C:\Windows\System32\sqldiff.exe --summary old.sqlite new.sqlite
+
+sqldiff --summary old.sqlite new.sqlite
 ```

@@ -34,7 +34,8 @@ def create_dogma_attributes_table(cursor):
             unitID INTEGER,
             unitName TEXT,
             highIsGood BOOLEAN,
-            defaultValue REAL
+            defaultValue REAL,
+            stackable BOOLEAN
         )
     ''')
 
@@ -125,11 +126,13 @@ def process_data(data, cursor, lang):
         categoryID = attr_data.get('categoryID', 0)
         tooltipDescription = attr_data.get('tooltipDescriptionID', {}).get(lang, None)
         highIsGood = attr_data.get('highIsGood', None)
+        # 获取stackable字段
+        stackable = attr_data.get('stackable', None)
 
         # 添加到批处理列表
         batch_data.append((
             attributeID, categoryID, name, displayName,
-            tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood, defaultValue
+            tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood, defaultValue, stackable
         ))
         
         # 当达到批处理大小时执行插入
@@ -137,8 +140,8 @@ def process_data(data, cursor, lang):
             cursor.executemany('''
                 INSERT OR REPLACE INTO dogmaAttributes (
                     attribute_id, categoryID, name, display_name, 
-                    tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood, defaultValue
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood, defaultValue, stackable
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', batch_data)
             batch_data = []  # 清空批处理列表
     
@@ -147,6 +150,6 @@ def process_data(data, cursor, lang):
         cursor.executemany('''
             INSERT OR REPLACE INTO dogmaAttributes (
                 attribute_id, categoryID, name, display_name, 
-                tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood, defaultValue
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                tooltipDescription, iconID, icon_filename, unitID, unitName, highIsGood, defaultValue, stackable
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', batch_data)
