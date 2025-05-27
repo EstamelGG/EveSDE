@@ -5881,7 +5881,8 @@
       {
         "resultingType": 47836,
         "applicableTypes": [
-          32772
+          32772,
+          88716
         ]
       }
     ],
@@ -5917,7 +5918,8 @@
       {
         "resultingType": 47838,
         "applicableTypes": [
-          4391
+          4391,
+          88715
         ]
       }
     ],
@@ -5953,7 +5955,8 @@
       {
         "resultingType": 47840,
         "applicableTypes": [
-          32780
+          32780,
+          88714
         ]
       }
     ],
@@ -5989,7 +5992,8 @@
       {
         "resultingType": 47842,
         "applicableTypes": [
-          33076
+          33076,
+          88721
         ]
       }
     ],
@@ -6025,7 +6029,8 @@
       {
         "resultingType": 47844,
         "applicableTypes": [
-          33101
+          33101,
+          88720
         ]
       }
     ],
@@ -6061,7 +6066,8 @@
       {
         "resultingType": 47846,
         "applicableTypes": [
-          33103
+          33103,
+          88719
         ]
       }
     ],
@@ -6712,7 +6718,8 @@
       {
         "resultingType": 56308,
         "applicableTypes": [
-          41503
+          41503,
+          88718
         ]
       }
     ],
@@ -6865,7 +6872,8 @@
       {
         "resultingType": 56310,
         "applicableTypes": [
-          41504
+          41504,
+          88713
         ]
       }
     ],
@@ -9539,7 +9547,8 @@
       {
         "resultingType": 47842,
         "applicableTypes": [
-          33076
+          33076,
+          88721
         ]
       }
     ],
@@ -9832,7 +9841,8 @@
       {
         "resultingType": 47844,
         "applicableTypes": [
-          33101
+          33101,
+          88720
         ]
       }
     ],
@@ -10261,7 +10271,8 @@
       {
         "resultingType": 47846,
         "applicableTypes": [
-          33103
+          33103,
+          88719
         ]
       }
     ],
@@ -10411,7 +10422,8 @@
       {
         "resultingType": 56308,
         "applicableTypes": [
-          41503
+          41503,
+          88718
         ]
       }
     ],
@@ -13705,7 +13717,8 @@
       {
         "resultingType": 47836,
         "applicableTypes": [
-          32772
+          32772,
+          88716
         ]
       }
     ],
@@ -14023,7 +14036,8 @@
       {
         "resultingType": 47838,
         "applicableTypes": [
-          4391
+          4391,
+          88715
         ]
       }
     ],
@@ -14227,7 +14241,8 @@
       {
         "resultingType": 47840,
         "applicableTypes": [
-          32780
+          32780,
+          88714
         ]
       }
     ],
@@ -14302,7 +14317,8 @@
       {
         "resultingType": 56310,
         "applicableTypes": [
-          41504
+          41504,
+          88713
         ]
       }
     ],

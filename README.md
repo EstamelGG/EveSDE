@@ -1,10 +1,10 @@
 # EVE SDE 数据库构造器
 
-1. 获取官方数据库：https://developers.eveonline.com/resource
+1. 获取官方数据库：https://developers.eveonline.com/resource , https://developers.eveonline.com/docs/services/iec/
 2. 解压后放在根目录 `Data/sde` 目录。
 3. 从第三方来源获取数据单位信息，如"%","+"等：https://sde.hoboleaks.space/tq/dogmaunits.json 下载后放在 `thirdparty_data_source`。
 4. 物品打包体积来自第三方数据来源：https://sde.hoboleaks.space/tq/repackagedvolumes.json ，放在 `thirdparty_data_source/repackagedvolumes.json`
-4. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。
+4. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。 (不怎么更新了)
 5. 开始构造数据库 `main.py`
 
 ![img.png](img.png)
@@ -51,7 +51,7 @@
 # 物品属性
 
 如果需要更新物品属性，有两个来源：
-1. 执行 `fetchTypes/fetch_type_dogma.py` 
+1. 执行 `fetchTypes/fetch_type_dogma.py` (不建议)
 2. 从 [https://github.com/EVEShipFit/sde/tree/main](https://github.com/EVEShipFit/sde/tree/main) 下载并替换，同时，设置 main.py 中的 load_online 为 false。
 
 可以替换官方SDE的：
@@ -131,6 +131,49 @@ for f in *; do
 done
 ```
 
+```powershell
+# 定义要保留的文件列表
+$keep_files = @(
+    "typeDogma.yaml",
+    "typeMaterials.yaml",
+    "dogmaEffects.yaml",
+    "marketGroups.yaml",
+    "agentsInSpace.yaml",
+    "ancestries.yaml",
+    "bloodlines.yaml",
+    "blueprints.yaml",
+    "categories.yaml",
+    "contrabandTypes.yaml",
+    "controlTowerResources.yaml",
+    "corporationActivities.yaml",
+    "dogmaAttributeCategories.yaml",
+    "groups.yaml",
+    "iconIDs.yaml",
+    "npcCorporationDivisions.yaml",
+    "npcCorporations.yaml",
+    "planetSchematics.yaml",
+    "researchAgents.yaml",
+    "skinLicenses.yaml",
+    "skins.yaml",
+    "stationOperations.yaml",
+    "stationServices.yaml",
+    "dogmaAttributes.yaml",
+    "factions.yaml",
+    "metaGroups.yaml",
+    "races.yaml"
+)
+
+# 获取当前目录下的所有文件
+Get-ChildItem -File | ForEach-Object {
+    # 如果文件不在保留列表中，则删除
+    if ($_.Name -notin $keep_files) {
+        Remove-Item -Path $_.FullName -Force
+        Write-Host "已删除文件: $($_.Name)"
+    } else {
+        Write-Host "保留文件: $($_.Name)"
+    }
+}
+```
 
 # 物品效果
 
