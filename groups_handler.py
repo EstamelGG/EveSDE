@@ -78,9 +78,9 @@ def process_data(groups_data, cursor, lang):
 
         # 如果存在后缀，为所有语言添加后缀
         if suffix:
-            for lang in names:
-                if names[lang]:  # 只有当名称不为空时才添加后缀
-                    names[lang] = names[lang] + suffix
+            for key in names:
+                if names[key]:  # 只有当名称不为空时才添加后缀
+                    names[key] = names[key] + suffix
 
         # 获取当前语言的名称作为主要name
         name = names[lang]
