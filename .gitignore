@@ -50,3 +50,4 @@ station_template_generator_*.log
 /fetchTypes/type_details/
 /fetchTypes/typeids.txt
 fetchTypes/typeDogma.yaml
+/fetchIcons/last_fetch.txt
