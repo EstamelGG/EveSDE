@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 import shutil
+import datetime
 
 def delete_files():
     """删除指定的文件和目录"""
@@ -54,6 +55,12 @@ def main():
 
     run_script('sync_icon.py')
     run_script('replace_icon.py')
+    
+    # 记录当前时间戳到文件
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open("./last_fetch.txt", "w") as f:
+        f.write(timestamp)
+    print(f"\n已记录完成时间: {timestamp}")
     
     print("\n所有操作已完成！")
 
