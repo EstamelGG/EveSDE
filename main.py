@@ -384,6 +384,74 @@ def update_dynamic_items_data():
     print("\nUpdating dynamic items data...")
     fetch_dynamic_items_data(use_cache=False)  # 强制从网络获取，如果失败则使用本地文件
 
+def dogma_patch():
+    """修补dogmaEffects表中的特定效果数据"""
+    print("\n执行dogmaEffects表数据修补...")
+    
+    # 需要修补的效果数据
+    patches = [
+        {
+            "effect_name": "selfRof",
+            "modifier_info": '[{"domain": "shipID", "func": "LocationRequiredSkillModifier", "modifiedAttributeID": 51, "modifyingAttributeID": 293, "operation": 6, "skillTypeID": -1}]'
+        },
+        {
+            "effect_name": "droneDmgBonus",
+            "modifier_info": '[{"domain": "shipID", "func": "OwnerRequiredSkillModifier", "modifiedAttributeID": 64, "modifyingAttributeID": 292, "operation": 6, "skillTypeID": -1}]'
+        },
+        {
+            "effect_name": "moduleBonusMicrowarpdrive",
+            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 552, "modifyingAttributeID": 554, "operation": 6}, {"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 4, "modifyingAttributeID": 796, "operation": 2}]'
+        },
+        {
+            "effect_name": "microJumpDrive",
+            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 552, "modifyingAttributeID": 973, "operation": 6}]'
+        },
+        {
+            "effect_name": "adaptiveArmorHardener",
+            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 267, "modifyingAttributeID": 267, "operation": 0}, {"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 268, "modifyingAttributeID": 268, "operation": 0},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 269, "modifyingAttributeID": 269, "operation": 0},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 270, "modifyingAttributeID": 270, "operation": 0}]'
+        }
+    ]
+    
+    # 遍历所有语言的数据库
+    for lang in languages:
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+        
+        # 检查数据库文件是否存在
+        if os.path.exists(db_filename):
+            db_path = db_filename
+        elif os.path.exists(f"{db_filename}.zip"):
+            print(f"警告：数据库 {db_filename} 已被压缩，无法修补。请在压缩前执行修补操作。")
+            continue
+        else:
+            print(f"错误：找不到数据库 {db_filename}")
+            continue
+        
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            
+            # 应用每个修补
+            for patch in patches:
+                effect_name = patch["effect_name"]
+                modifier_info = patch["modifier_info"]
+                
+                # 更新指定效果的modifier_info字段
+                cursor.execute(
+                    'UPDATE dogmaEffects SET modifier_info = ? WHERE effect_name = ?',
+                    (modifier_info, effect_name)
+                )
+                
+                # 获取受影响的行数
+                affected_rows = cursor.rowcount
+                print(f"数据库 {lang}: 已更新 {affected_rows} 条 {effect_name} 效果记录")
+            
+            # 提交更改
+            conn.commit()
+            conn.close()
+            
+        except Exception as e:
+            print(f"修补数据库 {db_filename} 时发生错误: {e}")
+
 def main():
     rebuild_directory("./output")
     # 依次处理每个 YAML 文件
@@ -487,6 +555,9 @@ def main():
     
     # 清理invNames表中不在指定范围的记录
     clean_invnames_table()
+    
+    # 执行dogmaEffects表数据修补
+    dogma_patch()
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
