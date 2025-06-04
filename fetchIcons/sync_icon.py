@@ -9,7 +9,7 @@ EXCLUDED_GROUP_IDS = {1950, 1951, 1952, 1953, 1954, 1955, 4040}
 class IconDownloader:
     def __init__(self, num_threads=10):
         self.save_dir = 'icon_from_api'
-        self.timeout = (5, 10)  # (连接超时, 读取超时)
+        self.timeout = (10, 20)  # (连接超时, 读取超时)
         self.max_retries = 5
         self.num_threads = num_threads
         # 添加锁用于线程安全的文件写入
@@ -267,7 +267,9 @@ def main(skip_existing=True, num_threads=10):
     print(f"总共发现 {len(type_ids)} 个type ID")
     print(f"跳过已存在文件: {'是' if skip_existing else '否'}")
     print(f"使用线程数: {num_threads}")
-    
+    if len(type_ids) == 0:
+        print(f"下载失败")
+        exit(-1)
     downloader = IconDownloader(num_threads=num_threads)
     results = downloader.download_batch(type_ids, skip_existing)
     
@@ -278,4 +280,4 @@ def main(skip_existing=True, num_threads=10):
     print(f"已存在跳过: {results['skip']}")
 
 if __name__ == '__main__':
-    main(skip_existing=True, num_threads=50)
+    main(skip_existing=True, num_threads=30)

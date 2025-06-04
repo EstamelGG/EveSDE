@@ -10,7 +10,8 @@ def delete_files():
         '../icon_md5_map.txt',
         'typeids.txt',
         'not_exist.txt',
-        'bp_id.txt'
+        'bp_id.txt',
+        'failed.txt'
     ]
     choice = input("是否确实要重新构建图片资源？(y/n)(y:完全重新下载图片资源, n:复用现有图片资源): ").lower().strip()
     if choice != 'y':
