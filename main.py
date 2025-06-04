@@ -409,6 +409,14 @@ def dogma_patch():
         {
             "effect_name": "adaptiveArmorHardener",
             "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 267, "modifyingAttributeID": 267, "operation": 0}, {"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 268, "modifyingAttributeID": 268, "operation": 0},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 269, "modifyingAttributeID": 269, "operation": 0},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 270, "modifyingAttributeID": 270, "operation": 0}]'
+        },
+        {
+            "effect_name": "hardPointModifierEffect",
+            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 101, "modifyingAttributeID": 1369, "operation": 2}, {"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 102, "modifyingAttributeID": 1368, "operation": 2}]'
+        },
+        {
+            "effect_name": "slotModifier",
+            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 14, "modifyingAttributeID": 1374, "operation": 2},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 13, "modifyingAttributeID": 1375, "operation": 2},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 12, "modifyingAttributeID": 1376, "operation": 2}]'
         }
     ]
     
