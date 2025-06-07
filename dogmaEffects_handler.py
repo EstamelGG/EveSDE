@@ -48,7 +48,10 @@ def process_data(data, cursor, lang):
         
         # 获取其他字段
         effect_name = effect_data.get('effectName', None)
-        effect_category = effect_data.get('effectCategory', None)
+        if effect_name == "online": # 打补丁修复
+            effect_category = 4
+        else:
+            effect_category = effect_data.get('effectCategory', None)
         published = effect_data.get('published', False)
         is_assistance = effect_data.get('isAssistance', False)
         is_offensive = effect_data.get('isOffensive', False)
