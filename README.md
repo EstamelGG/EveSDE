@@ -186,3 +186,19 @@ C:\Windows\System32\sqldiff.exe --summary old.sqlite new.sqlite
 
 sqldiff --summary old.sqlite new.sqlite
 ```
+
+# 游戏内图标
+
+所有 EVE 文件都在 EVE\SharedCache\ResFiles 文件夹中。
+
+EVE\SharedCache\tq\resfileindex.txt 包含文件列表和路径。
+
+例如，这行：
+
+res:/ui/texture/windowicons/abyssalfilament.png,1f/1f023a06d843f226_aea8910fa75ef1985037875159d7311c,aea8910fa75ef1985037875159d7311c,1825,1898
+
+告诉我 abyssalfilament.png 图标在 "1f" 文件夹中，名称是：
+
+"1f023a06d843f226_aea8910fa75ef1985037875159d7311c"
+
+所以只需复制它并将其重命名为 .png
