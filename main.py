@@ -384,7 +384,7 @@ def update_dynamic_items_data():
     print("\nUpdating dynamic items data...")
     fetch_dynamic_items_data(use_cache=False)  # 强制从网络获取，如果失败则使用本地文件
 
-def dogma_patch():
+def dogmaEffect_patch():
     """修补dogmaEffects表中的特定效果数据"""
     print("\n执行dogmaEffects表数据修补...")
     
@@ -401,6 +401,10 @@ def dogma_patch():
         {
             "effect_name": "moduleBonusMicrowarpdrive",
             "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 552, "modifyingAttributeID": 554, "operation": 6}, {"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 4, "modifyingAttributeID": 796, "operation": 2}]'
+        },
+        {
+            "effect_name": "moduleBonusAfterburner",
+            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 4, "modifyingAttributeID": 796, "operation": 2}]'
         },
         {
             "effect_name": "microJumpDrive",
@@ -565,7 +569,7 @@ def main():
     clean_invnames_table()
     
     # 执行dogmaEffects表数据修补
-    dogma_patch()
+    dogmaEffect_patch()
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
