@@ -123,6 +123,8 @@ npc_classification_cache = {}
 faction_icon_cache = {}
 # 英文名称映射缓存
 type_en_name_cache = {}
+# 特殊图标映射缓存，用于记录手动修正的图标对应关系
+special_icon_mapping = {}
 
 def get_npc_ship_scene(group_name, lang='en'):
     """根据组名确定NPC船只场景"""
@@ -210,9 +212,11 @@ def copy_icon_batch():
     
     同时处理一些特殊情况：某些图片需要复制为多个不同type_id的文件
     """
+    global special_icon_mapping
+    
     source_dir = "fetchIcons/icon_fix"
     target_dir = "Data/Types"
-
+    
     # 有些物品，如无人机，其衍生等级相同，但均使用了错误的图标
     # 定义特殊文件映射字典: key为源文件名，value为需要复制成的type_id列表
     # SELECT t.type_id, t.name, t.metaGroupID, t.icon_filename FROM types AS t JOIN (SELECT icon_filename, categoryID, metaGroupID FROM types WHERE type_id = 47151) AS ref ON t.icon_filename = ref.icon_filename AND t.categoryID = ref.categoryID AND t.metaGroupID = ref.metaGroupID
@@ -256,7 +260,7 @@ def copy_icon_batch():
         '47129': [47129,47121], # 屹立独眼巨人 II
         '47128': [47128,47120], # 屹立螳螂 II
         '47122': [47122,47130], # 屹立斩裂剑 II
-
+        
         # 可以根据需要添加更多映射
     }
     
@@ -267,7 +271,7 @@ def copy_icon_batch():
         
     # 确保目标目录存在
     os.makedirs(target_dir, exist_ok=True)
-
+    
     # 复制普通文件
     copy_count = 0
     for item_id in special_file_mapping.keys():
@@ -282,6 +286,10 @@ def copy_icon_batch():
                 if not os.path.exists(target_path):
                     shutil.copy2(source_path, target_path)
                     copy_count += 1
+                
+                # 重要：在全局字典中记录这个特殊映射关系
+                output_file_name = f"icon_{type_id}_64.png"
+                special_icon_mapping[type_id] = output_file_name
         else:
             print(f"找不到文件: {source_path}")
     
@@ -289,7 +297,7 @@ def copy_icon_batch():
 
 
 def copy_and_rename_icon(x):
-    global icon_md5_map
+    global icon_md5_map, special_icon_mapping
     
     # 定义文件路径
     input_directory = "Data/Types"
@@ -302,35 +310,48 @@ def copy_and_rename_icon(x):
     # 确保输出目录存在
     os.makedirs(output_directory, exist_ok=True)
 
-    # 构造输入文件完整路径
-    input_path = os.path.join(input_directory, input_file)
-    input_bpc_path = os.path.join(input_directory, input_bpc_file)
-
-    # 检查源文件是否存在
-    if not os.path.exists(input_path):
-        return "items_7_64_15.png", None
-
-    # 计算源文件的MD5
-    file_md5 = calculate_file_md5(input_path)
-    
-    # 检查MD5是否存在于映射中
-    if file_md5 in icon_md5_map:
-        # 如果存在，检查目标文件是否存在
-        output_file = icon_md5_map[file_md5]
+    # 检查当前type_id是否存在于特殊图标映射中
+    if x in special_icon_mapping:
+        # 如果是特殊映射的type_id，直接返回对应的图标名称
+        # 但我们仍需复制文件到输出目录（如果不存在）
+        output_file = special_icon_mapping[x]
         output_path = os.path.join(output_directory, output_file)
-        if not os.path.exists(output_path):
-            shutil.copy(input_path, output_path)
+        input_path = os.path.join(input_directory, input_file)
+        
+        if os.path.exists(input_path) and not os.path.exists(output_path):
+            shutil.copy2(input_path, output_path)
+        
+        # 注意：不在这里处理BPC图标，让它走下面的常规MD5映射逻辑
     else:
-        # 如果MD5没有重复，则复制一次
-        output_path = os.path.join(output_directory, output_file)
-        if not os.path.exists(output_path):
-            shutil.copy(input_path, output_path)
-            # 将新的MD5和文件名添加到映射中
-            icon_md5_map[file_md5] = output_file
-            # 保存更新后的映射
-            save_md5_map(icon_md5_map)
+        # 构造输入文件完整路径
+        input_path = os.path.join(input_directory, input_file)
+
+        # 检查源文件是否存在
+        if not os.path.exists(input_path):
+            return "items_7_64_15.png", None
+
+        # 计算源文件的MD5
+        file_md5 = calculate_file_md5(input_path)
+        
+        # 检查MD5是否存在于映射中
+        if file_md5 in icon_md5_map:
+            # 如果存在，检查目标文件是否存在
+            output_file = icon_md5_map[file_md5]
+            output_path = os.path.join(output_directory, output_file)
+            if not os.path.exists(output_path):
+                shutil.copy(input_path, output_path)
+        else:
+            # 如果MD5没有重复，则复制一次
+            output_path = os.path.join(output_directory, output_file)
+            if not os.path.exists(output_path):
+                shutil.copy(input_path, output_path)
+                # 将新的MD5和文件名添加到映射中
+                icon_md5_map[file_md5] = output_file
+                # 保存更新后的映射
+                save_md5_map(icon_md5_map)
     
-    # 检查是否存在bpc图标
+    # 检查是否存在bpc图标 - 统一处理BPC图标
+    input_bpc_path = os.path.join(input_directory, input_bpc_file)
     if os.path.exists(input_bpc_path):
         # 计算bpc文件的MD5
         bpc_md5 = calculate_file_md5(input_bpc_path)
