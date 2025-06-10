@@ -215,7 +215,7 @@ def copy_icon_batch():
 
     # 有些物品，如无人机，其衍生等级相同，但均使用了错误的图标
     # 定义特殊文件映射字典: key为源文件名，value为需要复制成的type_id列表
-    # SELECT t.type_id, t.name, t.metaGroupID FROM types AS t JOIN (SELECT icon_filename, categoryID, metaGroupID FROM types WHERE type_id = 47145) AS ref ON t.icon_filename = ref.icon_filename AND t.categoryID = ref.categoryID AND t.metaGroupID = ref.metaGroupID ORDER BY t.metaGroupID
+    # SELECT t.type_id, t.name, t.metaGroupID, t.icon_filename FROM types AS t JOIN (SELECT icon_filename, categoryID, metaGroupID FROM types WHERE type_id = 47151) AS ref ON t.icon_filename = ref.icon_filename AND t.categoryID = ref.categoryID AND t.metaGroupID = ref.metaGroupID
     # 可以这样查询到，由于只有部分物品存在此问题，因此暂时使用硬编码。
     special_file_mapping = {
         '2173': [2173,23702,23709,23725], # 渗透者 I
