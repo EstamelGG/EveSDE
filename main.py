@@ -379,6 +379,92 @@ def clean_invnames_table():
         except Exception as e:
             print(f"清理数据库 {db_filename} 中的invNames表时发生错误: {e}")
 
+    def copy_icon_batch():
+        """从fetchIcons/icon_fix目录复制修正过的图标到Data/Types目录
+
+        这些图片是已知某些typeid对应的图片存在错误，因此通过手动修正后放在icon_fix目录中
+        复制到Data/Types目录后，就能确保在处理时使用正确的图片
+
+        同时处理一些特殊情况：某些图片需要复制为多个不同type_id的文件
+        """
+
+        source_dir = "fetchIcons/icon_fix"
+        target_dir = "Data/Types"
+
+        # 有些物品，如无人机，其衍生等级相同，但均使用了错误的图标
+        # 定义特殊文件映射字典: key为源文件名，value为需要复制成的type_id列表
+        # SELECT t.type_id, t.name, t.metaGroupID, t.icon_filename FROM types AS t JOIN (SELECT icon_filename, categoryID, metaGroupID FROM types WHERE type_id = 47151) AS ref ON t.icon_filename = ref.icon_filename AND t.categoryID = ref.categoryID AND t.metaGroupID = ref.metaGroupID
+        # 可以这样查询到，由于只有部分物品存在此问题，因此暂时使用硬编码。
+        special_file_mapping = {
+            '2173': [2173, 23702, 23709, 23725],  # 渗透者 I
+            '2193': [2193, 22572, 23510, 23523],  # 执政官 I
+            '2203': [2203, 3549, 17565, 22574, 22713, 23659, 23711, 23727],  # 侍僧 I
+            '2464': [2464, 23707, 23719],  # 大黄蜂 I
+            '15508': [15508, 23705, 23717],  # 金星 I
+            '2476': [2476],  # 狂战士 I
+            '15510': [15510, 23721, 23729],  # 瓦尔基里 I
+            '2486': [2486, 23723, 23731],  # 武士 I
+            '40553': [40553, 40559, 40571],  # 因赫吉 II
+            '40570': [40555, 40558, 40570],  # 萨梯 II
+            '40569': [40554, 40557, 40569],  # 蚱蜢 II
+            '40568': [40552, 40556, 40568],  # 圣殿骑士 II
+            '40560': [40560, 40561],  # 阿米特 II
+            '40562': [40562, 40563],  # 独眼巨人 II
+            '40566': [40566, 40567],  # 白蚁 II
+            '40565': [40564, 40565],  # 斩裂剑 II
+            '47036': [47036, 47133, 47140],  # 屹立德洛米 I
+            '47145': [47035, 47131, 47145],  # 屹立修道士 I
+            '47138': [47132, 47138, 47146],  # 屹立圣甲虫 I
+            '47147': [47037, 47139, 47147],  # 屹立掷矛手 I
+            '47151': [47137, 47144, 47151],  # 屹立德洛米 II
+            '47148': [47134, 47141, 47148],  # 屹立圣殿骑士 II
+            '47142': [47135, 47142, 47149],  # 屹立蜻蜓 II
+            '47150': [47136, 47143, 47150],  # 屹立掷矛手 II
+            '28270': [28270, 28272],  # 集成型战锤
+            '28274': [28274, 28276],  # 集成型地精灵
+            '28286': [28286, 28288],  # 集成型蛮妖
+            '28278': [28278, 28280],  # 集成型大黄蜂
+            '28306': [28306, 28308],  # 集成型胡蜂
+            '28298': [28298, 28300],  # 集成型金星
+            '28282': [28282, 28284],  # 集成型渗透者
+            '28262': [28262, 28264],  # 集成型侍僧
+            '28302': [28302, 28304],  # 集成型武士
+            '28290': [28290, 28292],  # 集成型执政官
+            '47127': [47127, 47119],  # 屹立槌骨 II
+            '47129': [47129, 47121],  # 屹立独眼巨人 II
+            '47128': [47128, 47120],  # 屹立螳螂 II
+            '47122': [47122, 47130],  # 屹立斩裂剑 II
+
+            # 可以根据需要添加更多映射
+        }
+
+        # 检查源目录是否存在
+        if not os.path.exists(source_dir):
+            print(f"警告：{source_dir}目录不存在，跳过图标批量复制")
+            return
+
+        # 确保目标目录存在
+        os.makedirs(target_dir, exist_ok=True)
+
+        # 复制普通文件
+        copy_count = 0
+        for item_id in special_file_mapping.keys():
+            # 检查是否是特殊映射文件
+            file_name = f"{item_id}_64.png"
+            source_path = os.path.join(source_dir, file_name)
+            if os.path.exists(source_path):
+                # 为每个指定的type_id创建一个复制
+                for type_id in special_file_mapping[item_id]:
+                    target_file_name = f"{type_id}_64.png"
+                    target_path = os.path.join(target_dir, target_file_name)
+                    if not os.path.exists(target_path):
+                        shutil.copy2(source_path, target_path)
+                        copy_count += 1
+            else:
+                print(f"找不到文件: {source_path}")
+
+        print(f"已从{source_dir}复制{copy_count}个修正图标到{target_dir}")
+
 def update_dynamic_items_data():
     """尝试从网络更新动态物品数据，如果失败则使用本地数据"""
     print("\nUpdating dynamic items data...")
@@ -544,6 +630,9 @@ def main():
         process_yaml_file(update_typeDogma_yaml_file_path, read_typeDogma_yaml, process_typeDogma_data)
     else:
         process_yaml_file(typeDogma_yaml_file_path, read_typeDogma_yaml, process_typeDogma_data)
+
+    # 存在一些需要修复的图片
+    copy_icon_batch()
 
     print("\nProcessing types.yaml...")  # 物品详情
     process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
