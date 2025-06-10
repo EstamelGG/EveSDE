@@ -398,90 +398,6 @@ def getNewAttributeID(cursor):
     max_id = cursor.fetchone()[0]
     return max_id + 1
 
-def Fix_ab_and_mwd():
-    """
-    修复加力燃烧器和微型跃迁推进器效果
-    
-    1. 添加velocityBoost属性
-    2. 修复moduleBonusMicrowarpdrive和moduleBonusAfterburner效果
-    """
-    print("\n修复加力燃烧器和微型跃迁推进器效果...")
-    
-    # 遍历所有语言的数据库
-    for lang in languages:
-        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
-        
-        # 检查数据库文件是否存在
-        if os.path.exists(db_filename):
-            db_path = db_filename
-        elif os.path.exists(f"{db_filename}.zip"):
-            print(f"警告：数据库 {db_filename} 已被压缩，无法修补。请在压缩前执行修补操作。")
-            continue
-        else:
-            print(f"错误：找不到数据库 {db_filename}")
-            continue
-        
-        try:
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-            
-            # 1. 获取新的属性ID
-            velocity_boost_id = getNewAttributeID(cursor)
-            
-            # 2. 检查velocityBoost属性是否已存在
-            cursor.execute('SELECT COUNT(*) FROM dogmaAttributes WHERE name = ?', ("velocityBoost",))
-            if cursor.fetchone()[0] == 0:
-                # 3. 添加velocityBoost属性
-                cursor.execute('''
-                    INSERT INTO dogmaAttributes (
-                        attribute_id, categoryID, name, display_name, 
-                        highIsGood, defaultValue, stackable
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
-                ''', (
-                    velocity_boost_id,
-                    0,  # categoryID
-                    "velocityBoost",
-                    None,
-                    1,  # highIsGood
-                    0,  # defaultValue
-                    1   # stackable
-                ))
-                print(f"数据库 {lang}: 已添加 velocityBoost 属性，ID: {velocity_boost_id}")
-            else:
-                # 获取现有的velocityBoost属性ID
-                cursor.execute('SELECT attribute_id FROM dogmaAttributes WHERE name = ?', ("velocityBoost",))
-                velocity_boost_id = cursor.fetchone()[0]
-                print(f"数据库 {lang}: velocityBoost 属性已存在，ID: {velocity_boost_id}")
-            
-            # 4. 修复moduleBonusMicrowarpdrive效果
-            mwd_modifier_info = f'[{{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 552, "modifyingAttributeID": 554, "operation": 6}}, {{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 4, "modifyingAttributeID": 796, "operation": 2}}, {{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": {velocity_boost_id}, "modifyingAttributeID": 20, "operation": 6}}, {{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": {velocity_boost_id}, "modifyingAttributeID": 1803, "operation": 3}}]'
-            
-            cursor.execute(
-                'UPDATE dogmaEffects SET modifier_info = ? WHERE effect_name = ?',
-                (mwd_modifier_info, "moduleBonusMicrowarpdrive")
-            )
-            mwd_rows = cursor.rowcount
-            print(f"数据库 {lang}: 已更新 {mwd_rows} 条 moduleBonusMicrowarpdrive 效果记录")
-            
-            # 5. 修复moduleBonusAfterburner效果
-            ab_modifier_info = f'[{{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 4, "modifyingAttributeID": 796, "operation": 2}}, {{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": {velocity_boost_id}, "modifyingAttributeID": 20, "operation": 6}}, {{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": {velocity_boost_id}, "modifyingAttributeID": 315, "operation": 3}}]'
-            
-            cursor.execute(
-                'UPDATE dogmaEffects SET modifier_info = ? WHERE effect_name = ?',
-                (ab_modifier_info, "moduleBonusAfterburner")
-            )
-            ab_rows = cursor.rowcount
-            print(f"数据库 {lang}: 已更新 {ab_rows} 条 moduleBonusAfterburner 效果记录")
-            
-            # 提交更改
-            conn.commit()
-            conn.close()
-            
-            print(f"数据库 {lang}: 修复完成")
-            
-        except Exception as e:
-            print(f"修复数据库 {db_filename} 时发生错误: {e}")
-
 def dogmaEffect_patch():
     """修补dogmaEffects表中的特定效果数据"""
     print("\n执行dogmaEffects表数据修补...")
@@ -499,6 +415,14 @@ def dogmaEffect_patch():
         {
             "effect_name": "microJumpDrive",
             "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 552, "modifyingAttributeID": 973, "operation": 6}]'
+        },
+        {
+            "effect_name": "moduleBonusMicrowarpdrive",
+            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 552, "modifyingAttributeID": 554, "operation": 6}, {"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 4, "modifyingAttributeID": 796, "operation": 2}]'
+        },
+        {
+            "effect_name": "moduleBonusAfterburner",
+            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 4, "modifyingAttributeID": 796, "operation": 2}]'
         },
         {
             "effect_name": "adaptiveArmorHardener",
@@ -660,9 +584,6 @@ def main():
     
     # 执行dogmaEffects表数据修补
     dogmaEffect_patch()
-    
-    # 修复加力燃烧器和微型跃迁推进器效果
-    Fix_ab_and_mwd()
     
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
