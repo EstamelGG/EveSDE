@@ -379,7 +379,7 @@ def clean_invnames_table():
         except Exception as e:
             print(f"清理数据库 {db_filename} 中的invNames表时发生错误: {e}")
 
-    def copy_icon_batch():
+def copy_icon_batch():
         """从fetchIcons/icon_fix目录复制修正过的图标到Data/Types目录
 
         这些图片是已知某些typeid对应的图片存在错误，因此通过手动修正后放在icon_fix目录中
