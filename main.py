@@ -457,11 +457,10 @@ def copy_icon_batch():
                 for type_id in special_file_mapping[item_id]:
                     target_file_name = f"{type_id}_64.png"
                     target_path = os.path.join(target_dir, target_file_name)
-                    if not os.path.exists(target_path):
-                        shutil.copy2(source_path, target_path)
-                        copy_count += 1
+                    shutil.copy2(source_path, target_path)
+                    copy_count += 1
             else:
-                print(f"找不到文件: {source_path}")
+                print(f"找不到源文件: {source_path}")
 
         print(f"已从{source_dir}复制{copy_count}个修正图标到{target_dir}")
 
