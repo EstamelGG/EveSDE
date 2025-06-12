@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import shutil
 import sqlite3
@@ -35,6 +36,7 @@ from dynamic_items_handler import process_data as process_dynamic_items_data, fe
 from agent_localization_handler import update_agents_localization  # 导入新的本地化处理函数
 from station_name_localization.station_localization_handler import update_stations_localization  # 导入空间站本地化处理函数
 from dogmaEffects_handler import read_yaml as read_dogmaEffects_yaml, process_data as process_dogmaEffects_data
+from dbuff_collections_handler import read_yaml as read_dbuff_collections_yaml, process_data as process_dbuff_collections_data
 
 # 文件路径
 categories_yaml_file_path = 'Data/sde/fsd/categories.yaml'
@@ -63,6 +65,7 @@ stations_yaml_file_path = 'Data/sde/bsd/staStations.yaml'
 invFlags_yaml_file_path = 'Data/sde/bsd/invFlags.yaml'
 invNames_yaml_file_path = 'Data/sde/bsd/invNames.yaml'
 dogmaEffects_yaml_file_path = 'Data/sde/fsd/dogmaEffects.yaml'
+dbuff_collections_yaml_file_path = 'Data/sde/fsd/dbuffCollections.yaml'
 
 # aa archive -o ../icons.aar -d .
 
@@ -644,6 +647,9 @@ def main():
 
     # 更新动态物品数据（尝试从网络获取）
     update_dynamic_items_data()
+
+    print("\nProcessing dbuffCollections.yaml...")  # 处理dbuff集合数据
+    process_yaml_file(dbuff_collections_yaml_file_path, read_dbuff_collections_yaml, process_dbuff_collections_data)
 
     print("\nProcessing dynamic items data...")  # 动态物品属性数据
     process_special_data(process_dynamic_items_data, "dynamic items data")
