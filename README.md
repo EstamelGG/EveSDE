@@ -6,7 +6,7 @@
 4. 物品打包体积来自第三方数据来源：https://sde.hoboleaks.space/tq/repackagedvolumes.json ，放在 `thirdparty_data_source/repackagedvolumes.json`
 4. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。 (不怎么更新了)(建议删除 `Data/Types` 目录)
 5. 开始构造数据库 `main.py`
-6. 加成带来的 dbuff 效果来自 https://sde.hoboleaks.space/tq/dbuffs.json
+6. 加成带来的 dbuff 效果来自 https://github.com/EVEShipFit/sde/releases
 
 ![img.png](img.png)
 
@@ -101,6 +101,7 @@ keep_files=(
   "dogmaEffects.yaml"
   "marketGroups.yaml"
   "agentsInSpace.yaml"
+  "dbuffCollections.yaml",
   "ancestries.yaml"
   "bloodlines.yaml"
   "blueprints.yaml"
@@ -145,6 +146,7 @@ $keep_files = @(
     "blueprints.yaml",
     "categories.yaml",
     "contrabandTypes.yaml",
+    "dbuffCollections.yaml",
     "controlTowerResources.yaml",
     "corporationActivities.yaml",
     "dogmaAttributeCategories.yaml",
