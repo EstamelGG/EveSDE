@@ -498,14 +498,14 @@ def process_data(types_data, cursor, lang):
 
         # 获取所有语言的名称
         names = {
-            'de': item['name'].get('de', ''),
-            'en': item['name'].get('en', ''),
-            'es': item['name'].get('es', ''),
-            'fr': item['name'].get('fr', ''),
-            'ja': item['name'].get('ja', ''),
-            'ko': item['name'].get('ko', ''),
-            'ru': item['name'].get('ru', ''),
-            'zh': item['name'].get('zh', '')
+            'de': item['name'].get('de', name),
+            'en': item['name'].get('en', name),
+            'es': item['name'].get('es', name),
+            'fr': item['name'].get('fr', name),
+            'ja': item['name'].get('ja', name),
+            'ko': item['name'].get('ko', name),
+            'ru': item['name'].get('ru', name),
+            'zh': item['name'].get('zh', name)
         }
 
         description = item.get('description', {}).get(lang, item.get('description', {}).get('en', ""))

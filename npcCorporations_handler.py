@@ -126,14 +126,14 @@ async def process_data_async(corporations_data, cursor, lang):
         
         # 获取所有语言的名称
         names = {
-            'de': corp_info.get('nameID', {}).get('de', ''),
-            'en': corp_info.get('nameID', {}).get('en', ''),
-            'es': corp_info.get('nameID', {}).get('es', ''),
-            'fr': corp_info.get('nameID', {}).get('fr', ''),
-            'ja': corp_info.get('nameID', {}).get('ja', ''),
-            'ko': corp_info.get('nameID', {}).get('ko', ''),
-            'ru': corp_info.get('nameID', {}).get('ru', ''),
-            'zh': corp_info.get('nameID', {}).get('zh', '')
+            'de': corp_info.get('nameID', {}).get('de', name),
+            'en': corp_info.get('nameID', {}).get('en', name),
+            'es': corp_info.get('nameID', {}).get('es', name),
+            'fr': corp_info.get('nameID', {}).get('fr', name),
+            'ja': corp_info.get('nameID', {}).get('ja', name),
+            'ko': corp_info.get('nameID', {}).get('ko', name),
+            'ru': corp_info.get('nameID', {}).get('ru', name),
+            'zh': corp_info.get('nameID', {}).get('zh', name)
         }
         
         # 获取描述，如果没有对应语言的就用英文

@@ -192,14 +192,14 @@ async def process_data_async(yaml_data, cursor, language):
             
         # 获取所有语言的名称
         names = {
-            'de': faction_data.get('nameID', {}).get('de', ''),
-            'en': faction_data.get('nameID', {}).get('en', ''),
-            'es': faction_data.get('nameID', {}).get('es', ''),
-            'fr': faction_data.get('nameID', {}).get('fr', ''),
-            'ja': faction_data.get('nameID', {}).get('ja', ''),
-            'ko': faction_data.get('nameID', {}).get('ko', ''),
-            'ru': faction_data.get('nameID', {}).get('ru', ''),
-            'zh': faction_data.get('nameID', {}).get('zh', '')
+            'de': faction_data.get('nameID', {}).get('de', name),
+            'en': faction_data.get('nameID', {}).get('en', name),
+            'es': faction_data.get('nameID', {}).get('es', name),
+            'fr': faction_data.get('nameID', {}).get('fr', name),
+            'ja': faction_data.get('nameID', {}).get('ja', name),
+            'ko': faction_data.get('nameID', {}).get('ko', name),
+            'ru': faction_data.get('nameID', {}).get('ru', name),
+            'zh': faction_data.get('nameID', {}).get('zh', name)
         }
         
         # 设置图标文件名
