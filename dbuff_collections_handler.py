@@ -8,15 +8,15 @@ import time
 
 # 操作名称映射到操作ID
 OPERATION_MAP = {
-    "preAssign": -1,
-    "preMul": 0,
-    "preDiv": 1,
-    "modAdd": 2,
-    "modSub": 3,
-    "postMul": 4,
-    "postDiv": 5,
-    "postPercent": 6,
-    "postAssign": 7
+    "preassign": -1,
+    "premul": 0,
+    "prediv": 1,
+    "modadd": 2,
+    "modsub": 3,
+    "postmul": 4,
+    "postdiv": 5,
+    "postpercent": 6,
+    "postassign": 7
 }
 
 def read_yaml(file_path):
@@ -51,7 +51,11 @@ def parse_modifiers(dbuff_data):
         list: 修饰器列表
     """
     modifiers = []
-    operation = OPERATION_MAP.get(dbuff_data.get('operationName', 'postMul').lower(), 4)  # 默认为postMul(4)
+    operation_str = dbuff_data.get('operationName', 'postMul').lower()
+    if operation_str in OPERATION_MAP.keys():
+        operation = OPERATION_MAP[operation_str]
+    else:
+        print(f"未找到 {operation_str} 的 operation, 请检查")
     
     # 处理itemModifiers
     if 'itemModifiers' in dbuff_data and dbuff_data['itemModifiers']:
