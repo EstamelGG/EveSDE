@@ -666,9 +666,9 @@ def main():
     # 更新动态物品数据（尝试从网络获取）
     update_dynamic_items_data()
 
-    print("\nProcessing dbuffCollections.yaml...")  # 处理dbuff集合数据
-    process_yaml_file(dbuff_collections_yaml_file_path, read_dbuff_collections_yaml, process_dbuff_collections_data)
-
+    # 存在一些需要修复的图片
+    copy_icon_batch()
+    
     print("\nProcessing dynamic items data...")  # 动态物品属性数据
     process_special_data(process_dynamic_items_data, "dynamic items data")
 
@@ -728,11 +728,11 @@ def main():
     else:
         process_yaml_file(typeDogma_yaml_file_path, read_typeDogma_yaml, process_typeDogma_data)
 
-    # 存在一些需要修复的图片
-    copy_icon_batch()
-
     print("\nProcessing types.yaml...")  # 物品详情
     process_yaml_file(types_yaml_file_path, read_types_yaml, process_types_data)
+
+    print("\nProcessing dbuffCollections.yaml...")  # 处理dbuff集合数据
+    process_yaml_file(dbuff_collections_yaml_file_path, read_dbuff_collections_yaml, process_dbuff_collections_data)
 
     print("\nProcessing marketGroups.yaml...")  # 市场分组
     process_yaml_file(marketGroups_yaml_file_path, read_marketGroups_yaml, process_marketGroups_data)
