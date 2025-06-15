@@ -102,6 +102,7 @@ def create_dbuff_collection_table(cursor):
         dbuff_id INTEGER NOT NULL,
         type_id INTEGER NOT NULL,
         dbuff_name TEXT,
+        aggregateMode TEXT,
         modifier_info TEXT,
         PRIMARY KEY (dbuff_id, type_id)
     )
@@ -201,7 +202,12 @@ def process_data(data, cursor, lang):
             dbuff_name = re.sub(r'[^a-zA-Z]', '', dev_desc)
         else:
             dbuff_name = "dbuff_" + str(dbuff_id)
-        
+
+        if 'aggregateMode' in dbuff_data:
+            aggregateMode = dbuff_data['aggregateMode']
+        else:
+            aggregateMode = None
+
         # 检查是否有对应的type_id关系
         if dbuff_id in type_dbuff_mapping:
             # 为每个type_id创建一条记录
@@ -216,14 +222,14 @@ def process_data(data, cursor, lang):
                 modifier_info = json.dumps(modifiers)
                 
                 # 添加到批量数据
-                batch_data.append((dbuff_id, type_id, dbuff_name, modifier_info))
+                batch_data.append((dbuff_id, type_id, dbuff_name, aggregateMode, modifier_info))
                 
                 # 当达到批处理大小时执行插入
                 if len(batch_data) >= batch_size:
                     cursor.executemany('''
                         INSERT OR REPLACE INTO dbuffCollection (
-                            dbuff_id, type_id, dbuff_name, modifier_info
-                        ) VALUES (?, ?, ?, ?)
+                            dbuff_id, type_id, dbuff_name, aggregateMode, modifier_info
+                        ) VALUES (?, ?, ?, ?, ?)
                     ''', batch_data)
                     batch_data = []  # 清空批处理列表
         # 如果没有找到对应的type_id关系，跳过该记录（不写入type_id为0的记录）
@@ -232,8 +238,8 @@ def process_data(data, cursor, lang):
     if batch_data:
         cursor.executemany('''
             INSERT OR REPLACE INTO dbuffCollection (
-                dbuff_id, type_id, dbuff_name, modifier_info
-            ) VALUES (?, ?, ?, ?)
+                dbuff_id, type_id, dbuff_name, aggregateMode, modifier_info
+            ) VALUES (?, ?, ?, ?, ?)
         ''', batch_data)
     
     print("已处理 %d 个dbuff集合，语言: %s" % (len(data), lang))
