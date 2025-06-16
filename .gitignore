@@ -51,3 +51,5 @@ station_template_generator_*.log
 /fetchTypes/typeids.txt
 fetchTypes/typeDogma.yaml
 /fetchIcons/last_fetch.txt
+fetchIcons/typeid_to_iconpath.json
+fetchIcons/typeids_cache.txt
