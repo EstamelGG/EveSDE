@@ -94,14 +94,15 @@
 
 在下载目录执行命令，即可只保留有效数据：
 
-```txt
+```bash
+cd /Users/gg/Downloads/sde
 keep_files=(
   "typeDogma.yaml"
   "typeMaterials.yaml"
   "dogmaEffects.yaml"
   "marketGroups.yaml"
   "agentsInSpace.yaml"
-  "dbuffCollections.yaml",
+  "dbuffCollections.yaml"
   "ancestries.yaml"
   "bloodlines.yaml"
   "blueprints.yaml"
@@ -128,6 +129,7 @@ keep_files=(
 
 for f in *; do
   if [[ ! " ${keep_files[*]} " =~ " $f " ]]; then
+    echo "删除文件: "$f""
     rm -f -- "$f"
   fi
 done
