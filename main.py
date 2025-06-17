@@ -3,6 +3,7 @@ import os
 import shutil
 import sqlite3
 import zipfile
+import json
 from categories_handler import read_yaml as read_categories_yaml, process_data as process_categories_data
 from groups_handler import read_yaml as read_groups_yaml, process_data as process_groups_data
 from types_handler import read_yaml as read_types_yaml, process_data as process_types_data
@@ -168,7 +169,7 @@ def clean_unused_icons(source_dir):
                 # 如果文件不在使用的图标列表中，则删除
                 if filename not in used_icons:
                     os.remove(file_path)
-                    print(f"已删除未使用的图标文件: {filename}")
+                    # print(f"已删除未使用的图标文件: {filename}")
                     deleted_count += 1
             except Exception as e:
                 print(f"删除文件 {filename} 时发生错误: {e}")
@@ -417,45 +418,36 @@ def getNewAttributeID(cursor):
     return max_id + 1
 
 
+def load_dogma_effect_patches():
+    """从JSON文件加载dogmaEffects的修补数据"""
+    patch_file = 'dogmaPatch/dogma_effect_patches.json'
+    
+    try:
+        with open(patch_file, 'r', encoding='utf-8') as f:
+            patches = json.load(f)
+        print(f"成功从 {patch_file} 加载了 {len(patches)} 个修补项")
+        return patches
+    except FileNotFoundError:
+        print(f"警告：修补文件 {patch_file} 不存在，跳过dogmaEffects修补")
+        return []
+    except json.JSONDecodeError as e:
+        print(f"错误：解析修补文件 {patch_file} 失败: {e}")
+        return []
+    except Exception as e:
+        print(f"错误：加载修补文件 {patch_file} 时发生异常: {e}")
+        return []
+
+
 def dogmaEffect_patch():
     """修补dogmaEffects表中的特定效果数据"""
     print("\n执行dogmaEffects表数据修补...")
 
-    # 需要修补的效果数据
-    patches = [
-        {
-            "effect_name": "selfRof",
-            "modifier_info": '[{"domain": "shipID", "func": "LocationRequiredSkillModifier", "modifiedAttributeID": 51, "modifyingAttributeID": 293, "operation": 6, "skillTypeID": -1}]'
-        },
-        {
-            "effect_name": "droneDmgBonus",
-            "modifier_info": '[{"domain": "shipID", "func": "OwnerRequiredSkillModifier", "modifiedAttributeID": 64, "modifyingAttributeID": 292, "operation": 6, "skillTypeID": -1}]'
-        },
-        {
-            "effect_name": "microJumpDrive",
-            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 552, "modifyingAttributeID": 973, "operation": 6}]'
-        },
-        {
-            "effect_name": "moduleBonusMicrowarpdrive",
-            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 552, "modifyingAttributeID": 554, "operation": 6}, {"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 4, "modifyingAttributeID": 796, "operation": 2}]'
-        },
-        {
-            "effect_name": "moduleBonusAfterburner",
-            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 4, "modifyingAttributeID": 796, "operation": 2}]'
-        },
-        {
-            "effect_name": "adaptiveArmorHardener",
-            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 267, "modifyingAttributeID": 267, "operation": 0}, {"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 268, "modifyingAttributeID": 268, "operation": 0},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 269, "modifyingAttributeID": 269, "operation": 0},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 270, "modifyingAttributeID": 270, "operation": 0}]'
-        },
-        {
-            "effect_name": "hardPointModifierEffect",
-            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 101, "modifyingAttributeID": 1369, "operation": 2}, {"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 102, "modifyingAttributeID": 1368, "operation": 2}]'
-        },
-        {
-            "effect_name": "slotModifier",
-            "modifier_info": '[{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 14, "modifyingAttributeID": 1374, "operation": 2},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 13, "modifyingAttributeID": 1375, "operation": 2},{"domain": "shipID", "func": "ItemModifier", "modifiedAttributeID": 12, "modifyingAttributeID": 1376, "operation": 2}]'
-        }
-    ]
+    # 从JSON文件加载修补数据
+    patches = load_dogma_effect_patches()
+    
+    if not patches:
+        print("没有可用的修补数据，跳过修补操作")
+        return
 
     # 遍历所有语言的数据库
     for lang in languages:
@@ -478,7 +470,8 @@ def dogmaEffect_patch():
             # 应用每个修补
             for patch in patches:
                 effect_name = patch["effect_name"]
-                modifier_info = patch["modifier_info"]
+                # 将JSON对象转换为字符串存储到数据库中
+                modifier_info = json.dumps(patch["modifier_info"], separators=(',', ':'))
 
                 # 更新指定效果的modifier_info字段
                 cursor.execute(
@@ -488,7 +481,7 @@ def dogmaEffect_patch():
 
                 # 获取受影响的行数
                 affected_rows = cursor.rowcount
-                print(f"数据库 {lang}: 已更新 {affected_rows} 条 {effect_name} 效果记录")
+                print(f"数据库 {lang}: 已修补 {affected_rows} 条 {effect_name} 效果记录")
 
             # 提交更改
             conn.commit()

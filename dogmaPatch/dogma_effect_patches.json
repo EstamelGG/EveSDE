@@ -1,0 +1,201 @@
+[
+    {
+        "effect_name": "selfRof",
+        "modifier_info": [
+            {
+                "domain": "shipID",
+                "func": "LocationRequiredSkillModifier",
+                "modifiedAttributeID": 51,
+                "modifyingAttributeID": 293,
+                "operation": 6,
+                "skillTypeID": -1
+            }
+        ]
+    },
+    {
+        "effect_name": "droneDmgBonus",
+        "modifier_info": [
+            {
+                "domain": "shipID",
+                "func": "OwnerRequiredSkillModifier",
+                "modifiedAttributeID": 64,
+                "modifyingAttributeID": 292,
+                "operation": 6,
+                "skillTypeID": -1
+            }
+        ]
+    },
+    {
+        "effect_name": "microJumpDrive",
+        "modifier_info": [
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 552,
+                "modifyingAttributeID": 973,
+                "operation": 6
+            }
+        ]
+    },
+    {
+        "effect_name": "moduleBonusMicrowarpdrive",
+        "modifier_info": [
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 552,
+                "modifyingAttributeID": 554,
+                "operation": 6
+            },
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 4,
+                "modifyingAttributeID": 796,
+                "operation": 2
+            }
+        ]
+    },
+    {
+        "effect_name": "moduleBonusAfterburner",
+        "modifier_info": [
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 4,
+                "modifyingAttributeID": 796,
+                "operation": 2
+            }
+        ]
+    },
+    {
+        "effect_name": "adaptiveArmorHardener",
+        "modifier_info": [
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 267,
+                "modifyingAttributeID": 267,
+                "operation": 0
+            },
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 268,
+                "modifyingAttributeID": 268,
+                "operation": 0
+            },
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 269,
+                "modifyingAttributeID": 269,
+                "operation": 0
+            },
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 270,
+                "modifyingAttributeID": 270,
+                "operation": 0
+            }
+        ]
+    },
+    {
+        "effect_name": "hardPointModifierEffect",
+        "modifier_info": [
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 101,
+                "modifyingAttributeID": 1369,
+                "operation": 2
+            },
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 102,
+                "modifyingAttributeID": 1368,
+                "operation": 2
+            }
+        ]
+    },
+    {
+        "effect_name": "slotModifier",
+        "modifier_info": [
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 14,
+                "modifyingAttributeID": 1374,
+                "operation": 2
+            },
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 13,
+                "modifyingAttributeID": 1375,
+                "operation": 2
+            },
+            {
+                "domain": "shipID",
+                "func": "ItemModifier",
+                "modifiedAttributeID": 12,
+                "modifyingAttributeID": 1376,
+                "operation": 2
+            }
+        ]
+    },
+    {
+        "effect_name": "missileEMDmgBonus",
+        "modifier_info": [
+            {
+                "domain": "charID",
+                "func": "OwnerRequiredSkillModifier",
+                "modifiedAttributeID": 114,
+                "modifyingAttributeID": 292,
+                "operation": 6,
+                "skillTypeID": -1
+            }
+        ]
+    },
+    {
+        "effect_name": "missileExplosiveDmgBonus",
+        "modifier_info": [
+            {
+                "domain": "charID",
+                "func": "OwnerRequiredSkillModifier",
+                "modifiedAttributeID": 116,
+                "modifyingAttributeID": 292,
+                "operation": 6,
+                "skillTypeID": -1
+            }
+        ]
+    },
+    {
+        "effect_name": "missileKineticDmgBonus2",
+        "modifier_info": [
+            {
+                "domain": "charID",
+                "func": "OwnerRequiredSkillModifier",
+                "modifiedAttributeID": 117,
+                "modifyingAttributeID": 292,
+                "operation": 6,
+                "skillTypeID": -1
+            }
+        ]
+    },
+    {
+        "effect_name": "missileThermalDmgBonus",
+        "modifier_info": [
+            {
+                "domain": "charID",
+                "func": "OwnerRequiredSkillModifier",
+                "modifiedAttributeID": 118,
+                "modifyingAttributeID": 292,
+                "operation": 6,
+                "skillTypeID": -1
+            }
+        ]
+    }
+] 
