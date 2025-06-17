@@ -183,11 +183,10 @@ def read_repackaged_volumes():
 
 def load_md5_map():
     """从文件加载MD5映射"""
-    try:
-        with open('icon_md5_map.txt', 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
+    map_file = 'icon_md5_map.txt'
+    if os.path.exists(map_file):
+        os.unlink(map_file)
+    return {}
 
 
 def save_md5_map(md5_map):

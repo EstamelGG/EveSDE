@@ -97,7 +97,21 @@ def process_data(yaml_data, cursor, language):
     
     # 清空现有数据
     cursor.execute('DELETE FROM marketGroups')
-    
+
+    # 自定义组名称附加文本
+    custom_group_expand = {
+        '2396': '(R4)',
+        '2397': '(R8)',
+        '2398': '(R16)',
+        '2400': '(R32)',
+        '2401': '(R64)',
+        '1333': '(P0)',
+        '1334': '(P1)',
+        '1335': '(P2)',
+        '1336': '(P3)',
+        '1337': '(P4)',
+    }
+
     # 处理每个市场组
     insert_data = []
     for group_id, group_data in yaml_data.items():
@@ -105,16 +119,8 @@ def process_data(yaml_data, cursor, language):
         name = group_data.get('nameID', {}).get(language, '')
         if not name:  # 如果当前语言的name为空，尝试获取英语的name
             name = group_data.get('nameID', {}).get('en', '')
-        if group_id == 2396:
-            name += "(R4)"
-        if group_id == 2397:
-            name += "(R8)"
-        if group_id == 2398:
-            name += "(R16)"
-        if group_id == 2400:
-            name += "(R32)"
-        if group_id == 2401:
-            name += "(R64)"
+        if str(group_id) in custom_group_expand.keys():
+            name += custom_group_expand[str(group_id)]
             
         description = group_data.get('descriptionID', {}).get(language, '')
         if not description:  # 如果当前语言的description为空，尝试获取英语的description
