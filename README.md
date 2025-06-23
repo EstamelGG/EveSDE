@@ -2,11 +2,12 @@
 
 1. 获取官方数据库：https://developers.eveonline.com/resource , https://developers.eveonline.com/docs/services/iec/
 2. 解压后放在根目录 `Data/sde` 目录。
-3. 从第三方来源获取数据单位信息，如"%","+"等：https://sde.hoboleaks.space/tq/dogmaunits.json 下载后放在 `thirdparty_data_source`。
-4. 物品打包体积来自第三方数据来源：https://sde.hoboleaks.space/tq/repackagedvolumes.json ，放在 `thirdparty_data_source/repackagedvolumes.json`
-4. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。 (不怎么更新了)(建议删除 `Data/Types` 目录)
-5. 开始构造数据库 `main.py`
-6. 加成带来的 dbuff 效果来自 https://github.com/EVEShipFit/sde/releases
+3. 第三方 sde 补充: https://github.com/EVEShipFit/sde/releases
+4. 从第三方来源获取数据单位信息，如"%","+"等：https://sde.hoboleaks.space/tq/dogmaunits.json 下载后放在 `thirdparty_data_source`。
+5. 物品打包体积来自第三方数据来源：https://sde.hoboleaks.space/tq/repackagedvolumes.json ，放在 `thirdparty_data_source/repackagedvolumes.json`
+6. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。 (不怎么更新了)(建议删除 `Data/Types` 目录)
+7. 开始构造数据库 `main.py`
+8. 加成带来的 dbuff 效果来自 https://github.com/EVEShipFit/sde/releases
 
 ![img.png](img.png)
 
