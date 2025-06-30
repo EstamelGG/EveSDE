@@ -32,6 +32,20 @@ def get_language_code(dir_path):
     """从目录路径中提取语言代码"""
     return os.path.basename(dir_path)
 
+def lang_data_patch(entry_id, lang_code, lang_data):
+    if entry_id == "666500":
+        return {
+                "ja": "フルクラム",
+                "ru": "«Центр»",
+                "zh": "支点",
+                "de": "Der Stützpunkt",
+                "ko": "펄크럼",
+                "fr": "Le Pivot",
+                "es": "El Fulcro",
+                "en": "The Fulcrum"
+              }.get(lang_code, lang_data[entry_id]["text"])
+    return lang_data[entry_id]["text"]
+
 def main():
     # 获取基础目录
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -64,7 +78,7 @@ def main():
         # 从每种语言中获取文本
         for lang_code, lang_data in localization_data.items():
             if entry_id in lang_data:
-                combined_data[entry_id][lang_code] = lang_data[entry_id]["text"]
+                combined_data[entry_id][lang_code] = lang_data_patch(entry_id, lang_code, lang_data)
     
     # 保存合并后的JSON文件
     output_file = os.path.join(base_dir, "output", "combined_localization.json")
