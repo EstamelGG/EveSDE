@@ -35,6 +35,16 @@ def delete_files():
         except Exception as e:
             print(f"删除目录 {icon_dir} 时出错: {e}")
 
+def update_typeids():
+    """删除typeids.txt以强制更新typeid列表"""
+    typeids_file = 'typeids.txt'
+    if os.path.exists(typeids_file):
+        try:
+            os.remove(typeids_file)
+            print(f"已删除文件: {typeids_file}，将获取最新的typeid列表")
+        except Exception as e:
+            print(f"删除文件 {typeids_file} 时出错: {e}")
+
 def run_script(script_name):
     """运行指定的Python脚本"""
     try:
@@ -47,10 +57,13 @@ def run_script(script_name):
 
 def main():
     print("欢迎使用图标同步工具")
-    choice = input("是否重新构建图片资源？(y/n)(y:完全重新下载图片资源, n:复用现有图片资源): ").lower().strip()
+    choice = input("请选择操作模式：\n(y: 完全重新下载图片资源\nu: 复用现有图片资源但拉取最新的全部typeid以获取增量图片\nn: 完全复用现有图片资源)\n请输入选择(y/u/n): ").lower().strip()
     
     if choice == 'y':
         delete_files()
+    elif choice == 'u':
+        update_typeids()
+        print("\n将复用现有图片资源，但拉取最新的全部typeid以获取增量图片...")
     else:
         print("\n跳过重新构建，直接执行同步...")
 
