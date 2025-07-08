@@ -54,13 +54,10 @@ typeMaterials_yaml_file_path = 'Data/sde/fsd/typeMaterials.yaml'
 blueprints_yaml_file_path = 'Data/sde/fsd/blueprints.yaml'
 marketGroups_yaml_file_path = 'Data/sde/fsd/marketGroups.yaml'
 factions_yaml_file_path = 'Data/sde/fsd/factions.yaml'
-# invUniqueNames_yaml_file_path = 'Data/sde/bsd/invUniqueNames.yaml'  # 注释掉旧的文件路径
 npcCorporations_yaml_file_path = 'Data/sde/fsd/npcCorporations.yaml'
 agents_yaml_file_path = 'Data/sde/fsd/agents.yaml'
 agents_in_space_yaml_file_path = 'Data/sde/fsd/agentsInSpace.yaml'
 divisions_yaml_file_path = 'Data/sde/fsd/npcCorporationDivisions.yaml'
-ZIP_ICONS_DEST = 'output/Icons/icons.zip'
-arch_ICONS_DEST = 'output/Icons/icons.aar'
 ICONS_DEST_DIR = 'output/Icons'
 stations_yaml_file_path = 'Data/sde/bsd/staStations.yaml'
 invFlags_yaml_file_path = 'Data/sde/bsd/invFlags.yaml'
@@ -76,6 +73,13 @@ languages = ['en', 'de', 'es', 'fr', 'ja', 'ko', 'ru', 'zh']  # en 务必在第�
 output_db_dir = 'output/db'
 output_icons_dir = 'output/Icons'
 
+def file_check():
+    for item in [categories_yaml_file_path, groups_yaml_file_path, iconIDs_yaml_file_path, planetSchematics_yaml_file_path, types_yaml_file_path, metaGroups_yaml_file_path,
+                 dogmaAttributes_yaml_file_path, dogmaAttributeCategories_yaml_file_path, typeDogma_yaml_file_path, typeMaterials_yaml_file_path,
+                 blueprints_yaml_file_path, marketGroups_yaml_file_path, factions_yaml_file_path, npcCorporations_yaml_file_path, agents_yaml_file_path, agents_in_space_yaml_file_path,
+                 divisions_yaml_file_path, stations_yaml_file_path, invFlags_yaml_file_path, invNames_yaml_file_path, dogmaEffects_yaml_file_path, dbuff_collections_yaml_file_path]:
+        if not os.path.exists(item):
+            print(f"文件 {item} 不存在")
 
 def rebuild_directory(directory_path):
     """
@@ -492,6 +496,7 @@ def dogmaEffect_patch():
 
 
 def main():
+    file_check()
     rebuild_directory("./output")
     # 依次处理每个 YAML 文件
     copy_and_rename_png_files()
