@@ -247,9 +247,8 @@ def copy_icons():
     for i, filename in enumerate(files, 1):
         source_path = os.path.join(source_dir, filename)
         target_path = os.path.join(target_dir, filename)
-
-        print(f"处理第 {i}/{total_files} 个文件: {filename}", end='')
-
+        if i % 1000 == 0:
+            print(f"处理第 {i}/{total_files} 个文件: {filename}", end='')
         # 如果目标文件不存在，直接复制
         if not os.path.exists(target_path):
             shutil.copy2(source_path, target_path)
