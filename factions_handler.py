@@ -170,6 +170,8 @@ async def process_data_async(yaml_data, cursor, language):
         ko_name TEXT,
         ru_name TEXT,
         zh_name TEXT,
+        description TEXT,
+        shortDescription TEXT,
         iconName TEXT
     )
     ''')
@@ -202,14 +204,24 @@ async def process_data_async(yaml_data, cursor, language):
             'zh': faction_data.get('nameID', {}).get('zh', name)
         }
         
+        # 获取当前语言的描述信息
+        description = faction_data.get('descriptionID', {}).get(language, '')
+        if not description:  # 如果当前语言的描述为空，使用英语描述
+            description = faction_data.get('descriptionID', {}).get('en', '')
+        
+        # 获取当前语言的简短描述信息
+        short_description = faction_data.get('shortDescriptionID', {}).get(language, '')
+        if not short_description:  # 如果当前语言的简短描述为空，使用英语简短描述
+            short_description = faction_data.get('shortDescriptionID', {}).get('en', '')
+        
         # 设置图标文件名
         icon_name = f"faction_{faction_id}.png"
         
         # 插入数据
         cursor.execute('''
             INSERT OR REPLACE INTO factions 
-            (id, name, de_name, en_name, es_name, fr_name, ja_name, ko_name, ru_name, zh_name, iconName)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (id, name, de_name, en_name, es_name, fr_name, ja_name, ko_name, ru_name, zh_name, description, shortDescription, iconName)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             faction_id, 
             name,
@@ -221,6 +233,8 @@ async def process_data_async(yaml_data, cursor, language):
             names['ko'],
             names['ru'],
             names['zh'],
+            description,
+            short_description,
             icon_name
         ))
 
