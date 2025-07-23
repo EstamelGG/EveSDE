@@ -31,8 +31,11 @@
 
 # 钱包日志文本本地化：
 
-1. 执行 `accounting_entry_types/main.py`
-2. 将 `accounting_entry_types/output/accountingentrytypes_localized.json` 传到 IOS 项目的 `language` 目录即可
+1. 根据 https://github.com/esi/eve-glue/blob/master/eve_glue/wallet_journal_ref.py 修改 `3_localize_accounting_types.py` 中的本地化字段
+2. 执行 `accounting_entry_types/main.py`
+3. `accountingentrytypes.json` 来自 https://sde.hoboleaks.space/tq/accountingentrytypes.json
+4. 将 `accounting_entry_types/output/accountingentrytypes_localized.json` 传到 IOS 项目的 `language` 目录即可
+5. 注意：`accountingentrytypes_localized` 含有自定义内容，因此务必手动检查 git commit，以防误删
 
 # 代理人名称本地化：
 

@@ -146,9 +146,8 @@
         "name": "Agents_temporary"
     }, 
     "19": {
-        "entryTypeNameID": 59811,
-        "entryJournalMessageID": [234532, 234531, 234533],
-        "entryTypeNameTranslated": "Insurance",
+        "entryTypeNameID": 59811, 
+        "entryTypeNameTranslated": "Insurance", 
         "description": "", 
         "name": "Insurance"
     }, 
@@ -310,8 +309,7 @@
         "description": "Withdrawal from corporation account", 
         "entryTypeDescriptionTranslated": "Withdrawal from corporation account", 
         "entryTypeDescriptionID": 59736, 
-        "entryTypeNameID": 59829,
-        "entryJournalMessageID": 234558,
+        "entryTypeNameID": 59829, 
         "entryTypeNameTranslated": "Corporation Account Withdrawal", 
         "name": "Corporation Account Withdrawal"
     }, 
@@ -346,8 +344,7 @@
     "42": {
         "entryTypeNameID": 59834, 
         "entryTypeNameTranslated": "Market Escrow", 
-        "description": "",
-        "entryJournalMessageID": [234573],
+        "description": "", 
         "name": "Market Escrow"
     }, 
     "43": {
@@ -377,8 +374,7 @@
     "46": {
         "entryTypeNameID": 59838, 
         "entryTypeNameTranslated": "Brokers Fee", 
-        "description": "",
-        "entryJournalMessageID": [234569],
+        "description": "", 
         "name": "Brokers Fee"
     }, 
     "47": {
@@ -722,8 +718,7 @@
         "name": "Contract Reward Deposited (corp)"
     }, 
     "85": {
-        "entryTypeNameID": 59877,
-        "entryJournalMessageID": [234530, 234529, 59722],
+        "entryTypeNameID": 59877, 
         "entryTypeNameTranslated": "Bounty Prizes", 
         "description": "", 
         "name": "Bounty Prizes"
@@ -956,8 +951,7 @@
     }, 
     "116": {
         "entryTypeNameID": 285169, 
-        "entryTypeNameTranslated": "Kill Right",
-        "entryJournalMessageID": 285160,
+        "entryTypeNameTranslated": "Kill Right", 
         "description": "Kill right bought", 
         "name": "Kill Right Fee"
     }, 
@@ -1332,6 +1326,78 @@
         "entryTypeNameTranslated": "Paragon Hub SKIN transaction", 
         "description": "Accounting entry for transactions of SKINs between players in the Cosmetic Market", 
         "name": "Cosmetic Market Skin Transaction"
+    }, 
+    "184": {
+        "entryJournalMessageTranslated": "Fee for {[location]arg1.name} Sovereignty Hub claiming one or more Skyhooks", 
+        "description": "Accounting entry for fee paid when a SovHub claims ownership of a Skyhook", 
+        "entryTypeNameID": 1010920, 
+        "entryTypeNameTranslated": "Skyhook claim fee", 
+        "entryJournalMessageID": 1010919, 
+        "name": "Fee for SovHub to claim a local Skyhook"
+    }, 
+    "185": {
+        "entryJournalMessageTranslated": "Reward for completion of an AIR Career Program goal", 
+        "description": "Accounting entry for AIR Career Program goal rewards", 
+        "entryTypeNameID": 1011296, 
+        "entryTypeNameTranslated": "AIR Career Program Reward", 
+        "entryJournalMessageID": 1011295, 
+        "name": "Air Career Program Reward"
+    }, 
+    "186": {
+        "entryJournalMessageTranslated": "Freelance Job - {project_name}", 
+        "description": "Entry type is used for payments made when creating Freelance Jobs - for the base fee", 
+        "entryTypeNameID": 1011633, 
+        "entryTypeNameTranslated": "Freelance Jobs Duration Fee", 
+        "entryJournalMessageID": 1011632, 
+        "name": "Freelance Job Creation - Base Fee"
+    }, 
+    "187": {
+        "entryJournalMessageTranslated": "Freelance Job - {project_name}", 
+        "description": "Entry type is used for payments made when creating Freelance Jobs - for the broadcasting fee", 
+        "entryTypeNameID": 1011635, 
+        "entryTypeNameTranslated": "Freelance Jobs Broadcasting Fee", 
+        "entryJournalMessageID": 1011634, 
+        "name": "Freelance Job Creation - Broadcasting Fee"
+    }, 
+    "188": {
+        "entryJournalMessageTranslated": "Freelance Job - {project_name}", 
+        "description": "Entry type is used for payments made when creating Freelance Jobs - for the rewards deposit", 
+        "entryTypeNameID": 1011637, 
+        "entryTypeNameTranslated": "Freelance Jobs Reward Escrow", 
+        "entryJournalMessageID": 1011636, 
+        "name": "Freelance Job Creation - Rewards Deposit"
+    }, 
+    "189": {
+        "entryJournalMessageTranslated": "{corp_name} Freelance Job - {project_name}", 
+        "description": "Entry type is used for payouts made when players contribute to Freelance Jobs", 
+        "entryTypeNameID": 1011653, 
+        "entryTypeNameTranslated": "Freelance Jobs Reward", 
+        "entryJournalMessageID": 1011652, 
+        "name": "Freelance Job Contribution Payouts"
+    }, 
+    "190": {
+        "entryJournalMessageTranslated": "Freelance Job - {project_name}", 
+        "description": "Entry type is used for refunds made when closing or expiring Freelance Jobs", 
+        "entryTypeNameID": 1011655, 
+        "entryTypeNameTranslated": "Freelance Jobs Escrow Refund", 
+        "entryJournalMessageID": 1011654, 
+        "name": "Freelance Job Closing Refunds"
+    }, 
+    "191": {
+        "entryJournalMessageTranslated": "{corp_name} Freelance Job - {project_name}", 
+        "description": "Entry type is used for corporation tax on payouts made when players contribute to Freelance Jobs", 
+        "entryTypeNameID": 1014042, 
+        "entryTypeNameTranslated": "Freelance Jobs Reward Corporation Tax", 
+        "entryJournalMessageID": 1014041, 
+        "name": "Freelance Job Contribution Payouts Tax"
+    }, 
+    "192": {
+        "entryJournalMessageTranslated": "Reimbursement for PLEX market order fees", 
+        "description": "Entry type is used for refunds when cancelling PLEX orders due to market policy changes", 
+        "entryTypeNameID": 1017441, 
+        "entryTypeNameTranslated": "GM Cash Transfer", 
+        "entryJournalMessageID": 1017440, 
+        "name": "PLEX Order Fee Cancellation Refund"
     }, 
     "13001": {
         "description": "DUST - DK from daily mission", 
