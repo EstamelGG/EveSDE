@@ -4,6 +4,8 @@
 /.venv/
 .DS_Store
 /fetchIcons/icon_from_api
+/fetchIcons/icon_from_client
+/fetchIcons/icon_from_api_and_client
 /icon_md5_map.txt
 thirdparty_data_source/error.txt
 fetchIcons/not_exist.txt

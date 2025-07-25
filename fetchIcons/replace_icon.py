@@ -221,9 +221,8 @@ def copy_icon_batch():
 
     print(f"\n已从{source_dir}复制{copy_count}个修正图标到{target_dir}")
 
-def copy_icons():
-    # 定义源目录和目标目录
-    source_dir = "icon_from_api"
+def copy_icons_from_source(source_dir):
+    """从指定源目录复制图标到Data/Types目录"""
     target_dir = "../Data/Types"
 
     # 确保目标目录存在
@@ -242,18 +241,18 @@ def copy_icons():
     copied = 0
     replaced = 0
 
-    print(f"开始处理 {total_files} 个文件...")
+    print(f"开始从 {source_dir} 处理 {total_files} 个文件...")
 
     for i, filename in enumerate(files, 1):
         source_path = os.path.join(source_dir, filename)
         target_path = os.path.join(target_dir, filename)
         if i % 1000 == 0:
             print(f"处理第 {i}/{total_files} 个文件: {filename}", end='')
+            print()
         # 如果目标文件不存在，直接复制
         if not os.path.exists(target_path):
             shutil.copy2(source_path, target_path)
             copied += 1
-            print(" - 已复制")
             continue
         shutil.copy2(source_path, target_path)
         source_size = get_file_size(source_path)
@@ -264,6 +263,10 @@ def copy_icons():
     print("\n处理完成！")
     print(f"新复制: {copied} 个文件")
     print(f"已替换: {replaced} 个文件")
+
+def copy_icons():
+    """使用默认源目录复制图标（保持向后兼容）"""
+    copy_icons_from_source("icon_from_api")
 
 
 if __name__ == "__main__":

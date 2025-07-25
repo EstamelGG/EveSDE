@@ -13,7 +13,9 @@
 
 # 更新图标
 
-根据需要，执行 `fetchIcons\main.py`
+根据需要，执行 `fetchIcons\0_main.py`
+
+建议：从 `https://newedenencyclopedia.net/dev_resource/icons_dedup.zip` 获得导出的文件，解压到 `fetchIcons/icon_from_client`，执行 `fetchIcons\0_local_load.py`
 
 # 更新星系信息
 
