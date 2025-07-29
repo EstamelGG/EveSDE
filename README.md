@@ -8,6 +8,8 @@
 6. 下载 `types` 、 `Icons` 解压到 `Data/Icons` 和 `Data/Types` 目录。 (不怎么更新了)(建议删除 `Data/Types` 目录)
 7. 开始构造数据库 `main.py`
 8. 加成带来的 dbuff 效果来自 https://github.com/EVEShipFit/sde/releases
+9. 建筑插件加成对象和效果：https://sde.hoboleaks.space/tq/industrymodifiersources.json
+10. 建筑加成对象类别：https://sde.hoboleaks.space/tq/industrytargetfilters.json
 
 ![img.png](img.png)
 
@@ -15,7 +17,7 @@
 
 根据需要，执行 `fetchIcons\0_main.py`
 
-建议：从 `https://newedenencyclopedia.net/dev_resource/icons_dedup.zip` 获得导出的文件，解压到 `fetchIcons/icon_from_client`，执行 `fetchIcons\0_local_load.py`
+建议：从 `https://newedenencyclopedia.net/dev_resource/icons_dedup.zip` 获得导出的图片，解压到 `fetchIcons/icon_from_client`，执行 `fetchIcons\0_local_load.py`
 
 # 更新星系信息
 

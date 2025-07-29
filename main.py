@@ -38,6 +38,7 @@ from agent_localization_handler import update_agents_localization  # 导入新�
 from station_name_localization.station_localization_handler import update_stations_localization  # 导入空间站本地化处理函数
 from dogmaEffects_handler import read_yaml as read_dogmaEffects_yaml, process_data as process_dogmaEffects_data
 from dbuff_collections_handler import read_yaml as read_dbuff_collections_yaml, process_data as process_dbuff_collections_data
+from facility_rig_effects import process_facility_rig_effects
 
 # 文件路径
 categories_yaml_file_path = 'Data/sde/fsd/categories.yaml'
@@ -597,6 +598,9 @@ def main():
 
     print("\nProcessing skill requirements...")  # 处理技能需求数据
     process_special_data(process_skill_requirements, "skill requirements", lang=True)
+
+    print("\nProcessing facility rig effects...")  # 处理设施装配效果数据
+    process_special_data(process_facility_rig_effects, "facility rig effects", lang=True)
 
     # 删除iconIDs表，因为图标文件名已经复制到各个相关表中
     drop_icon_ids_table()
