@@ -10,20 +10,22 @@
 8. 加成带来的 dbuff 效果来自 https://github.com/EVEShipFit/sde/releases
 9. 建筑插件加成对象和效果：https://sde.hoboleaks.space/tq/industrymodifiersources.json
 10. 建筑加成对象类别：https://sde.hoboleaks.space/tq/industrytargetfilters.json
+11. 朱庇特瞭望台：https://jambeeno.com/jo.txt
 
 ![img.png](img.png)
 
 # 需要外部下载的
-    
-1. https://developers.eveonline.com/resource
-2. https://github.com/EVEShipFit/sde/releases
+
+1. https://developers.eveonline.com/resource （不随git）
+2. https://github.com/EVEShipFit/sde/releases （不随git）
 3. https://sde.hoboleaks.space/tq/dogmaunits.json
 4. https://sde.hoboleaks.space/tq/repackagedvolumes.json
 5. https://sde.hoboleaks.space/tq/industrymodifiersources.json
 6. https://sde.hoboleaks.space/tq/industrytargetfilters.json
-7. https://newedenencyclopedia.net/dev_resource/icons_dedup.zip
+7. https://newedenencyclopedia.net/dev_resource/icons_dedup.zip（不随git）
 8. https://sde.hoboleaks.space/tq/accountingentrytypes.json
-9. https://github.com/esi/eve-glue/blob/master/eve_glue/wallet_journal_ref.py
+9. https://github.com/esi/eve-glue/blob/master/eve_glue/wallet_journal_ref.py （不随git，但本地化不常变，更新时需要重新解包本地化）
+10. https://jambeeno.com/jo.txt
 
 # 更新图标
 
