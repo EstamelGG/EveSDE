@@ -146,7 +146,7 @@
   </symbol>
   <symbol id="def30002056">
     <a xlink:href="http://evemaps.dotlan.net/system/Resbroko" class="sys link-5-30002056" target="_top">
-      <rect id="rect30002056" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: #FFE8E8;" />
+      <rect id="rect30002056" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-0);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Resbroko</text>
       <text id="txt30002056" x="24.25" y="18.895" class="st" text-anchor="middle">Minmatar</text>
     </a>
@@ -329,7 +329,7 @@
   </symbol>
   <symbol id="def30002098">
     <a xlink:href="http://evemaps.dotlan.net/system/Orfrold" class="sys link-5-30002098" target="_top">
-      <rect id="rect30002098" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-0);" />
+      <rect id="rect30002098" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: #FFE8E8;" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Orfrold</text>
       <text id="txt30002098" x="24.25" y="18.895" class="st" text-anchor="middle">Minmatar</text>
     </a>
@@ -470,7 +470,7 @@
   </symbol>
   <symbol id="def30002102">
     <a xlink:href="http://evemaps.dotlan.net/system/Gukarla" class="sys link-5-30002102" target="_top">
-      <rect id="rect30002102" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-0);" />
+      <rect id="rect30002102" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: #FFE8E8;" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Gukarla</text>
       <text id="txt30002102" x="24.25" y="18.895" class="st" text-anchor="middle">Minmatar</text>
     </a>
@@ -568,7 +568,7 @@
   </symbol>
   <symbol id="def30002066">
     <a xlink:href="http://evemaps.dotlan.net/system/Arnher" class="sys link-5-30002066" target="_top">
-      <rect id="rect30002066" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-0);" />
+      <rect id="rect30002066" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-20);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Arnher</text>
       <text id="txt30002066" x="24.25" y="18.895" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -774,7 +774,7 @@
   </symbol>
   <symbol id="def30002085">
     <a xlink:href="http://evemaps.dotlan.net/system/Eytjangard" class="sys link-5-30002085" target="_top">
-      <rect id="rect30002085" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-20);" />
+      <rect id="rect30002085" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-40);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Eytjangard</text>
       <text id="txt30002085" x="24.25" y="18.895" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -2133,6 +2133,7 @@
 
 <g id="glow">
 
+  <rect id="inc30002056" x="-6.5" y="425.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002057" x="8.5" y="490.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002091" x="18.5" y="615.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002093" x="33.5" y="660.5" width="63.5" height="34.7" class="con" />
@@ -2141,11 +2142,9 @@
   <rect id="inc30002096" x="68.5" y="735.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002090" x="73.5" y="580.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002095" x="73.5" y="695.5" width="63.5" height="34.7" class="con" />
-  <rect id="inc30002098" x="83.5" y="410.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002094" x="108.5" y="660.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002099" x="138.5" y="390.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002100" x="138.5" y="435.5" width="63.5" height="34.7" class="con" />
-  <rect id="inc30002102" x="168.5" y="470.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002088" x="183.5" y="650.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002065" x="188.5" y="345.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002082" x="208.5" y="565.5" width="63.5" height="34.7" class="con" />

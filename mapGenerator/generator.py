@@ -135,6 +135,30 @@ class MapGenerator:
             print(f"解析坐标和关系失败: {e}")
             return {}, {}
     
+    def extract_region_centers(self, svg_content):
+        """从New Eden SVG中提取星域中心点坐标"""
+        try:
+            soup = BeautifulSoup(svg_content, features="xml")
+            region_centers = {}
+            
+            # 查找sysuse组
+            sysuse_group = soup.find('g', id='sysuse')
+            if sysuse_group:
+                for system in sysuse_group.find_all('use'):
+                    system_id = system.get('id')
+                    if system_id and system_id.startswith('sys'):
+                        # 提取星域ID（去掉'sys'前缀）
+                        region_id = system_id[3:]
+                        x = float(system.get('x', 0))
+                        y = float(system.get('y', 0))
+                        region_centers[region_id] = {'x': x, 'y': y}
+            
+            print(f"从New Eden SVG中提取到 {len(region_centers)} 个星域的中心点坐标")
+            return region_centers
+        except Exception as e:
+            print(f"提取星域中心点失败: {e}")
+            return {}
+
     def extract_global_relations(self, svg_content):
         """从New Eden SVG中提取全局连接关系"""
         try:
@@ -238,9 +262,10 @@ class MapGenerator:
         # 构建区域信息
         system_to_region, region_info = self.build_system_to_region_mapping()
         
-        # 从New Eden SVG中提取全局连接关系
-        print("正在从New Eden SVG中提取连接关系...")
+        # 从New Eden SVG中提取全局连接关系和星域中心点
+        print("正在从New Eden SVG中提取连接关系和星域中心点...")
         global_relations = self.extract_global_relations(new_eden_svg_content)
+        region_centers = self.extract_region_centers(new_eden_svg_content)
         
         # 存储区域连接关系
         region_connections = {}
@@ -249,6 +274,8 @@ class MapGenerator:
         processed_count = 0
         skipped_count = 0
         no_systems_count = 0
+        center_found_count = 0
+        center_not_found_count = 0
         
         for region_name, svg_content in region_svgs.items():
             if not svg_content:
@@ -283,13 +310,21 @@ class MapGenerator:
                 print(f"警告: 星域 {region_name} 未解析到任何系统")
                 no_systems_count += 1
             
-            # 计算中心坐标（使用所有系统的平均坐标）
-            if systems:
-                center_x = sum(sys['x'] for sys in systems.values()) / len(systems)
-                center_y = sum(sys['y'] for sys in systems.values()) / len(systems)
-                center = {'x': center_x, 'y': center_y}
+            # 从New Eden SVG中获取星域中心点坐标
+            center = region_centers.get(str(region_id))
+            if center:
+                center_found_count += 1
+                print(f"找到星域 {region_name} (ID: {region_id}) 的中心点: ({center['x']}, {center['y']})")
             else:
-                center = {'x': 0, 'y': 0}
+                center_not_found_count += 1
+                print(f"警告: 未找到星域 {region_name} (ID: {region_id}) 的中心点，使用默认坐标")
+                # 如果找不到中心点，使用系统坐标的平均值作为备选
+                if systems:
+                    center_x = sum(sys['x'] for sys in systems.values()) / len(systems)
+                    center_y = sum(sys['y'] for sys in systems.values()) / len(systems)
+                    center = {'x': center_x, 'y': center_y}
+                else:
+                    center = {'x': 0, 'y': 0}
             
             # 从全局连接关系中获取该区域的连接
             connected_regions = self.get_region_connections(region_id, global_relations)
@@ -312,6 +347,8 @@ class MapGenerator:
         print(f"  - 成功处理: {processed_count} 个星域")
         print(f"  - 跳过处理: {skipped_count} 个星域")
         print(f"  - 无系统星域: {no_systems_count} 个")
+        print(f"  - 找到中心点: {center_found_count} 个星域")
+        print(f"  - 未找到中心点: {center_not_found_count} 个星域")
         
         # 验证连接关系的完整性
         self.validate_connections(region_connections)

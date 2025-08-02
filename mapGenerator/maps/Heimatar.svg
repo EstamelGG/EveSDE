@@ -175,7 +175,7 @@
   </symbol>
   <symbol id="def30002514">
     <a xlink:href="http://evemaps.dotlan.net/system/Bosboger" class="sys link-5-30002514" target="_top">
-      <rect id="rect30002514" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500002-0);" />
+      <rect id="rect30002514" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #FFE8E8;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Bosboger</text>
       <text id="txt30002514" x="28" y="21.7" class="st" text-anchor="middle">Minmatar</text>
     </a>
@@ -224,7 +224,7 @@
   <symbol id="def30002538">
     <a xlink:href="http://evemaps.dotlan.net/system/Vard" class="sys link-5-30002538" target="_top">
     <rect id="ice30002538" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30002538" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500002-20);" />
+      <rect id="rect30002538" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500002-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Vard</text>
       <text id="txt30002538" x="28" y="21.7" class="st" text-anchor="middle">Minmatar</text>
     </a>
@@ -1302,7 +1302,6 @@
 
   <rect id="inc30002516" x="-6.5" y="475.5" width="71" height="38" class="con" />
   <rect id="inc30002539" x="-6.5" y="690.5" width="71" height="38" class="con" />
-  <rect id="inc30002514" x="43.5" y="440.5" width="71" height="38" class="con" />
   <rect id="inc30002517" x="53.5" y="505.5" width="71" height="38" class="con" />
   <rect id="inc30002538" x="68.5" y="640.5" width="71" height="38" class="con" />
   <rect id="inc30002540" x="103.5" y="675.5" width="71" height="38" class="con" />

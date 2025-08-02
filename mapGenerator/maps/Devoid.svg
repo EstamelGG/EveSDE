@@ -400,7 +400,7 @@
   </symbol>
   <symbol id="def30002960">
     <a xlink:href="http://evemaps.dotlan.net/system/Arzad" class="sys link-5-30002960" target="_top">
-      <rect id="rect30002960" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #FFF4CE;" />
+      <rect id="rect30002960" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Arzad</text>
       <text id="txt30002960" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -829,6 +829,7 @@
 <g id="glow">
 
   <rect id="inc30002962" x="408.5" y="35.5" width="71" height="38" class="con" />
+  <rect id="inc30002960" x="408.5" y="80.5" width="71" height="38" class="con" />
   <rect id="inc30003088" x="388.5" y="160.5" width="71" height="38" class="con" />
   <rect id="inc30002538" x="468.5" y="5.5" width="71" height="38" class="con" />
   <rect id="inc30003063" x="563.5" y="180.5" width="71" height="38" class="con" />

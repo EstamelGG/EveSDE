@@ -127,16 +127,16 @@
 <defs>
   <symbol id="def30000629">
     <a xlink:href="http://evemaps.dotlan.net/system/U-QMOA" class="sys link-5-30000629" target="_top">
-      <rect id="rect30000629" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #A4C3F0;" />
+      <rect id="rect30000629" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #EBB3EF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">U-QMOA</text>
-      <text id="txt30000629" x="28" y="21.7" class="st so" text-anchor="middle">NC (5)</text>
+      <text id="txt30000629" x="28" y="21.7" class="st so" text-anchor="middle">FNT (0)</text>
     </a>
   </symbol>
   <symbol id="def30000627">
     <a xlink:href="http://evemaps.dotlan.net/system/O-5TN1" class="sys link-5-30000627" target="_top">
       <rect id="rect30000627" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #EBB3EF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">O-5TN1</text>
-      <text id="txt30000627" x="28" y="21.7" class="st so" text-anchor="middle">FNT (0)</text>
+      <text id="txt30000627" x="28" y="21.7" class="st so" text-anchor="middle">FNT (1)</text>
     </a>
   </symbol>
   <symbol id="def30000615">
@@ -158,7 +158,7 @@
     <a xlink:href="http://evemaps.dotlan.net/system/E1W-TB" class="sys link-5-30000612" target="_top">
       <rect id="rect30000612" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #EBB3EF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">E1W-TB</text>
-      <text id="txt30000612" x="28" y="21.7" class="st so" text-anchor="middle">FNT (1)</text>
+      <text id="txt30000612" x="28" y="21.7" class="st so" text-anchor="middle">FNT (2)</text>
     </a>
   </symbol>
   <symbol id="def30000611">
@@ -206,9 +206,9 @@
   </symbol>
   <symbol id="def30000625">
     <a xlink:href="http://evemaps.dotlan.net/system/VK-A5G" class="sys link-5-30000625" target="_top">
-      <rect id="rect30000625" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #A4C3F0;" />
+      <rect id="rect30000625" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #EBB3EF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">VK-A5G</text>
-      <text id="txt30000625" x="28" y="21.7" class="st so" text-anchor="middle">NC (5)</text>
+      <text id="txt30000625" x="28" y="21.7" class="st so" text-anchor="middle">FNT (0)</text>
     </a>
   </symbol>
   <symbol id="def30000623">
@@ -243,16 +243,16 @@
   <symbol id="def30000624">
     <a xlink:href="http://evemaps.dotlan.net/system/B-T6BT" class="sys link-5-30000624" target="_top">
     <rect id="ice30000624" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30000624" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #A4C3F0;" />
+      <rect id="rect30000624" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #EBB3EF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">B-T6BT</text>
-      <text id="txt30000624" x="28" y="21.7" class="st so" text-anchor="middle">NC (5)</text>
+      <text id="txt30000624" x="28" y="21.7" class="st so" text-anchor="middle">FNT (0)</text>
     </a>
   </symbol>
   <symbol id="def30000628">
     <a xlink:href="http://evemaps.dotlan.net/system/8-SPNN" class="sys link-5-30000628" target="_top">
-      <rect id="rect30000628" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #A4C3F0;" />
+      <rect id="rect30000628" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #EBB3EF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">8-SPNN</text>
-      <text id="txt30000628" x="28" y="21.7" class="st so" text-anchor="middle">NC (5)</text>
+      <text id="txt30000628" x="28" y="21.7" class="st so" text-anchor="middle">FNT (0)</text>
     </a>
   </symbol>
   <symbol id="def30001542">
