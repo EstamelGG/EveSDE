@@ -13,6 +13,18 @@
 
 ![img.png](img.png)
 
+# 需要外部下载的
+    
+1. https://developers.eveonline.com/resource
+2. https://github.com/EVEShipFit/sde/releases
+3. https://sde.hoboleaks.space/tq/dogmaunits.json
+4. https://sde.hoboleaks.space/tq/repackagedvolumes.json
+5. https://sde.hoboleaks.space/tq/industrymodifiersources.json
+6. https://sde.hoboleaks.space/tq/industrytargetfilters.json
+7. https://newedenencyclopedia.net/dev_resource/icons_dedup.zip
+8. https://sde.hoboleaks.space/tq/accountingentrytypes.json
+9. https://github.com/esi/eve-glue/blob/master/eve_glue/wallet_journal_ref.py
+
 # 更新图标
 
 根据需要，执行 `fetchIcons\0_main.py`
