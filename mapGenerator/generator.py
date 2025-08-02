@@ -153,6 +153,7 @@ class MapGenerator:
             if path.exists():
                 return path
         
+        print(f"警告: 未找到星域 {region_name} 的region.yaml文件")
         return None
     
 
@@ -212,8 +213,15 @@ class MapGenerator:
         # 存储区域连接关系
         region_connections = {}
         
+        # 统计信息
+        processed_count = 0
+        skipped_count = 0
+        no_systems_count = 0
+        
         for region_name, svg_content in region_svgs.items():
             if not svg_content:
+                print(f"警告: 星域 {region_name} 的SVG内容为空，跳过处理")
+                skipped_count += 1
                 continue
                 
             # 提取坐标和连接关系
@@ -234,8 +242,14 @@ class MapGenerator:
                     print(f"读取 {yaml_path} 失败: {e}")
             
             if not region_id:
-                print(f"无法找到区域ID: {region_name}")
+                print(f"错误: 无法找到区域ID: {region_name}")
+                skipped_count += 1
                 continue
+            
+            # 检查系统数量
+            if len(systems) == 0:
+                print(f"警告: 星域 {region_name} 未解析到任何系统")
+                no_systems_count += 1
             
             # 计算中心坐标（使用所有系统的平均坐标）
             if systems:
@@ -267,7 +281,14 @@ class MapGenerator:
             
             self.regions_data.append(region_data)
             region_connections[region_id] = list(connected_regions)
-            print(f"处理完成: {region_name} (ID: {region_id})")
+            processed_count += 1
+            print(f"处理完成: {region_name} (ID: {region_id}, 系统数: {len(systems)})")
+        
+        # 输出统计信息
+        print(f"\n处理统计:")
+        print(f"  - 成功处理: {processed_count} 个星域")
+        print(f"  - 跳过处理: {skipped_count} 个星域")
+        print(f"  - 无系统星域: {no_systems_count} 个")
         
         # 验证连接关系的完整性
         self.validate_connections(region_connections)
