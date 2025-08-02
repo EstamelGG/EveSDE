@@ -1,0 +1,990 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1"
+     id="svgdoc"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="1024" height="768"
+     viewBox="0 0 1024 768"
+     style="background: #ffffff"
+     onload="init(evt)"
+>
+
+
+<style type="text/css">
+<![CDATA[
+/* jumps */
+.j	{ stroke: #000000; stroke-width: 1; }
+.jc	{ stroke: #FF0000; stroke-width: 1; }
+.jr	{ stroke: #800080; stroke-width: 1; }
+.jx	{ stroke: #000000; stroke-width: 3; }
+.jxc	{ stroke: #FF0000; stroke-width: 3; }
+.jxr	{ stroke: #800080; stroke-width: 3; }
+.jb	{ stroke: #0000FF; stroke-width: 3; fill: none; }
+
+/* external system */
+.eh	{ stroke: #00B000; stroke-width: 1; fill: #CCCCCC; }
+.el	{ stroke: #F00000; stroke-width: 1; stroke-dasharray: 8, 4; fill: #CCCCCC; }
+.e	{ stroke: #000000; stroke-width: 1; fill: #CCCCCC; }
+.exh	{ stroke: #00B000; stroke-width: 2; fill: #CCCCCC; }
+.exl	{ stroke: #F00000; stroke-width: 2; stroke-dasharray: 8, 3; fill: #CCCCCC; }
+.ex	{ stroke: #000000; stroke-width: 2; fill: #CCCCCC; }
+
+/* external system text */
+.es	{ font-size: 9px; font-family: Arial, Helvetica, sans-serif; fill: #000000; }
+.er	{ font-weight: bold; font-size: 7px; font-family: verdana, Arial, sans-serif; fill: #000000; }
+
+/* system */
+.sh	{ stroke: #00B000; stroke-width: 1; }
+.sl	{ stroke: #F00000; stroke-width: 1; stroke-dasharray: 8, 3; }
+.s	{ stroke: #000000; stroke-width: 1; }
+.sc	{ stroke-width: 1.2; stroke-dasharray: 4, 3; }
+.sx	{ stroke-width: 2.5; }
+
+.scl	{ stroke: transparent; stroke-width: 2; fill: transparent; }
+
+/* system text */
+.ss	{ font-family: Arial, Helvetica, sans-serif; font-size: 9px; fill: #000000; }
+.st	{ font-weight: bold; font-size: 7px; font-family: verdana, Arial, sans-serif; fill: #000000; }
+.so	{ fill: #ff0000; }
+.i	{ stroke: #0080FF; stroke-width: 1; fill: none; }
+
+/* station */
+.o	{ fill: #ffffff; }
+.oc	{ fill: #0000FF; }
+.oa	{ fill: #FFDC00; }
+.og	{ fill: #00FF00; }
+.om	{ fill: #FF0000; }
+.o1	{ fill: #ffffff; stroke-width: 0.5; stroke: #000000; }
+.o2	{ fill: #ffffff; stroke-width: 0.5; stroke: #000000; }
+.oo	{ fill: none; stroke: #000000; stroke-width: 1; }
+
+/* station services */
+.v1	{ fill: #FF0000; }
+.v2	{ fill: #00FF00; }
+.v3	{ fill: #FFDC00; }
+.v4	{ fill: #0000FF; }
+
+/* legend */
+.lb	{ stroke-width: 1; stroke: #000000; fill: #ffffff; }
+.lbt	{ stroke-width: 1; stroke: #000000; fill: #ffffff; }
+.lt	{ fill: #000000; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 12px; }
+.lc	{ fill: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+.l	{ fill: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 10px; }
+
+/* highlight */
+.h	{ fill: none; stroke-width: 3; stroke: #000000; }
+.hw	{ fill: none; stroke-width: 2; stroke: #00AA00; }
+.hl	{ fill: none; stroke-width: 2; stroke: #F00000; }
+.hg	{ fill: none; stroke-width: 2; stroke: #00B000; }
+
+/* incursion */
+.inc	{ fill: url(#incBg); }
+.incs	{ fill: url(#incStBg); }
+
+/* contested */
+.con	{ fill: url(#conBg); }
+
+/* sov campaign triggered */
+.cam		{ fill: url(#camBg); }
+.cam-active	{ fill: url(#camActiveBg); }
+]]>
+</style>
+
+<g id="map">
+<g id="legend">
+<rect x="860.5" y="575.5" width="160" height="188" class="lb" />
+<rect x="860.5" y="860.5" width="160" height="20" class="lbt" />
+<text x="942.5" y="590.5" class="lt" text-anchor="middle">J7HZ-F</text>
+<rect x="860.5" y="595.5" width="160" height="148" class="lb" />
+<rect x="860.5" y="743.5" width="160" height="20" class="lb" />
+<text x="942.5" y="757.5" class="lc" text-anchor="middle"> 	&#169; by Wollari &amp; CCP</text>
+
+<rect x="875" y="600" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #FFFFFF;" /><text x="900" y="611" class="ss" text-anchor="middle">XXXXX</text><text x="900" y="618.7" class="st so" text-anchor="middle">YYYYY (Z)</text>
+<rect x="920.6" y="605.5" height="11" width="11" class="o" /><polygon points="922.8,611 929.4,607.7 929.4,614.3 922.8,611"  class="o1" /><rect x="920.6" y="605.5" height="11" width="11"  class="oo" />
+<text x="877" y="639.4" class="l" text-anchor="start">X</text><text x="890" y="639.4" class="l" text-anchor="start">= System</text>
+<text x="877" y="654.8" class="l" text-anchor="start">Y</text><text x="890" y="654.8" class="l" text-anchor="start">= Alliance</text>
+<text x="877" y="670.2" class="l" text-anchor="start">Z</text><text x="890" y="670.2" class="l" text-anchor="start">= Sov. Lvl</text>
+<rect x="874" y="679.8" height="11" width="11" class="o" /><polygon points="876.2,685.3 882.8,682 882.8,688.6 876.2,685.3"  class="o1" /><rect x="874" y="679.8" height="11" width="11"  class="oo" /><text x="890" y="687.8" class="l" text-anchor="start">= Outpost</text>
+<rect x="874" y="695.2" height="11" width="11" class="o" /><rect x="877.3" y="698.5" height="4.4" width="4.4" class="o2" /><rect x="874" y="695.2" height="11" width="11"  class="oo" /><text x="890" y="703.2" class="l" text-anchor="start">= Cq Stat.</text>
+<rect x="874" y="710.6" height="11" width="11" class="o" /><rect x="874" y="710.6" height="11" width="11"  class="oo" /><text x="890" y="718.6" class="l" text-anchor="start">= NPC Stat.</text>
+<rect x="872" y="726" rx="5.5" ry="5.5" width="15.4" height="11" class="i" /><text x="890" y="734" class="l" text-anchor="start">= Icebelt</text>
+
+<rect x="947" y="603" height="11" width="11" class="om" /><polygon points="949.2,608.5 955.8,605.2 955.8,611.8 949.2,608.5"  class="o1" /><rect x="947" y="603" height="11" width="11"  class="oo" /><text x="963" y="611" class="l" text-anchor="start">= Refinery</text>
+<rect x="947" y="618.4" height="11" width="11" class="oa" /><polygon points="949.2,623.9 955.8,620.6 955.8,627.2 949.2,623.9"  class="o1" /><rect x="947" y="618.4" height="11" width="11"  class="oo" /><text x="963" y="626.4" class="l" text-anchor="start">= Factory</text>
+<rect x="947" y="633.8" height="11" width="11" class="oc" /><polygon points="949.2,639.3 955.8,636 955.8,642.6 949.2,639.3"  class="o1" /><rect x="947" y="633.8" height="11" width="11"  class="oo" /><text x="963" y="641.8" class="l" text-anchor="start">= Research</text>
+<rect x="947" y="649.2" height="11" width="11" class="og" /><polygon points="949.2,654.7 955.8,651.4 955.8,658 949.2,654.7"  class="o1" /><rect x="947" y="649.2" height="11" width="11"  class="oo" /><text x="963" y="657.2" class="l" text-anchor="start">= Offices</text>
+<rect x="947" y="664.6" height="11" width="11" class="o" /><polygon points="947,664.6 958,664.6 952.5,670.1 947,664.6" class="v1" /><rect x="947" y="664.6" height="11" width="11"  class="oo" /><text x="963" y="672.6" class="l" text-anchor="start">= Refining</text>
+<rect x="947" y="680" height="11" width="11" class="o" /><polygon points="958,691 952.5,685.5 947,691 958,691" class="v3" /><rect x="947" y="680" height="11" width="11"  class="oo" /><text x="963" y="688" class="l" text-anchor="start">= Industry</text>
+<rect x="947" y="695.4" height="11" width="11" class="o" /><polygon points="947,706.4 952.5,700.9 947,695.4 947,706.4" class="v4" /><rect x="947" y="695.4" height="11" width="11"  class="oo" /><text x="963" y="703.4" class="l" text-anchor="start">= Research</text>
+<rect x="947" y="710.8" height="11" width="11" class="o" /><polygon points="958,710.8 952.5,716.3 958,721.8 958,710.8" class="v2" /><rect x="947" y="710.8" height="11" width="11"  class="oo" /><text x="963" y="718.8" class="l" text-anchor="start">= Cloning</text>
+<rect x="945" y="726.2" rx="5.5" ry="5.5" width="15.4" height="11" class="sl" style="fill: #ffa0ff;" /><text x="963" y="734.2" class="l" text-anchor="start">= Contested</text>
+
+</g>
+
+<defs>
+  <symbol id="def30001524">
+    <a xlink:href="http://evemaps.dotlan.net/system/1C-TD6" class="sys link-5-30001524" target="_top">
+      <rect id="rect30001524" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">1C-TD6</text>
+      <text id="txt30001524" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <polygon points="49.6,20.5 55.1,15 49.6,9.5 49.6,20.5" class="v4" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001517">
+    <a xlink:href="http://evemaps.dotlan.net/system/G5J-LH" class="sys link-5-30001517" target="_top">
+      <rect id="rect30001517" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">G5J-LH</text>
+      <text id="txt30001517" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001515">
+    <a xlink:href="http://evemaps.dotlan.net/system/KF1-DU" class="sys link-5-30001515" target="_top">
+      <rect id="rect30001515" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">KF1-DU</text>
+      <text id="txt30001515" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001523">
+    <a xlink:href="http://evemaps.dotlan.net/system/8RV-1L" class="sys link-5-30001523" target="_top">
+      <rect id="rect30001523" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">8RV-1L</text>
+      <text id="txt30001523" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001491">
+    <a xlink:href="http://evemaps.dotlan.net/system/R-G1SF" class="sys link-5-30001491" target="_top">
+      <rect id="rect30001491" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">R-G1SF</text>
+      <text id="txt30001491" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001489">
+    <a xlink:href="http://evemaps.dotlan.net/system/N-FKXV" class="sys link-5-30001489" target="_top">
+      <rect id="rect30001489" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">N-FKXV</text>
+      <text id="txt30001489" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001516">
+    <a xlink:href="http://evemaps.dotlan.net/system/W-WQM5" class="sys link-5-30001516" target="_top">
+      <rect id="rect30001516" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">W-WQM5</text>
+      <text id="txt30001516" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001514">
+    <a xlink:href="http://evemaps.dotlan.net/system/8-ULAA" class="sys link-5-30001514" target="_top">
+      <rect id="rect30001514" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">8-ULAA</text>
+      <text id="txt30001514" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <polygon points="49.6,20.5 55.1,15 49.6,9.5 49.6,20.5" class="v4" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001513">
+    <a xlink:href="http://evemaps.dotlan.net/system/H-EDXD" class="sys link-5-30001513" target="_top">
+      <rect id="rect30001513" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">H-EDXD</text>
+      <text id="txt30001513" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001512">
+    <a xlink:href="http://evemaps.dotlan.net/system/4U-14I" class="sys link-5-30001512" target="_top">
+      <rect id="rect30001512" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">4U-14I</text>
+      <text id="txt30001512" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001521">
+    <a xlink:href="http://evemaps.dotlan.net/system/0M-M64" class="sys link-5-30001521" target="_top">
+      <rect id="rect30001521" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">0M-M64</text>
+      <text id="txt30001521" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001522">
+    <a xlink:href="http://evemaps.dotlan.net/system/W5-SGC" class="sys link-5-30001522" target="_top">
+      <rect id="rect30001522" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">W5-SGC</text>
+      <text id="txt30001522" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001519">
+    <a xlink:href="http://evemaps.dotlan.net/system/TO21-U" class="sys link-5-30001519" target="_top">
+      <rect id="rect30001519" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">TO21-U</text>
+      <text id="txt30001519" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001488">
+    <a xlink:href="http://evemaps.dotlan.net/system/6-QXE6" class="sys link-5-30001488" target="_top">
+      <rect id="rect30001488" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">6-QXE6</text>
+      <text id="txt30001488" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001490">
+    <a xlink:href="http://evemaps.dotlan.net/system/X7-8IG" class="sys link-5-30001490" target="_top">
+      <rect id="rect30001490" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">X7-8IG</text>
+      <text id="txt30001490" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001520">
+    <a xlink:href="http://evemaps.dotlan.net/system/RN-5K9" class="sys link-5-30001520" target="_top">
+      <rect id="rect30001520" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">RN-5K9</text>
+      <text id="txt30001520" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001454">
+    <a xlink:href="http://evemaps.dotlan.net/system/Z-FYJR" class="sys link-5-30001454" target="_top">
+      <rect id="rect30001454" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">Z-FYJR</text>
+      <text id="txt30001454" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001525">
+    <a xlink:href="http://evemaps.dotlan.net/system/YBYX-1" class="sys link-5-30001525" target="_top">
+      <rect id="rect30001525" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">YBYX-1</text>
+      <text id="txt30001525" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001518">
+    <a xlink:href="http://evemaps.dotlan.net/system/H7OL-I" class="sys link-5-30001518" target="_top">
+      <rect id="rect30001518" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">H7OL-I</text>
+      <text id="txt30001518" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001452">
+    <a xlink:href="http://evemaps.dotlan.net/system/1SR-HT" class="sys link-5-30001452" target="_top">
+      <rect id="rect30001452" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">1SR-HT</text>
+      <text id="txt30001452" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001460">
+    <a xlink:href="http://evemaps.dotlan.net/system/LG1-TA" class="sys link-5-30001460" target="_top">
+      <rect id="rect30001460" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">LG1-TA</text>
+      <text id="txt30001460" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001459">
+    <a xlink:href="http://evemaps.dotlan.net/system/A9-NB6" class="sys link-5-30001459" target="_top">
+      <rect id="rect30001459" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">A9-NB6</text>
+      <text id="txt30001459" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001486">
+    <a xlink:href="http://evemaps.dotlan.net/system/Z-D1DW" class="sys link-5-30001486" target="_top">
+      <rect id="rect30001486" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">Z-D1DW</text>
+      <text id="txt30001486" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001451">
+    <a xlink:href="http://evemaps.dotlan.net/system/JGDF-B" class="sys link-5-30001451" target="_top">
+      <rect id="rect30001451" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">JGDF-B</text>
+      <text id="txt30001451" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001453">
+    <a xlink:href="http://evemaps.dotlan.net/system/SQ-2XA" class="sys link-5-30001453" target="_top">
+      <rect id="rect30001453" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">SQ-2XA</text>
+      <text id="txt30001453" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <polygon points="49.6,20.5 55.1,15 49.6,9.5 49.6,20.5" class="v4" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001449">
+    <a xlink:href="http://evemaps.dotlan.net/system/PZP1-D" class="sys link-5-30001449" target="_top">
+      <rect id="rect30001449" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">PZP1-D</text>
+      <text id="txt30001449" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001458">
+    <a xlink:href="http://evemaps.dotlan.net/system/0RZ5-2" class="sys link-5-30001458" target="_top">
+      <rect id="rect30001458" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">0RZ5-2</text>
+      <text id="txt30001458" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001457">
+    <a xlink:href="http://evemaps.dotlan.net/system/7H-Z5R" class="sys link-5-30001457" target="_top">
+      <rect id="rect30001457" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">7H-Z5R</text>
+      <text id="txt30001457" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001509">
+    <a xlink:href="http://evemaps.dotlan.net/system/HGB-C6" class="sys link-5-30001509" target="_top">
+      <rect id="rect30001509" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">HGB-C6</text>
+      <text id="txt30001509" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001487">
+    <a xlink:href="http://evemaps.dotlan.net/system/FO-3PJ" class="sys link-5-30001487" target="_top">
+      <rect id="rect30001487" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">FO-3PJ</text>
+      <text id="txt30001487" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001450">
+    <a xlink:href="http://evemaps.dotlan.net/system/R1KE-A" class="sys link-5-30001450" target="_top">
+      <rect id="rect30001450" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">R1KE-A</text>
+      <text id="txt30001450" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001499">
+    <a xlink:href="http://evemaps.dotlan.net/system/L-TPN0" class="sys link-5-30001499" target="_top">
+      <rect id="rect30001499" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">L-TPN0</text>
+      <text id="txt30001499" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <polygon points="49.6,20.5 55.1,15 49.6,9.5 49.6,20.5" class="v4" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001508">
+    <a xlink:href="http://evemaps.dotlan.net/system/I9D-0D" class="sys link-5-30001508" target="_top">
+      <rect id="rect30001508" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">I9D-0D</text>
+      <text id="txt30001508" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001455">
+    <a xlink:href="http://evemaps.dotlan.net/system/ZA6-9N" class="sys link-5-30001455" target="_top">
+      <rect id="rect30001455" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">ZA6-9N</text>
+      <text id="txt30001455" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001511">
+    <a xlink:href="http://evemaps.dotlan.net/system/RS08-B" class="sys link-5-30001511" target="_top">
+      <rect id="rect30001511" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">RS08-B</text>
+      <text id="txt30001511" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001498">
+    <a xlink:href="http://evemaps.dotlan.net/system/Y-4V7U" class="sys link-5-30001498" target="_top">
+      <rect id="rect30001498" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">Y-4V7U</text>
+      <text id="txt30001498" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001456">
+    <a xlink:href="http://evemaps.dotlan.net/system/J1-6CJ" class="sys link-5-30001456" target="_top">
+      <rect id="rect30001456" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">J1-6CJ</text>
+      <text id="txt30001456" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001507">
+    <a xlink:href="http://evemaps.dotlan.net/system/LH-J8H" class="sys link-5-30001507" target="_top">
+      <rect id="rect30001507" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">LH-J8H</text>
+      <text id="txt30001507" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001492">
+    <a xlink:href="http://evemaps.dotlan.net/system/6-NCE7" class="sys link-5-30001492" target="_top">
+      <rect id="rect30001492" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">6-NCE7</text>
+      <text id="txt30001492" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001485">
+    <a xlink:href="http://evemaps.dotlan.net/system/KN7M-N" class="sys link-5-30001485" target="_top">
+      <rect id="rect30001485" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">KN7M-N</text>
+      <text id="txt30001485" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <polygon points="49.6,20.5 55.1,15 49.6,9.5 49.6,20.5" class="v4" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001510">
+    <a xlink:href="http://evemaps.dotlan.net/system/2L5-FI" class="sys link-5-30001510" target="_top">
+      <rect id="rect30001510" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">2L5-FI</text>
+      <text id="txt30001510" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001483">
+    <a xlink:href="http://evemaps.dotlan.net/system/PBXG-A" class="sys link-5-30001483" target="_top">
+      <rect id="rect30001483" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">PBXG-A</text>
+      <text id="txt30001483" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001479">
+    <a xlink:href="http://evemaps.dotlan.net/system/M-FDTD" class="sys link-5-30001479" target="_top">
+      <rect id="rect30001479" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">M-FDTD</text>
+      <text id="txt30001479" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001506">
+    <a xlink:href="http://evemaps.dotlan.net/system/VR3-PS" class="sys link-5-30001506" target="_top">
+      <rect id="rect30001506" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">VR3-PS</text>
+      <text id="txt30001506" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001493">
+    <a xlink:href="http://evemaps.dotlan.net/system/WDJQ-G" class="sys link-5-30001493" target="_top">
+      <rect id="rect30001493" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">WDJQ-G</text>
+      <text id="txt30001493" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001494">
+    <a xlink:href="http://evemaps.dotlan.net/system/JS3-RS" class="sys link-5-30001494" target="_top">
+      <rect id="rect30001494" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">JS3-RS</text>
+      <text id="txt30001494" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001480">
+    <a xlink:href="http://evemaps.dotlan.net/system/54-VNO" class="sys link-5-30001480" target="_top">
+      <rect id="rect30001480" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">54-VNO</text>
+      <text id="txt30001480" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <polygon points="49.6,20.5 55.1,15 49.6,9.5 49.6,20.5" class="v4" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001484">
+    <a xlink:href="http://evemaps.dotlan.net/system/9-ERCP" class="sys link-5-30001484" target="_top">
+      <rect id="rect30001484" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">9-ERCP</text>
+      <text id="txt30001484" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <polygon points="49.6,20.5 55.1,15 49.6,9.5 49.6,20.5" class="v4" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001495">
+    <a xlink:href="http://evemaps.dotlan.net/system/JX-T1W" class="sys link-5-30001495" target="_top">
+      <rect id="rect30001495" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">JX-T1W</text>
+      <text id="txt30001495" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001477">
+    <a xlink:href="http://evemaps.dotlan.net/system/VYX2-I" class="sys link-5-30001477" target="_top">
+      <rect id="rect30001477" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">VYX2-I</text>
+      <text id="txt30001477" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001476">
+    <a xlink:href="http://evemaps.dotlan.net/system/OU-AIT" class="sys link-5-30001476" target="_top">
+      <rect id="rect30001476" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">OU-AIT</text>
+      <text id="txt30001476" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001496">
+    <a xlink:href="http://evemaps.dotlan.net/system/CZ-CED" class="sys link-5-30001496" target="_top">
+      <rect id="rect30001496" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">CZ-CED</text>
+      <text id="txt30001496" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001497">
+    <a xlink:href="http://evemaps.dotlan.net/system/BKK4-H" class="sys link-5-30001497" target="_top">
+      <rect id="rect30001497" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">BKK4-H</text>
+      <text id="txt30001497" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001473">
+    <a xlink:href="http://evemaps.dotlan.net/system/QO-3LC" class="sys link-5-30001473" target="_top">
+      <rect id="rect30001473" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">QO-3LC</text>
+      <text id="txt30001473" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001500">
+    <a xlink:href="http://evemaps.dotlan.net/system/3-XORH" class="sys link-5-30001500" target="_top">
+      <rect id="rect30001500" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">3-XORH</text>
+      <text id="txt30001500" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001481">
+    <a xlink:href="http://evemaps.dotlan.net/system/IAMZ-5" class="sys link-5-30001481" target="_top">
+      <rect id="rect30001481" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">IAMZ-5</text>
+      <text id="txt30001481" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <polygon points="49.6,20.5 55.1,15 49.6,9.5 49.6,20.5" class="v4" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001474">
+    <a xlink:href="http://evemaps.dotlan.net/system/3E-ER7" class="sys link-5-30001474" target="_top">
+      <rect id="rect30001474" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">3E-ER7</text>
+      <text id="txt30001474" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001502">
+    <a xlink:href="http://evemaps.dotlan.net/system/W6H6-K" class="sys link-5-30001502" target="_top">
+      <rect id="rect30001502" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">W6H6-K</text>
+      <text id="txt30001502" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001482">
+    <a xlink:href="http://evemaps.dotlan.net/system/HD3-JK" class="sys link-5-30001482" target="_top">
+      <rect id="rect30001482" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">HD3-JK</text>
+      <text id="txt30001482" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001478">
+    <a xlink:href="http://evemaps.dotlan.net/system/5-P3CQ" class="sys link-5-30001478" target="_top">
+      <rect id="rect30001478" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">5-P3CQ</text>
+      <text id="txt30001478" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001501">
+    <a xlink:href="http://evemaps.dotlan.net/system/G1VU-H" class="sys link-5-30001501" target="_top">
+      <rect id="rect30001501" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">G1VU-H</text>
+      <text id="txt30001501" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001504">
+    <a xlink:href="http://evemaps.dotlan.net/system/DVAR-P" class="sys link-5-30001504" target="_top">
+      <rect id="rect30001504" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">DVAR-P</text>
+      <text id="txt30001504" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001503">
+    <a xlink:href="http://evemaps.dotlan.net/system/6-23NU" class="sys link-5-30001503" target="_top">
+      <rect id="rect30001503" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">6-23NU</text>
+      <text id="txt30001503" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,9.5 55.1,15 60.6,20.5 60.6,9.5" class="v2" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001505">
+    <a xlink:href="http://evemaps.dotlan.net/system/J-JS0D" class="sys link-5-30001505" target="_top">
+      <rect id="rect30001505" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">J-JS0D</text>
+      <text id="txt30001505" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001475">
+    <a xlink:href="http://evemaps.dotlan.net/system/REZ-YZ" class="sys link-5-30001475" target="_top">
+      <rect id="rect30001475" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">REZ-YZ</text>
+      <text id="txt30001475" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001470">
+    <a xlink:href="http://evemaps.dotlan.net/system/PQA-9K" class="sys link-5-30001470" target="_top">
+      <rect id="rect30001470" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">PQA-9K</text>
+      <text id="txt30001470" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001467">
+    <a xlink:href="http://evemaps.dotlan.net/system/QIW-TQ" class="sys link-5-30001467" target="_top">
+      <rect id="rect30001467" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">QIW-TQ</text>
+      <text id="txt30001467" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001465">
+    <a xlink:href="http://evemaps.dotlan.net/system/UBES-K" class="sys link-5-30001465" target="_top">
+      <rect id="rect30001465" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">UBES-K</text>
+      <text id="txt30001465" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001469">
+    <a xlink:href="http://evemaps.dotlan.net/system/BJC4-8" class="sys link-5-30001469" target="_top">
+      <rect id="rect30001469" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">BJC4-8</text>
+      <text id="txt30001469" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <polygon points="60.6,20.5 55.1,15 49.6,20.5 60.6,20.5" class="v3" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001471">
+    <a xlink:href="http://evemaps.dotlan.net/system/S5-U0R" class="sys link-5-30001471" target="_top">
+      <rect id="rect30001471" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">S5-U0R</text>
+      <text id="txt30001471" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001462">
+    <a xlink:href="http://evemaps.dotlan.net/system/E2AX-5" class="sys link-5-30001462" target="_top">
+      <rect id="rect30001462" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">E2AX-5</text>
+      <text id="txt30001462" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001466">
+    <a xlink:href="http://evemaps.dotlan.net/system/I-R8B0" class="sys link-5-30001466" target="_top">
+      <rect id="rect30001466" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">I-R8B0</text>
+      <text id="txt30001466" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001464">
+    <a xlink:href="http://evemaps.dotlan.net/system/THS-MN" class="sys link-5-30001464" target="_top">
+      <rect id="rect30001464" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">THS-MN</text>
+      <text id="txt30001464" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001463">
+    <a xlink:href="http://evemaps.dotlan.net/system/HPE-KP" class="sys link-5-30001463" target="_top">
+      <rect id="rect30001463" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">HPE-KP</text>
+      <text id="txt30001463" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+    <rect x="49.6" y="9.5" height="11" width="11" class="o" />
+    <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
+    <rect x="49.6" y="9.5" height="11" width="11"  class="oo" />
+  </symbol>
+  <symbol id="def30001468">
+    <a xlink:href="http://evemaps.dotlan.net/system/WLL-QX" class="sys link-5-30001468" target="_top">
+      <rect id="rect30001468" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">WLL-QX</text>
+      <text id="txt30001468" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001461">
+    <a xlink:href="http://evemaps.dotlan.net/system/TNK-BQ" class="sys link-5-30001461" target="_top">
+      <rect id="rect30001461" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">TNK-BQ</text>
+      <text id="txt30001461" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+  <symbol id="def30001472">
+    <a xlink:href="http://evemaps.dotlan.net/system/CW-R71" class="sys link-5-30001472" target="_top">
+      <rect id="rect30001472" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #ffffff;" />
+      <text x="28" y="14" class="ss" text-anchor="middle">CW-R71</text>
+      <text id="txt30001472" x="28" y="21.7" class="st" text-anchor="middle">Jove Empire</text>
+    </a>
+  </symbol>
+
+
+  <symbol id="defCampaign" width="85" height="46">
+    <rect x="0" y="0" width="85" height="46" class="cam" />
+  </symbol>
+  <symbol id="defCampaignActive" width="85" height="46">
+    <rect x="0" y="0" width="85" height="46" class="cam-active" />
+  </symbol>
+  <radialGradient id="conBg">
+    <stop offset="50%" stop-color="#FFA0FF"/>
+    <stop offset="95%" stop-color="#FFA0FF" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="camBg">
+    <stop offset="30%" stop-color="#FF8800" stop-opacity="1"/>
+    <stop offset="95%" stop-color="#FF8800" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="camActiveBg">
+    <stop offset="40%" stop-color="#FF0000" stop-opacity="1"/>
+    <stop offset="95%" stop-color="#FF0000" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="incBg">
+    <stop offset="50%" stop-color="#AFCE00"/>
+    <stop offset="100%" stop-color="#AFCE00" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="incStBg">
+    <stop offset="50%" stop-color="#808000"/>
+    <stop offset="100%" stop-color="#808000" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+
+<text x="10" y="20" id="debug"  style="fill: #888888;"> </text>
+
+<g id="glow">
+
+
+</g>
+
+<g id="campaigns"></g>
+
+<g id="jumps">
+
+</g>
+
+<g id="sysuse">
+<use id="sys30001524" x="0" y="10" width="62.5" height="30" xlink:href="#def30001524" />
+<use id="sys30001517" x="10" y="320" width="62.5" height="30" xlink:href="#def30001517" />
+<use id="sys30001515" x="45" y="365" width="62.5" height="30" xlink:href="#def30001515" />
+<use id="sys30001523" x="65" y="30" width="62.5" height="30" xlink:href="#def30001523" />
+<use id="sys30001491" x="95" y="565" width="62.5" height="30" xlink:href="#def30001491" />
+<use id="sys30001489" x="102" y="607" width="62.5" height="30" xlink:href="#def30001489" />
+<use id="sys30001516" x="105" y="260" width="62.5" height="30" xlink:href="#def30001516" />
+<use id="sys30001514" x="110" y="305" width="62.5" height="30" xlink:href="#def30001514" />
+<use id="sys30001513" x="110" y="345" width="62.5" height="30" xlink:href="#def30001513" />
+<use id="sys30001512" x="115" y="400" width="62.5" height="30" xlink:href="#def30001512" />
+<use id="sys30001521" x="130" y="35" width="62.5" height="30" xlink:href="#def30001521" />
+<use id="sys30001522" x="185" y="5" width="62.5" height="30" xlink:href="#def30001522" />
+<use id="sys30001519" x="185" y="70" width="62.5" height="30" xlink:href="#def30001519" />
+<use id="sys30001488" x="205" y="555" width="62.5" height="30" xlink:href="#def30001488" />
+<use id="sys30001490" x="210" y="510" width="62.5" height="30" xlink:href="#def30001490" />
+<use id="sys30001520" x="250" y="95" width="62.5" height="30" xlink:href="#def30001520" />
+<use id="sys30001454" x="250" y="420" width="62.5" height="30" xlink:href="#def30001454" />
+<use id="sys30001525" x="255" y="10" width="62.5" height="30" xlink:href="#def30001525" />
+<use id="sys30001518" x="265" y="50" width="62.5" height="30" xlink:href="#def30001518" />
+<use id="sys30001452" x="265" y="380" width="62.5" height="30" xlink:href="#def30001452" />
+<use id="sys30001460" x="280" y="170" width="62.5" height="30" xlink:href="#def30001460" />
+<use id="sys30001459" x="285" y="220" width="62.5" height="30" xlink:href="#def30001459" />
+<use id="sys30001486" x="290" y="520" width="62.5" height="30" xlink:href="#def30001486" />
+<use id="sys30001451" x="315" y="440" width="62.5" height="30" xlink:href="#def30001451" />
+<use id="sys30001453" x="330" y="340" width="62.5" height="30" xlink:href="#def30001453" />
+<use id="sys30001449" x="335" y="380" width="62.5" height="30" xlink:href="#def30001449" />
+<use id="sys30001458" x="345" y="170" width="62.5" height="30" xlink:href="#def30001458" />
+<use id="sys30001457" x="345" y="220" width="62.5" height="30" xlink:href="#def30001457" />
+<use id="sys30001509" x="355" y="65" width="62.5" height="30" xlink:href="#def30001509" />
+<use id="sys30001487" x="355" y="540" width="62.5" height="30" xlink:href="#def30001487" />
+<use id="sys30001450" x="375" y="420" width="62.5" height="30" xlink:href="#def30001450" />
+<use id="sys30001499" x="380" y="675" width="62.5" height="30" xlink:href="#def30001499" />
+<use id="sys30001508" x="405" y="95" width="62.5" height="30" xlink:href="#def30001508" />
+<use id="sys30001455" x="405" y="195" width="62.5" height="30" xlink:href="#def30001455" />
+<use id="sys30001511" x="430" y="40" width="62.5" height="30" xlink:href="#def30001511" />
+<use id="sys30001498" x="460" y="645" width="62.5" height="30" xlink:href="#def30001498" />
+<use id="sys30001456" x="470" y="195" width="62.5" height="30" xlink:href="#def30001456" />
+<use id="sys30001507" x="480" y="100" width="62.5" height="30" xlink:href="#def30001507" />
+<use id="sys30001492" x="480" y="570" width="62.5" height="30" xlink:href="#def30001492" />
+<use id="sys30001485" x="485" y="375" width="62.5" height="30" xlink:href="#def30001485" />
+<use id="sys30001510" x="495" y="45" width="62.5" height="30" xlink:href="#def30001510" />
+<use id="sys30001483" x="495" y="420" width="62.5" height="30" xlink:href="#def30001483" />
+<use id="sys30001479" x="530" y="460" width="62.5" height="30" xlink:href="#def30001479" />
+<use id="sys30001506" x="550" y="100" width="62.5" height="30" xlink:href="#def30001506" />
+<use id="sys30001493" x="560" y="515" width="62.5" height="30" xlink:href="#def30001493" />
+<use id="sys30001494" x="560" y="565" width="62.5" height="30" xlink:href="#def30001494" />
+<use id="sys30001480" x="580" y="415" width="62.5" height="30" xlink:href="#def30001480" />
+<use id="sys30001484" x="605" y="365" width="62.5" height="30" xlink:href="#def30001484" />
+<use id="sys30001495" x="605" y="595" width="62.5" height="30" xlink:href="#def30001495" />
+<use id="sys30001477" x="610" y="170" width="62.5" height="30" xlink:href="#def30001477" />
+<use id="sys30001476" x="630" y="100" width="62.5" height="30" xlink:href="#def30001476" />
+<use id="sys30001496" x="645" y="515" width="62.5" height="30" xlink:href="#def30001496" />
+<use id="sys30001497" x="650" y="625" width="62.5" height="30" xlink:href="#def30001497" />
+<use id="sys30001473" x="660" y="135" width="62.5" height="30" xlink:href="#def30001473" />
+<use id="sys30001500" x="660" y="250" width="62.5" height="30" xlink:href="#def30001500" />
+<use id="sys30001481" x="660" y="410" width="62.5" height="30" xlink:href="#def30001481" />
+<use id="sys30001474" x="665" y="70" width="62.5" height="30" xlink:href="#def30001474" />
+<use id="sys30001502" x="675" y="295" width="62.5" height="30" xlink:href="#def30001502" />
+<use id="sys30001482" x="690" y="465" width="62.5" height="30" xlink:href="#def30001482" />
+<use id="sys30001478" x="705" y="100" width="62.5" height="30" xlink:href="#def30001478" />
+<use id="sys30001501" x="730" y="245" width="62.5" height="30" xlink:href="#def30001501" />
+<use id="sys30001504" x="735" y="285" width="62.5" height="30" xlink:href="#def30001504" />
+<use id="sys30001503" x="760" y="210" width="62.5" height="30" xlink:href="#def30001503" />
+<use id="sys30001505" x="770" y="170" width="62.5" height="30" xlink:href="#def30001505" />
+<use id="sys30001475" x="775" y="95" width="62.5" height="30" xlink:href="#def30001475" />
+<use id="sys30001470" x="795" y="450" width="62.5" height="30" xlink:href="#def30001470" />
+<use id="sys30001467" x="845" y="405" width="62.5" height="30" xlink:href="#def30001467" />
+<use id="sys30001465" x="850" y="90" width="62.5" height="30" xlink:href="#def30001465" />
+<use id="sys30001469" x="865" y="485" width="62.5" height="30" xlink:href="#def30001469" />
+<use id="sys30001471" x="910" y="435" width="62.5" height="30" xlink:href="#def30001471" />
+<use id="sys30001462" x="915" y="205" width="62.5" height="30" xlink:href="#def30001462" />
+<use id="sys30001466" x="920" y="105" width="62.5" height="30" xlink:href="#def30001466" />
+<use id="sys30001464" x="920" y="250" width="62.5" height="30" xlink:href="#def30001464" />
+<use id="sys30001463" x="925" y="160" width="62.5" height="30" xlink:href="#def30001463" />
+<use id="sys30001468" x="925" y="380" width="62.5" height="30" xlink:href="#def30001468" />
+<use id="sys30001461" x="970" y="130" width="62.5" height="30" xlink:href="#def30001461" />
+<use id="sys30001472" x="974" y="420" width="62.5" height="30" xlink:href="#def30001472" />
+
+</g>
+
+<g id="highlights">
+
+</g>
+
+<g id="notes"></g>
+
+<g id="standings"></g>
+
+</g>
+<g id="controls" style="display: none;">
+  <a xlink:title="Zoom In"><image id="zoom_in" x="5" y="5" width="16" height="16" xlink:href="https://i.dotlan.net/images/icons/magnifier_zoom_in.png" style="cursor: pointer;"/></a>
+  <a xlink:title="Zoom Out"><image id="zoom_out" x="5" y="23" width="16" height="16" xlink:href="https://i.dotlan.net/images/icons/magnifier_zoom_out.png" style="cursor: pointer;"/></a>
+  <a xlink:title="Enable Mousewheel Support"><image id="wheel_on" x="5" y="42" width="16" height="16" xlink:href="https://i.dotlan.net/images/icons/mouse_add.png" style="cursor: pointer;"/> </a>
+  <a xlink:title="Disable Mousewheel Support"><image id="wheel_off" x="5" y="42" width="16" height="16" xlink:href="https://i.dotlan.net/images/icons/mouse_delete.png" style="cursor: pointer; display: none;"/></a>
+</g>
+
+
+<script type="text/javascript" xlink:href="https://s.dotlan.net/lib/dotSvg.js?1730328322"></script>
+<script type="text/javascript"><![CDATA[
+
+function init(E) {
+	SVGMap.init(E);
+}
+
+]]></script>
+
+
+</svg>

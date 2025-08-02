@@ -1,0 +1,761 @@
+[
+  {
+    "region_id": 10000001,
+    "region_name": "Derelik",
+    "faction_id": 500007,
+    "center": {
+      "x": 452.88,
+      "y": 345.84
+    },
+    "relations": [],
+    "systems_count": 125
+  },
+  {
+    "region_id": 10000002,
+    "region_name": "The_Forge",
+    "faction_id": 500001,
+    "center": {
+      "x": 465.0571428571429,
+      "y": 365.5809523809524
+    },
+    "relations": [],
+    "systems_count": 105
+  },
+  {
+    "region_id": 10000003,
+    "region_name": "Vale_of_the_Silent",
+    "faction_id": 0,
+    "center": {
+      "x": 462.4347826086956,
+      "y": 353.6376811594203
+    },
+    "relations": [],
+    "systems_count": 138
+  },
+  {
+    "region_id": 10000004,
+    "region_name": "UUA-F4",
+    "faction_id": 0,
+    "center": {
+      "x": 447.3738317757009,
+      "y": 336.77570093457945
+    },
+    "relations": [],
+    "systems_count": 107
+  },
+  {
+    "region_id": 10000005,
+    "region_name": "Detorid",
+    "faction_id": 0,
+    "center": {
+      "x": 442.73873873873873,
+      "y": 311.3693693693694
+    },
+    "relations": [],
+    "systems_count": 111
+  },
+  {
+    "region_id": 10000006,
+    "region_name": "Wicked_Creek",
+    "faction_id": 0,
+    "center": {
+      "x": 420.42105263157896,
+      "y": 317.36842105263156
+    },
+    "relations": [],
+    "systems_count": 95
+  },
+  {
+    "region_id": 10000007,
+    "region_name": "Cache",
+    "faction_id": 0,
+    "center": {
+      "x": 457.37704918032784,
+      "y": 283.1967213114754
+    },
+    "relations": [],
+    "systems_count": 61
+  },
+  {
+    "region_id": 10000008,
+    "region_name": "Scalding_Pass",
+    "faction_id": 0,
+    "center": {
+      "x": 464.3142857142857,
+      "y": 323.83809523809526
+    },
+    "relations": [],
+    "systems_count": 105
+  },
+  {
+    "region_id": 10000009,
+    "region_name": "Insmother",
+    "faction_id": 0,
+    "center": {
+      "x": 461.15748031496065,
+      "y": 342.79527559055117
+    },
+    "relations": [],
+    "systems_count": 127
+  },
+  {
+    "region_id": 10000010,
+    "region_name": "Tribute",
+    "faction_id": 0,
+    "center": {
+      "x": 429.36893203883494,
+      "y": 352.40776699029124
+    },
+    "relations": [],
+    "systems_count": 103
+  },
+  {
+    "region_id": 10000011,
+    "region_name": "Great_Wildlands",
+    "faction_id": 500015,
+    "center": {
+      "x": 437.54545454545456,
+      "y": 317.1818181818182
+    },
+    "relations": [],
+    "systems_count": 110
+  },
+  {
+    "region_id": 10000012,
+    "region_name": "Curse",
+    "faction_id": 500011,
+    "center": {
+      "x": 465.55555555555554,
+      "y": 322.55555555555554
+    },
+    "relations": [],
+    "systems_count": 63
+  },
+  {
+    "region_id": 10000013,
+    "region_name": "Malpais",
+    "faction_id": 0,
+    "center": {
+      "x": 459.5546218487395,
+      "y": 353.9495798319328
+    },
+    "relations": [],
+    "systems_count": 119
+  },
+  {
+    "region_id": 10000014,
+    "region_name": "Catch",
+    "faction_id": 0,
+    "center": {
+      "x": 448.9761904761905,
+      "y": 325.8095238095238
+    },
+    "relations": [],
+    "systems_count": 126
+  },
+  {
+    "region_id": 10000015,
+    "region_name": "Venal",
+    "faction_id": 500010,
+    "center": {
+      "x": 397.3490566037736,
+      "y": 331.62264150943395
+    },
+    "relations": [],
+    "systems_count": 106
+  },
+  {
+    "region_id": 10000016,
+    "region_name": "Lonetrek",
+    "faction_id": 500001,
+    "center": {
+      "x": 402.1304347826087,
+      "y": 289.31304347826085
+    },
+    "relations": [],
+    "systems_count": 115
+  },
+  {
+    "region_id": 10000017,
+    "region_name": "J7HZ-F",
+    "faction_id": 500005,
+    "center": {
+      "x": 485.4025974025974,
+      "y": 296.7142857142857
+    },
+    "relations": [],
+    "systems_count": 77
+  },
+  {
+    "region_id": 10000018,
+    "region_name": "The_Spire",
+    "faction_id": 0,
+    "center": {
+      "x": 417.52941176470586,
+      "y": 387.3529411764706
+    },
+    "relations": [],
+    "systems_count": 85
+  },
+  {
+    "region_id": 10000019,
+    "region_name": "A821-A",
+    "faction_id": 500005,
+    "center": {
+      "x": 389.45652173913044,
+      "y": 334.45652173913044
+    },
+    "relations": [],
+    "systems_count": 46
+  },
+  {
+    "region_id": 10000020,
+    "region_name": "Tash-Murkon",
+    "faction_id": 500003,
+    "center": {
+      "x": 423.57142857142856,
+      "y": 335.890756302521
+    },
+    "relations": [],
+    "systems_count": 119
+  },
+  {
+    "region_id": 10000021,
+    "region_name": "Outer_Passage",
+    "faction_id": 0,
+    "center": {
+      "x": 450.71875,
+      "y": 370.8854166666667
+    },
+    "relations": [],
+    "systems_count": 96
+  },
+  {
+    "region_id": 10000022,
+    "region_name": "Stain",
+    "faction_id": 500019,
+    "center": {
+      "x": 435.55882352941177,
+      "y": 353.6397058823529
+    },
+    "relations": [],
+    "systems_count": 136
+  },
+  {
+    "region_id": 10000023,
+    "region_name": "Pure_Blind",
+    "faction_id": 0,
+    "center": {
+      "x": 451.6666666666667,
+      "y": 329.6470588235294
+    },
+    "relations": [],
+    "systems_count": 102
+  },
+  {
+    "region_id": 10000025,
+    "region_name": "Immensea",
+    "faction_id": 0,
+    "center": {
+      "x": 391.5,
+      "y": 334.6111111111111
+    },
+    "relations": [],
+    "systems_count": 90
+  },
+  {
+    "region_id": 10000027,
+    "region_name": "Etherium_Reach",
+    "faction_id": 0,
+    "center": {
+      "x": 511.6814159292035,
+      "y": 348.1858407079646
+    },
+    "relations": [],
+    "systems_count": 113
+  },
+  {
+    "region_id": 10000028,
+    "region_name": "Molden_Heath",
+    "faction_id": 500002,
+    "center": {
+      "x": 381.9047619047619,
+      "y": 285.95238095238096
+    },
+    "relations": [],
+    "systems_count": 42
+  },
+  {
+    "region_id": 10000029,
+    "region_name": "Geminate",
+    "faction_id": 0,
+    "center": {
+      "x": 481.25,
+      "y": 336.6847826086956
+    },
+    "relations": [],
+    "systems_count": 92
+  },
+  {
+    "region_id": 10000030,
+    "region_name": "Heimatar",
+    "faction_id": 500002,
+    "center": {
+      "x": 432.990099009901,
+      "y": 334.3762376237624
+    },
+    "relations": [],
+    "systems_count": 101
+  },
+  {
+    "region_id": 10000031,
+    "region_name": "Impass",
+    "faction_id": 0,
+    "center": {
+      "x": 462.8703703703704,
+      "y": 333.7962962962963
+    },
+    "relations": [],
+    "systems_count": 54
+  },
+  {
+    "region_id": 10000032,
+    "region_name": "Sinq_Laison",
+    "faction_id": 500004,
+    "center": {
+      "x": 465.57142857142856,
+      "y": 355.05263157894734
+    },
+    "relations": [],
+    "systems_count": 133
+  },
+  {
+    "region_id": 10000033,
+    "region_name": "The_Citadel",
+    "faction_id": 500001,
+    "center": {
+      "x": 417.30392156862746,
+      "y": 324.4117647058824
+    },
+    "relations": [],
+    "systems_count": 102
+  },
+  {
+    "region_id": 10000034,
+    "region_name": "The_Kalevala_Expanse",
+    "faction_id": 0,
+    "center": {
+      "x": 483.48275862068965,
+      "y": 312.8390804597701
+    },
+    "relations": [],
+    "systems_count": 87
+  },
+  {
+    "region_id": 10000035,
+    "region_name": "Deklein",
+    "faction_id": 0,
+    "center": {
+      "x": 517.0348837209302,
+      "y": 361.16279069767444
+    },
+    "relations": [],
+    "systems_count": 86
+  },
+  {
+    "region_id": 10000036,
+    "region_name": "Devoid",
+    "faction_id": 500003,
+    "center": {
+      "x": 438.46774193548384,
+      "y": 339.03225806451616
+    },
+    "relations": [],
+    "systems_count": 62
+  },
+  {
+    "region_id": 10000037,
+    "region_name": "Everyshore",
+    "faction_id": 500004,
+    "center": {
+      "x": 446.61764705882354,
+      "y": 365.7352941176471
+    },
+    "relations": [],
+    "systems_count": 68
+  },
+  {
+    "region_id": 10000038,
+    "region_name": "The_Bleak_Lands",
+    "faction_id": 500003,
+    "center": {
+      "x": 509.8,
+      "y": 287.44444444444446
+    },
+    "relations": [],
+    "systems_count": 45
+  },
+  {
+    "region_id": 10000039,
+    "region_name": "Esoteria",
+    "faction_id": 0,
+    "center": {
+      "x": 456.86813186813185,
+      "y": 324.61538461538464
+    },
+    "relations": [],
+    "systems_count": 91
+  },
+  {
+    "region_id": 10000040,
+    "region_name": "Oasa",
+    "faction_id": 0,
+    "center": {
+      "x": 453.57142857142856,
+      "y": 367.9591836734694
+    },
+    "relations": [],
+    "systems_count": 98
+  },
+  {
+    "region_id": 10000041,
+    "region_name": "Syndicate",
+    "faction_id": 500009,
+    "center": {
+      "x": 468.349593495935,
+      "y": 337.0162601626016
+    },
+    "relations": [],
+    "systems_count": 123
+  },
+  {
+    "region_id": 10000042,
+    "region_name": "Metropolis",
+    "faction_id": 500002,
+    "center": {
+      "x": 452.5921787709497,
+      "y": 344.66480446927375
+    },
+    "relations": [],
+    "systems_count": 179
+  },
+  {
+    "region_id": 10000043,
+    "region_name": "Domain",
+    "faction_id": 500003,
+    "center": {
+      "x": 409.478672985782,
+      "y": 356.77725118483414
+    },
+    "relations": [],
+    "systems_count": 211
+  },
+  {
+    "region_id": 10000044,
+    "region_name": "Solitude",
+    "faction_id": 500004,
+    "center": {
+      "x": 417.4255319148936,
+      "y": 345.8723404255319
+    },
+    "relations": [],
+    "systems_count": 47
+  },
+  {
+    "region_id": 10000045,
+    "region_name": "Tenal",
+    "faction_id": 0,
+    "center": {
+      "x": 424.1333333333333,
+      "y": 378.6666666666667
+    },
+    "relations": [],
+    "systems_count": 75
+  },
+  {
+    "region_id": 10000046,
+    "region_name": "Fade",
+    "faction_id": 0,
+    "center": {
+      "x": 438.93939393939394,
+      "y": 356.5151515151515
+    },
+    "relations": [],
+    "systems_count": 33
+  },
+  {
+    "region_id": 10000047,
+    "region_name": "Providence",
+    "faction_id": 0,
+    "center": {
+      "x": 487.6020408163265,
+      "y": 333.8265306122449
+    },
+    "relations": [],
+    "systems_count": 98
+  },
+  {
+    "region_id": 10000048,
+    "region_name": "Placid",
+    "faction_id": 500004,
+    "center": {
+      "x": 475.4117647058824,
+      "y": 326.5529411764706
+    },
+    "relations": [],
+    "systems_count": 85
+  },
+  {
+    "region_id": 10000049,
+    "region_name": "Khanid",
+    "faction_id": 500008,
+    "center": {
+      "x": 501.21505376344084,
+      "y": 363.36559139784947
+    },
+    "relations": [],
+    "systems_count": 93
+  },
+  {
+    "region_id": 10000050,
+    "region_name": "Querious",
+    "faction_id": 0,
+    "center": {
+      "x": 464.52830188679246,
+      "y": 322.688679245283
+    },
+    "relations": [],
+    "systems_count": 106
+  },
+  {
+    "region_id": 10000051,
+    "region_name": "Cloud_Ring",
+    "faction_id": 0,
+    "center": {
+      "x": 519.7872340425532,
+      "y": 331.59574468085106
+    },
+    "relations": [],
+    "systems_count": 47
+  },
+  {
+    "region_id": 10000052,
+    "region_name": "Kador",
+    "faction_id": 500003,
+    "center": {
+      "x": 409.18095238095236,
+      "y": 357.76190476190476
+    },
+    "relations": [],
+    "systems_count": 105
+  },
+  {
+    "region_id": 10000053,
+    "region_name": "Cobalt_Edge",
+    "faction_id": 0,
+    "center": {
+      "x": 456.53246753246754,
+      "y": 369.7402597402597
+    },
+    "relations": [],
+    "systems_count": 77
+  },
+  {
+    "region_id": 10000054,
+    "region_name": "Aridia",
+    "faction_id": 500003,
+    "center": {
+      "x": 473.40697674418607,
+      "y": 311.83720930232556
+    },
+    "relations": [],
+    "systems_count": 86
+  },
+  {
+    "region_id": 10000055,
+    "region_name": "Branch",
+    "faction_id": 0,
+    "center": {
+      "x": 467.1980198019802,
+      "y": 306.74257425742576
+    },
+    "relations": [],
+    "systems_count": 101
+  },
+  {
+    "region_id": 10000056,
+    "region_name": "Feythabolis",
+    "faction_id": 0,
+    "center": {
+      "x": 410.94736842105266,
+      "y": 347.65263157894736
+    },
+    "relations": [],
+    "systems_count": 95
+  },
+  {
+    "region_id": 10000057,
+    "region_name": "Outer_Ring",
+    "faction_id": 500014,
+    "center": {
+      "x": 484.2307692307692,
+      "y": 312.84615384615387
+    },
+    "relations": [],
+    "systems_count": 65
+  },
+  {
+    "region_id": 10000058,
+    "region_name": "Fountain",
+    "faction_id": 0,
+    "center": {
+      "x": 427.43697478991595,
+      "y": 351.218487394958
+    },
+    "relations": [],
+    "systems_count": 119
+  },
+  {
+    "region_id": 10000059,
+    "region_name": "Paragon_Soul",
+    "faction_id": 0,
+    "center": {
+      "x": 471.83673469387753,
+      "y": 237.44897959183675
+    },
+    "relations": [],
+    "systems_count": 49
+  },
+  {
+    "region_id": 10000060,
+    "region_name": "Delve",
+    "faction_id": 0,
+    "center": {
+      "x": 479.6363636363636,
+      "y": 348.8636363636364
+    },
+    "relations": [],
+    "systems_count": 110
+  },
+  {
+    "region_id": 10000061,
+    "region_name": "Tenerifis",
+    "faction_id": 0,
+    "center": {
+      "x": 435.6179775280899,
+      "y": 299.75280898876406
+    },
+    "relations": [],
+    "systems_count": 89
+  },
+  {
+    "region_id": 10000062,
+    "region_name": "Omist",
+    "faction_id": 0,
+    "center": {
+      "x": 426.4130434782609,
+      "y": 336.19565217391306
+    },
+    "relations": [],
+    "systems_count": 46
+  },
+  {
+    "region_id": 10000063,
+    "region_name": "Period_Basis",
+    "faction_id": 0,
+    "center": {
+      "x": 446.8181818181818,
+      "y": 332.3863636363636
+    },
+    "relations": [],
+    "systems_count": 44
+  },
+  {
+    "region_id": 10000064,
+    "region_name": "Essence",
+    "faction_id": 500004,
+    "center": {
+      "x": 468.9080459770115,
+      "y": 286.55172413793105
+    },
+    "relations": [],
+    "systems_count": 87
+  },
+  {
+    "region_id": 10000065,
+    "region_name": "Kor-Azor",
+    "faction_id": 500003,
+    "center": {
+      "x": 422.5068493150685,
+      "y": 333.56164383561645
+    },
+    "relations": [],
+    "systems_count": 73
+  },
+  {
+    "region_id": 10000066,
+    "region_name": "Perrigen_Falls",
+    "faction_id": 0,
+    "center": {
+      "x": 452.0508474576271,
+      "y": 310.46610169491527
+    },
+    "relations": [],
+    "systems_count": 118
+  },
+  {
+    "region_id": 10000067,
+    "region_name": "Genesis",
+    "faction_id": 500003,
+    "center": {
+      "x": 463.84496124031006,
+      "y": 322.93023255813955
+    },
+    "relations": [],
+    "systems_count": 129
+  },
+  {
+    "region_id": 10000068,
+    "region_name": "Verge_Vendor",
+    "faction_id": 500004,
+    "center": {
+      "x": 435.6231884057971,
+      "y": 320.5652173913044
+    },
+    "relations": [],
+    "systems_count": 69
+  },
+  {
+    "region_id": 10000069,
+    "region_name": "Black_Rise",
+    "faction_id": 500001,
+    "center": {
+      "x": 436.7368421052632,
+      "y": 258.6666666666667
+    },
+    "relations": [],
+    "systems_count": 57
+  },
+  {
+    "region_id": 10000070,
+    "region_name": "Pochven",
+    "faction_id": 500026,
+    "center": {
+      "x": 487.14814814814815,
+      "y": 473.0
+    },
+    "relations": [],
+    "systems_count": 27
+  },
+  {
+    "region_id": 10001000,
+    "region_name": "Yasna_Zakh",
+    "faction_id": 0,
+    "center": {
+      "x": 434.2,
+      "y": 255.8
+    },
+    "relations": [],
+    "systems_count": 5
+  }
+]
