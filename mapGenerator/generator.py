@@ -14,6 +14,8 @@ class MapGenerator:
     def __init__(self):
         self.maps_dir = Path("maps")
         self.maps_dir.mkdir(exist_ok=True)
+        self.map_result = Path("../output/map")
+        self.map_result.mkdir(exist_ok=True)
         self.regions_data = []
         self.region_links = {}  # 存储星域连接关系
         
@@ -133,6 +135,46 @@ class MapGenerator:
             print(f"解析坐标和关系失败: {e}")
             return {}, {}
     
+    def extract_global_relations(self, svg_content):
+        """从New Eden SVG中提取全局连接关系"""
+        try:
+            soup = BeautifulSoup(svg_content, features="xml")
+            global_relations = {}
+            
+            # 查找jumps组
+            jumps_group = soup.find('g', id='jumps')
+            if jumps_group:
+                for line in jumps_group.find_all('line'):
+                    line_id = line.get('id')
+                    if line_id and line_id.startswith('j-'):
+                        # 解析连接的区域ID
+                        parts = line_id.split('-')
+                        if len(parts) >= 3:
+                            region1 = parts[1]
+                            region2 = parts[2]
+                            
+                            # 确保两个区域ID不同
+                            if region1 != region2:
+                                if region1 not in global_relations:
+                                    global_relations[region1] = set()
+                                global_relations[region1].add(region2)
+                                
+                                if region2 not in global_relations:
+                                    global_relations[region2] = set()
+                                global_relations[region2].add(region1)
+            
+            print(f"从New Eden SVG中提取到 {len(global_relations)} 个区域的连接关系")
+            return global_relations
+        except Exception as e:
+            print(f"提取全局连接关系失败: {e}")
+            return {}
+    
+    def get_region_connections(self, region_id, global_relations):
+        """获取指定区域的连接关系"""
+        if str(region_id) in global_relations:
+            return list(global_relations[str(region_id)])
+        return []
+    
     def format_region_name(self, region_name):
         """格式化星域名，删除下划线"""
         return region_name.replace('_', '')
@@ -183,32 +225,22 @@ class MapGenerator:
                                     'name': region_dir.name,
                                     'faction_id': faction_id
                                 }
-                                
-                                # 遍历该区域下的所有系统
-                                for system_dir in region_dir.iterdir():
-                                    if system_dir.is_dir():
-                                        constellation_yaml = system_dir / "constellation.yaml"
-                                        if constellation_yaml.exists():
-                                            try:
-                                                with open(constellation_yaml, 'r', encoding='utf-8') as f:
-                                                    constellation_data = yaml.safe_load(f)
-                                                    constellation_id = constellation_data.get('constellationID')
-                                                    if constellation_id:
-                                                        system_to_region[constellation_id] = region_id
-                                            except Exception as e:
-                                                print(f"读取星座文件失败 {constellation_yaml}: {e}")
                     except Exception as e:
                         print(f"读取区域文件失败 {region_yaml}: {e}")
         
-        print(f"构建完成，共找到 {len(region_info)} 个区域，{len(system_to_region)} 个系统映射")
+        print(f"构建完成，共找到 {len(region_info)} 个区域")
         return system_to_region, region_info
     
-    def process_regions_data(self, region_links, region_svgs):
+    def process_regions_data(self, region_links, region_svgs, new_eden_svg_content):
         """处理所有星域数据"""
         print("正在处理星域数据...")
         
-        # 构建系统到区域的映射
+        # 构建区域信息
         system_to_region, region_info = self.build_system_to_region_mapping()
+        
+        # 从New Eden SVG中提取全局连接关系
+        print("正在从New Eden SVG中提取连接关系...")
+        global_relations = self.extract_global_relations(new_eden_svg_content)
         
         # 存储区域连接关系
         region_connections = {}
@@ -259,30 +291,21 @@ class MapGenerator:
             else:
                 center = {'x': 0, 'y': 0}
             
-            # 收集区域间的连接关系
-            connected_regions = set()
-            for system_id, connected_systems in relations.items():
-                # 将系统ID转换为区域ID
-                if system_id in system_to_region:
-                    current_region = system_to_region[system_id]
-                    for connected_system in connected_systems:
-                        if connected_system in system_to_region:
-                            connected_region = system_to_region[connected_system]
-                            if connected_region != current_region:
-                                connected_regions.add(connected_region)
+            # 从全局连接关系中获取该区域的连接
+            connected_regions = self.get_region_connections(region_id, global_relations)
             
             region_data = {
                 "region_id": region_id,
                 "faction_id": faction_id,
                 "center": center,
-                "relations": list(connected_regions),
+                "relations": connected_regions,
                 "systems_count": len(systems)
             }
             
             self.regions_data.append(region_data)
-            region_connections[region_id] = list(connected_regions)
+            region_connections[region_id] = connected_regions
             processed_count += 1
-            print(f"处理完成: {region_name} (ID: {region_id}, 系统数: {len(systems)})")
+            print(f"处理完成: {region_name} (ID: {region_id}, 系统数: {len(systems)}, 连接数: {len(connected_regions)})")
         
         # 输出统计信息
         print(f"\n处理统计:")
@@ -312,7 +335,7 @@ class MapGenerator:
     
     def save_to_json(self, filename="regions_data.json"):
         """保存数据到JSON文件"""
-        output_path = self.maps_dir / filename
+        output_path = self.map_result / filename
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(self.regions_data, f, ensure_ascii=False, indent=2)
         print(f"数据已保存到: {output_path}")
@@ -330,7 +353,7 @@ class MapGenerator:
             region_svgs = await self.download_all_regions(region_links)
             
             # 4. 处理星域数据
-            self.process_regions_data(region_links, region_svgs)
+            self.process_regions_data(region_links, region_svgs, svg_content)
             
             # 5. 保存到JSON
             self.save_to_json()
