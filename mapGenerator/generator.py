@@ -18,6 +18,7 @@ class MapGenerator:
         self.map_result.mkdir(exist_ok=True)
         self.regions_data = []
         self.region_links = {}  # 存储星域连接关系
+        self.systems_data = {}  # 存储所有星域的系统数据
         
     async def download_new_eden_svg(self):
         """下载New Eden SVG地图"""
@@ -341,8 +342,8 @@ class MapGenerator:
                 "jumps": relations
             }
             
-            # 保存单个星域的地图数据
-            self.save_region_map_data(region_id, region_map_data)
+            # 将星域数据存储到systems_data中
+            self.systems_data[str(region_id)] = region_map_data
             
             # 为regions_data.json准备数据
             region_data = {
@@ -387,20 +388,19 @@ class MapGenerator:
                 sorted_relations = sorted(region_connections[region_id], key=int)
                 region_data["relations"] = sorted_relations
     
-    def save_region_map_data(self, region_id, region_map_data):
-        """保存单个星域的地图数据到JSON文件"""
-        filename = f"map_{region_id}.json"
-        output_path = self.map_result / filename
-        with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(region_map_data, f, ensure_ascii=False, indent=2)
-        print(f"星域地图数据已保存到: {output_path}")
-    
     def save_to_json(self, filename="regions_data.json"):
         """保存数据到JSON文件"""
         output_path = self.map_result / filename
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(self.regions_data, f, ensure_ascii=False, indent=2)
         print(f"数据已保存到: {output_path}")
+    
+    def save_systems_data(self, filename="systems_data.json"):
+        """保存所有星域的系统数据到JSON文件"""
+        output_path = self.map_result / filename
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(self.systems_data, f, ensure_ascii=False, indent=2)
+        print(f"所有星域系统数据已保存到: {output_path}")
     
     async def run(self):
         """运行完整的地图生成流程"""
@@ -419,6 +419,7 @@ class MapGenerator:
             
             # 5. 保存到JSON
             self.save_to_json()
+            self.save_systems_data()
             
             print("地图生成完成！")
             
