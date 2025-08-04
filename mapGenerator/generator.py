@@ -328,6 +328,8 @@ class MapGenerator:
             
             # 从全局连接关系中获取该区域的连接
             connected_regions = self.get_region_connections(region_id, global_relations)
+            # 按数值大小排序
+            connected_regions.sort(key=int)
             
             region_data = {
                 "region_id": region_id,
@@ -368,7 +370,9 @@ class MapGenerator:
         for region_data in self.regions_data:
             region_id = region_data["region_id"]
             if region_id in region_connections:
-                region_data["relations"] = region_connections[region_id]
+                # 按数值大小排序
+                sorted_relations = sorted(region_connections[region_id], key=int)
+                region_data["relations"] = sorted_relations
     
     def save_to_json(self, filename="regions_data.json"):
         """保存数据到JSON文件"""

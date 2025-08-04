@@ -586,7 +586,7 @@
   <symbol id="def30003827">
     <a xlink:href="http://evemaps.dotlan.net/system/Aubenall" class="sys link-5-30003827" target="_top">
     <rect id="ice30003827" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30003827" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #E1FFE1;" />
+      <rect id="rect30003827" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Aubenall</text>
       <text id="txt30003827" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -681,7 +681,7 @@
   <symbol id="def30003825">
     <a xlink:href="http://evemaps.dotlan.net/system/Eugales" class="sys link-5-30003825" target="_top">
     <rect id="ice30003825" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30003825" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #E1FFE1;" />
+      <rect id="rect30003825" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Eugales</text>
       <text id="txt30003825" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -745,7 +745,7 @@
   </symbol>
   <symbol id="def30003836">
     <a xlink:href="http://evemaps.dotlan.net/system/Vlillirier" class="sys link-5-30003836" target="_top">
-      <rect id="rect30003836" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-60);" />
+      <rect id="rect30003836" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-40);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Vlillirier</text>
       <text id="txt30003836" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -1095,10 +1095,12 @@
   <rect id="inc30003795" x="498.5" y="520.5" width="71" height="38" class="con" />
   <rect id="inc30003840" x="529.5" y="67.5" width="71" height="38" class="con" />
   <rect id="inc30003842" x="532.5" y="34.5" width="71" height="38" class="con" />
+  <rect id="inc30003827" x="553.5" y="170.5" width="71" height="38" class="con" />
   <rect id="inc30003796" x="588.5" y="615.5" width="71" height="38" class="con" />
   <rect id="inc30003839" x="599.5" y="69.5" width="71" height="38" class="con" />
   <rect id="inc30003829" x="628.5" y="155.5" width="71" height="38" class="con" />
   <rect id="inc30003792" x="643.5" y="440.5" width="71" height="38" class="con" />
+  <rect id="inc30003825" x="658.5" y="210.5" width="71" height="38" class="con" />
   <rect id="inc30003837" x="661.5" y="77.5" width="71" height="38" class="con" />
   <rect id="inc30003797" x="668.5" y="565.5" width="71" height="38" class="con" />
   <rect id="inc30003799" x="668.5" y="615.5" width="71" height="38" class="con" />

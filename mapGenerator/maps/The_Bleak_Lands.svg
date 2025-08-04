@@ -155,7 +155,7 @@
   </symbol>
   <symbol id="def30003089">
     <a xlink:href="http://evemaps.dotlan.net/system/Kurniainen" class="sys link-5-30003089" target="_top">
-      <rect id="rect30003089" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-60);" />
+      <rect id="rect30003089" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-40);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Kurniainen</text>
       <text id="txt30003089" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -696,6 +696,7 @@
   <rect id="inc30003063" x="743.5" y="330.5" width="71" height="38" class="con" />
   <rect id="inc30003068" x="833.5" y="330.5" width="71" height="38" class="con" />
   <rect id="inc30002087" x="224.5" y="10.5" width="71" height="38" class="con" />
+  <rect id="inc30002957" x="743.5" y="285.5" width="71" height="38" class="con" />
   <rect id="inc30002542" x="843.5" y="280.5" width="71" height="38" class="con" />
 </g>
 
