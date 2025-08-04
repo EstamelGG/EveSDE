@@ -3,14 +3,14 @@ import time
 import logging
 import re
 import os
-from typing import List, Tuple
+from typing import List, Tuple, Set
 
 # 配置日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 # 用于缓存universe数据
-_universe_data: List[Tuple[int, int, int, float, int, float, float, float, bool, bool, bool]] = []
+_universe_data: List[Tuple] = []
 
 planetary_typeIdMapping = {
     "temperate": 11,
@@ -22,6 +22,27 @@ planetary_typeIdMapping = {
     "storm": 2017,
     "plasma": 2063
 }
+
+def read_jove_systems(file_path: str = 'thirdparty_data_source/jo.txt') -> Set[str]:
+    """读取jo.txt文件，返回Jove星系名称集合"""
+    jove_systems = set()
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            for line_num, line in enumerate(file, 1):
+                line = line.strip()
+                if line and line_num > 1:  # 跳过标题行
+                    parts = line.split(',')
+                    if len(parts) >= 2:
+                        system_name = parts[1].strip()
+                        jove_systems.add(system_name)
+        logger.info(f"从 {file_path} 读取了 {len(jove_systems)} 个Jove星系")
+        return jove_systems
+    except FileNotFoundError:
+        logger.warning(f"文件 {file_path} 不存在，将不会标记Jove星系")
+        return set()
+    except Exception as e:
+        logger.error(f"读取 {file_path} 时出错: {str(e)}")
+        return set()
 
 def create_table(cursor):
     """创建universe表和starmap表"""
@@ -38,7 +59,8 @@ def create_table(cursor):
             z REAL,
             hasStation BOOLEAN NOT NULL DEFAULT 0,
             hasJumpGate BOOLEAN NOT NULL DEFAULT 0,
-            isJSpace BOOLEAN NOT NULL DEFAULT 0
+            isJSpace BOOLEAN NOT NULL DEFAULT 0,
+            jove BOOLEAN NOT NULL DEFAULT 0
     '''
     
     # 添加硬编码的行星类型列
@@ -53,7 +75,7 @@ def create_table(cursor):
     
     # 执行创建表语句
     cursor.execute(table_schema)
-    logger.info(f"创建了包含 {len(planetary_typeIdMapping)} 种行星类型的表结构")
+    logger.info(f"创建了包含 {len(planetary_typeIdMapping)} 种行星类型和jove列的表结构")
     
     # cursor.execute('''
     #     CREATE TABLE IF NOT EXISTS starmap (
@@ -75,7 +97,7 @@ def read_universe_data(file_path: str = 'fetchUniverse/universe_data.json') -> d
         logger.error(f"文件 {file_path} 不是有效的JSON格式")
         return {}
 
-def process_universe_data(data: dict, cursor=None) -> List[Tuple]:
+def process_universe_data(data: dict, cursor=None, jove_systems: Set[str] = None) -> List[Tuple]:
     """处理universe数据"""
     universe_data = []
     neighbour_count = 0
@@ -88,6 +110,10 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple]:
     
     # 用于收集邻居星系数据
     neighbours_data = {}
+    
+    # 如果没有提供jove_systems，则读取jo.txt文件
+    if jove_systems is None:
+        jove_systems = read_jove_systems()
     
     # 遍历所有星域
     for region_id, region_info in data.items():
@@ -145,6 +171,9 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple]:
                                 planet_name = planet_type_to_name[planet_type]
                                 planet_counts[planet_name] += 1
                 
+                # 检查是否为Jove星系
+                is_jove = system_name in jove_systems
+                
                 # 构建数据元组
                 data_tuple = [
                     int(region_id),
@@ -157,7 +186,8 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple]:
                     float(z),
                     has_station,
                     has_stargates,
-                    is_jspace
+                    is_jspace,
+                    is_jove
                 ]
                 
                 # 添加行星类型计数，按照planetary_typeIdMapping的顺序
@@ -182,7 +212,7 @@ def process_universe_data(data: dict, cursor=None) -> List[Tuple]:
         columns = [
             'region_id', 'constellation_id', 'solarsystem_id', 
             'system_security', 'system_type', 'x', 'y', 'z', 
-            'hasStation', 'hasJumpGate', 'isJSpace'
+            'hasStation', 'hasJumpGate', 'isJSpace', 'jove'
         ]
         
         # 添加行星类型列，按照planetary_typeIdMapping的顺序
@@ -257,7 +287,7 @@ def process_data(cursor, lang: str = 'en'):
                 columns = [
                     'region_id', 'constellation_id', 'solarsystem_id', 
                     'system_security', 'system_type', 'x', 'y', 'z', 
-                    'hasStation', 'hasJumpGate', 'isJSpace'
+                    'hasStation', 'hasJumpGate', 'isJSpace', 'jove'
                 ]
                 
                 # 添加行星类型列，按照planetary_typeIdMapping的顺序

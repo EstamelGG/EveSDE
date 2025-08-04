@@ -513,7 +513,7 @@
   </symbol>
   <symbol id="def30002957">
     <a xlink:href="http://evemaps.dotlan.net/system/Tzvi" class="sys link-5-30002957" target="_top">
-      <rect id="rect30002957" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-0);" />
+      <rect id="rect30002957" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #FFF4CE;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Tzvi</text>
       <text id="txt30002957" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -829,7 +829,7 @@
 <g id="glow">
 
   <rect id="inc30002962" x="408.5" y="35.5" width="71" height="38" class="con" />
-  <rect id="inc30002957" x="563.5" y="130.5" width="71" height="38" class="con" />
+  <rect id="inc30003067" x="383.5" y="210.5" width="71" height="38" class="con" />
   <rect id="inc30003088" x="388.5" y="160.5" width="71" height="38" class="con" />
   <rect id="inc30002538" x="468.5" y="5.5" width="71" height="38" class="con" />
   <rect id="inc30003063" x="563.5" y="180.5" width="71" height="38" class="con" />

@@ -298,7 +298,7 @@
   </symbol>
   <symbol id="def30003851">
     <a xlink:href="http://evemaps.dotlan.net/system/Reschard" class="sys link-5-30003851" target="_top">
-      <rect id="rect30003851" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-60);" />
+      <rect id="rect30003851" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-80);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Reschard</text>
       <text id="txt30003851" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -745,7 +745,7 @@
   </symbol>
   <symbol id="def30003836">
     <a xlink:href="http://evemaps.dotlan.net/system/Vlillirier" class="sys link-5-30003836" target="_top">
-      <rect id="rect30003836" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-40);" />
+      <rect id="rect30003836" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-60);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Vlillirier</text>
       <text id="txt30003836" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -1116,7 +1116,6 @@
   <rect id="inc30003788" x="918.5" y="335.5" width="71" height="38" class="con" />
   <rect id="inc30003789" x="933.5" y="390.5" width="71" height="38" class="con" />
   <rect id="inc30045344" x="710.5" y="31.5" width="71" height="38" class="con" />
-  <rect id="inc30045319" x="818.5" y="45.5" width="71" height="38" class="con" />
   <rect id="inc30005300" x="818.5" y="460.5" width="71" height="38" class="con" />
 </g>
 
