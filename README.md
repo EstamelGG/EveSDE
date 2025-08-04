@@ -229,3 +229,9 @@ res:/ui/texture/windowicons/abyssalfilament.png,1f/1f023a06d843f226_aea8910fa75e
 "1f023a06d843f226_aea8910fa75ef1985037875159d7311c"
 
 所以只需复制它并将其重命名为 .png
+
+# 更新地图
+
+1. 执行 `mapGenerator/generator.py`
+2. 输出到目录 `output/map`
+3. 复制到 ios 项目的 `EVE Nexus/utils/StarMap` 中
