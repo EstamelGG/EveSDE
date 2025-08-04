@@ -773,7 +773,14 @@
 <text x="10" y="20" id="debug"  style="fill: #888888;"> </text>
 
 <g id="glow">
-
+  <rect id="inc30001043" x="36.5" y="81.5" width="85" height="46" class="incs" />
+  <rect id="inc30001042" x="111.5" y="81.5" width="85" height="46" class="inc" />
+  <rect id="inc30001037" x="151.5" y="121.5" width="85" height="46" class="inc" />
+  <rect id="inc30001038" x="191.5" y="81.5" width="85" height="46" class="inc" />
+  <rect id="inc30001040" x="216.5" y="161.5" width="85" height="46" class="inc" />
+  <rect id="inc30001039" x="226.5" y="121.5" width="85" height="46" class="inc" />
+  <rect id="inc30001036" x="271.5" y="46.5" width="85" height="46" class="inc" />
+  <rect id="inc30001041" x="271.5" y="81.5" width="85" height="46" class="inc" />
 
 </g>
 

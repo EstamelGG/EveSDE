@@ -532,7 +532,7 @@
   </symbol>
   <symbol id="def30004979">
     <a xlink:href="http://evemaps.dotlan.net/system/Heydieles" class="sys link-5-30004979" target="_top">
-      <rect id="rect30004979" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-0);" />
+      <rect id="rect30004979" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #E1FFE1;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Heydieles</text>
       <text id="txt30004979" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -650,7 +650,7 @@
   <symbol id="def30004980">
     <a xlink:href="http://evemaps.dotlan.net/system/Fliet" class="sys link-5-30004980" target="_top">
     <rect id="ice30004980" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30004980" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #E1FFE1;" />
+      <rect id="rect30004980" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Fliet</text>
       <text id="txt30004980" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -1101,8 +1101,8 @@
 
   <rect id="inc30004999" x="13.5" y="5.5" width="71" height="38" class="con" />
   <rect id="inc30004997" x="113.5" y="60.5" width="71" height="38" class="con" />
-  <rect id="inc30004979" x="553.5" y="5.5" width="71" height="38" class="con" />
   <rect id="inc30004984" x="573.5" y="55.5" width="71" height="38" class="con" />
+  <rect id="inc30004980" x="693.5" y="-4.5" width="71" height="38" class="con" />
   <rect id="inc30004985" x="778.5" y="-4.5" width="71" height="38" class="con" />
   <rect id="inc30005321" x="68.5" y="290.5" width="71" height="38" class="con" />
   <rect id="inc30005295" x="493.5" y="105.5" width="71" height="38" class="con" />

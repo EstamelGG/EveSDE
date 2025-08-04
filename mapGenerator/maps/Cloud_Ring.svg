@@ -332,14 +332,14 @@
     <rect id="ice30004068" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
       <rect id="rect30004068" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #FFF4BB;" />
       <text x="28" y="14" class="ss" text-anchor="middle">00TY-J</text>
-      <text id="txt30004068" x="28" y="21.7" class="st so" text-anchor="middle">APOC (3)</text>
+      <text id="txt30004068" x="28" y="21.7" class="st so" text-anchor="middle">APOC (4)</text>
     </a>
   </symbol>
   <symbol id="def30004065">
     <a xlink:href="http://evemaps.dotlan.net/system/PPG-XC" class="sys link-5-30004065" target="_top">
       <rect id="rect30004065" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #FFF4BB;" />
       <text x="28" y="14" class="ss" text-anchor="middle">PPG-XC</text>
-      <text id="txt30004065" x="28" y="21.7" class="st so" text-anchor="middle">APOC (3)</text>
+      <text id="txt30004065" x="28" y="21.7" class="st so" text-anchor="middle">APOC (4)</text>
     </a>
   </symbol>
   <symbol id="def30004046">
@@ -396,7 +396,7 @@
     <a xlink:href="http://evemaps.dotlan.net/system/5S-KNL" class="sys link-5-30004067" target="_top">
       <rect id="rect30004067" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #FFF4BB;" />
       <text x="28" y="14" class="ss" text-anchor="middle">5S-KNL</text>
-      <text id="txt30004067" x="28" y="21.7" class="st so" text-anchor="middle">APOC (3)</text>
+      <text id="txt30004067" x="28" y="21.7" class="st so" text-anchor="middle">APOC (4)</text>
     </a>
   </symbol>
   <symbol id="def30004066">

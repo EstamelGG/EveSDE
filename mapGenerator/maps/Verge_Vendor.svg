@@ -513,7 +513,7 @@
   <symbol id="def30005298">
     <a xlink:href="http://evemaps.dotlan.net/system/Costolle" class="sys link-5-30005298" target="_top">
     <rect id="ice30005298" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30005298" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-0);" />
+      <rect id="rect30005298" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #E1FFE1;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Costolle</text>
       <text id="txt30005298" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -953,7 +953,6 @@
   <rect id="inc30005299" x="503.5" y="90.5" width="71" height="38" class="con" />
   <rect id="inc30005296" x="508.5" y="200.5" width="71" height="38" class="con" />
   <rect id="inc30005321" x="523.5" y="40.5" width="71" height="38" class="con" />
-  <rect id="inc30005298" x="528.5" y="140.5" width="71" height="38" class="con" />
   <rect id="inc30005295" x="583.5" y="195.5" width="71" height="38" class="con" />
   <rect id="inc30003795" x="-6.5" y="170.5" width="71" height="38" class="con" />
   <rect id="inc30003797" x="58.5" y="150.5" width="71" height="38" class="con" />

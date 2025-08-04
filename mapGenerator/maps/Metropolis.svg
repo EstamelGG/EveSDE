@@ -198,7 +198,7 @@
   </symbol>
   <symbol id="def30002093">
     <a xlink:href="http://evemaps.dotlan.net/system/Gebuladi" class="sys link-5-30002093" target="_top">
-      <rect id="rect30002093" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-0);" />
+      <rect id="rect30002093" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-20);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Gebuladi</text>
       <text id="txt30002093" x="24.25" y="18.895" class="st" text-anchor="middle">Minmatar</text>
     </a>
@@ -235,9 +235,9 @@
   </symbol>
   <symbol id="def30002058">
     <a xlink:href="http://evemaps.dotlan.net/system/Ardar" class="sys link-5-30002058" target="_top">
-      <rect id="rect30002058" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-100);" />
+      <rect id="rect30002058" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-0);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Ardar</text>
-      <text id="txt30002058" x="24.25" y="18.895" class="st" text-anchor="middle">Minmatar</text>
+      <text id="txt30002058" x="24.25" y="18.895" class="st" text-anchor="middle">Amarr</text>
     </a>
     <rect x="42.76" y="8.675" height="9.35" width="9.35" class="o" />
     <polygon points="42.76,8.675 52.11,8.675 47.435,13.35 42.76,8.675" class="v1" />
@@ -306,9 +306,9 @@
   <symbol id="def30002095">
     <a xlink:href="http://evemaps.dotlan.net/system/Eszur" class="sys link-5-30002095" target="_top">
     <rect id="ice30002095" x="1" y="0.5" rx="12.35" ry="11.35" width="48.5" height="24.7" class="i" />
-      <rect id="rect30002095" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-100);" />
+      <rect id="rect30002095" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-0);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Eszur</text>
-      <text id="txt30002095" x="24.25" y="18.895" class="st" text-anchor="middle">Minmatar</text>
+      <text id="txt30002095" x="24.25" y="18.895" class="st" text-anchor="middle">Amarr</text>
     </a>
     <rect x="42.76" y="8.675" height="9.35" width="9.35" class="o" />
     <polygon points="42.76,8.675 52.11,8.675 47.435,13.35 42.76,8.675" class="v1" />
@@ -329,7 +329,7 @@
   </symbol>
   <symbol id="def30002098">
     <a xlink:href="http://evemaps.dotlan.net/system/Orfrold" class="sys link-5-30002098" target="_top">
-      <rect id="rect30002098" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: #FFE8E8;" />
+      <rect id="rect30002098" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-0);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Orfrold</text>
       <text id="txt30002098" x="24.25" y="18.895" class="st" text-anchor="middle">Minmatar</text>
     </a>
@@ -425,7 +425,7 @@
   <symbol id="def30002099">
     <a xlink:href="http://evemaps.dotlan.net/system/Egmar" class="sys link-5-30002099" target="_top">
     <rect id="ice30002099" x="1" y="0.5" rx="12.35" ry="11.35" width="48.5" height="24.7" class="i" />
-      <rect id="rect30002099" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-60);" />
+      <rect id="rect30002099" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-80);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Egmar</text>
       <text id="txt30002099" x="24.25" y="18.895" class="st" text-anchor="middle">Minmatar</text>
     </a>
@@ -509,7 +509,7 @@
   </symbol>
   <symbol id="def30002088">
     <a xlink:href="http://evemaps.dotlan.net/system/Vimeini" class="sys link-5-30002088" target="_top">
-      <rect id="rect30002088" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-20);" />
+      <rect id="rect30002088" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-40);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Vimeini</text>
       <text id="txt30002088" x="24.25" y="18.895" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -695,7 +695,7 @@
   <symbol id="def30002062">
     <a xlink:href="http://evemaps.dotlan.net/system/Todifrauan" class="sys link-5-30002062" target="_top">
     <rect id="ice30002062" x="1" y="0.5" rx="12.35" ry="11.35" width="48.5" height="24.7" class="i" />
-      <rect id="rect30002062" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-0);" />
+      <rect id="rect30002062" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-20);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Todifrauan</text>
       <text id="txt30002062" x="24.25" y="18.895" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -707,9 +707,9 @@
   </symbol>
   <symbol id="def30002067">
     <a xlink:href="http://evemaps.dotlan.net/system/Brin" class="sys link-5-30002067" target="_top">
-      <rect id="rect30002067" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-100);" />
+      <rect id="rect30002067" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500002-0);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Brin</text>
-      <text id="txt30002067" x="24.25" y="18.895" class="st" text-anchor="middle">Amarr</text>
+      <text id="txt30002067" x="24.25" y="18.895" class="st" text-anchor="middle">Minmatar</text>
     </a>
     <rect x="42.76" y="8.675" height="9.35" width="9.35" class="o" />
     <polygon points="42.76,8.675 52.11,8.675 47.435,13.35 42.76,8.675" class="v1" />
@@ -745,7 +745,7 @@
   </symbol>
   <symbol id="def30002064">
     <a xlink:href="http://evemaps.dotlan.net/system/Arnstur" class="sys link-5-30002064" target="_top">
-      <rect id="rect30002064" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-40);" />
+      <rect id="rect30002064" x="4" y="3.5" rx="9.35" ry="9.35" width="42.5" height="18.7"  class="sl" style="fill: url(#fw500003-60);" />
       <text x="24.25" y="12.35" class="ss" text-anchor="middle">Arnstur</text>
       <text id="txt30002064" x="24.25" y="18.895" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -2142,6 +2142,7 @@
   <rect id="inc30002096" x="68.5" y="735.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002090" x="73.5" y="580.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002095" x="73.5" y="695.5" width="63.5" height="34.7" class="con" />
+  <rect id="inc30002098" x="83.5" y="410.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002094" x="108.5" y="660.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002099" x="138.5" y="390.5" width="63.5" height="34.7" class="con" />
   <rect id="inc30002100" x="138.5" y="435.5" width="63.5" height="34.7" class="con" />
