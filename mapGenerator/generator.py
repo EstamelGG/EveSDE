@@ -331,12 +331,25 @@ class MapGenerator:
             # 按数值大小排序
             connected_regions.sort(key=int)
             
-            region_data = {
+            # 生成单个星域的地图数据
+            region_map_data = {
                 "region_id": region_id,
                 "faction_id": faction_id,
                 "center": center,
                 "relations": connected_regions,
-                "systems_count": len(systems)
+                "systems": systems,
+                "jumps": relations
+            }
+            
+            # 保存单个星域的地图数据
+            self.save_region_map_data(region_id, region_map_data)
+            
+            # 为regions_data.json准备数据
+            region_data = {
+                "region_id": region_id,
+                "faction_id": faction_id,
+                "center": center,
+                "relations": connected_regions
             }
             
             self.regions_data.append(region_data)
@@ -373,6 +386,14 @@ class MapGenerator:
                 # 按数值大小排序
                 sorted_relations = sorted(region_connections[region_id], key=int)
                 region_data["relations"] = sorted_relations
+    
+    def save_region_map_data(self, region_id, region_map_data):
+        """保存单个星域的地图数据到JSON文件"""
+        filename = f"map_{region_id}.json"
+        output_path = self.map_result / filename
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(region_map_data, f, ensure_ascii=False, indent=2)
+        print(f"星域地图数据已保存到: {output_path}")
     
     def save_to_json(self, filename="regions_data.json"):
         """保存数据到JSON文件"""
