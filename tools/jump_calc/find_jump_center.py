@@ -5,7 +5,7 @@ import requests
 import pandas as pd
 from datetime import datetime
 
-# 读取 jump_map.json
+# 读取 jump_map.json, 数据来自：Tritanium app 导航功能计算缓存
 with open("jump_map.json", "r") as f:
     jump_data = json.load(f)
 
