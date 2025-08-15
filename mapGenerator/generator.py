@@ -8,6 +8,13 @@ from bs4 import BeautifulSoup
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
+# 从dotlan下载svg地图并生成json文件
+# 1. 下载New Eden SVG
+# 2. 提取星域链接
+# 3. 并发下载所有星域SVG
+# 4. 处理星域数据
+# 5. 保存到JSON
+
 world_map_layout = "https://evemaps.dotlan.net/svg/New_Eden.svg"
 
 class MapGenerator:

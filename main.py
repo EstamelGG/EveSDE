@@ -4,6 +4,7 @@ import shutil
 import sqlite3
 import zipfile
 import json
+import requests
 from categories_handler import read_yaml as read_categories_yaml, process_data as process_categories_data
 from groups_handler import read_yaml as read_groups_yaml, process_data as process_groups_data
 from types_handler import read_yaml as read_types_yaml, process_data as process_types_data
@@ -497,6 +498,78 @@ def dogmaEffect_patch():
             print(f"修补数据库 {db_filename} 时发生错误: {e}")
 
 
+def fetch_compressable():
+    """从网络获取物品压缩对照表数据并存储到数据库"""
+    print("\n获取物品压缩对照表数据...")
+    
+    url = "https://sde.hoboleaks.space/tq/compressibletypes.json"
+    
+    try:
+        # 从网络获取数据
+        response = requests.get(url, timeout=30)
+        response.raise_for_status()
+        compressible_data = response.json()
+        print(f"成功从 {url} 获取了 {len(compressible_data)} 条压缩对照数据")
+        
+    except requests.exceptions.RequestException as e:
+        print(f"网络请求失败: {e}")
+        return
+    except json.JSONDecodeError as e:
+        print(f"JSON解析失败: {e}")
+        return
+    except Exception as e:
+        print(f"获取数据时发生未知错误: {e}")
+        return
+
+    # 遍历所有语言的数据库
+    for lang in languages:
+        db_filename = os.path.join(output_db_dir, f'item_db_{lang}.sqlite')
+
+        # 检查数据库文件是否存在
+        if os.path.exists(db_filename):
+            db_path = db_filename
+        elif os.path.exists(f"{db_filename}.zip"):
+            print(f"警告：数据库 {db_filename} 已被压缩，无法更新。请在压缩前执行此操作。")
+            continue
+        else:
+            print(f"错误：找不到数据库 {db_filename}")
+            continue
+
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+
+            # 创建compressible_types表
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS compressible_types (
+                    origin INTEGER NOT NULL,
+                    compressed INTEGER NOT NULL,
+                    PRIMARY KEY (origin)
+                )
+            ''')
+
+            # 清空现有数据（如果有的话）
+            cursor.execute('DELETE FROM compressible_types')
+
+            # 插入新数据
+            insert_count = 0
+            for origin_id, compressed_id in compressible_data.items():
+                cursor.execute(
+                    'INSERT INTO compressible_types (origin, compressed) VALUES (?, ?)',
+                    (int(origin_id), int(compressed_id))
+                )
+                insert_count += 1
+
+            # 提交更改
+            conn.commit()
+            conn.close()
+
+            print(f"数据库 {lang}: 已创建/更新 compressible_types 表，插入了 {insert_count} 条记录")
+
+        except Exception as e:
+            print(f"更新数据库 {db_filename} 时发生错误: {e}")
+
+
 def main():
     file_check()
     rebuild_directory("./output")
@@ -610,6 +683,9 @@ def main():
 
     # 执行dogmaEffects表数据修补
     dogmaEffect_patch()
+
+    # 获取物品压缩对照表数据
+    fetch_compressable()
 
     print("\n")
     create_uncompressed_icons_zip(ICONS_DEST_DIR, ZIP_ICONS_DEST)
