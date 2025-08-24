@@ -211,7 +211,8 @@ def create_tables(cursor):
         research_material_time INTEGER,
         research_time_time INTEGER,
         copying_time INTEGER,
-        invention_time INTEGER
+        invention_time INTEGER,
+        maxRunsPerCopy INTEGER
     )
     ''')
 
@@ -249,7 +250,8 @@ def process_data(yaml_data, cursor, language):
                 blueprint_type_name = get_type_name(cursor, blueprint_type_id)
                 blueprint_type_icon = get_type_icon(cursor, blueprint_type_id)
                 activities = blueprint_data.get('activities', {})
-                
+                maxProductionLimit = blueprint_data.get('maxProductionLimit', 0)
+
                 # 记录处理时间
                 times = {
                     'manufacturing_time': (activities.get('manufacturing') or activities.get('reaction') or {}).get('time', 0),
@@ -259,8 +261,8 @@ def process_data(yaml_data, cursor, language):
                     'invention_time': activities.get('invention', {}).get('time', 0)
                 }
                 cursor.execute(
-                    'INSERT OR REPLACE INTO blueprint_process_time (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, manufacturing_time, research_material_time, research_time_time, copying_time, invention_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                    (blueprint_type_id, blueprint_type_name, blueprint_type_icon, times['manufacturing_time'], times['research_material_time'], times['research_time_time'], times['copying_time'], times['invention_time'])
+                    'INSERT OR REPLACE INTO blueprint_process_time (blueprintTypeID, blueprintTypeName, blueprintTypeIcon, manufacturing_time, research_material_time, research_time_time, copying_time, invention_time, maxRunsPerCopy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    (blueprint_type_id, blueprint_type_name, blueprint_type_icon, times['manufacturing_time'], times['research_material_time'], times['research_time_time'], times['copying_time'], times['invention_time'], maxProductionLimit)
                 )
                 
                 # 处理制造
