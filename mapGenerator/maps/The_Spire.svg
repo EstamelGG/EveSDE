@@ -510,14 +510,14 @@
     <a xlink:href="http://evemaps.dotlan.net/system/U1-VHY" class="sys link-5-30001585" target="_top">
       <rect id="rect30001585" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #DFF1FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">U1-VHY</text>
-      <text id="txt30001585" x="28" y="21.7" class="st so" text-anchor="middle">NC (2)</text>
+      <text id="txt30001585" x="28" y="21.7" class="st so" text-anchor="middle">NC (3)</text>
     </a>
   </symbol>
   <symbol id="def30001583">
     <a xlink:href="http://evemaps.dotlan.net/system/HPMN-V" class="sys link-5-30001583" target="_top">
       <rect id="rect30001583" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #DFF1FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">HPMN-V</text>
-      <text id="txt30001583" x="28" y="21.7" class="st so" text-anchor="middle">NC (2)</text>
+      <text id="txt30001583" x="28" y="21.7" class="st so" text-anchor="middle">NC (3)</text>
     </a>
   </symbol>
   <symbol id="def30001591">
@@ -531,7 +531,7 @@
     <a xlink:href="http://evemaps.dotlan.net/system/GF-GR7" class="sys link-5-30001580" target="_top">
       <rect id="rect30001580" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #DFF1FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">GF-GR7</text>
-      <text id="txt30001580" x="28" y="21.7" class="st so" text-anchor="middle">NC (1)</text>
+      <text id="txt30001580" x="28" y="21.7" class="st so" text-anchor="middle">NC (3)</text>
     </a>
   </symbol>
   <symbol id="def30001573">
@@ -553,7 +553,7 @@
     <a xlink:href="http://evemaps.dotlan.net/system/XR-ZL7" class="sys link-5-30001584" target="_top">
       <rect id="rect30001584" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #DFF1FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">XR-ZL7</text>
-      <text id="txt30001584" x="28" y="21.7" class="st so" text-anchor="middle">NC (2)</text>
+      <text id="txt30001584" x="28" y="21.7" class="st so" text-anchor="middle">NC (3)</text>
     </a>
   </symbol>
   <symbol id="def30001586">
@@ -568,14 +568,14 @@
     <rect id="ice30001582" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
       <rect id="rect30001582" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #DFF1FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Z19-B8</text>
-      <text id="txt30001582" x="28" y="21.7" class="st so" text-anchor="middle">NC (1)</text>
+      <text id="txt30001582" x="28" y="21.7" class="st so" text-anchor="middle">NC (3)</text>
     </a>
   </symbol>
   <symbol id="def30001581">
     <a xlink:href="http://evemaps.dotlan.net/system/DVN6-0" class="sys link-5-30001581" target="_top">
       <rect id="rect30001581" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #DFF1FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">DVN6-0</text>
-      <text id="txt30001581" x="28" y="21.7" class="st so" text-anchor="middle">NC (2)</text>
+      <text id="txt30001581" x="28" y="21.7" class="st so" text-anchor="middle">NC (3)</text>
     </a>
   </symbol>
   <symbol id="def30001590">
@@ -766,7 +766,14 @@
 <text x="10" y="20" id="debug"  style="fill: #888888;"> </text>
 
 <g id="glow">
-
+  <rect id="inc30001537" x="11.5" y="301.5" width="85" height="46" class="incs" />
+  <rect id="inc30001539" x="91.5" y="301.5" width="85" height="46" class="inc" />
+  <rect id="inc30001533" x="91.5" y="366.5" width="85" height="46" class="inc" />
+  <rect id="inc30001535" x="171.5" y="301.5" width="85" height="46" class="inc" />
+  <rect id="inc30001534" x="171.5" y="366.5" width="85" height="46" class="inc" />
+  <rect id="inc30001536" x="241.5" y="406.5" width="85" height="46" class="inc" />
+  <rect id="inc30001538" x="256.5" y="356.5" width="85" height="46" class="inc" />
+  <rect id="inc30001540" x="321.5" y="406.5" width="85" height="46" class="inc" />
 
 </g>
 

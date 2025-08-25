@@ -164,7 +164,7 @@
     <a xlink:href="http://evemaps.dotlan.net/system/C0O6-K" class="sys link-5-30000568" target="_top">
       <rect id="rect30000568" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #BFA26B;" />
       <text x="28" y="14" class="ss" text-anchor="middle">C0O6-K</text>
-      <text id="txt30000568" x="28" y="21.7" class="st so" text-anchor="middle">CONDI (2)</text>
+      <text id="txt30000568" x="28" y="21.7" class="st so" text-anchor="middle">CONDI (3)</text>
     </a>
   </symbol>
   <symbol id="def30000573">
@@ -255,14 +255,14 @@
     <a xlink:href="http://evemaps.dotlan.net/system/5H-SM2" class="sys link-5-30000581" target="_top">
       <rect id="rect30000581" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #BFA26B;" />
       <text x="28" y="14" class="ss" text-anchor="middle">5H-SM2</text>
-      <text id="txt30000581" x="28" y="21.7" class="st so" text-anchor="middle">CONDI (2)</text>
+      <text id="txt30000581" x="28" y="21.7" class="st so" text-anchor="middle">CONDI (3)</text>
     </a>
   </symbol>
   <symbol id="def30000564">
     <a xlink:href="http://evemaps.dotlan.net/system/5Q65-4" class="sys link-5-30000564" target="_top">
       <rect id="rect30000564" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #BFA26B;" />
       <text x="28" y="14" class="ss" text-anchor="middle">5Q65-4</text>
-      <text id="txt30000564" x="28" y="21.7" class="st so" text-anchor="middle">CONDI (2)</text>
+      <text id="txt30000564" x="28" y="21.7" class="st so" text-anchor="middle">CONDI (3)</text>
     </a>
   </symbol>
   <symbol id="def30000606">
@@ -321,7 +321,7 @@
     <a xlink:href="http://evemaps.dotlan.net/system/5DE-QS" class="sys link-5-30000562" target="_top">
       <rect id="rect30000562" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="s" style="fill: #BFA26B;" />
       <text x="28" y="14" class="ss" text-anchor="middle">5DE-QS</text>
-      <text id="txt30000562" x="28" y="21.7" class="st so" text-anchor="middle">CONDI (2)</text>
+      <text id="txt30000562" x="28" y="21.7" class="st so" text-anchor="middle">CONDI (3)</text>
     </a>
   </symbol>
   <symbol id="def30000553">
@@ -833,15 +833,7 @@
 <text x="10" y="20" id="debug"  style="fill: #888888;"> </text>
 
 <g id="glow">
-  <rect id="inc30000583" x="36.5" y="461.5" width="85" height="46" class="inc" />
-  <rect id="inc30000584" x="136.5" y="491.5" width="85" height="46" class="inc" />
-  <rect id="inc30000579" x="146.5" y="576.5" width="85" height="46" class="inc" />
-  <rect id="inc30000581" x="151.5" y="626.5" width="85" height="46" class="inc" />
-  <rect id="inc30000586" x="236.5" y="576.5" width="85" height="46" class="inc" />
-  <rect id="inc30000582" x="266.5" y="521.5" width="85" height="46" class="inc" />
-  <rect id="inc30000585" x="321.5" y="576.5" width="85" height="46" class="incs" />
-  <rect id="inc30000580" x="346.5" y="521.5" width="85" height="46" class="inc" />
-  <rect id="inc30000578" x="356.5" y="471.5" width="85" height="46" class="inc" />
+
 
 </g>
 

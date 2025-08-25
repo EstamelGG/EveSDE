@@ -229,7 +229,7 @@
   <symbol id="def30003850">
     <a xlink:href="http://evemaps.dotlan.net/system/Alparena" class="sys link-5-30003850" target="_top">
     <rect id="ice30003850" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30003850" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-20);" />
+      <rect id="rect30003850" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-40);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Alparena</text>
       <text id="txt30003850" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -254,7 +254,7 @@
   </symbol>
   <symbol id="def30003856">
     <a xlink:href="http://evemaps.dotlan.net/system/Athounon" class="sys link-5-30003856" target="_top">
-      <rect id="rect30003856" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-40);" />
+      <rect id="rect30003856" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-20);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Athounon</text>
       <text id="txt30003856" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -274,9 +274,9 @@
   <symbol id="def30003853">
     <a xlink:href="http://evemaps.dotlan.net/system/Mercomesier" class="sys link-5-30003853" target="_top">
     <rect id="ice30003853" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30003853" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-40);" />
+      <rect id="rect30003853" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Mercomesier</text>
-      <text id="txt30003853" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
+      <text id="txt30003853" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
     <rect x="49.6" y="9.5" height="11" width="11" class="o" />
     <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
@@ -298,9 +298,9 @@
   </symbol>
   <symbol id="def30003851">
     <a xlink:href="http://evemaps.dotlan.net/system/Reschard" class="sys link-5-30003851" target="_top">
-      <rect id="rect30003851" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-80);" />
+      <rect id="rect30003851" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-20);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Reschard</text>
-      <text id="txt30003851" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
+      <text id="txt30003851" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
   </symbol>
   <symbol id="def30003846">
@@ -384,9 +384,9 @@
   </symbol>
   <symbol id="def30003852">
     <a xlink:href="http://evemaps.dotlan.net/system/Arderonne" class="sys link-5-30003852" target="_top">
-      <rect id="rect30003852" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-40);" />
+      <rect id="rect30003852" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-20);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Arderonne</text>
-      <text id="txt30003852" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
+      <text id="txt30003852" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
   </symbol>
   <symbol id="def30003855">
@@ -421,7 +421,7 @@
   </symbol>
   <symbol id="def30003854">
     <a xlink:href="http://evemaps.dotlan.net/system/Alamel" class="sys link-5-30003854" target="_top">
-      <rect id="rect30003854" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-60);" />
+      <rect id="rect30003854" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-80);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Alamel</text>
       <text id="txt30003854" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -474,9 +474,9 @@
   </symbol>
   <symbol id="def30003857">
     <a xlink:href="http://evemaps.dotlan.net/system/Odamia" class="sys link-5-30003857" target="_top">
-      <rect id="rect30003857" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-80);" />
+      <rect id="rect30003857" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Odamia</text>
-      <text id="txt30003857" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
+      <text id="txt30003857" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
   </symbol>
   <symbol id="def30003847">
@@ -586,7 +586,7 @@
   <symbol id="def30003827">
     <a xlink:href="http://evemaps.dotlan.net/system/Aubenall" class="sys link-5-30003827" target="_top">
     <rect id="ice30003827" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30003827" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-0);" />
+      <rect id="rect30003827" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #E1FFE1;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Aubenall</text>
       <text id="txt30003827" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -681,7 +681,7 @@
   <symbol id="def30003825">
     <a xlink:href="http://evemaps.dotlan.net/system/Eugales" class="sys link-5-30003825" target="_top">
     <rect id="ice30003825" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30003825" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-0);" />
+      <rect id="rect30003825" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #E1FFE1;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Eugales</text>
       <text id="txt30003825" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -693,7 +693,7 @@
   </symbol>
   <symbol id="def30003837">
     <a xlink:href="http://evemaps.dotlan.net/system/Aldranette" class="sys link-5-30003837" target="_top">
-      <rect id="rect30003837" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-40);" />
+      <rect id="rect30003837" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-60);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Aldranette</text>
       <text id="txt30003837" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -745,7 +745,7 @@
   </symbol>
   <symbol id="def30003836">
     <a xlink:href="http://evemaps.dotlan.net/system/Vlillirier" class="sys link-5-30003836" target="_top">
-      <rect id="rect30003836" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-60);" />
+      <rect id="rect30003836" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-80);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Vlillirier</text>
       <text id="txt30003836" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -797,7 +797,7 @@
   </symbol>
   <symbol id="def30003826">
     <a xlink:href="http://evemaps.dotlan.net/system/Frarie" class="sys link-5-30003826" target="_top">
-      <rect id="rect30003826" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-40);" />
+      <rect id="rect30003826" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-20);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Frarie</text>
       <text id="txt30003826" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -808,7 +808,7 @@
   </symbol>
   <symbol id="def30003838">
     <a xlink:href="http://evemaps.dotlan.net/system/Oicx" class="sys link-5-30003838" target="_top">
-      <rect id="rect30003838" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-20);" />
+      <rect id="rect30003838" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Oicx</text>
       <text id="txt30003838" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -1095,12 +1095,10 @@
   <rect id="inc30003795" x="498.5" y="520.5" width="71" height="38" class="con" />
   <rect id="inc30003840" x="529.5" y="67.5" width="71" height="38" class="con" />
   <rect id="inc30003842" x="532.5" y="34.5" width="71" height="38" class="con" />
-  <rect id="inc30003827" x="553.5" y="170.5" width="71" height="38" class="con" />
   <rect id="inc30003796" x="588.5" y="615.5" width="71" height="38" class="con" />
   <rect id="inc30003839" x="599.5" y="69.5" width="71" height="38" class="con" />
   <rect id="inc30003829" x="628.5" y="155.5" width="71" height="38" class="con" />
   <rect id="inc30003792" x="643.5" y="440.5" width="71" height="38" class="con" />
-  <rect id="inc30003825" x="658.5" y="210.5" width="71" height="38" class="con" />
   <rect id="inc30003837" x="661.5" y="77.5" width="71" height="38" class="con" />
   <rect id="inc30003797" x="668.5" y="565.5" width="71" height="38" class="con" />
   <rect id="inc30003799" x="668.5" y="615.5" width="71" height="38" class="con" />
@@ -1116,6 +1114,7 @@
   <rect id="inc30003788" x="918.5" y="335.5" width="71" height="38" class="con" />
   <rect id="inc30003789" x="933.5" y="390.5" width="71" height="38" class="con" />
   <rect id="inc30045344" x="710.5" y="31.5" width="71" height="38" class="con" />
+  <rect id="inc30045319" x="818.5" y="45.5" width="71" height="38" class="con" />
   <rect id="inc30005300" x="818.5" y="460.5" width="71" height="38" class="con" />
 </g>
 

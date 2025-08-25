@@ -950,13 +950,7 @@
 <text x="10" y="20" id="debug"  style="fill: #888888;"> </text>
 
 <g id="glow">
-  <rect id="inc30005062" x="-3.5" y="696.5" width="85" height="46" class="inc" />
-  <rect id="inc30005063" x="6.5" y="651.5" width="85" height="46" class="inc" />
-  <rect id="inc30005068" x="46.5" y="571.5" width="85" height="46" class="inc" />
-  <rect id="inc30005067" x="61.5" y="616.5" width="85" height="46" class="inc" />
-  <rect id="inc30005064" x="91.5" y="656.5" width="85" height="46" class="inc" />
-  <rect id="inc30005065" x="121.5" y="591.5" width="85" height="46" class="inc" />
-  <rect id="inc30005066" x="191.5" y="636.5" width="85" height="46" class="incs" />
+
 
 </g>
 

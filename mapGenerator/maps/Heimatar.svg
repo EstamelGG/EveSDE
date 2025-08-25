@@ -139,7 +139,7 @@
   </symbol>
   <symbol id="def30002516">
     <a xlink:href="http://evemaps.dotlan.net/system/Lulm" class="sys link-5-30002516" target="_top">
-      <rect id="rect30002516" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500002-0);" />
+      <rect id="rect30002516" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #FFE8E8;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Lulm</text>
       <text id="txt30002516" x="28" y="21.7" class="st" text-anchor="middle">Minmatar</text>
     </a>
@@ -266,7 +266,7 @@
   </symbol>
   <symbol id="def30002540">
     <a xlink:href="http://evemaps.dotlan.net/system/Lantorn" class="sys link-5-30002540" target="_top">
-      <rect id="rect30002540" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-60);" />
+      <rect id="rect30002540" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-40);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Lantorn</text>
       <text id="txt30002540" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -322,9 +322,9 @@
   </symbol>
   <symbol id="def30002542">
     <a xlink:href="http://evemaps.dotlan.net/system/Auga" class="sys link-5-30002542" target="_top">
-      <rect id="rect30002542" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500002-60);" />
+      <rect id="rect30002542" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-20);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Auga</text>
-      <text id="txt30002542" x="28" y="21.7" class="st" text-anchor="middle">Minmatar</text>
+      <text id="txt30002542" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
     <rect x="49.6" y="9.5" height="11" width="11" class="o" />
     <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
@@ -399,7 +399,7 @@
   </symbol>
   <symbol id="def30002541">
     <a xlink:href="http://evemaps.dotlan.net/system/Dal" class="sys link-5-30002541" target="_top">
-      <rect id="rect30002541" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-20);" />
+      <rect id="rect30002541" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-40);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Dal</text>
       <text id="txt30002541" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -1226,27 +1226,6 @@
     </a>
   </symbol>
 
-  <linearGradient id="fw500002-0"><stop offset="3%" stop-color="#FFF4CE"/><stop offset="4%" stop-color="#FFA0FF"/><stop offset="6%" stop-color="#FFA0FF"/><stop offset="7%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-5"><stop offset="7.5%" stop-color="#FFF4CE"/><stop offset="8.5%" stop-color="#FFA0FF"/><stop offset="10.5%" stop-color="#FFA0FF"/><stop offset="11.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-10"><stop offset="12%" stop-color="#FFF4CE"/><stop offset="13%" stop-color="#FFA0FF"/><stop offset="15%" stop-color="#FFA0FF"/><stop offset="16%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-15"><stop offset="16.5%" stop-color="#FFF4CE"/><stop offset="17.5%" stop-color="#FFA0FF"/><stop offset="19.5%" stop-color="#FFA0FF"/><stop offset="20.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-20"><stop offset="21%" stop-color="#FFF4CE"/><stop offset="22%" stop-color="#FFA0FF"/><stop offset="24%" stop-color="#FFA0FF"/><stop offset="25%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-25"><stop offset="25.5%" stop-color="#FFF4CE"/><stop offset="26.5%" stop-color="#FFA0FF"/><stop offset="28.5%" stop-color="#FFA0FF"/><stop offset="29.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-30"><stop offset="30%" stop-color="#FFF4CE"/><stop offset="31%" stop-color="#FFA0FF"/><stop offset="33%" stop-color="#FFA0FF"/><stop offset="34%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-35"><stop offset="34.5%" stop-color="#FFF4CE"/><stop offset="35.5%" stop-color="#FFA0FF"/><stop offset="37.5%" stop-color="#FFA0FF"/><stop offset="38.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-40"><stop offset="39%" stop-color="#FFF4CE"/><stop offset="40%" stop-color="#FFA0FF"/><stop offset="42%" stop-color="#FFA0FF"/><stop offset="43%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-45"><stop offset="43.5%" stop-color="#FFF4CE"/><stop offset="44.5%" stop-color="#FFA0FF"/><stop offset="46.5%" stop-color="#FFA0FF"/><stop offset="47.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-50"><stop offset="48%" stop-color="#FFF4CE"/><stop offset="49%" stop-color="#FFA0FF"/><stop offset="51%" stop-color="#FFA0FF"/><stop offset="52%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-55"><stop offset="52.5%" stop-color="#FFF4CE"/><stop offset="53.5%" stop-color="#FFA0FF"/><stop offset="55.5%" stop-color="#FFA0FF"/><stop offset="56.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-60"><stop offset="57%" stop-color="#FFF4CE"/><stop offset="58%" stop-color="#FFA0FF"/><stop offset="60%" stop-color="#FFA0FF"/><stop offset="61%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-65"><stop offset="61.5%" stop-color="#FFF4CE"/><stop offset="62.5%" stop-color="#FFA0FF"/><stop offset="64.5%" stop-color="#FFA0FF"/><stop offset="65.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-70"><stop offset="66%" stop-color="#FFF4CE"/><stop offset="67%" stop-color="#FFA0FF"/><stop offset="69%" stop-color="#FFA0FF"/><stop offset="70%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-75"><stop offset="70.5%" stop-color="#FFF4CE"/><stop offset="71.5%" stop-color="#FFA0FF"/><stop offset="73.5%" stop-color="#FFA0FF"/><stop offset="74.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-80"><stop offset="75%" stop-color="#FFF4CE"/><stop offset="76%" stop-color="#FFA0FF"/><stop offset="78%" stop-color="#FFA0FF"/><stop offset="79%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-85"><stop offset="79.5%" stop-color="#FFF4CE"/><stop offset="80.5%" stop-color="#FFA0FF"/><stop offset="82.5%" stop-color="#FFA0FF"/><stop offset="83.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-90"><stop offset="84%" stop-color="#FFF4CE"/><stop offset="85%" stop-color="#FFA0FF"/><stop offset="87%" stop-color="#FFA0FF"/><stop offset="88%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-95"><stop offset="88.5%" stop-color="#FFF4CE"/><stop offset="89.5%" stop-color="#FFA0FF"/><stop offset="91.5%" stop-color="#FFA0FF"/><stop offset="92.5%" stop-color="#FFE8E8"/></linearGradient>
-  <linearGradient id="fw500002-100"><stop offset="93%" stop-color="#FFF4CE"/><stop offset="94%" stop-color="#FFA0FF"/><stop offset="96%" stop-color="#FFA0FF"/><stop offset="97%" stop-color="#FFE8E8"/></linearGradient>
   <linearGradient id="fw500003-0"><stop offset="3%" stop-color="#FFE8E8"/><stop offset="4%" stop-color="#FFA0FF"/><stop offset="6%" stop-color="#FFA0FF"/><stop offset="7%" stop-color="#FFF4CE"/></linearGradient>
   <linearGradient id="fw500003-5"><stop offset="7.5%" stop-color="#FFE8E8"/><stop offset="8.5%" stop-color="#FFA0FF"/><stop offset="10.5%" stop-color="#FFA0FF"/><stop offset="11.5%" stop-color="#FFF4CE"/></linearGradient>
   <linearGradient id="fw500003-10"><stop offset="12%" stop-color="#FFE8E8"/><stop offset="13%" stop-color="#FFA0FF"/><stop offset="15%" stop-color="#FFA0FF"/><stop offset="16%" stop-color="#FFF4CE"/></linearGradient>
@@ -1268,6 +1247,27 @@
   <linearGradient id="fw500003-90"><stop offset="84%" stop-color="#FFE8E8"/><stop offset="85%" stop-color="#FFA0FF"/><stop offset="87%" stop-color="#FFA0FF"/><stop offset="88%" stop-color="#FFF4CE"/></linearGradient>
   <linearGradient id="fw500003-95"><stop offset="88.5%" stop-color="#FFE8E8"/><stop offset="89.5%" stop-color="#FFA0FF"/><stop offset="91.5%" stop-color="#FFA0FF"/><stop offset="92.5%" stop-color="#FFF4CE"/></linearGradient>
   <linearGradient id="fw500003-100"><stop offset="93%" stop-color="#FFE8E8"/><stop offset="94%" stop-color="#FFA0FF"/><stop offset="96%" stop-color="#FFA0FF"/><stop offset="97%" stop-color="#FFF4CE"/></linearGradient>
+  <linearGradient id="fw500002-0"><stop offset="3%" stop-color="#FFF4CE"/><stop offset="4%" stop-color="#FFA0FF"/><stop offset="6%" stop-color="#FFA0FF"/><stop offset="7%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-5"><stop offset="7.5%" stop-color="#FFF4CE"/><stop offset="8.5%" stop-color="#FFA0FF"/><stop offset="10.5%" stop-color="#FFA0FF"/><stop offset="11.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-10"><stop offset="12%" stop-color="#FFF4CE"/><stop offset="13%" stop-color="#FFA0FF"/><stop offset="15%" stop-color="#FFA0FF"/><stop offset="16%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-15"><stop offset="16.5%" stop-color="#FFF4CE"/><stop offset="17.5%" stop-color="#FFA0FF"/><stop offset="19.5%" stop-color="#FFA0FF"/><stop offset="20.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-20"><stop offset="21%" stop-color="#FFF4CE"/><stop offset="22%" stop-color="#FFA0FF"/><stop offset="24%" stop-color="#FFA0FF"/><stop offset="25%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-25"><stop offset="25.5%" stop-color="#FFF4CE"/><stop offset="26.5%" stop-color="#FFA0FF"/><stop offset="28.5%" stop-color="#FFA0FF"/><stop offset="29.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-30"><stop offset="30%" stop-color="#FFF4CE"/><stop offset="31%" stop-color="#FFA0FF"/><stop offset="33%" stop-color="#FFA0FF"/><stop offset="34%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-35"><stop offset="34.5%" stop-color="#FFF4CE"/><stop offset="35.5%" stop-color="#FFA0FF"/><stop offset="37.5%" stop-color="#FFA0FF"/><stop offset="38.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-40"><stop offset="39%" stop-color="#FFF4CE"/><stop offset="40%" stop-color="#FFA0FF"/><stop offset="42%" stop-color="#FFA0FF"/><stop offset="43%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-45"><stop offset="43.5%" stop-color="#FFF4CE"/><stop offset="44.5%" stop-color="#FFA0FF"/><stop offset="46.5%" stop-color="#FFA0FF"/><stop offset="47.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-50"><stop offset="48%" stop-color="#FFF4CE"/><stop offset="49%" stop-color="#FFA0FF"/><stop offset="51%" stop-color="#FFA0FF"/><stop offset="52%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-55"><stop offset="52.5%" stop-color="#FFF4CE"/><stop offset="53.5%" stop-color="#FFA0FF"/><stop offset="55.5%" stop-color="#FFA0FF"/><stop offset="56.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-60"><stop offset="57%" stop-color="#FFF4CE"/><stop offset="58%" stop-color="#FFA0FF"/><stop offset="60%" stop-color="#FFA0FF"/><stop offset="61%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-65"><stop offset="61.5%" stop-color="#FFF4CE"/><stop offset="62.5%" stop-color="#FFA0FF"/><stop offset="64.5%" stop-color="#FFA0FF"/><stop offset="65.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-70"><stop offset="66%" stop-color="#FFF4CE"/><stop offset="67%" stop-color="#FFA0FF"/><stop offset="69%" stop-color="#FFA0FF"/><stop offset="70%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-75"><stop offset="70.5%" stop-color="#FFF4CE"/><stop offset="71.5%" stop-color="#FFA0FF"/><stop offset="73.5%" stop-color="#FFA0FF"/><stop offset="74.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-80"><stop offset="75%" stop-color="#FFF4CE"/><stop offset="76%" stop-color="#FFA0FF"/><stop offset="78%" stop-color="#FFA0FF"/><stop offset="79%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-85"><stop offset="79.5%" stop-color="#FFF4CE"/><stop offset="80.5%" stop-color="#FFA0FF"/><stop offset="82.5%" stop-color="#FFA0FF"/><stop offset="83.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-90"><stop offset="84%" stop-color="#FFF4CE"/><stop offset="85%" stop-color="#FFA0FF"/><stop offset="87%" stop-color="#FFA0FF"/><stop offset="88%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-95"><stop offset="88.5%" stop-color="#FFF4CE"/><stop offset="89.5%" stop-color="#FFA0FF"/><stop offset="91.5%" stop-color="#FFA0FF"/><stop offset="92.5%" stop-color="#FFE8E8"/></linearGradient>
+  <linearGradient id="fw500002-100"><stop offset="93%" stop-color="#FFF4CE"/><stop offset="94%" stop-color="#FFA0FF"/><stop offset="96%" stop-color="#FFA0FF"/><stop offset="97%" stop-color="#FFE8E8"/></linearGradient>
   <symbol id="defCampaign" width="85" height="46">
     <rect x="0" y="0" width="85" height="46" class="cam" />
   </symbol>
@@ -1300,7 +1300,6 @@
 
 <g id="glow">
 
-  <rect id="inc30002516" x="-6.5" y="475.5" width="71" height="38" class="con" />
   <rect id="inc30002539" x="-6.5" y="690.5" width="71" height="38" class="con" />
   <rect id="inc30002517" x="53.5" y="505.5" width="71" height="38" class="con" />
   <rect id="inc30002538" x="68.5" y="640.5" width="71" height="38" class="con" />

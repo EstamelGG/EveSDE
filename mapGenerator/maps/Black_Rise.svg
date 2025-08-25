@@ -149,7 +149,7 @@
   </symbol>
   <symbol id="def30045310">
     <a xlink:href="http://evemaps.dotlan.net/system/Sarenemi" class="sys link-5-30045310" target="_top">
-      <rect id="rect30045310" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
+      <rect id="rect30045310" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #CEE7FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Sarenemi</text>
       <text id="txt30045310" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -182,7 +182,7 @@
   </symbol>
   <symbol id="def30045306">
     <a xlink:href="http://evemaps.dotlan.net/system/Hykanima" class="sys link-5-30045306" target="_top">
-      <rect id="rect30045306" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
+      <rect id="rect30045306" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #CEE7FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Hykanima</text>
       <text id="txt30045306" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -209,7 +209,7 @@
   </symbol>
   <symbol id="def30045313">
     <a xlink:href="http://evemaps.dotlan.net/system/Ienakkamon" class="sys link-5-30045313" target="_top">
-      <rect id="rect30045313" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
+      <rect id="rect30045313" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #CEE7FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Ienakkamon</text>
       <text id="txt30045313" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -258,14 +258,14 @@
   </symbol>
   <symbol id="def30045334">
     <a xlink:href="http://evemaps.dotlan.net/system/Mushikegi" class="sys link-5-30045334" target="_top">
-      <rect id="rect30045334" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
+      <rect id="rect30045334" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-80);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Mushikegi</text>
       <text id="txt30045334" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
   </symbol>
   <symbol id="def30045330">
     <a xlink:href="http://evemaps.dotlan.net/system/Okkamon" class="sys link-5-30045330" target="_top">
-      <rect id="rect30045330" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-0);" />
+      <rect id="rect30045330" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-80);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Okkamon</text>
       <text id="txt30045330" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -295,7 +295,7 @@
   <symbol id="def30045308">
     <a xlink:href="http://evemaps.dotlan.net/system/Kehjari" class="sys link-5-30045308" target="_top">
     <rect id="ice30045308" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30045308" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
+      <rect id="rect30045308" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #CEE7FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Kehjari</text>
       <text id="txt30045308" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -306,7 +306,7 @@
   </symbol>
   <symbol id="def30045331">
     <a xlink:href="http://evemaps.dotlan.net/system/Vaaralen" class="sys link-5-30045331" target="_top">
-      <rect id="rect30045331" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-40);" />
+      <rect id="rect30045331" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-20);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Vaaralen</text>
       <text id="txt30045331" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -338,7 +338,7 @@
   </symbol>
   <symbol id="def30045332">
     <a xlink:href="http://evemaps.dotlan.net/system/Asakai" class="sys link-5-30045332" target="_top">
-      <rect id="rect30045332" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
+      <rect id="rect30045332" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-80);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Asakai</text>
       <text id="txt30045332" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -350,7 +350,7 @@
   </symbol>
   <symbol id="def30045338">
     <a xlink:href="http://evemaps.dotlan.net/system/Hikkoken" class="sys link-5-30045338" target="_top">
-      <rect id="rect30045338" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-80);" />
+      <rect id="rect30045338" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-60);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Hikkoken</text>
       <text id="txt30045338" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -369,9 +369,9 @@
   </symbol>
   <symbol id="def30045337">
     <a xlink:href="http://evemaps.dotlan.net/system/Ikoskio" class="sys link-5-30045337" target="_top">
-      <rect id="rect30045337" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
+      <rect id="rect30045337" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #CEE7FF;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Ikoskio</text>
-      <text id="txt30045337" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
+      <text id="txt30045337" x="28" y="21.7" class="st" text-anchor="middle">Guristas</text>
     </a>
   </symbol>
   <symbol id="def30045343">
@@ -384,7 +384,7 @@
   <symbol id="def30045341">
     <a xlink:href="http://evemaps.dotlan.net/system/Hallanen" class="sys link-5-30045341" target="_top">
     <rect id="ice30045341" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30045341" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-40);" />
+      <rect id="rect30045341" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-20);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Hallanen</text>
       <text id="txt30045341" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -421,7 +421,7 @@
   </symbol>
   <symbol id="def30045315">
     <a xlink:href="http://evemaps.dotlan.net/system/Raihbaka" class="sys link-5-30045315" target="_top">
-      <rect id="rect30045315" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-40);" />
+      <rect id="rect30045315" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-20);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Raihbaka</text>
       <text id="txt30045315" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -440,7 +440,7 @@
   </symbol>
   <symbol id="def30045344">
     <a xlink:href="http://evemaps.dotlan.net/system/Nennamaila" class="sys link-5-30045344" target="_top">
-      <rect id="rect30045344" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-40);" />
+      <rect id="rect30045344" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-60);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Nennamaila</text>
       <text id="txt30045344" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
     </a>
@@ -451,9 +451,9 @@
   </symbol>
   <symbol id="def30045339">
     <a xlink:href="http://evemaps.dotlan.net/system/Enaluri" class="sys link-5-30045339" target="_top">
-      <rect id="rect30045339" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500004-60);" />
+      <rect id="rect30045339" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Enaluri</text>
-      <text id="txt30045339" x="28" y="21.7" class="st" text-anchor="middle">Gallente</text>
+      <text id="txt30045339" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
     <rect x="49.6" y="9.5" height="11" width="11" class="o" />
     <polygon points="49.6,9.5 60.6,9.5 55.1,15 49.6,9.5" class="v1" />
@@ -463,7 +463,7 @@
   </symbol>
   <symbol id="def30045319">
     <a xlink:href="http://evemaps.dotlan.net/system/Eha" class="sys link-5-30045319" target="_top">
-      <rect id="rect30045319" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #CEE7FF;" />
+      <rect id="rect30045319" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Eha</text>
       <text id="txt30045319" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -528,7 +528,7 @@
   </symbol>
   <symbol id="def30045316">
     <a xlink:href="http://evemaps.dotlan.net/system/Innia" class="sys link-5-30045316" target="_top">
-      <rect id="rect30045316" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #CEE7FF;" />
+      <rect id="rect30045316" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500001-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Innia</text>
       <text id="txt30045316" x="28" y="21.7" class="st" text-anchor="middle">Caldari</text>
     </a>
@@ -743,13 +743,10 @@
 
   <rect id="inc30045348" x="3.5" y="490.5" width="71" height="38" class="con" />
   <rect id="inc30045352" x="68.5" y="425.5" width="71" height="38" class="con" />
-  <rect id="inc30045310" x="83.5" y="5.5" width="71" height="38" class="con" />
   <rect id="inc30045350" x="113.5" y="265.5" width="71" height="38" class="con" />
   <rect id="inc30045346" x="113.5" y="355.5" width="71" height="38" class="con" />
   <rect id="inc30045347" x="128.5" y="475.5" width="71" height="38" class="con" />
-  <rect id="inc30045306" x="153.5" y="5.5" width="71" height="38" class="con" />
   <rect id="inc30045345" x="163.5" y="425.5" width="71" height="38" class="con" />
-  <rect id="inc30045313" x="193.5" y="55.5" width="71" height="38" class="con" />
   <rect id="inc30045349" x="228.5" y="405.5" width="71" height="38" class="con" />
   <rect id="inc30045354" x="243.5" y="325.5" width="71" height="38" class="con" />
   <rect id="inc30045307" x="248.5" y="25.5" width="71" height="38" class="con" />
@@ -757,21 +754,22 @@
   <rect id="inc30045334" x="273.5" y="215.5" width="71" height="38" class="con" />
   <rect id="inc30045330" x="303.5" y="290.5" width="71" height="38" class="con" />
   <rect id="inc30045351" x="308.5" y="405.5" width="71" height="38" class="con" />
-  <rect id="inc30045308" x="333.5" y="100.5" width="71" height="38" class="con" />
   <rect id="inc30045331" x="348.5" y="215.5" width="71" height="38" class="con" />
   <rect id="inc30045336" x="418.5" y="230.5" width="71" height="38" class="con" />
   <rect id="inc30045332" x="418.5" y="280.5" width="71" height="38" class="con" />
   <rect id="inc30045338" x="438.5" y="515.5" width="71" height="38" class="con" />
   <rect id="inc30045333" x="488.5" y="230.5" width="71" height="38" class="con" />
-  <rect id="inc30045337" x="488.5" y="280.5" width="71" height="38" class="con" />
   <rect id="inc30045343" x="493.5" y="575.5" width="71" height="38" class="con" />
   <rect id="inc30045341" x="533.5" y="505.5" width="71" height="38" class="con" />
   <rect id="inc30045315" x="613.5" y="125.5" width="71" height="38" class="con" />
   <rect id="inc30045344" x="618.5" y="560.5" width="71" height="38" class="con" />
   <rect id="inc30045339" x="623.5" y="485.5" width="71" height="38" class="con" />
+  <rect id="inc30045319" x="658.5" y="15.5" width="71" height="38" class="con" />
   <rect id="inc30045342" x="723.5" y="460.5" width="71" height="38" class="con" />
+  <rect id="inc30045316" x="733.5" y="55.5" width="71" height="38" class="con" />
   <rect id="inc30002813" x="18.5" y="350.5" width="71" height="38" class="con" />
   <rect id="inc30004984" x="103.5" y="535.5" width="71" height="38" class="con" />
+  <rect id="inc30002760" x="198.5" y="190.5" width="71" height="38" class="con" />
   <rect id="inc30003856" x="572.5" y="354.5" width="71" height="38" class="con" />
   <rect id="inc30003837" x="738.5" y="555.5" width="71" height="38" class="con" />
   <rect id="inc30003838" x="908.5" y="20.5" width="71" height="38" class="con" />

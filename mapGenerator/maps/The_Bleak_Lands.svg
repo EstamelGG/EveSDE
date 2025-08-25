@@ -135,14 +135,14 @@
   <symbol id="def30003087">
     <a xlink:href="http://evemaps.dotlan.net/system/Haras" class="sys link-5-30003087" target="_top">
     <rect id="ice30003087" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30003087" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-0);" />
+      <rect id="rect30003087" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #FFF4CE;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Haras</text>
       <text id="txt30003087" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
   </symbol>
   <symbol id="def30003079">
     <a xlink:href="http://evemaps.dotlan.net/system/Saikamon" class="sys link-5-30003079" target="_top">
-      <rect id="rect30003079" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #FFF4CE;" />
+      <rect id="rect30003079" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Saikamon</text>
       <text id="txt30003079" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -259,7 +259,7 @@
   </symbol>
   <symbol id="def30003072">
     <a xlink:href="http://evemaps.dotlan.net/system/Iesa" class="sys link-5-30003072" target="_top">
-      <rect id="rect30003072" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #FFF4CE;" />
+      <rect id="rect30003072" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Iesa</text>
       <text id="txt30003072" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -281,7 +281,7 @@
   </symbol>
   <symbol id="def30003077">
     <a xlink:href="http://evemaps.dotlan.net/system/Uusanen" class="sys link-5-30003077" target="_top">
-      <rect id="rect30003077" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-0);" />
+      <rect id="rect30003077" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #FFF4CE;" />
       <text x="28" y="14" class="ss" text-anchor="middle">Uusanen</text>
       <text id="txt30003077" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -295,7 +295,7 @@
   <symbol id="def30003091">
     <a xlink:href="http://evemaps.dotlan.net/system/Tannakan" class="sys link-5-30003091" target="_top">
     <rect id="ice30003091" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30003091" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-20);" />
+      <rect id="rect30003091" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Tannakan</text>
       <text id="txt30003091" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -344,7 +344,7 @@
   <symbol id="def30003070">
     <a xlink:href="http://evemaps.dotlan.net/system/Sosala" class="sys link-5-30003070" target="_top">
     <rect id="ice30003070" x="1" y="0.5" rx="14" ry="13" width="56" height="28" class="i" />
-      <rect id="rect30003070" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: #FFF4CE;" />
+      <rect id="rect30003070" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Sosala</text>
       <text id="txt30003070" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -463,7 +463,7 @@
   </symbol>
   <symbol id="def30003068">
     <a xlink:href="http://evemaps.dotlan.net/system/Kourmonen" class="sys link-5-30003068" target="_top">
-      <rect id="rect30003068" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-20);" />
+      <rect id="rect30003068" x="4" y="3.5" rx="11" ry="11" width="50" height="22"  class="sl" style="fill: url(#fw500003-0);" />
       <text x="28" y="14" class="ss" text-anchor="middle">Kourmonen</text>
       <text id="txt30003068" x="28" y="21.7" class="st" text-anchor="middle">Amarr</text>
     </a>
@@ -688,11 +688,12 @@
 <g id="glow">
 
   <rect id="inc30003090" x="128.5" y="45.5" width="71" height="38" class="con" />
-  <rect id="inc30003087" x="193.5" y="140.5" width="71" height="38" class="con" />
+  <rect id="inc30003079" x="198.5" y="225.5" width="71" height="38" class="con" />
   <rect id="inc30003089" x="208.5" y="60.5" width="71" height="38" class="con" />
   <rect id="inc30003088" x="263.5" y="100.5" width="71" height="38" class="con" />
-  <rect id="inc30003077" x="363.5" y="295.5" width="71" height="38" class="con" />
+  <rect id="inc30003072" x="323.5" y="235.5" width="71" height="38" class="con" />
   <rect id="inc30003091" x="378.5" y="170.5" width="71" height="38" class="con" />
+  <rect id="inc30003070" x="463.5" y="315.5" width="71" height="38" class="con" />
   <rect id="inc30003063" x="743.5" y="330.5" width="71" height="38" class="con" />
   <rect id="inc30003068" x="833.5" y="330.5" width="71" height="38" class="con" />
   <rect id="inc30003067" x="898.5" y="365.5" width="71" height="38" class="con" />
